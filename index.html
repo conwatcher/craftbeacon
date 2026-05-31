@@ -21,13 +21,12 @@
   <h1>Welcome to CraftBeacon</h1>
   <p>The writing coach for authors who want to do the work themselves.</p>
 
-  <!-- Login button -->
-  <a href="#o-login" data-widget="auth" data-auth-type="login">Log In</a>
+ <!-- Login button -->
+  <button onclick="Outseta.auth.open({widgetMode: 'login'})">Log In</button>
 
   &nbsp;&nbsp;
 
   <!-- Signup button -->
-  <a href="#o-signup" data-widget="auth" data-auth-type="register">Sign Up</a>
-
+  <button onclick="Outseta.auth.open({widgetMode: 'register'})">Sign Up</button>
 </body>
 </html>
