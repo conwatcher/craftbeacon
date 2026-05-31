@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftBeacon</title>
+
+  <!-- Outseta connection -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js"
+          data-options="o_options">
+  </script>
+</head>
+<body>
+
+  <h1>Welcome to CraftBeacon</h1>
+  <p>The writing coach for authors who want to do the work themselves.</p>
+
+  <!-- Login button -->
+  <a href="#o-login" data-widget="auth" data-auth-type="login">Log In</a>
+
+  &nbsp;&nbsp;
+
+  <!-- Signup button -->
+  <a href="#o-signup" data-widget="auth" data-auth-type="register">Sign Up</a>
+
+</body>
+</html>
