@@ -647,11 +647,15 @@ For creative discouragement — normalize the experience honestly, then return t
     }
 
     // ── Auth ───────────────────────────────────────────────────────
-    async function initAuth() {
-      try {
-        await new Promise(r => setTimeout(r, 900));
-        const user = await Outseta.getUser();
-        if (!user || !user.Email) { window.location.href = '/index.html'; return; }
+async function initAuth() {
+  try {
+    let user = null;
+    for (let i = 0; i < 12; i++) {
+      await new Promise(r => setTimeout(r, 500));
+      try { user = await Outseta.getUser(); } catch(e) {}
+      if (user && user.Email) break;
+    }
+    if (!user || !user.Email) { window.location.href = '/index.html'; return; }
         tier = detectTier(user);
         document.getElementById('tierBadge').textContent = tierLabel(tier);
         document.getElementById('userName').textContent  = user.FirstName || user.Email;
