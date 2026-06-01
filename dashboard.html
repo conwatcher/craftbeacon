@@ -659,29 +659,40 @@ For creative discouragement — normalize the experience honestly, then return t
       }
     }
 
-    async function tryGetUser() {
-      // Try every method Outseta may expose to get the current user
-      const methods = [
-        () => Outseta.getUser(),
-        () => Outseta.getPerson(),
-        () => Outseta.auth.getUser(),
-        () => Promise.resolve(Outseta.user),
-        () => Promise.resolve(Outseta.currentUser)
-      ];
-      for (const method of methods) {
-        try {
-          const u = await method();
-          if (u && (u.Email || u.email)) return u;
-        } catch(e) {}
+    function readToken(token) {
+      // Decode the JWT token Outseta provides — no API call needed
+      try {
+        const payload = token.split('.')[1];
+        const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+        return {
+          Email:     decoded.email || decoded.sub || 'member',
+          FirstName: decoded.given_name || decoded.name || 'Member',
+          _plan:     decoded.plan || decoded['outseta:plan'] || ''
+        };
+      } catch(e) {
+        return { Email: 'member', FirstName: 'Member', _plan: '' };
       }
+    }
+
+    function findStoredToken() {
+      // Look through localStorage for anything that looks like an Outseta JWT
+      try {
+        for (const key of Object.keys(localStorage)) {
+          const val = localStorage.getItem(key);
+          if (val && typeof val === 'string' && val.split('.').length === 3) {
+            const user = readToken(val);
+            if (user.Email && user.Email !== 'member') return user;
+          }
+        }
+      } catch(e) {}
       return null;
     }
 
-    async function initAuth() {
-      // Listen for Outseta confirming a valid session
-      Outseta.on('accessToken.set', async function() {
-        await new Promise(r => setTimeout(r, 400));
-        const user = await tryGetUser();
+    function initAuth() {
+      // Primary: listen for Outseta to hand us the token directly
+      Outseta.on('accessToken.set', function(token) {
+        if (document.getElementById('appShell').style.display !== 'none') return;
+        const user = token ? readToken(token) : findStoredToken();
         if (user) {
           setupDashboard(user);
         } else {
@@ -689,22 +700,21 @@ For creative discouragement — normalize the experience honestly, then return t
         }
       });
 
-      // Also try immediately in case session is already active
-      await new Promise(r => setTimeout(r, 1200));
-      if (document.getElementById('appShell').style.display === 'none') {
-        const user = await tryGetUser();
+      // Fallback: check localStorage after a short wait
+      setTimeout(function() {
+        if (document.getElementById('appShell').style.display !== 'none') return;
+        const user = findStoredToken();
         if (user) {
           setupDashboard(user);
-          return;
         }
-      }
+      }, 2000);
 
-      // Final timeout safety net — if nothing worked, go to login
+      // Final safety net — if still nothing after 8 seconds, go to login
       setTimeout(function() {
         if (document.getElementById('appShell').style.display === 'none') {
           window.location.href = '/index.html';
         }
-      }, 7000);
+      }, 8000);
     }
 
     function handleLogout() {
