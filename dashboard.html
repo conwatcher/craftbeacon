@@ -746,7 +746,8 @@ For creative discouragement — normalize the experience honestly, then return t
     }
 
     function handleLogout() {
-      Outseta.auth.logout();
+      try { Outseta.auth.logout(); } catch(e) {}
+      localStorage.clear();
       window.location.href = '/index.html';
     }
 
