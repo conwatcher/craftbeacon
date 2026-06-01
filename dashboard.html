@@ -647,26 +647,38 @@ For creative discouragement — normalize the experience honestly, then return t
     }
 
     // ── Auth ───────────────────────────────────────────────────────
+function setupDashboard(user) {
+  tier = detectTier(user);
+  document.getElementById('tierBadge').textContent = tierLabel(tier);
+  document.getElementById('userName').textContent  = user.FirstName || user.Email;
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('appShell').style.display = 'flex';
+  if (tier === 'free') {
+    document.getElementById('counter').style.display = 'block';
+    updateCounter();
+  }
+}
+
 async function initAuth() {
-  try {
-    let user = null;
-    for (let i = 0; i < 12; i++) {
-      await new Promise(r => setTimeout(r, 500));
-      try { user = await Outseta.getUser(); } catch(e) {}
-      if (user && user.Email) break;
+  Outseta.on('accessToken.set', async function() {
+    try {
+      const user = await Outseta.getUser();
+      if (user && user.Email) {
+        setupDashboard(user);
+      } else {
+        window.location.href = '/index.html';
+      }
+    } catch(e) {
+      window.location.href = '/index.html';
     }
-    if (!user || !user.Email) { window.location.href = '/index.html'; return; }
-        tier = detectTier(user);
-        document.getElementById('tierBadge').textContent = tierLabel(tier);
-        document.getElementById('userName').textContent  = user.FirstName || user.Email;
-        document.getElementById('loadingScreen').style.display = 'none';
-        document.getElementById('appShell').style.display = 'flex';
-        if (tier === 'free') {
-          document.getElementById('counter').style.display = 'block';
-          updateCounter();
-        }
-      } catch(e) { window.location.href = '/index.html'; }
+  });
+
+  setTimeout(function() {
+    if (document.getElementById('appShell').style.display === 'none') {
+      window.location.href = '/index.html';
     }
+  }, 8000);
+}
 
     function handleLogout() {
       Outseta.auth.logout();
