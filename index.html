@@ -3,48 +3,959 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CraftBeacon</title>
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png">
-  <link rel="shortcut icon" type="image/png" href="assets/Favicon-NoBG.png">
+  <title>CraftBeacon — AI Writing Coaching for Authors</title>
+  <meta name="description" content="CraftBeacon is an AI writing coach that diagnoses what isn't working, asks the right questions, and sends you back to your manuscript with something to act on. It never writes for you. That's the point." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
   <script>
     var o_options = {
       domain: 'the-craft-beacon.outseta.com',
-      load: 'auth'
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'popup',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js"
-          data-options="o_options"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-red:         #8B1A2F;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #5a5448;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Grain overlay (sits above everything, pointer-events off) ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Shared helpers ─── */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+      border: none;
+      padding: 0.9rem 2.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--cb-amber-light); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--cb-text); }
+
+    hr.divider {
+      border: none;
+      border-top: 0.5px solid var(--cb-border);
+    }
+
+    /* ─── Texture mixin (applied per section via inline bg) ─── */
+    .tex {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Navigation ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cb-amber-light); }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Hero ─── */
+    .cb-hero {
+      position: relative;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 6rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 72px, rgba(200,144,58,0.035) 72px, rgba(200,144,58,0.035) 73px),
+        repeating-linear-gradient(90deg, transparent, transparent 72px, rgba(200,144,58,0.02) 72px, rgba(200,144,58,0.02) 73px);
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 80% at 32% 55%, transparent 15%, rgba(17,15,11,0.55) 60%, rgba(17,15,11,0.94) 100%),
+        radial-gradient(ellipse 42% 65% at 72% 48%, rgba(200,144,58,0.065) 0%, transparent 60%);
+    }
+
+    .hero-beam {
+      position: absolute;
+      right: 28%;
+      top: 0;
+      bottom: 0;
+      width: 0.5px;
+      background: linear-gradient(to bottom,
+        transparent 5%,
+        rgba(200,144,58,0.18) 28%,
+        rgba(200,144,58,0.42) 54%,
+        rgba(200,144,58,0.1) 80%,
+        transparent 96%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem;
+      font-weight: 400;
+      line-height: 1.12;
+      color: var(--cb-text);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--cb-amber-light);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 460px;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Hero image — right side */
+    .hero-image {
+      position: absolute;
+      right: 3.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 260px;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border: 0.5px solid rgba(200,144,58,0.18);
+      /* Warm dark tint overlay via mix-blend-mode */
+      filter: brightness(0.82) sepia(0.12);
+    }
+    /* Fallback placeholder if image not yet added */
+    .hero-image-placeholder {
+      width: 260px;
+      height: 340px;
+      border: 0.5px solid rgba(200,144,58,0.18);
+      background: rgba(22,19,14,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      color: var(--cb-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ─── Philosophy ─── */
+    .cb-philosophy {
+      position: relative;
+      padding: 5.5rem 3rem;
+      overflow: hidden;
+    }
+    .philosophy-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+    .philosophy-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .philosophy-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--cb-text);
+      margin-bottom: 1.5rem;
+    }
+    .philosophy-inner h2 em { font-style: italic; color: var(--cb-amber-light); }
+
+    .philosophy-inner p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .philosophy-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contrast-card {
+      padding: 1.6rem;
+      border: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.55);
+    }
+    .contrast-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .contrast-label.not { color: #6b4444; }
+    .contrast-label.yes { color: var(--cb-amber); }
+    .contrast-card p {
+      font-size: 0.96rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ─── Lanes ─── */
+    .cb-lanes {
+      position: relative;
+      padding: 5.5rem 3rem;
+      overflow: hidden;
+    }
+    .lanes-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23a07830'/%3E%3C/svg%3E");
+      background-size: 500px 500px;
+    }
+    .lanes-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .lanes-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .lanes-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+    .lanes-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .lanes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--cb-border);
+      border: 0.5px solid var(--cb-border);
+    }
+    .lane-card {
+      background: rgba(22,19,14,0.88);
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .lane-card:hover { background: rgba(28,25,18,0.95); }
+    .lane-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--cb-amber);
+      opacity: 0.32;
+      transition: opacity 0.25s;
+    }
+    .lane-card:hover::before { opacity: 0.85; }
+
+    .lane-icon {
+      font-size: 1.65rem;
+      margin-bottom: 1.25rem;
+      display: block;
+      color: var(--cb-amber);
+      opacity: 0.72;
+    }
+    .lane-name {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.65rem;
+    }
+    .lane-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .lane-card p {
+      font-size: 0.96rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.78;
+      margin-bottom: 1.5rem;
+    }
+    .lane-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lane-list li {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      line-height: 1.5;
+    }
+    .lane-list li::before {
+      content: '—';
+      color: var(--cb-amber);
+      opacity: 0.42;
+      flex-shrink: 0;
+    }
+
+    /* ─── Tiers ─── */
+    .cb-tiers {
+      position: relative;
+      padding: 5.5rem 3rem;
+      overflow: hidden;
+    }
+    .tiers-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='350'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.021 0.031' numOctaves='5' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 350px 350px;
+    }
+    .tiers-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .tiers-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .tiers-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+    .tiers-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--cb-border);
+      border: 0.5px solid var(--cb-border);
+      margin-bottom: 2rem;
+    }
+    .tier-card {
+      background: rgba(17,15,11,0.78);
+      padding: 2.25rem 1.35rem;
+      text-align: center;
+      position: relative;
+    }
+    .tier-card.featured {
+      background: rgba(28,25,20,0.92);
+      border: 0.5px solid rgba(200,144,58,0.28);
+    }
+    .tier-card.featured::after {
+      content: 'Most Complete';
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+      padding: 0.22rem 0.7rem;
+      white-space: nowrap;
+    }
+    .tier-name {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.85rem;
+    }
+    .tier-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .tier-price-note {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      margin-bottom: 1.35rem;
+    }
+    .tier-desc {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.62;
+    }
+    .tiers-note {
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cb-dim);
+    }
+
+    /* ─── CTA ─── */
+    .cb-cta {
+      position: relative;
+      padding: 7rem 3rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.011 0.019' numOctaves='6' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.085'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23b07828'/%3E%3C/svg%3E");
+      background-size: 600px 400px;
+    }
+    .cta-warm {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 120% at 50% 115%, rgba(200,144,58,0.07) 0%, transparent 65%);
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1.1rem;
+      line-height: 1.2;
+    }
+    .cta-content h2 em { font-style: italic; color: var(--cb-amber-light); }
+    .cta-content p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      max-width: 430px;
+      margin: 0 auto 2.75rem;
+      line-height: 1.8;
+    }
+    .cta-actions {
+      display: flex;
+      gap: 1.1rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {}
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    /* ─── Smooth section anchors ─── */
+    section[id] { scroll-margin-top: 70px; }
+  </style>
 </head>
 <body>
-  <h1>Welcome to CraftBeacon</h1>
-  <p>The writing coach for authors who want to do the work themselves.</p>
 
-  <button onclick="Outseta.auth.open({widgetMode: 'login'})">Log In</button>
-  &nbsp;&nbsp;
-  <button onclick="Outseta.auth.open({widgetMode: 'register'})">Sign Up</button>
+  <!-- ═══════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#philosophy">How it works</a></li>
+      <li><a href="#lanes">The lanes</a></li>
+      <li><a href="#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
 
-  <script>
-    // Redirect already-logged-in users straight to the dashboard
-    window.addEventListener('load', async function() {
-      try {
-        await new Promise(function(r) { setTimeout(r, 900); });
-        var user = await Outseta.getUser();
-        if (user && user.Email) {
-          window.location.href = '/dashboard.html';
-        }
-      } catch(e) {}
-    });
 
-    // Redirect immediately after a successful login
-    window.addEventListener('load', function() {
-      if (window.Outseta) {
-        Outseta.on('accessToken.set', function() {
-          setTimeout(function() {
-            window.location.href = '/dashboard.html';
-          }, 500);
-        });
-      }
-    });
-  </script>
+  <!-- ═══════════════════════════════════
+       HERO
+  ═══════════════════════════════════ -->
+  <section class="cb-hero" aria-labelledby="hero-heading">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-beam"></div>
+
+    <div class="hero-content">
+      <div class="section-label">AI writing coaching for authors</div>
+      <h1 id="hero-heading">Your work.<br><em>Clearer thinking.</em><br>Your words.</h1>
+      <p class="hero-sub">CraftBeacon is an AI writing coach that diagnoses what isn't working, asks the right questions, and sends you back to your manuscript with something to act on. It never writes for you. That's the point.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start coaching — it's free</button>
+        <a class="btn-ghost" href="#philosophy">See how it works</a>
+      </div>
+    </div>
+
+    <!-- HERO IMAGE
+         Replace the placeholder div below with an <img> tag once you have your image.
+         Recommended: dark moody workspace or lighthouse beam photograph.
+         Example when ready:
+         <div class="hero-image">
+           <img src="assets/hero-workspace.jpg" alt="A writer's desk illuminated by warm lamplight" />
+         </div>
+    -->
+    <div class="hero-image" aria-hidden="true">
+      <div class="hero-image-placeholder">
+        Hero image<br>Illuminated workspace<br>or lighthouse beam
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ═══════════════════════════════════
+       PHILOSOPHY
+  ═══════════════════════════════════ -->
+  <section class="cb-philosophy" id="philosophy" aria-labelledby="philosophy-heading">
+    <div class="philosophy-bg"></div>
+    <div class="philosophy-inner">
+      <div>
+        <div class="section-label">The coaching philosophy</div>
+        <h2 id="philosophy-heading">The AI that <em>coaches</em><br>instead of writing</h2>
+        <p>Every AI writing tool on the market will write for you. CraftBeacon is built on a different belief: that the author's own voice, instincts, and creative decisions are the thing worth protecting.</p>
+        <p>When something in your manuscript isn't working, you don't need a replacement — you need to understand why it's broken and where the fix lives. That's what CraftBeacon does.</p>
+      </div>
+      <div class="philosophy-right">
+        <div class="contrast-card">
+          <div class="contrast-label not">Other AI tools</div>
+          <p>Generate prose, dialogue, scenes, and blurbs. Hand you finished text you didn't write and have to live with.</p>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-label yes">CraftBeacon</div>
+          <p>Diagnose the root cause. Ask the question that opens your thinking. Return you to your own creativity with direction and momentum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ═══════════════════════════════════
+       LANES
+  ═══════════════════════════════════ -->
+  <section class="cb-lanes" id="lanes" aria-labelledby="lanes-heading">
+    <div class="lanes-bg"></div>
+    <div class="lanes-inner">
+      <div class="lanes-header">
+        <div class="section-label" style="justify-content: center;">Three coaching lanes</div>
+        <h2 id="lanes-heading">Where do you need support?</h2>
+        <p>CraftBeacon is organized around the three phases of the author's journey. Choose the lane that matches where you are right now.</p>
+      </div>
+      <div class="lanes-grid">
+
+        <div class="lane-card">
+          <span class="lane-icon" aria-hidden="true">✒</span>
+          <div class="lane-name">Writing Lane</div>
+          <h3>The craft of the manuscript</h3>
+          <p>Diagnostic coaching oriented around your specific work in progress. When something isn't landing, CraftBeacon helps you find out why.</p>
+          <ul class="lane-list">
+            <li>Scene and structure diagnosis</li>
+            <li>Character and voice coaching</li>
+            <li>Pacing and tension analysis</li>
+            <li>Revision strategy</li>
+          </ul>
+        </div>
+
+        <div class="lane-card">
+          <span class="lane-icon" aria-hidden="true">◈</span>
+          <div class="lane-name">Marketing Lane</div>
+          <h3>Finding your readers</h3>
+          <p>Author platform, newsletter strategy, launch orientation, and reader engagement — built around your book and your presence, not generic advice.</p>
+          <ul class="lane-list">
+            <li>Author platform assessment</li>
+            <li>Newsletter and list strategy</li>
+            <li>Launch orientation and sequencing</li>
+            <li>Reader engagement framework</li>
+          </ul>
+        </div>
+
+        <div class="lane-card">
+          <span class="lane-icon" aria-hidden="true">⊟</span>
+          <div class="lane-name">Production Lane</div>
+          <h3>Bringing the book to market</h3>
+          <p>Formatting specifications, platform requirements, distribution path guidance, and production sequencing — specific to your project and your tools.</p>
+          <ul class="lane-list">
+            <li>Format and trim specifications</li>
+            <li>Platform requirements by path</li>
+            <li>Distribution orientation</li>
+            <li>Production sequencing</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ═══════════════════════════════════
+       TIERS
+  ═══════════════════════════════════ -->
+  <section class="cb-tiers" id="tiers" aria-labelledby="tiers-heading">
+    <div class="tiers-bg"></div>
+    <div class="tiers-inner">
+      <div class="tiers-header">
+        <div class="section-label" style="justify-content: center;">Membership</div>
+        <h2 id="tiers-heading">Find your place</h2>
+        <p>Start free. Upgrade to the lane that matches your current priority. Stack lanes or go Premium when the work demands it.</p>
+      </div>
+      <div class="tiers-grid">
+
+        <div class="tier-card">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0</div>
+          <div class="tier-price-note">always</div>
+          <div class="tier-desc">General craft guidance, publishing orientation, and grammar feedback. A real tier, not a preview.</div>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Writing Lane</div>
+          <div class="tier-price">$10</div>
+          <div class="tier-price-note">per month</div>
+          <div class="tier-desc">Full diagnostic coaching system for your manuscript, your process, your creative challenges.</div>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Marketing Lane</div>
+          <div class="tier-price">$10</div>
+          <div class="tier-price-note">per month</div>
+          <div class="tier-desc">Author platform, newsletter strategy, launch planning, and reader engagement coaching.</div>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Production Lane</div>
+          <div class="tier-price">$10</div>
+          <div class="tier-price-note">per month</div>
+          <div class="tier-desc">Formatting, platform requirements, distribution guidance, and production sequencing.</div>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-name">Premium</div>
+          <div class="tier-price">$29</div>
+          <div class="tier-price-note">per month</div>
+          <div class="tier-desc">All three lanes. Full coaching access wherever you are in the author journey.</div>
+        </div>
+
+      </div>
+      <p class="tiers-note">Annual plans available at a reduced rate. No contracts. Cancel anytime.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       CLOSING CTA
+  ═══════════════════════════════════ -->
+  <section class="cb-cta" aria-labelledby="cta-heading">
+    <div class="cta-bg"></div>
+    <div class="cta-warm"></div>
+    <div class="cta-content">
+      <h2 id="cta-heading">Start with the work<br>in front of <em>you</em>.</h2>
+      <p>Bring your manuscript, your question, or your stuck moment. CraftBeacon meets you where you are.</p>
+      <div class="cta-actions">
+        <button class="btn-primary" onclick="Outseta.auth.open({ widgetMode: 'register' })">Begin free coaching</button>
+        <a class="btn-ghost" href="#lanes">Explore the lanes</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div class="footer-brand">
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">A Red Foundations Publishing service</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
 </body>
 </html>
