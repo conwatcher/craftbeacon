@@ -337,7 +337,63 @@
       color: var(--text-muted);
     }
     .counter.warn { color: var(--accent-dim); }
+/* ── Upload ───────────────────────────────────── */
+    .upload-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 6px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .upload-btn:hover { color: var(--text-secondary); background: var(--bg-elevated); }
 
+    .file-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      margin-bottom: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .file-indicator-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0 2px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .file-remove-btn:hover { color: var(--text-primary); }
+
+    .input-hint {
+      text-align: center;
+      margin-top: 7px;
+      font-size: 0.71rem;
+      font-style: italic;
+      color: var(--text-muted);
+    }
     /* ── Upgrade prompt ───────────────────────────── */
     .upgrade-box {
       background: var(--bg-surface);
@@ -425,7 +481,16 @@
     </div>
 
     <div class="input-area" id="inputArea">
+      <div class="file-indicator" id="fileIndicator" style="display:none;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="file-indicator-name" id="fileIndicatorName"></span>
+        <button class="file-remove-btn" onclick="removeFile()" aria-label="Remove file">×</button>
+      </div>
       <div class="input-row">
+        <button class="upload-btn" id="uploadBtn" onclick="document.getElementById('fileInput').click()" aria-label="Attach file" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <input type="file" id="fileInput" accept=".txt,.docx" style="display:none;" onchange="handleFileSelect(event)">
         <textarea
           class="chat-input"
           id="chatInput"
@@ -441,6 +506,7 @@
         </button>
       </div>
       <div class="counter" id="counter" style="display:none;"></div>
+      <div class="input-hint" id="inputHint" style="display:none;">Attach a passage or chapter for feedback &mdash; text files and Word documents, one section at a time.</div>
     </div>
 
   </div>
@@ -454,7 +520,9 @@
     let history   = [];
     let count     = 0;
     let tier      = 'free';
-    let busy      = false;
+    let busy          = false;
+    let attachedFile  = null;
+    const CHAR_LIMIT  = 50000;
 
     // ── System Prompt ──────────────────────────────────────────────
     const SYSTEM = `You are CraftBeacon — an AI writing coach for authors of fiction and narrative nonfiction. Your purpose is to help authors think more clearly about their work through questions, diagnosis, and frameworks. You are a coach, not a ghostwriter. The author writes. You coach.
@@ -701,6 +769,8 @@ function detectTier(user) {
       if (tier === 'free') {
         document.getElementById('counter').style.display = 'block';
         updateCounter();
+      } else {
+        showUploadControls();
       }
     }
 
@@ -794,7 +864,47 @@ function detectTier(user) {
         }
       }, 500);
     }
+    // ── File upload ────────────────────────────────────────────────
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        let text = e.target.result;
+
+        // Strip basic DOCX XML down to readable text if needed
+        if (file.name.endsWith('.docx')) {
+          text = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+
+        if (text.length > CHAR_LIMIT) {
+          alert(`This file is too long to attach in one session — it contains ${text.length.toLocaleString()} characters and the limit is ${CHAR_LIMIT.toLocaleString()} (roughly a long chapter). Please upload one section at a time.`);
+          event.target.value = '';
+          return;
+        }
+
+        attachedFile = { name: file.name, content: text };
+        document.getElementById('fileIndicatorName').textContent = file.name;
+        document.getElementById('fileIndicator').style.display = 'flex';
+        event.target.value = '';
+      };
+
+      reader.readAsText(file);
+    }
+
+    function removeFile() {
+      attachedFile = null;
+      document.getElementById('fileIndicator').style.display = 'none';
+      document.getElementById('fileIndicatorName').textContent = '';
+      document.getElementById('fileInput').value = '';
+    }
+
+    function showUploadControls() {
+      document.getElementById('uploadBtn').style.display = 'flex';
+      document.getElementById('inputHint').style.display = 'block';
+    }
     function handleLogout() {
       try { Outseta.auth.logout(); } catch(e) {}
       localStorage.clear();
@@ -890,8 +1000,15 @@ function detectTier(user) {
 
       if (tier === 'free' && count >= LIMIT) { showUpgrade(); return; }
 
-      history.push({ role: 'user', content: text });
-      addMessage('user', text);
+     let fullContent = text;
+      let displayText = text;
+      if (attachedFile) {
+        fullContent = `${text}\n\n---ATTACHED FILE: ${attachedFile.name}---\n\n${attachedFile.content}`;
+        displayText = `${text} [${attachedFile.name} attached]`;
+        removeFile();
+      }
+      history.push({ role: 'user', content: fullContent });
+      addMessage('user', displayText);
       input.value = '';
       input.style.height = 'auto';
       count++;
