@@ -699,6 +699,7 @@ Creative discouragement â€” which is the large majority of emotional sessions â€
       try {
         const payload = token.split('.')[1];
         const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+         console.log('OUTSETA TOKEN PAYLOAD:', JSON.stringify(decoded, null, 2));
         return {
           Email:     decoded.email || decoded.sub || 'member',
           FirstName: decoded.given_name || decoded.name || 'Member',
