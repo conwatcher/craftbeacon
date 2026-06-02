@@ -665,16 +665,15 @@ When those signals appear: do not continue the coaching interaction as though th
 Creative discouragement — which is the large majority of emotional sessions — is different. Normalize the experience honestly (doubt, frustration, and feeling stuck are features of the writing life at every level, not personal failures), then return to craft. The emotional acknowledgment is genuine and brief. It is not a therapeutic response. It is a human moment inside a coaching interaction, delivered in a way that does not prolong the distress but makes the author available to receive coaching.`;
 
     // ── Tier helpers ───────────────────────────────────────────────
-    function detectTier(user) {
-      try {
-        const name = (user?.Account?.CurrentSubscription?.Plan?.Name || '').toLowerCase();
-        if (name.includes('premium'))    return 'premium';
-        if (name.includes('writing'))    return 'writing_lane';
-        if (name.includes('marketing'))  return 'marketing_lane';
-        if (name.includes('production')) return 'production_lane';
-      } catch(e) {}
-      return 'free';
-    }
+function detectTier(user) {
+  const uid = user._planUid || '';
+  if (uid === 'L9P3lEQJ') return 'premium';
+  if (uid === 'OW48a3Wg') return 'writing_lane';
+  if (uid === 'XQYaGRQP') return 'marketing_lane';
+  if (uid === 'wQXNDaWK') return 'production_lane';
+  if (uid === 'dQGgqpQ4') return 'free';
+  return 'free';
+}
 
     function tierLabel(t) {
       return { free:'Free', writing_lane:'Writing Lane', marketing_lane:'Marketing Lane',
@@ -699,12 +698,11 @@ Creative discouragement — which is the large majority of emotional sessions �
       try {
         const payload = token.split('.')[1];
         const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
-         console.log('OUTSETA TOKEN PAYLOAD:', JSON.stringify(decoded, null, 2));
         return {
-          Email:     decoded.email || decoded.sub || 'member',
-          FirstName: decoded.given_name || decoded.name || 'Member',
-          _plan:     decoded.plan || decoded['outseta:plan'] || ''
-        };
+      Email:     decoded.email || decoded.sub || 'member',
+      FirstName: decoded.given_name || decoded.name || decoded.email || 'Member',
+      _planUid:  decoded['outseta:planUid'] || ''
+    };
       } catch(e) {
         return { Email: 'member', FirstName: 'Member', _plan: '' };
       }
