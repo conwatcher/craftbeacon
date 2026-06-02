@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Author Resources — CraftBeacon</title>
+  <meta name="description" content="A curated library of official, verified resources for authors — copyright, publishing platforms, trade organizations, and production tools." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'popup',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #5a5448;
+    }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Nav (identical to homepage) ── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ── Page header ── */
+    .page-header {
+      position: relative;
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.065'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    .page-header-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.6) 100%);
+    }
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 620px;
+    }
+    .page-header p + p { margin-top: 0.75rem; }
+
+    /* ── Main layout ── */
+    .page-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 80px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      gap: 4rem;
+    }
+
+    /* ── Sticky sidebar nav ── */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+    .sidebar-section {
+      margin-bottom: 2rem;
+    }
+    .sidebar-heading {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-dim);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .sidebar-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .sidebar-links a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.5;
+      display: block;
+      padding: 0.15rem 0;
+    }
+    .sidebar-links a:hover { color: var(--cb-amber-light); }
+
+    /* ── Content area ── */
+    .content {
+      padding: 3rem 0 5rem;
+    }
+
+    /* ── Resource sections ── */
+    .resource-section {
+      margin-bottom: 4rem;
+    }
+    .resource-section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .resource-section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.4rem;
+    }
+    .resource-section-header p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Resource group (subsection within a section) ── */
+    .resource-group {
+      margin-bottom: 2.5rem;
+    }
+    .resource-group-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .resource-group-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(200,144,58,0.2);
+    }
+
+    /* ── Resource cards ── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--cb-border);
+      border: 0.5px solid var(--cb-border);
+    }
+    .resource-card {
+      background: var(--cb-surface);
+      padding: 1.4rem 1.5rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .resource-card:hover {
+      background: var(--cb-surface2);
+    }
+    .resource-card::after {
+      content: '↗';
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      font-size: 0.75rem;
+      color: var(--cb-dim);
+      transition: color 0.2s;
+    }
+    .resource-card:hover::after { color: var(--cb-amber); }
+
+    .resource-card-type {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cb-dim);
+      margin-bottom: 0.4rem;
+    }
+    .resource-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+      padding-right: 1.25rem;
+    }
+    .resource-card-desc {
+      font-size: 0.84rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Disclaimer box ── */
+    .disclaimer {
+      background: rgba(200,144,58,0.06);
+      border: 0.5px solid rgba(200,144,58,0.2);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .disclaimer p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+    .disclaimer strong {
+      color: var(--cb-amber);
+      font-weight: 400;
+    }
+
+    /* ── Footer ── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    section[id] { scroll-margin-top: 90px; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════ PAGE HEADER ═══════════════ -->
+  <header class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-vignette"></div>
+    <div class="page-header-content">
+      <div class="section-label">Author resources</div>
+      <h1>The reference library</h1>
+      <p>A curated collection of official, verified sources for authors navigating copyright, publishing platforms, trade organizations, production tools, and the business side of the writing life.</p>
+      <p>CraftBeacon does not endorse, recommend, or have any financial relationship with any tool or service listed here. Every link goes to an official source. Pricing and features for any tool or platform should be verified directly with the provider, as they change frequently.</p>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════ BODY ═══════════════ -->
+  <div class="page-body">
+
+    <!-- Sidebar navigation -->
+    <aside class="sidebar" aria-label="Page sections">
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Official &amp; institutional</div>
+        <ul class="sidebar-links">
+          <li><a href="#copyright">Copyright &amp; legal</a></li>
+          <li><a href="#platforms">Publishing platforms</a></li>
+          <li><a href="#organizations">Trade organizations</a></li>
+          <li><a href="#business">Business &amp; tax</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Tools &amp; services</div>
+        <ul class="sidebar-links">
+          <li><a href="#newsletters">Newsletter platforms</a></li>
+          <li><a href="#scheduling">Social scheduling</a></li>
+          <li><a href="#formatting">Formatting software</a></li>
+          <li><a href="#conversion">Ebook conversion</a></li>
+          <li><a href="#covers">Cover design</a></li>
+          <li><a href="#websites">Author websites</a></li>
+          <li><a href="#isbn">ISBN registration</a></li>
+          <li><a href="#pod">Print on demand</a></li>
+          <li><a href="#audiobook">Audiobook distribution</a></li>
+        </ul>
+      </div>
+    </aside>
+
+
+    <!-- Main content -->
+    <main class="content">
+
+      <!-- ─── SECTION ONE: OFFICIAL & INSTITUTIONAL ─── -->
+      <div class="resource-section" id="copyright">
+        <div class="resource-section-header">
+          <h2>Copyright &amp; legal</h2>
+          <p>Official U.S. government sources for copyright registration, AI policy, trademark, and commercial email compliance. These are primary sources — not summaries or third-party interpretations.</p>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">U.S. Copyright Office</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://www.copyright.gov/ai/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Copyright and Artificial Intelligence</div>
+              <div class="resource-card-desc">Official hub for AI policy, copyrightability guidance, digital replicas, and generative AI training issues.</div>
+            </a>
+            <a class="resource-card" href="https://www.copyright.gov/engage/writers/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">What Writers Should Know about Copyright</div>
+              <div class="resource-card-desc">Writer-specific overview covering fixation, registration, work made for hire, and infringement.</div>
+            </a>
+            <a class="resource-card" href="https://www.copyright.gov/registration/literary-works/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Literary Works Registration</div>
+              <div class="resource-card-desc">Registration category page for books, fiction, nonfiction, manuscripts, blogs, and newsletters.</div>
+            </a>
+            <a class="resource-card" href="https://www.copyright.gov/about/small-claims/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Copyright Claims Board — Small Claims</div>
+              <div class="resource-card-desc">Official overview of the small-claims copyright dispute process for independent creators.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">U.S. Patent &amp; Trademark Office</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://www.uspto.gov/trademarks/basics" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Trademark Basics</div>
+              <div class="resource-card-desc">Official USPTO hub for trademark fundamentals and the registration process.</div>
+            </a>
+            <a class="resource-card" href="https://www.uspto.gov/trademarks/search" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Trademark Search</div>
+              <div class="resource-card-desc">Search the official USPTO trademark database before registering a pen name, series title, or imprint.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">Federal Trade Commission</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">CAN-SPAM Act Compliance Guide</div>
+              <div class="resource-card-desc">Commercial email compliance requirements — relevant to any author newsletter or reader list.</div>
+            </a>
+            <a class="resource-card" href="https://www.ftc.gov/business-guidance/resources/ftcs-endorsement-guides-what-people-are-asking" target="_blank" rel="noopener">
+              <div class="resource-card-type">Government</div>
+              <div class="resource-card-name">Endorsement Guides Q&amp;A</div>
+              <div class="resource-card-desc">FTC guidance on reviews, affiliate disclosures, and social posts — applies to author marketing.</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── PUBLISHING PLATFORMS ─── -->
+      <div class="resource-section" id="platforms">
+        <div class="resource-section-header">
+          <h2>Publishing platforms</h2>
+          <p>Official documentation from the major publishing and distribution platforms. These pages contain the actual requirements — not summaries. When specifications matter, go to the source.</p>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">Amazon KDP</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://kdp.amazon.com/help/topic/G200672390" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">KDP Content Guidelines</div>
+              <div class="resource-card-desc">Legal and content policy hub, including AI-generated and AI-assisted content disclosure requirements.</div>
+            </a>
+            <a class="resource-card" href="https://kdp.amazon.com/help?topicId=GKX2T59EVGFSMKQK" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">KDP Book Formatting</div>
+              <div class="resource-card-desc">Formatting hub for paperback, hardcover, and ebook — tools, templates, and submission requirements.</div>
+            </a>
+            <a class="resource-card" href="https://kdp.amazon.com/en_US/help/topic/G201834170" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">KDP ISBN and Imprint</div>
+              <div class="resource-card-desc">ISBN requirements, free KDP ISBN limitations, and imprint matching guidance.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">IngramSpark</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://www.ingramspark.com/blog/file-requirements-for-print-books" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">File Requirements for Print Books</div>
+              <div class="resource-card-desc">PDF interior and cover requirements — bleed, margins, embedded fonts, barcode, and spine guidance.</div>
+            </a>
+            <a class="resource-card" href="https://www.ingramspark.com/blog/file-requirements-for-ebooks" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">File Requirements for Ebooks</div>
+              <div class="resource-card-desc">EPUB and cover requirements, file-size limits, and ISBN reminders for ebook distribution.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">Draft2Digital</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://draft2digital.com/content-guidelines/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">D2D Content Guidelines</div>
+              <div class="resource-card-desc">Official content policy covering AI-generated, mass-produced, and restricted content categories.</div>
+            </a>
+            <a class="resource-card" href="https://draft2digital.com/knowledge-base/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">D2D Knowledge Base</div>
+              <div class="resource-card-desc">Author support hub for accepted files, publishing procedures, ISBNs, print, and tax verification.</div>
+            </a>
+            <a class="resource-card" href="https://draft2digital.com/steps/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">D2D Step by Step</div>
+              <div class="resource-card-desc">Onboarding overview covering manuscript files, conversion, ISBN assignment, pricing, and fees.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">Apple Books</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://authors.apple.com/" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">Apple Books for Authors</div>
+              <div class="resource-card-desc">Official Apple Books hub for authors and independent publishers.</div>
+            </a>
+            <a class="resource-card" href="https://help.apple.com/itc/applebooksstoreformatting/en.lproj/static.html" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">Apple Books Formatting and Content Guidelines</div>
+              <div class="resource-card-desc">Book files, cover art, metadata, legal compliance, and AI-generated content transparency requirements.</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <div class="resource-group-label">Kobo Writing Life</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://kobowritinglife.zendesk.com/hc/en-us/categories/360005918791-Creating-your-Book" target="_blank" rel="noopener">
+              <div class="resource-card-type">Official Platform</div>
+              <div class="resource-card-name">KWL — Creating Your Book</div>
+              <div class="resource-card-desc">Official support for file types, metadata, ISBNs, DRM, and publishing setup on Kobo.</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── TRADE ORGANIZATIONS ─── -->
+      <div class="resource-section" id="organizations">
+        <div class="resource-section-header">
+          <h2>Trade organizations</h2>
+          <p>Nonprofit membership organizations and unions that advocate for authors. Many offer free resources regardless of membership status.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://authorsguild.org/resources/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Nonprofit</div>
+            <div class="resource-card-name">Authors Guild — Resource Library</div>
+            <div class="resource-card-desc">Resources covering AI, contracts, copyright, finances, legal topics, publicity, scams, and self-publishing.</div>
+          </a>
+          <a class="resource-card" href="https://www.allianceindependentauthors.org/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Nonprofit</div>
+            <div class="resource-card-name">Alliance of Independent Authors</div>
+            <div class="resource-card-desc">Nonprofit for indie authors — rights protection, watchdog alerts, contracts, and vetted service reviews.</div>
+          </a>
+          <a class="resource-card" href="https://selfpublishingadvice.org/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Nonprofit</div>
+            <div class="resource-card-name">ALLi Self-Publishing Advice Center</div>
+            <div class="resource-card-desc">ALLi's open advice center with education, news, tool ratings, and self-publishing guidance.</div>
+          </a>
+          <a class="resource-card" href="https://nwu.org/grievance-and-contract-division/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Nonprofit</div>
+            <div class="resource-card-name">National Writers Union — Grievance &amp; Contract</div>
+            <div class="resource-card-desc">Contract advisors, grievance officers, and writer alerts. Some resources are member-only.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── BUSINESS & TAX ─── -->
+      <div class="resource-section" id="business">
+        <div class="resource-section-header">
+          <h2>Business &amp; tax</h2>
+          <p>Official IRS and SBA resources for self-employed authors. CraftBeacon does not provide tax or financial advice — these links go directly to the authoritative government sources.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employed-individuals-tax-center" target="_blank" rel="noopener">
+            <div class="resource-card-type">Government</div>
+            <div class="resource-card-name">IRS — Self-Employed Tax Center</div>
+            <div class="resource-card-desc">Tax obligations, estimated taxes, Schedule C and SE, 1099s, and home-office deduction guidance.</div>
+          </a>
+          <a class="resource-card" href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" target="_blank" rel="noopener">
+            <div class="resource-card-type">Government</div>
+            <div class="resource-card-name">IRS — Self-Employment Tax</div>
+            <div class="resource-card-desc">Social Security and Medicare tax obligations for self-employed writers and authors.</div>
+          </a>
+          <a class="resource-card" href="https://www.sba.gov/business-guide" target="_blank" rel="noopener">
+            <div class="resource-card-type">Government</div>
+            <div class="resource-card-name">SBA — Business Guide</div>
+            <div class="resource-card-desc">Official SBA guide to planning, launching, managing, and growing a small business.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── SECTION TWO: TOOLS & SERVICES ─── -->
+      <div class="disclaimer">
+        <p><strong>Note on tools and services:</strong> The resources below are organized by category for reference. CraftBeacon has no financial relationship with any tool or service listed. Pricing, features, and availability change frequently — verify everything directly with the provider before making any decisions.</p>
+      </div>
+
+
+      <!-- ─── NEWSLETTER PLATFORMS ─── -->
+      <div class="resource-section" id="newsletters">
+        <div class="resource-section-header">
+          <h2>Email newsletter platforms</h2>
+          <p>Platforms for building and managing a direct reader list. Your newsletter is the one channel you own outright — independent of any social platform or algorithm.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.mailerlite.com/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">MailerLite</div>
+            <div class="resource-card-desc">Email newsletter platform with free and paid tiers. Scales by subscriber count. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://kit.com/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Kit (formerly ConvertKit)</div>
+            <div class="resource-card-desc">Newsletter platform built for creators. Free newsletter plan available. Scales by list size.</div>
+          </a>
+          <a class="resource-card" href="https://mailchimp.com/pricing/marketing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Mailchimp</div>
+            <div class="resource-card-desc">Widely used email marketing platform with free and paid tiers. Verify current contact limits directly.</div>
+          </a>
+          <a class="resource-card" href="https://substack.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Substack</div>
+            <div class="resource-card-desc">Free to publish; monetization via paid subscriptions. Strong fit for authors building a reading community.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── SOCIAL SCHEDULING ─── -->
+      <div class="resource-section" id="scheduling">
+        <div class="resource-section-header">
+          <h2>Social media scheduling</h2>
+          <p>Tools for planning and scheduling posts across platforms, so your author presence stays consistent without requiring daily manual effort.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://buffer.com/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Buffer</div>
+            <div class="resource-card-desc">Social scheduling with a free plan supporting multiple channels. Strong fit for Facebook and Instagram.</div>
+          </a>
+          <a class="resource-card" href="https://later.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Later</div>
+            <div class="resource-card-desc">Visual scheduling platform with free trial. Verify current plan pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://metricool.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Metricool</div>
+            <div class="resource-card-desc">Scheduling and analytics with a free forever plan. Pricing varies by region and billing term.</div>
+          </a>
+          <a class="resource-card" href="https://www.hootsuite.com/plans" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Hootsuite</div>
+            <div class="resource-card-desc">Enterprise-oriented scheduling platform. Verify current plan pricing and trial availability directly.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── FORMATTING SOFTWARE ─── -->
+      <div class="resource-section" id="formatting">
+        <div class="resource-section-header">
+          <h2>Book formatting software</h2>
+          <p>Tools for preparing manuscript files for print and ebook publication. File requirements vary by platform — always verify specs with your target distributor.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.atticus.io/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Atticus</div>
+            <div class="resource-card-desc">Browser-based formatting and writing tool for print and ebook. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://vellum.pub/buy/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Vellum</div>
+            <div class="resource-card-desc">Mac-only formatting software with a strong reputation among indie authors. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://reedsy.com/write-a-book" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Reedsy Studio</div>
+            <div class="resource-card-desc">Free core writing and export tools with optional paid add-ons. Good starting point for new authors.</div>
+          </a>
+          <a class="resource-card" href="https://www.literatureandlatte.com/store/scrivener" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Scrivener</div>
+            <div class="resource-card-desc">Drafting and organization software with compile and export features. Verify current pricing and trial terms.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── EBOOK CONVERSION ─── -->
+      <div class="resource-section" id="conversion">
+        <div class="resource-section-header">
+          <h2>Ebook conversion tools</h2>
+          <p>Tools for converting manuscript files into EPUB and other ebook formats required by distribution platforms.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://calibre-ebook.com/about" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">Calibre</div>
+            <div class="resource-card-desc">Free, open-source ebook management and conversion tool supporting a wide range of file types.</div>
+          </a>
+          <a class="resource-card" href="https://www.draft2digital.com/steps/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Draft2Digital Conversion</div>
+            <div class="resource-card-desc">Free conversion from Word-compatible files to EPUB when using D2D for distribution.</div>
+          </a>
+          <a class="resource-card" href="https://kdp.amazon.com/en_US/help/topic/G202131400" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">Kindle Create</div>
+            <div class="resource-card-desc">Amazon's free KDP formatting tool for ebook and print preparation. Verify supported files directly.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── COVER DESIGN ─── -->
+      <div class="resource-section" id="covers">
+        <div class="resource-section-header">
+          <h2>Cover design tools</h2>
+          <p>Tools for author graphics, cover concepts, and reader-facing visual content. Note that professional cover design for commercial release often requires more than a DIY tool — these are starting points.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.canva.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Canva</div>
+            <div class="resource-card-desc">Free and paid design platform. Good for author graphics and cover concepts. Verify current plan pricing.</div>
+          </a>
+          <a class="resource-card" href="https://www.adobe.com/express/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Adobe Express</div>
+            <div class="resource-card-desc">Free and paid Adobe design tool. Verify current plan availability and pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.bookbrush.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Book Brush</div>
+            <div class="resource-card-desc">Author-specific design tool for ads, mockups, and reader-facing graphics. Verify current pricing directly.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── AUTHOR WEBSITES ─── -->
+      <div class="resource-section" id="websites">
+        <div class="resource-section-header">
+          <h2>Author website builders</h2>
+          <p>Platforms for building and maintaining an author web presence. Your website is a foundational asset — independent of any third-party platform.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://wordpress.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">WordPress.com</div>
+            <div class="resource-card-desc">Free and paid website plans. Flexible and widely supported. Verify current storage and plugin limits.</div>
+          </a>
+          <a class="resource-card" href="https://www.wix.com/premium-purchase-plan/dynamo" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Wix</div>
+            <div class="resource-card-desc">Free site creation with paid upgrade options. Prices vary by location and billing term.</div>
+          </a>
+          <a class="resource-card" href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Squarespace</div>
+            <div class="resource-card-desc">Design-focused website platform. No confirmed free tier — verify trial availability and current pricing.</div>
+          </a>
+          <a class="resource-card" href="https://www.pub-site.com/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Pub Site</div>
+            <div class="resource-card-desc">Author-specific website platform built for book-focused needs. Verify current pricing directly.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── ISBN ─── -->
+      <div class="resource-section" id="isbn">
+        <div class="resource-section-header">
+          <h2>ISBN registration</h2>
+          <p>An ISBN is required for most retail and library distribution. Platform-assigned free ISBNs limit portability and imprint control — understand the tradeoffs before choosing.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.myidentifiers.com/identify-protect-your-book/isbn/buy-isbn" target="_blank" rel="noopener">
+            <div class="resource-card-type">Official</div>
+            <div class="resource-card-name">Bowker / MyIdentifiers</div>
+            <div class="resource-card-desc">The official U.S. ISBN agency. Best option when you want your own imprint. Verify current package pricing.</div>
+          </a>
+          <a class="resource-card" href="https://kdp.amazon.com/en_US/help/topic/G201834170" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform ISBN</div>
+            <div class="resource-card-name">KDP Free ISBN</div>
+            <div class="resource-card-desc">Free ISBN for KDP print books. Imprint appears as "Independently published." Limited to KDP use.</div>
+          </a>
+          <a class="resource-card" href="https://www.ingramspark.com/free-isbn" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform ISBN</div>
+            <div class="resource-card-name">IngramSpark Free ISBN</div>
+            <div class="resource-card-desc">Free ISBNs for U.S. self-publishers. Imprint uses IngramSpark branding and is limited to their platform.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── PRINT ON DEMAND ─── -->
+      <div class="resource-section" id="pod">
+        <div class="resource-section-header">
+          <h2>Print on demand</h2>
+          <p>Platforms that print and fulfill physical books per order — no inventory required. Distribution reach and cost structure vary significantly between platforms.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://kdp.amazon.com/en_US/help/topic/G201834330" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">KDP Print</div>
+            <div class="resource-card-desc">Amazon's POD service with no setup fee. Strong reach within the Amazon ecosystem. Verify current royalty structure.</div>
+          </a>
+          <a class="resource-card" href="https://www.ingramspark.com/features" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">IngramSpark</div>
+            <div class="resource-card-desc">Global POD and distribution platform with wide bookstore and library reach. Verify current setup and pricing.</div>
+          </a>
+          <a class="resource-card" href="https://www.lulu.com/create/print-books" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">Lulu</div>
+            <div class="resource-card-desc">POD platform with direct sales integrations for Shopify, Wix, and WooCommerce. Verify current print pricing.</div>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ─── AUDIOBOOK DISTRIBUTION ─── -->
+      <div class="resource-section" id="audiobook">
+        <div class="resource-section-header">
+          <h2>Audiobook distribution</h2>
+          <p>Platforms for distributing finished audiobook files. Exclusive vs. non-exclusive agreements have significant implications for reach and royalty rates — verify current terms directly.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://help.acx.com/s/article/how-royalties-work" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">ACX (Audible)</div>
+            <div class="resource-card-desc">Amazon's audiobook production and distribution marketplace. Exclusive and non-exclusive options. Verify current royalty rates directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.authorsrepublic.com/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">Author's Republic</div>
+            <div class="resource-card-desc">Non-exclusive audiobook distribution to 50+ channels. Royalty-share model — verify current terms directly.</div>
+          </a>
+          <a class="resource-card" href="https://publishdrive.com/pricing.html" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">PublishDrive</div>
+            <div class="resource-card-desc">Subscription-based distribution for ebooks, POD, and audiobooks. Verify current plan structure directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.draft2digital.com/steps/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">Draft2Digital — Audiobook</div>
+            <div class="resource-card-desc">D2D's audiobook distribution partnership. Verify current terms and distribution network directly.</div>
+          </a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">A Red Foundations Publishing service</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
