@@ -121,7 +121,17 @@
       transition: color 0.2s, border-color 0.2s;
     }
     .btn-logout:hover { color: var(--text-secondary); border-color: var(--border-medium); }
-
+    .header-nav-link {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      padding: 5px 14px;
+      border-radius: 20px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .header-nav-link:hover { color: var(--text-secondary); border-color: var(--border-medium); }
     /* ── Messages ─────────────────────────────────── */
     .messages {
       flex: 1;
@@ -395,6 +405,7 @@
         <span class="brand-name">Craft<em>Beacon</em></span>
       </div>
       <div class="header-right">
+        <a class="header-nav-link" href="/resources.html">Resources</a>
         <span class="tier-badge" id="tierBadge">Free</span>
         <span class="user-name"  id="userName"></span>
         <button class="btn-logout" onclick="handleLogout()">Sign out</button>
