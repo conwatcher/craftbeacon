@@ -312,36 +312,24 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 2;
-      width: 260px;
+      width: 300px;
     }
     .hero-image img {
       width: 100%;
-      height: 340px;
+      height: 380px;
       object-fit: cover;
-      object-position: center;
+      object-position: center top;
       display: block;
       border: 0.5px solid rgba(200,144,58,0.18);
-      /* Warm dark tint overlay via mix-blend-mode */
-      filter: brightness(0.82) sepia(0.12);
+      filter: brightness(0.88) sepia(0.08);
     }
-    /* Fallback placeholder if image not yet added */
-    .hero-image-placeholder {
-      width: 260px;
-      height: 340px;
-      border: 0.5px solid rgba(200,144,58,0.18);
-      background: rgba(22,19,14,0.7);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      color: var(--cb-dim);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 1rem;
-      line-height: 1.6;
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(17,15,11,0.7) 100%),
+                  linear-gradient(to left, transparent 70%, rgba(17,15,11,0.5) 100%);
+      pointer-events: none;
     }
 
     /* ─── Philosophy ─── */
@@ -388,6 +376,26 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+    }
+    .philosophy-image {
+      position: relative;
+      overflow: hidden;
+      border: 0.5px solid rgba(200,144,58,0.15);
+    }
+    .philosophy-image img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      filter: brightness(0.75) sepia(0.1);
+    }
+    .philosophy-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(17,15,11,0.2) 0%, transparent 40%, rgba(17,15,11,0.4) 100%);
+      pointer-events: none;
     }
     .contrast-card {
       padding: 1.6rem;
@@ -669,13 +677,20 @@
       margin: 0 auto 2.75rem;
       line-height: 1.8;
     }
-    .cta-actions {
-      display: flex;
-      gap: 1.1rem;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+    .cta-fresnel {
+      position: absolute;
+      right: -2rem;
+      bottom: -3rem;
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.12;
+      filter: sepia(0.3) brightness(1.1);
+      pointer-events: none;
+      z-index: 0;
     }
+    @media (max-width: 900px) { .cta-fresnel { display: none; } }
 
     /* ─── Footer ─── */
     .cb-footer {
@@ -764,18 +779,8 @@
       </div>
     </div>
 
-    <!-- HERO IMAGE
-         Replace the placeholder div below with an <img> tag once you have your image.
-         Recommended: dark moody workspace or lighthouse beam photograph.
-         Example when ready:
-         <div class="hero-image">
-           <img src="assets/hero-workspace.jpg" alt="A writer's desk illuminated by warm lamplight" />
-         </div>
-    -->
-    <div class="hero-image" aria-hidden="true">
-      <div class="hero-image-placeholder">
-        Hero image<br>Illuminated workspace<br>or lighthouse beam
-      </div>
+    <div class="hero-image">
+      <img src="assets/hero-lighthouse.jpg" alt="A lighthouse beam cutting through fog at night" />
     </div>
 
   </section>
@@ -796,6 +801,9 @@
         <p>When something in your manuscript isn't working, you don't need a replacement — you need to understand why it's broken and where the fix lives. That's what CraftBeacon does.</p>
       </div>
       <div class="philosophy-right">
+        <div class="philosophy-image">
+          <img src="assets/philosophy.jpg" alt="A candlelit writer's desk with quill, manuscript, and wax seal" />
+        </div>
         <div class="contrast-card">
           <div class="contrast-label not">Other AI tools</div>
           <p>Generate prose, dialogue, scenes, and blurbs. Hand you finished text you didn't write and have to live with.</p>
@@ -930,6 +938,7 @@
   <section class="cb-cta" aria-labelledby="cta-heading">
     <div class="cta-bg"></div>
     <div class="cta-warm"></div>
+    <img class="cta-fresnel" src="assets/fresnel2.jpg" alt="" aria-hidden="true" />
     <div class="cta-content">
       <h2 id="cta-heading">Start with the work<br>in front of <em>you</em>.</h2>
       <p>Bring your manuscript, your question, or your stuck moment. CraftBeacon meets you where you are.</p>
