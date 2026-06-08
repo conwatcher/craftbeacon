@@ -14,7 +14,7 @@ The homepage (index.html) currently has no real styling — it is bare bones wit
 
 ## Last Session
 
-We spent this session identifying structural gaps in how Patrick and Claude have been working together, specifically the fragmented memory problem that makes every re-entry disorienting. We identified that this is a real and consistent pattern across Patrick's daily life, not just Claude sessions. We designed the Re-Entry Brief as the first solution — a short living document that orients Patrick at the start of every session and surfaces open loops so nothing stays forgotten in the fridge. This document is the result of that session.
+We built the complete session management system from scratch. This included the Re-Entry Brief (this document), the Decisions Log, and the Session Ritual — three documents now saved in the root of the CraftBeacon GitHub repository. We also updated the threaded handoff skill to include document updates as part of every session close-out. The opening phrase for new sessions is "Bring me up to speed." The save workflow is: download updated docs at session end, drag to the CraftBeacon folder on the D drive, commit and sync in VS Code.
 
 ---
 
@@ -26,12 +26,12 @@ We spent this session identifying structural gaps in how Patrick and Claude have
 - **Sections 4 and 5 of the system prompt** — drafted and approved in the section files but not yet integrated into the condensed live prompt running on Val.town.
 - **Referral system text** — drafted and approved for Section 3.4 of the system prompt documents but not yet inserted into the file.
 - **Model routing by tier** — Haiku for free tier, Sonnet for paid tiers in the Val.town relay. Currently all tiers route to the same model. Flagged as a cost-management item. Not urgent yet.
-- **Instagram connection** — Meta Business Suite connection unresolved. Deprioritized pending fix. Facebook running fine without it.
+- **Instagram connection** — resolved. Instagram is now connected to Meta Business Suite and posts have been made through the account. Both Facebook and Instagram are active.
 - **Author Decision Record** — a downloadable PDF report for Premium members showing coaching session summaries. Requires enriching Supabase session logging first. Future build item.
 - **Adversarial prompt testing** — using Claude to systematically try to break CraftBeacon's content generation line before more testers see it. Identified this session as a high-value task never yet attempted.
 - **Analytics strategy** — Google Analytics is installed on both pages but no one has defined what to measure, what events to track, or what a useful early-signal dashboard looks like.
 - **Email/onboarding sequences** — no tester offboarding email, no free tier onboarding email, no nurture sequence exists yet.
-- **Decisions log** — identified this session as a needed document. Not yet built. Next session item.
+- **Threaded handoff skill** — updated this session to include document updates as part of close-out. Confirmed saved.
 
 ---
 
@@ -48,7 +48,7 @@ We spent this session identifying structural gaps in how Patrick and Claude have
 
 ## Next Action
 
-Build the Decisions Log — a companion document to this one that records every architectural and strategic choice already made, with the reasoning behind each decision, so nothing has to be re-figured out from scratch.
+Resume CraftBeacon product work — the most visible remaining build priority is the homepage (index.html), which currently has no styling. Say "Bring me up to speed" at the start of the next thread and we'll pick up from there.
 
 ---
 

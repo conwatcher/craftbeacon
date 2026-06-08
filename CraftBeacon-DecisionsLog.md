@@ -152,10 +152,10 @@ Why this won: Each tool is used for what it does best. Manus produces images and
 
 ---
 
-**DECISION: Facebook-first for social media launch. Instagram deprioritized pending Meta Business Suite connection resolution.**
-Date: Pre-launch, June 2026
-Status: FOR NOW — revisit when Instagram connection issue is resolved.
-Why this won: The Meta Business Suite connection for Instagram had an unresolved confirmation email issue at launch time. Proceeding Facebook-first rather than delaying the entire social schedule.
+**DECISION: Both Facebook and Instagram active through Meta Business Suite.**
+Date: Resolved June 2026
+Status: PERMANENT — both platforms connected and posting.
+Note: Instagram had an unresolved connection issue at launch time and was temporarily deprioritized. That issue has since been resolved. Instagram is now connected to Meta Business Suite and posts have been made through the account. Both platforms are running.
 
 ---
 
@@ -189,6 +189,40 @@ Note: Sections 4 and 5 are drafted and approved in the section files but not yet
 Date: Mid-build, 2025–2026
 Status: PERMANENT — built into the system prompt's emotional response handling.
 Why this won: Telling an author "this is a challenge nearly every writer faces" is not just comfort — it is accurate information that removes shame from the coaching relationship and makes the author more receptive to working through the problem.
+
+---
+
+## Session Management
+
+---
+
+**DECISION: Three-document session management system adopted — Re-Entry Brief, Decisions Log, and Session Ritual.**
+Date: June 9, 2026
+Status: PERMANENT
+Alternatives considered: Relying on handoff prompts alone, maintaining a single combined document.
+Why this won: The fragmented memory problem Patrick experiences at re-entry into any context requires a dedicated orientation system. The three documents divide the work cleanly — the Brief covers current state, the Log covers reasoning behind past choices, and the Ritual covers how to use the system. All three live in the root of the CraftBeacon GitHub repository.
+
+---
+
+**DECISION: Session opening phrase is "Bring me up to speed."**
+Date: June 9, 2026
+Status: PERMANENT
+Why this won: Natural to Patrick's speaking style and easy to recall instinctively. The alternative "CraftBeacon, orient me" felt awkward and would not have stuck.
+
+---
+
+**DECISION: Document save workflow is download, drag to D drive CraftBeacon folder, commit and sync in VS Code.**
+Date: June 9, 2026
+Status: PERMANENT
+Alternatives considered: Setting Chrome downloads folder to VS Code folder directly (ruled out — would send all downloads there including Canva and Manus files), Google Drive (ruled out in favor of keeping everything in GitHub where the project already lives).
+Why this won: Simple, consistent, uses tools and habits already in place. A Post-it note reading "End of session — download and drag the docs, then sync" serves as the physical reminder.
+
+---
+
+**DECISION: Threaded handoff skill updated to include document updates as part of every session close-out.**
+Date: June 9, 2026
+Status: PERMANENT
+Why this won: Folding the doc update into the existing handoff routine means it happens automatically as part of closing rather than being a separate thing to remember. The skill already existed — this added one step rather than creating a new habit from scratch.
 
 ---
 
