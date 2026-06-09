@@ -1,4 +1,5 @@
 # CraftBeacon — Session Ritual
+
 *The opening and closing routine for every CraftBeacon working session. Simple, consistent, and designed to work even on scattered days.*
 
 *Last updated: June 9, 2026*
@@ -8,16 +9,25 @@
 ## Opening a Session
 
 When starting any new CraftBeacon thread, say:
-
 > **"Bring me up to speed."**
 
-That phrase is the signal. Claude will immediately read the Re-Entry Brief and Decisions Log, then deliver a plain-language briefing covering:
+That phrase is the signal. Claude will immediately fetch and read the Re-Entry Brief and Decisions Log from GitHub, then deliver a plain-language briefing covering:
 
 - Where the project stands right now
 - What the last session covered
 - What's sitting in the fridge waiting to be finished
 - The single next action
 - Any decisions currently pending
+
+**How Claude fetches the documents — exact URLs to use:**
+
+Re-Entry Brief:
+https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-ReEntryBrief.md
+
+Decisions Log:
+https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-DecisionsLog.md
+
+**Important technical note:** Use the github.com/blob URL shown above, not the raw.githubusercontent.com URL. The raw URL requires a prior web search result to be fetched and will fail otherwise. The blob URL works directly with web_fetch. Both files are in a public repository so no authentication is needed.
 
 After the briefing, Claude will ask if you're ready to move into that next action or if something else has come up that needs to move to the front first.
 
@@ -29,9 +39,10 @@ No re-explaining. No warmup. Straight into oriented, productive work.
 
 At the end of any session where real work happened, the threaded handoff skill handles the close-out. As part of that skill's workflow, Claude will:
 
-1. Update the Re-Entry Brief to reflect what was accomplished, what moved off the fridge, what new items were added, and what the next action is.
-2. Add any new significant decisions to the Decisions Log, with the reasoning captured.
-3. Deliver the updated documents for saving before the thread closes.
+1. Fetch the current Re-Entry Brief and Decisions Log from GitHub using the URLs above.
+2. Update the Re-Entry Brief to reflect what was accomplished, what moved off the fridge, what new items were added, and what the next action is.
+3. Add any new significant decisions to the Decisions Log, with the reasoning captured.
+4. Deliver the updated documents as downloadable files before the thread closes.
 
 The handoff skill already asks: *"Before I close this out — is there anything open, unfinished, or half-formed that we haven't named yet?"* That question is the safety net for anything that almost slipped through.
 
@@ -39,13 +50,15 @@ The handoff skill already asks: *"Before I close this out — is there anything 
 
 ## Saving the Documents
 
-Claude cannot save directly to GitHub or Google Drive. The save step requires one manual action at the end of each session.
+The save workflow after every session close:
 
-**The simplest reminder:** A Post-it note on your monitor that reads:
+1. Download both updated files when Claude presents them.
+2. Drag them to the CraftBeacon folder on the D drive (this replaces the previous versions).
+3. In VS Code, commit and sync — this pushes the updated files to GitHub.
 
-*End of session — paste the docs.*
+Under two minutes. The updated files on GitHub are what Claude reads at the next session open.
 
-When the updated files are handed to you at close, open the file in GitHub's web editor or your Google Doc, select all, paste, save. Under one minute. The Post-it makes sure you don't walk away without doing it.
+**Physical reminder:** A Post-it note on your monitor reading: *End of session — download, drag, sync.*
 
 ---
 
@@ -57,7 +70,7 @@ All three documents live in the root directory of the CraftBeacon GitHub reposit
 
 **CraftBeacon-DecisionsLog.md** — Every significant architectural and strategic decision made, with reasoning and PERMANENT vs FOR NOW status. Updated when decisions are made.
 
-**CraftBeacon-SessionRitual.md** — This document. The operating instructions for the system. Rarely needs updating.
+**CraftBeacon-SessionRitual.md** — This document. The operating instructions for the system. Updated only when the ritual itself changes.
 
 ---
 
@@ -71,4 +84,4 @@ The goal is simple: walk in, say four words, and be ready to work within sixty s
 
 ---
 
-*This system was designed on June 9, 2026, in a session dedicated to building workflow structure for CraftBeacon.*
+*This system was designed on June 9, 2026. Fetch instructions added June 9, 2026 after discovering the missing link that caused Claude to default to a stale orientation document instead of fetching live GitHub files.*

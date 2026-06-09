@@ -1,4 +1,5 @@
 # CraftBeacon — Decisions Log
+
 *A running record of every significant architectural, strategic, and product decision made during the build. Each entry captures what was decided, when, what the alternatives were, and why the chosen path won. Entries marked PERMANENT are locked. Entries marked FOR NOW are placeholder decisions that should be revisited when conditions change.*
 
 *Last updated: June 9, 2026*
@@ -83,6 +84,22 @@ Note: Custom domain thecraftbeacon.com points to GitHub Pages via GoDaddy DNS se
 
 ---
 
+**DECISION: File upload supports Markdown only. DOCX support intentionally removed.**
+Date: June 2026
+Status: PERMANENT until a proper parsing library is implemented.
+Alternatives considered: Keeping DOCX support, using a third-party parsing library.
+Why this won: DOCX extraction was unreliable and caused CraftBeacon to hallucinate manuscript content rather than read the actual uploaded file. Markdown works cleanly and reliably. DOCX will be revisited when a proper parsing library can be integrated.
+
+---
+
+**DECISION: VS Code is the single development tool for both CraftBeacon and Red Foundations projects. GitHub Desktop was evaluated and removed.**
+Date: June 9, 2026
+Status: PERMANENT
+Alternatives considered: Using GitHub Desktop for CraftBeacon and VS Code for Red Foundations as a separation strategy.
+Why this won: GitHub Desktop is only a delivery tool — it has no code editor and would still require VS Code for actual file editing. Splitting tools across projects adds complexity without any functional benefit. The projects are already separated by folder and repository. GitHub Desktop was removed from the laptop.
+
+---
+
 ## Membership and Pricing
 
 ---
@@ -117,6 +134,41 @@ Why this matters: If you want plans displayed in a specific order on the website
 
 ---
 
+## Email and Subscriber System
+
+---
+
+**DECISION: Outseta's built-in email system handles all CraftBeacon subscriber communications. MailerLite is not used for CraftBeacon.**
+Date: June 9, 2026
+Status: PERMANENT
+Alternatives considered: MailerLite with Zapier integration to connect Outseta signups; MailerLite standalone with manual subscriber management.
+Why this won: Outseta already handles memberships and payments — adding its built-in email system keeps everything in one platform, eliminates a third monthly subscription (MailerLite), and removes the need for a Zapier connector. The CraftBeacon MailerLite account that was created during this session should be deleted.
+
+---
+
+**DECISION: Welcome email is attached directly to the CraftBeacon Subscribers list in Outseta, not managed as a separate drip campaign.**
+Date: June 9, 2026
+Status: PERMANENT
+Alternatives considered: Outseta drip campaign triggered by list join; MailerLite automation.
+Why this won: Outseta's list-level welcome email fires automatically when a subscriber is added to the list, which is simpler and cleaner than a separate drip campaign for a single email. A drip campaign would only add value if multiple timed follow-up emails were needed.
+
+---
+
+**DECISION: New Outseta signups are automatically added to the CraftBeacon Subscribers list via the "Add opt-in to email list" checkbox in Auth > Sign up and login settings.**
+Date: June 9, 2026
+Status: PERMANENT
+Why this matters: This is the connection that makes the whole system automatic. When someone creates a CraftBeacon account, they are added to the CraftBeacon Subscribers list, which triggers the welcome email. No manual steps required.
+
+---
+
+**DECISION: Newsletter frequency is monthly.**
+Date: June 9, 2026
+Status: FOR NOW — revisit after consistent monthly cadence is established.
+Alternatives considered: Biweekly.
+Why this won: Monthly is sustainable given Patrick's other commitments (platform build, writing retreat schedule, Red Foundations projects). Starting biweekly and pulling back feels like a retreat to subscribers; starting monthly and stepping up feels like a gift. Upgrade the frequency when it earns itself.
+
+---
+
 ## Brand and Visual Identity
 
 ---
@@ -144,7 +196,7 @@ Status: PERMANENT
 **DECISION: Manus AI handles creative asset production. Claude handles strategy, structure, and code.**
 Date: Established during build, 2025–2026
 Status: PERMANENT as the working division of labor.
-Why this won: Each tool is used for what it does best. Manus produces images and design assets aligned with CraftBeacon's visual aesthetic. Claude handles architecture, copy, code, and strategic thinking. Opus.ai was considered for video and ruled out — claymation and sketch styles don't fit CraftBeacon's brand.
+Why this won: Each tool is used for what it does best. Manus produces images and design assets aligned with CraftBeacon's visual aesthetic. Claude handles architecture, copy, code, and strategic thinking.
 
 ---
 
@@ -155,7 +207,6 @@ Why this won: Each tool is used for what it does best. Manus produces images and
 **DECISION: Both Facebook and Instagram active through Meta Business Suite.**
 Date: Resolved June 2026
 Status: PERMANENT — both platforms connected and posting.
-Note: Instagram had an unresolved connection issue at launch time and was temporarily deprioritized. That issue has since been resolved. Instagram is now connected to Meta Business Suite and posts have been made through the account. Both platforms are running.
 
 ---
 
@@ -185,6 +236,13 @@ Note: Sections 4 and 5 are drafted and approved in the section files but not yet
 
 ---
 
+**DECISION: Carry-forward notes at the bottom of individual section prompt files should be cleared out.**
+Date: June 9, 2026
+Status: FOR NOW — cleanup pending.
+Why this matters: The notes were useful during active construction but now cause confusion in sessions and are easily misread as current instructions. The full prompt is the authoritative document. Before deleting, each file should be scanned to confirm nothing unresolved is hiding in the notes that never made it into the full prompt or orientation documents.
+
+---
+
 **DECISION: Normalization — explicitly telling authors their struggles are common — is a meaningful and intentional coaching move.**
 Date: Mid-build, 2025–2026
 Status: PERMANENT — built into the system prompt's emotional response handling.
@@ -207,22 +265,28 @@ Why this won: The fragmented memory problem Patrick experiences at re-entry into
 **DECISION: Session opening phrase is "Bring me up to speed."**
 Date: June 9, 2026
 Status: PERMANENT
-Why this won: Natural to Patrick's speaking style and easy to recall instinctively. The alternative "CraftBeacon, orient me" felt awkward and would not have stuck.
+Why this won: Natural to Patrick's speaking style and easy to recall instinctively.
 
 ---
 
 **DECISION: Document save workflow is download, drag to D drive CraftBeacon folder, commit and sync in VS Code.**
 Date: June 9, 2026
 Status: PERMANENT
-Alternatives considered: Setting Chrome downloads folder to VS Code folder directly (ruled out — would send all downloads there including Canva and Manus files), Google Drive (ruled out in favor of keeping everything in GitHub where the project already lives).
-Why this won: Simple, consistent, uses tools and habits already in place. A Post-it note reading "End of session — download and drag the docs, then sync" serves as the physical reminder.
+Why this won: Simple, consistent, uses tools and habits already in place.
 
 ---
 
 **DECISION: Threaded handoff skill updated to include document updates as part of every session close-out.**
 Date: June 9, 2026
 Status: PERMANENT
-Why this won: Folding the doc update into the existing handoff routine means it happens automatically as part of closing rather than being a separate thing to remember. The skill already existed — this added one step rather than creating a new habit from scratch.
+Why this won: Folding the doc update into the existing handoff routine means it happens automatically as part of closing rather than being a separate thing to remember.
+
+---
+
+**DECISION: GitHub repository fetched via web_fetch tool using the public GitHub blob URL. Raw URL fetch requires a prior search result — use blob URL instead.**
+Date: June 9, 2026
+Status: PERMANENT — this is the correct access method.
+Why this matters: The raw.githubusercontent.com URL requires a prior search result to be fetched. The github.com/blob URL works directly. When fetching Re-Entry Brief or Decisions Log at session start, use: https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-ReEntryBrief.md and https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-DecisionsLog.md
 
 ---
 
