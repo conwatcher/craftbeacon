@@ -798,29 +798,42 @@ function detectTier(user) {
       }
     }
 
-    function findStoredToken() {
-      // Look through localStorage for anything that looks like an Outseta JWT
-      try {
-        for (const key of Object.keys(localStorage)) {
-          const val = localStorage.getItem(key);
-          if (val && typeof val === 'string' && val.split('.').length === 3) {
-            const user = readToken(val);
-            if (user.Email && user.Email !== 'member') return user;
-          }
-        }
-      } catch(e) {}
+    function getTokenFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const fromQuery = params.get('access_token') ||
+             params.get('accessToken') ||
+             params.get('token') ||
+             [...params.values()].find(v => v && v.split('.').length === 3);
+      if (fromQuery) return fromQuery;
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const hashParams = new URLSearchParams(hash);
+        const fromHash = hashParams.get('access_token') ||
+               hashParams.get('accessToken') ||
+               hashParams.get('token') ||
+               [...hashParams.values()].find(v => v && v.split('.').length === 3);
+        if (fromHash) return fromHash;
+      }
       return null;
     }
 
     function getTokenFromUrl() {
-      // Outseta passes the access token in the URL after login
       const params = new URLSearchParams(window.location.search);
-      // Try common Outseta parameter names
-      return params.get('access_token') ||
+      const fromQuery = params.get('access_token') ||
              params.get('accessToken') ||
              params.get('token') ||
-             [...params.values()].find(v => v && v.split('.').length === 3) ||
-             null;
+             [...params.values()].find(v => v && v.split('.').length === 3);
+      if (fromQuery) return fromQuery;
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const hashParams = new URLSearchParams(hash);
+        const fromHash = hashParams.get('access_token') ||
+               hashParams.get('accessToken') ||
+               hashParams.get('token') ||
+               [...hashParams.values()].find(v => v && v.split('.').length === 3);
+        if (fromHash) return fromHash;
+      }
+      return null;
     }
 
     function initAuth() {
