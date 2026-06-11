@@ -1,57 +1,71 @@
 # CraftBeacon — Re-Entry Brief
-
-*This document is updated at the close of each session and read at the start of the next one. Last updated: June 9, 2026*
-
----
-
-## Where We Stand
-
-CraftBeacon launched June 15th. The full technical stack is live and functional end-to-end: GitHub Pages front end at thecraftbeacon.com, Val.town AI relay connected to the Anthropic API, Outseta handling memberships and payments via Stripe, and Supabase logging coaching sessions. The dashboard is working with streaming responses and a free-tier message counter. Several Premium beta testers have confirmed the platform is intuitive and that the content generation line holds. A 13-post Facebook social media schedule is live in Meta Business Suite running through July 1. The homepage is fully styled and live. The resources page sidebar contrast was improved this session based on user feedback.
+*Last updated: June 11, 2026*
 
 ---
 
-## Last Session
+## What CraftBeacon Is
 
-Addressed readability feedback from a community member about the resources page. Changed the `--cb-dim` color variable from `#5a5448` to `#9a8f82` in both resources.html and index.html, improving contrast on the sidebar navigation and the homepage lane card bullet points. Both files committed and synced. Also cleaned up the Re-Entry Brief and Decisions Log to remove stale items.
+An AI writing coach for fiction and narrative nonfiction authors at thecraftbeacon.com. Five membership tiers: Free, Writing Lane ($10/mo or $96/yr), Marketing Lane ($10/mo or $96/yr), Production Lane ($10/mo or $96/yr), Premium ($29/mo or $276/yr). The platform never generates content — it coaches only. GitHub Pages front end. Val.town relay to Anthropic API. Outseta for membership and payments. Supabase for session logging. Google Analytics (G-FRZ967M5K9).
 
----
-
-## Upcoming
-
-Patrick leaves for a writing retreat Friday morning, June 13th. Return date TBD. Resume CraftBeacon work after the retreat. Say "Bring me up to speed" at the start of the next session.
+**Launch date: June 15, 2026.**
 
 ---
 
-## Drinks in the Fridge
+## Current Platform State
 
-*Things that exist, are approved or started, but have not been finished yet.*
+The platform is live and functional at thecraftbeacon.com. All core systems confirmed working: tier gating, message limits, badge behavior, file upload (.txt and .md, paid tiers only, 50,000-character limit), Outseta authentication, Supabase session logging, Val.town AI relay, Google Analytics.
 
-- **Outseta brand styling** — the Outseta account portal used by members has not been styled to match CraftBeacon's visual identity. Needs attention.
-- **Email footer address** — current welcome email footer uses a placeholder address. Replace with PO Box or virtual address when available. Future item.
-- **Adversarial prompt testing** — post-retreat task. Use Cowork to assign an agent to attempt content generation workarounds against the live CraftBeacon system. Goal is to surface gaps in the redirect protocol before broader user growth.
-- **Analytics strategy** — Google Analytics is installed on both pages but no events are defined and no dashboard exists. Needs a dedicated session to define what early-signal metrics actually matter.
-- **Two-piece marketing strategy** — resources page as a standalone community drop asset is working. Next step: identify the best recurring questions and communities where the resources page link is most natural. IngramSpark groups, debut author communities, and self-publishing process groups are the starting points.
-- **Email and onboarding sequences** — no free tier onboarding email, no nurture sequence exists yet.
-- **Author Decision Record** — downloadable PDF for Premium members showing coaching session history. Requires enriching Supabase session logging first. Future build item.
-- **Model routing by tier** — Haiku for free tier, Sonnet for paid. Currently all tiers use the same model. Cost-management item, not urgent at current scale.
+**Pricing section** has been fully rebuilt. The nav Start Free button is wired directly to the Free tier Outseta signup URL. The pricing grid shows three lane cards in a row (Writing, Marketing, Production) each with individual Outseta signup buttons and annual pricing displayed. Premium sits below as a featured centered card (~760px wide) with a 10-item outcome-oriented feature list and Go Premium button. SVG icons (quill, broadcast signal, gear, lighthouse) appear above each tier name. A "free tier available — no time limit" note sits in the section header.
 
----
+**Dashboard** has a Manage Account link in the nav bar pointing to the-craft-beacon.outseta.com/profile — Outseta's native billing portal where members can change plan, update billing, or cancel.
 
-## Decisions Pending
+**Val.town relay** is set to max_tokens: 4000. Model: claude-sonnet-4-20250514.
 
-*Questions that are blocking or will soon block forward progress.*
+**Stress tests** — all 13 tests passed. No content generation failures, no security breaches, no scope violations. One known edge case: B3 (crisis false positive) — when a user presents self-harm language in an explicit fictional framing, the system leans toward caution and partially deploys the crisis protocol rather than treating it purely as a craft question. Acceptable behavior but worth smoothing post-launch.
 
-- **Lane stacking** — can members subscribe to multiple individual lanes without going Premium? Pricing decision needed.
-- **Persistent user context architecture** — how will Premium tier memory across sessions be built? Not urgent yet.
-- **Multilingual and localization strategy** — English-first confirmed for now; full localization decision deferred.
-- **Paid ad boosting** — posts around June 27–29 are first boosting candidates. Budget decision needed around that time.
+**Mobile Chrome login loop** — still deferred. Token stores correctly but dashboard fails to read it. Needs a dedicated fix session. Browser notice banner is live on index.html directing Chrome mobile users to Safari or Firefox.
 
 ---
 
-## Supabase Maintenance
+## Key URLs and Architecture
 
-To keep the free tier active, log into the Premium test account and run a coaching session for 10–15 minutes on the first day of each week. Calendar entries are set. If the project is ever paused, reactivation is manual. Upgrade to Supabase Pro at roughly $25 per month once consistent paying users exist.
+- **Live site:** https://thecraftbeacon.com
+- **GitHub repo:** https://github.com/conwatcher/craftbeacon
+- **Outseta admin:** https://the-craft-beacon.outseta.com
+- **Val.town relay:** https://conwatcher--725351085ceb11f1822e1607ee4eb77e.web.val.run
+- **Supabase project:** craftbeacon-sessions (East US Ohio) — coaching_sessions table
+- **Google Analytics:** G-FRZ967M5K9
+
+**Outseta Plan UIDs** (in Patrick's Vault):
+- Free: dQGgqpQ4
+- Writing Lane: OW48a3Wg
+- Marketing Lane: XQYaGRQP
+- Production Lane: wQXNDaWK
+- Premium: L9P3lEQJ
 
 ---
 
-*How to use this document: at the start of any new CraftBeacon session, say "Bring me up to speed" and Claude will read this file and orient you. At the close of any session, ask Claude to update this document before you leave.*
+## Session Management Documents (GitHub)
+
+- Re-Entry Brief: https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-ReEntryBrief.md
+- Decisions Log: https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-DecisionsLog.md
+- Session Ritual: https://github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-SessionRitual.md
+
+*Note: Use github.com/blob/ URL format with web_fetch — raw.githubusercontent.com is blocked in this environment.*
+
+---
+
+## Open Items
+
+- **Mobile Chrome login loop** — token stores but dashboard can't read it. Deferred. Fix in dedicated session.
+- **B3 crisis false positive** — post-launch smoothing. Add clearer fictional context signal handling to system prompt.
+- **Response length tuning** — monitor after launch. If coaching responses run consistently long, add concision guidance to prompt.
+- **Model routing by tier** — Haiku for Free, Sonnet for paid — deferred cost-management item.
+- **Persistent user context architecture** — deferred.
+- **Custom pricing page** — completed this session (replaced existing section on index.html).
+
+---
+
+## How to Start a Session
+
+Paste the continuation prompt from the last session handoff. If returning cold, read this document first, then check the Decisions Log for recent choices before touching any code.
