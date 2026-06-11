@@ -588,25 +588,38 @@
       max-width: 480px;
       margin: 0 auto;
     }
-    .tiers-grid {
+    .tiers-lanes {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--cb-border);
       border: 0.5px solid var(--cb-border);
+      margin-bottom: 1px;
+    }
+    .tiers-premium {
       margin-bottom: 2rem;
     }
     .tier-card {
       background: rgba(17,15,11,0.78);
-      padding: 2.25rem 1.35rem;
+      padding: 2.25rem 1.75rem;
       text-align: center;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .tier-card.featured {
       background: rgba(28,25,20,0.92);
       border: 0.5px solid rgba(200,144,58,0.28);
+      padding: 2.5rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto auto;
+      align-items: start;
+      gap: 0 3rem;
+      text-align: left;
     }
-    .tier-card.featured::after {
+    .tier-card.featured::before {
       content: 'Most Complete';
       position: absolute;
       top: -11px;
@@ -621,6 +634,11 @@
       padding: 0.22rem 0.7rem;
       white-space: nowrap;
     }
+    .tier-card.featured .tier-name { grid-column: 1; }
+    .tier-card.featured .tier-price-group { grid-column: 1; }
+    .tier-card.featured .tier-desc { grid-column: 1; grid-row: 3; }
+    .tier-card.featured .tier-btn { grid-column: 1; grid-row: 4; margin-top: 1.5rem; align-self: start; }
+    .tier-card.featured .tier-features { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
     .tier-name {
       font-size: 0.68rem;
       font-weight: 300;
@@ -628,6 +646,9 @@
       text-transform: uppercase;
       color: var(--cb-amber);
       margin-bottom: 0.85rem;
+    }
+    .tier-price-group {
+      margin-bottom: 1.35rem;
     }
     .tier-price {
       font-family: 'Playfair Display', serif;
@@ -641,13 +662,53 @@
       font-size: 0.74rem;
       font-weight: 300;
       color: var(--cb-dim);
-      margin-bottom: 1.35rem;
     }
     .tier-desc {
       font-size: 0.86rem;
       font-weight: 300;
       color: var(--cb-muted);
       line-height: 1.62;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+    .tier-features {
+      list-style: none;
+      font-size: 0.84rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.9;
+    }
+    .tier-features li::before {
+      content: '— ';
+      color: var(--cb-amber);
+      font-weight: 300;
+    }
+    .tier-btn {
+      display: inline-block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--cb-amber);
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.65rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      margin-top: auto;
+    }
+    .tier-btn:hover {
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+    }
+    .tier-btn.tier-btn-primary {
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+    }
+    .tier-btn.tier-btn-primary:hover {
+      background: var(--cb-amber-light);
     }
     .tiers-note {
       text-align: center;
@@ -655,6 +716,20 @@
       font-weight: 300;
       font-style: italic;
       color: var(--cb-dim);
+    }
+    @media (max-width: 768px) {
+      .tiers-lanes { grid-template-columns: 1fr; }
+      .tier-card.featured {
+        grid-template-columns: 1fr;
+        text-align: center;
+        align-items: center;
+      }
+      .tier-card.featured .tier-name,
+      .tier-card.featured .tier-price-group,
+      .tier-card.featured .tier-desc,
+      .tier-card.featured .tier-btn,
+      .tier-card.featured .tier-features { grid-column: 1; grid-row: auto; }
+      .tier-card.featured .tier-features { margin-top: 1.5rem; text-align: left; }
     }
 
     /* ─── CTA ─── */
@@ -776,7 +851,7 @@
     </ul>
     <div class="nav-actions">
       <button class="btn-nav-login" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=login'">Sign in</button>
-      <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register'">Start free</button>
+      <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=dQGgqpQ4&planPaymentTerm=month&skipPlanOptions=true#o-anonymous'">Start free</button>
     </div>
   </nav>
 
@@ -908,45 +983,58 @@
       <div class="tiers-header">
         <div class="section-label" style="justify-content: center;">Membership</div>
         <h2 id="tiers-heading">Find your place</h2>
-        <p>Start free. Upgrade to the lane that matches your current priority. Stack lanes or go Premium when the work demands it.</p>
+        <p>Choose the lane that matches your current priority — or go Premium for full access across all three. Free tier available, no time limit. Use the Start Free button above to begin.</p>
       </div>
-      <div class="tiers-grid">
-
-        <div class="tier-card">
-          <div class="tier-name">Free</div>
-          <div class="tier-price">$0</div>
-          <div class="tier-price-note">always</div>
-          <div class="tier-desc">General craft guidance, publishing orientation, and grammar feedback. A real tier, not a preview.</div>
-        </div>
+      <div class="tiers-lanes">
 
         <div class="tier-card">
           <div class="tier-name">Writing Lane</div>
-          <div class="tier-price">$10</div>
-          <div class="tier-price-note">per month</div>
+          <div class="tier-price-group">
+            <div class="tier-price">$10</div>
+            <div class="tier-price-note">per month</div>
+          </div>
           <div class="tier-desc">Full diagnostic coaching system for your manuscript, your process, your creative challenges.</div>
+          <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=OW48a3Wg&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Writing Lane</a>
         </div>
 
         <div class="tier-card">
           <div class="tier-name">Marketing Lane</div>
-          <div class="tier-price">$10</div>
-          <div class="tier-price-note">per month</div>
+          <div class="tier-price-group">
+            <div class="tier-price">$10</div>
+            <div class="tier-price-note">per month</div>
+          </div>
           <div class="tier-desc">Author platform, newsletter strategy, launch planning, and reader engagement coaching.</div>
+          <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=XQYaGRQP&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Marketing Lane</a>
         </div>
 
         <div class="tier-card">
           <div class="tier-name">Production Lane</div>
-          <div class="tier-price">$10</div>
-          <div class="tier-price-note">per month</div>
+          <div class="tier-price-group">
+            <div class="tier-price">$10</div>
+            <div class="tier-price-note">per month</div>
+          </div>
           <div class="tier-desc">Formatting, platform requirements, distribution guidance, and production sequencing.</div>
+          <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=wQXNDaWK&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Production Lane</a>
         </div>
 
+      </div>
+
+      <div class="tiers-premium">
         <div class="tier-card featured">
           <div class="tier-name">Premium</div>
-          <div class="tier-price">$29</div>
-          <div class="tier-price-note">per month</div>
+          <div class="tier-price-group">
+            <div class="tier-price">$29</div>
+            <div class="tier-price-note">per month</div>
+          </div>
           <div class="tier-desc">All three lanes. Full coaching access wherever you are in the author journey.</div>
+          <a class="tier-btn tier-btn-primary" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=L9P3lEQJ&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Go Premium</a>
+          <ul class="tier-features">
+            <li>Writing Lane — full diagnostic coaching</li>
+            <li>Marketing Lane — platform and launch strategy</li>
+            <li>Production Lane — formatting and distribution</li>
+            <li>All three coaching systems in one membership</li>
+          </ul>
         </div>
-
       </div>
       <p class="tiers-note">Annual plans available at a reduced rate. No contracts. Cancel anytime.</p>
     </div>
