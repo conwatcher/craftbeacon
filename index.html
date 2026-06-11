@@ -628,12 +628,19 @@
     .tier-card.featured {
       background: rgba(28,25,20,0.92);
       border: 0.5px solid rgba(200,144,58,0.28);
-      padding: 2.5rem 2.5rem;
+      padding: 2.5rem 3rem;
+      max-width: 760px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+        "icon    features"
+        "name    features"
+        "price   features"
+        "desc    features"
+        "btn     features";
       align-items: start;
-      gap: 0 3rem;
+      gap: 0 3.5rem;
       text-align: left;
     }
     .tier-card.featured::before {
@@ -651,11 +658,20 @@
       padding: 0.22rem 0.7rem;
       white-space: nowrap;
     }
-    .tier-card.featured .tier-name { grid-column: 1; }
-    .tier-card.featured .tier-price-group { grid-column: 1; }
-    .tier-card.featured .tier-desc { grid-column: 1; grid-row: 3; }
-    .tier-card.featured .tier-btn { grid-column: 1; grid-row: 4; margin-top: 1.5rem; align-self: start; }
-    .tier-card.featured .tier-features { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+    .tier-card.featured .tier-icon  { grid-area: icon;     margin: 0 0 0.75rem; }
+    .tier-card.featured .tier-name  { grid-area: name;     margin-bottom: 0.85rem; }
+    .tier-card.featured .tier-price-group { grid-area: price; }
+    .tier-card.featured .tier-desc  { grid-area: desc;     margin-bottom: 0; }
+    .tier-card.featured .tier-btn   { grid-area: btn;      margin-top: 1.75rem; align-self: start; width: auto; display: inline-block; }
+    .tier-card.featured .tier-features { grid-area: features; align-self: center; border-left: 0.5px solid var(--cb-border); padding-left: 3rem; }
+    .tier-price-annual {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--cb-amber);
+      opacity: 0.7;
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
     .tier-name {
       font-size: 0.68rem;
       font-weight: 300;
@@ -738,15 +754,20 @@
       .tiers-lanes { grid-template-columns: 1fr; }
       .tier-card.featured {
         grid-template-columns: 1fr;
+        grid-template-areas:
+          "icon"
+          "name"
+          "price"
+          "desc"
+          "features"
+          "btn";
         text-align: center;
         align-items: center;
+        padding: 2.5rem 1.75rem;
       }
-      .tier-card.featured .tier-name,
-      .tier-card.featured .tier-price-group,
-      .tier-card.featured .tier-desc,
-      .tier-card.featured .tier-btn,
-      .tier-card.featured .tier-features { grid-column: 1; grid-row: auto; }
-      .tier-card.featured .tier-features { margin-top: 1.5rem; text-align: left; }
+      .tier-card.featured .tier-icon  { margin: 0 auto 0.75rem; }
+      .tier-card.featured .tier-features { border-left: none; padding-left: 0; margin-top: 1.5rem; text-align: left; }
+      .tier-card.featured .tier-btn   { margin: 1.5rem auto 0; }
     }
 
     /* ─── CTA ─── */
@@ -1014,6 +1035,7 @@
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
             <div class="tier-price-note">per month</div>
+            <div class="tier-price-annual">or $96/yr</div>
           </div>
           <div class="tier-desc">Full diagnostic coaching system for your manuscript, your process, your creative challenges.</div>
           <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=OW48a3Wg&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Writing Lane</a>
@@ -1032,6 +1054,7 @@
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
             <div class="tier-price-note">per month</div>
+            <div class="tier-price-annual">or $96/yr</div>
           </div>
           <div class="tier-desc">Author platform, newsletter strategy, launch planning, and reader engagement coaching.</div>
           <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=XQYaGRQP&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Marketing Lane</a>
@@ -1047,6 +1070,7 @@
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
             <div class="tier-price-note">per month</div>
+            <div class="tier-price-annual">or $96/yr</div>
           </div>
           <div class="tier-desc">Formatting, platform requirements, distribution guidance, and production sequencing.</div>
           <a class="tier-btn" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=wQXNDaWK&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Start Production Lane</a>
@@ -1068,6 +1092,7 @@
           <div class="tier-price-group">
             <div class="tier-price">$29</div>
             <div class="tier-price-note">per month</div>
+            <div class="tier-price-annual">or $276/yr</div>
           </div>
           <div class="tier-desc">All three lanes. Full coaching access wherever you are in the author journey.</div>
           <a class="tier-btn tier-btn-primary" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=L9P3lEQJ&planPaymentTerm=month&skipPlanOptions=true#o-anonymous">Go Premium</a>
