@@ -588,6 +588,23 @@
       max-width: 480px;
       margin: 0 auto;
     }
+    .tiers-free-note {
+      font-size: 0.82rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cb-dim);
+      max-width: 480px;
+      margin: 0.65rem auto 0;
+    }
+    .tier-icon {
+      display: block;
+      margin: 0 auto 1.1rem;
+      color: var(--cb-amber);
+      opacity: 0.75;
+    }
+    .tier-card.featured .tier-icon {
+      margin: 0 0 1.1rem;
+    }
     .tiers-lanes {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -983,11 +1000,16 @@
       <div class="tiers-header">
         <div class="section-label" style="justify-content: center;">Membership</div>
         <h2 id="tiers-heading">Find your place</h2>
-        <p>Choose the lane that matches your current priority — or go Premium for full access across all three. Free tier available, no time limit. Use the Start Free button above to begin.</p>
+        <p>Choose the lane that matches your current priority — or go Premium for full access across all three.</p>
+        <p class="tiers-free-note">A free tier is also available — no time limit, no credit card required.</p>
       </div>
       <div class="tiers-lanes">
 
         <div class="tier-card">
+          <svg class="tier-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M28 4C28 4 22 6 16 14C10 22 10 30 10 30C10 30 12 28 15 27C15 27 13 23 17 18C17 18 18 22 20 22C20 22 26 16 26 10C26 10 23 12 21 15C21 15 21 11 24 8C24 8 26 6 28 4Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/>
+            <path d="M10 30L8 33" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
           <div class="tier-name">Writing Lane</div>
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
@@ -998,6 +1020,14 @@
         </div>
 
         <div class="tier-card">
+          <svg class="tier-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="22" r="3" stroke="currentColor" stroke-width="1"/>
+            <path d="M12 28C12 28 10 25 10 22C10 19 12 16 14 14.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M24 28C24 28 26 25 26 22C26 19 24 16 22 14.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M8 31C8 31 5 27 5 22C5 17 8 13 11 10.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M28 31C28 31 31 27 31 22C31 17 28 13 25 10.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line x1="18" y1="25" x2="18" y2="32" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
           <div class="tier-name">Marketing Lane</div>
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
@@ -1008,6 +1038,11 @@
         </div>
 
         <div class="tier-card">
+          <svg class="tier-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="18" cy="18" r="4.5" stroke="currentColor" stroke-width="1"/>
+            <path d="M18 5V8M18 28V31M5 18H8M28 18H31M8.5 8.5L10.6 10.6M25.4 25.4L27.5 27.5M27.5 8.5L25.4 10.6M10.6 25.4L8.5 27.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M15 5.5H21V8.5H15V5.5ZM15 27.5H21V30.5H15V27.5ZM5.5 15V21H8.5V15H5.5ZM27.5 15V21H30.5V15H27.5Z" fill="currentColor" opacity="0.3"/>
+          </svg>
           <div class="tier-name">Production Lane</div>
           <div class="tier-price-group">
             <div class="tier-price">$10</div>
@@ -1021,6 +1056,14 @@
 
       <div class="tiers-premium">
         <div class="tier-card featured">
+          <svg class="tier-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="15" y="14" width="6" height="16" stroke="currentColor" stroke-width="1"/>
+            <path d="M13 30H23" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M14 14L16 6H20L22 14" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+            <circle cx="18" cy="5" r="2" stroke="currentColor" stroke-width="1"/>
+            <path d="M22 8L27 5M22 11L29 11M22 14L27 17" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.6"/>
+            <path d="M10 20H13M10 23H13M10 26H13" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+          </svg>
           <div class="tier-name">Premium</div>
           <div class="tier-price-group">
             <div class="tier-price">$29</div>
