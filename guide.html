@@ -10,7 +10,14 @@
   <script>
     var o_options = {
       domain: 'the-craft-beacon.outseta.com',
-      load: 'auth,leadCaptureForm'
+      load: 'auth,leadCaptureForm',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'redirect',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
