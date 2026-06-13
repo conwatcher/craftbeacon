@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Nobody Tells Indie Authors | CraftBeacon</title>
+  <meta name="description" content="A field guide to the platforms that run your career — the policy changes nobody announced, the defaults working against you, and the opportunities sitting unused." />
+
+  <!-- Outseta Quickstart — required for the newsletter form embed -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth,leadCaptureForm'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:      #0f0e0c;
+      --bg-surface:   #1a1814;
+      --bg-card:      #221f1a;
+      --border:       #2e2a24;
+      --amber:        #c8922a;
+      --amber-light:  #e0aa4a;
+      --amber-dim:    #7a5518;
+      --text-primary: #e8e0d0;
+      --text-body:    #c4b89a;
+      --text-dim:     #9a8f82;
+      --white:        #ffffff;
+      --font-serif:   'Georgia', 'Times New Roman', serif;
+      --font-sans:    'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── Header / Nav ── */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .nav-brand img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-brand-text {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--amber-light);
+      letter-spacing: 0.02em;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--amber-light); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--bg-deep) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.05em;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--amber-light) !important; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--text-primary);
+      line-height: 1.2;
+      max-width: 780px;
+      margin: 0 auto 1.2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-body);
+      max-width: 640px;
+      margin: 0 auto 0.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-attribution {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+    }
+
+    /* ── Main Content ── */
+    .content-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* ── Section Headers ── */
+    .guide-section {
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      margin-bottom: 0.6rem;
+    }
+
+    .guide-section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Individual Items ── */
+    .guide-item {
+      margin-bottom: 2.5rem;
+    }
+
+    .guide-item h3 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--amber-light);
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+    }
+
+    .guide-item p {
+      color: var(--text-body);
+      line-height: 1.8;
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0;
+    }
+
+    /* ── Final Note ── */
+    .final-note {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: 4px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .final-note p {
+      color: var(--text-body);
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+
+    .final-note p:last-child { margin-bottom: 0; }
+
+    /* ── Newsletter Block ── */
+    .newsletter-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .newsletter-block .nl-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-block h2 {
+      font-family: var(--font-serif);
+      font-size: 1.7rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .newsletter-block p {
+      color: var(--text-body);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    /* Outseta form styling overrides */
+    .outseta-form-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-brand {
+      font-family: var(--font-serif);
+      color: var(--amber-light);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--amber-light); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 0.8rem 0; gap: 0.8rem; }
+      nav { gap: 1rem; }
+      .content-wrapper { padding: 2.5rem 1.25rem; }
+      .newsletter-block { padding: 2rem 1.25rem; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/CraftBeacon Logo.png" alt="CraftBeacon" onerror="this.style.display='none'" />
+        <span class="nav-brand-text">CraftBeacon</span>
+      </a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/resources.html">Resources</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="https://the-craft-beacon.outseta.com/auth?widgetMode=register" class="nav-cta">Start Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <span class="hero-eyebrow">CraftBeacon Field Guide</span>
+    <h1>What Nobody Tells Indie Authors</h1>
+    <p class="hero-sub">A field guide to the platforms that run your career — the policy changes nobody announced, the defaults quietly working against you, and the opportunities sitting unused.</p>
+    <p class="hero-attribution">Produced by CraftBeacon &nbsp;·&nbsp; thecraftbeacon.com</p>
+  </section>
+
+  <!-- ── Guide Content ── -->
+  <main class="content-wrapper">
+
+    <!-- Section 1 -->
+    <div class="guide-section">
+      <p class="section-label">Section 1</p>
+      <h2>Amazon and KDP — What Has Changed and What Was Never True</h2>
+
+      <div class="guide-item">
+        <h3>The three-category ceiling is now a hard limit with no workaround.</h3>
+        <p>For years, authors were advised to request additional Amazon categories through KDP support, with the understanding that up to ten categories were available if you knew to ask. That system no longer exists. Amazon has eliminated the extended category request process entirely. The KDP support email address that authors were directed to use no longer accepts incoming mail, and the contact form routes through a chatbot that cannot action category expansion requests. You have three category slots. That is the full allocation. Any publishing resource still advising you to request more is working from outdated information.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>KDP Select enrollment is opt-in, not opt-out.</h3>
+        <p>When you create a new title in KDP, the KDP Select enrollment checkbox is checked by default. If you do not manually uncheck it during initial setup, your ebook is enrolled in a 90-day exclusivity window before you realize what has happened. KDP Select restricts your ebook from appearing on any competing retail or subscription platform for the duration of that window. The practical consequence is that authors who intend to publish wide from day one find themselves locked into Amazon exclusivity because the interface assumed they wanted to enroll. Uncheck that box intentionally during title creation. Reversing it after the fact requires waiting out the full enrollment period.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Your ISBN choice has distribution consequences most authors do not anticipate.</h3>
+        <p>KDP will assign a free ISBN to your paperback if you do not supply one. That ISBN is tied to KDP and cannot be transferred to another platform. If you later want your paperback distributed through IngramSpark using the same ISBN, you cannot — the KDP-assigned number belongs to Amazon's ecosystem. Authors who purchase their own ISBN through a registry such as Bowker and supply it at the time of KDP submission retain ownership of that identifier and can use it across platforms. The distinction seems administrative until the moment it matters, at which point it is not correctable without creating a new listing.</p>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="guide-section">
+      <p class="section-label">Section 2</p>
+      <h2>The Library Opportunity Most KDP Authors Are Sitting On</h2>
+
+      <div class="guide-item">
+        <h3>KDP Select exclusivity does not prevent library distribution.</h3>
+        <p>The widely held assumption is that KDP Select means your ebook is locked out of every channel except Amazon for 90 days. As of a policy change Amazon made in September 2025, that assumption is no longer accurate. Library distribution is now a permitted exception to the KDP Select exclusivity rule. While your ebook remains restricted from retail competitors and subscription platforms, it can now be distributed to library systems through aggregators such as Draft2Digital without violating your enrollment or costing you a single Kindle Unlimited page read.</p>
+        <p style="margin-top: 0.8rem;">The library platforms reachable through this exception include OverDrive, Hoopla, BorrowBox, cloudLibrary, and Vivlio Libraries — which covers library systems across France, Belgium, Switzerland, Germany, and Austria. The one operational requirement is that when setting up library distribution, you must select library channels only. Any selection of retail or subscription channels would constitute an actual exclusivity violation.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Library royalties are growing faster than most retail channels.</h3>
+        <p>Aggregated data from Draft2Digital for the January through April window comparing 2025 to 2026 shows library royalties growing roughly six times faster than their retail and subscription partners — approximately 24% year over year. Science fiction is specifically identified as one of the genres leaning into library distribution most aggressively. The shift toward one-copy, one-user lending models has roughly doubled the per-borrow royalty value compared to the previous year. Authors who are currently enrolled in KDP Select and unaware of this exception are leaving an expanding revenue channel entirely untouched.</p>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="guide-section">
+      <p class="section-label">Section 3</p>
+      <h2>Paid Social — What the Platforms Do Not Tell You</h2>
+
+      <div class="guide-item">
+        <h3>Meta's ad creative defaults are not neutral.</h3>
+        <p>When you boost a post or create a campaign in Meta Business Suite, six AI-enhanced creative toggles are switched on by default. These settings authorize Meta to alter your images, rewrite your copy, and modify your creative assets without additional approval from you. For authors who have spent time developing a specific visual identity or brand voice, this is a meaningful interference. The toggles are not prominently displayed. They must be manually located and disabled before you confirm your campaign. Leaving them active means your ad may be running creative that does not match what you submitted.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Changing your call-to-action on a live campaign resets the learning phase.</h3>
+        <p>Meta's ad delivery algorithm spends the early days of a campaign in what the platform calls a learning phase — a period during which it is identifying which users in your audience are most likely to take the action you specified. That accumulated data is discarded if you make certain edits to a live campaign, including changing the call-to-action button. If your campaign has been running for several days and showing improving performance, modifying the CTA restarts that process from zero. The instinct to optimize a running campaign is reasonable, but this particular edit is almost always more costly than the perceived improvement it delivers.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Facebook suppresses posts with external links in the caption.</h3>
+        <p>Facebook's algorithm de-prioritizes posts that contain clickable external links in the post caption, because the platform's business model is built on keeping users inside Facebook rather than sending them elsewhere. This is not a stated policy but a documented behavioral pattern visible in organic reach data. The conventional workaround — posting without a link and directing followers to the link in your bio — exists for this specific reason, not as a stylistic convention. Instagram enforces this structurally by prohibiting clickable links in captions entirely. Both platforms reward content that keeps users engaged on-platform, which means any post whose primary function is driving traffic away will receive less organic distribution than content that does not.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>The campaign objective determines what you actually buy.</h3>
+        <p>Meta offers multiple campaign objectives, and selecting the wrong one produces results that look like performance data but represent no actionable outcome. An objective optimized for profile visits will generate profile visits. An objective optimized for post reach will generate impressions. Neither of these is the same as landing page clicks that send a potential reader to your book listing. Before confirming any campaign, verify that the objective is explicitly set to drive external link clicks or landing page visits, and that the platform has not defaulted to a traffic type that serves its own engagement metrics rather than your commercial goal.</p>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="guide-section">
+      <p class="section-label">Section 4</p>
+      <h2>Reddit and Genre Communities — The Rules Under the Rules</h2>
+
+      <div class="guide-item">
+        <h3>Cross-posting is visible to the community and treated as broadcast behavior.</h3>
+        <p>Reddit's interface appends a label to any post that has been cross-posted from another subreddit. That label is visible to every reader in the community receiving the cross-post, and it signals immediately that the content was not written for them specifically. Genre communities on Reddit have well-developed radar for promotional behavior dressed as participation. A labeled cross-post is processed as exactly what it is: a broadcast message sent to multiple communities at once rather than a genuine contribution to the conversation. Each subreddit where you intend to post requires its own individually written submission.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Subreddit automod rules are invisible until triggered.</h3>
+        <p>Most active subreddits run automated moderation filters that will hold or remove posts meeting certain criteria — minimum account age, minimum karma threshold, presence of links, specific keywords, and other conditions that vary by community. These rules are not published in a place that new participants would naturally find before posting. The first indication that a rule exists is often a removed post or a moderation hold with a minimal explanation. Before posting in any subreddit that is commercially relevant to your work, review the community's rules page thoroughly and, where possible, observe the posting patterns of established members before contributing your own content.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>The contribution ratio is the single most important variable in Reddit strategy.</h3>
+        <p>Hard science fiction and genre fiction communities on Reddit extend meaningful reach to authors who have established themselves as genuine participants in the conversation. A rough working ratio is 90% contribution to 10% promotion. An author who arrives in a community and posts promotional content as their primary activity will be filtered out by the community's social immune system regardless of how the post is technically formatted. The same post, submitted by someone with an established presence in the community, will receive entirely different treatment. The investment required to build that presence is not optional if Reddit is part of your strategy.</p>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="guide-section">
+      <p class="section-label">Section 5</p>
+      <h2>Print Distribution — IngramSpark vs. KDP Print</h2>
+
+      <div class="guide-item">
+        <h3>A cover file built for KDP cannot be submitted to IngramSpark without recalculation.</h3>
+        <p>The two platforms calculate spine width differently, which means the dimensions of a print cover prepared for KDP will be incorrect for IngramSpark even if the page count and trim size are identical. Submitting a KDP cover file to IngramSpark will produce a rejection or a visually incorrect result. Each platform requires its own cover file built from that platform's specific template calculator. Authors who discover this after the fact and attempt to reuse existing files spend significant time troubleshooting problems that are not fixable without rebuilding the cover from the correct specifications.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>IngramSpark provides meaningfully better access to library and bookstore wholesale channels.</h3>
+        <p>KDP Print offers an extended distribution option that places your print book in non-Amazon channels, but the wholesale terms and retailer relationships available through IngramSpark are generally considered superior for reaching independent bookstores, library systems, and international distribution. IngramSpark titles flow through Ingram's wholesale network, which is the primary distributor relationship that brick-and-mortar booksellers and library acquisition systems use. If physical retail presence and library availability matter to your distribution strategy, IngramSpark is the more effective tool for that purpose. Using both platforms simultaneously for print is possible, but the cover file incompatibility means the work must be done twice.</p>
+      </div>
+
+      <div class="guide-item">
+        <h3>Font embedding errors in IngramSpark PDFs are best resolved through Ghostscript.</h3>
+        <p>IngramSpark's file validation process will flag PDFs that contain fonts which are not fully embedded in the document. The instinct for most authors is to return to the source document, make adjustments, and re-export. In practice, re-exporting from the source frequently does not resolve the underlying embedding issue and produces the same error on resubmission. The more reliable fix is processing the existing PDF through Ghostscript — a free, command-line tool that can force full font embedding during a PDF conversion pass. This approach resolves embedding errors that source-document reconversion does not, and it preserves the visual integrity of the formatted file.</p>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="guide-section">
+      <p class="section-label">Section 6</p>
+      <h2>Goodreads — The Email Problem Nobody Warns You About</h2>
+
+      <div class="guide-item">
+        <h3>Account email mismatch is the most common reason Goodreads Author Program applications stall.</h3>
+        <p>The Goodreads Author Program verifies authorship by cross-referencing the email address on your Goodreads account against the email address associated with your publisher or distributor account. Authors who use different email addresses for different publishing-related accounts frequently find their applications stall or reject without a clear explanation of why. The specific failure pattern is this: the Goodreads account is registered under one address, the author's public contact or website displays a second address, and the actual KDP account operates under a third. When Goodreads cannot find a match between the account on file and the distributor record, the verification process fails silently. Before submitting an Author Program application, confirm which email address your KDP account actually uses and ensure your Goodreads account is registered under the same address.</p>
+      </div>
+    </div>
+
+    <!-- Final Note -->
+    <div class="final-note">
+      <p>Every item in this document came from a real decision, a real platform, and a real consequence — not from a blog post written about publishing in the abstract. The landscape changes frequently, and some of what is accurate today will require updating within a year or two as platforms adjust their policies. Staying current requires active attention to platform communications, community knowledge-sharing, and the willingness to verify before assuming advice you received six months ago still applies.</p>
+      <p>CraftBeacon exists to keep that intelligence current and accessible. The tools, resources, and ongoing guidance available at thecraftbeacon.com are built around the same principle this document represents: authors deserve to know how the industry actually works, not just how it is supposed to.</p>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="newsletter-block">
+      <p class="nl-eyebrow">Stay Current</p>
+      <h2>Author Intelligence, When It Matters</h2>
+      <p>CraftBeacon publishes periodic author intelligence — platform changes, industry shifts, and practical guidance like what you just read. No noise. Just what's actually useful.</p>
+      <div class="outseta-form-wrap">
+        <div data-o-lead-capture="1"
+             data-form-uid="Rm8rxY94"
+             data-mode="embed">
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-brand">CraftBeacon</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/resources.html">Resources</a>
+        <a href="/guide.html">Field Guide</a>
+        <a href="/dashboard.html">Dashboard</a>
+      </div>
+      <p class="footer-copy">© 2026 CraftBeacon · thecraftbeacon.com · The writing coach that never writes for you.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
