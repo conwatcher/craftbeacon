@@ -6,7 +6,7 @@
   <title>What Nobody Tells Indie Authors | CraftBeacon</title>
   <meta name="description" content="A field guide to the platforms that run your career — the policy changes nobody announced, the defaults working against you, and the opportunities sitting unused." />
 
-  <!-- Outseta Quickstart — required for the newsletter form embed -->
+  <!-- Outseta Quickstart -->
   <script>
     var o_options = {
       domain: 'the-craft-beacon.outseta.com',
@@ -315,6 +315,38 @@
       color: var(--text-dim);
     }
 
+    /* ── Floating Subscribe Button ── */
+    .float-subscribe {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--amber);
+      color: var(--bg-deep);
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.65rem 1.1rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .float-subscribe:hover {
+      background: var(--amber-light);
+      transform: translateY(-2px);
+    }
+
+    .float-subscribe svg {
+      flex-shrink: 0;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 640px) {
       .nav-inner { flex-wrap: wrap; height: auto; padding: 0.8rem 0; gap: 0.8rem; }
@@ -322,11 +354,24 @@
       .content-wrapper { padding: 2.5rem 1.25rem; }
       .newsletter-block { padding: 2rem 1.25rem; }
       .hero { padding: 3rem 1.25rem 2.5rem; }
+      .float-subscribe { bottom: 1.25rem; right: 1.25rem; font-size: 0.78rem; padding: 0.6rem 1rem; }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- ── Floating Subscribe Button ── -->
+  <a class="float-subscribe"
+     href="https://the-craft-beacon.outseta.com/forms/Rm8rxY94">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+    Stay Current
+  </a>
 
   <!-- ── Header ── -->
   <header>
@@ -338,6 +383,7 @@
       <nav>
         <a href="/">Home</a>
         <a href="/resources.html">Resources</a>
+        <a href="/dashboard.html">Dashboard</a>
         <a href="https://the-craft-beacon.outseta.com/auth?widgetMode=register" class="nav-cta">Start Free</a>
       </nav>
     </div>
@@ -482,13 +528,12 @@
       <p class="nl-eyebrow">Stay Current</p>
       <h2>Author Intelligence, When It Matters</h2>
       <p>CraftBeacon publishes periodic author intelligence — platform changes, industry shifts, and practical guidance like what you just read. No noise. Just what's actually useful.</p>
-      <a href="https://the-craft-beacon.outseta.com/forms/Rm8rxY94"
-         data-o-lead-capture="1"
-         style="display:inline-block;background:#c8922a;color:#0f0e0c;font-weight:600;
-                font-size:0.95rem;letter-spacing:0.05em;padding:0.8rem 2rem;
-                border-radius:4px;text-decoration:none;">
-        Subscribe to Author Intelligence
-      </a>
+      <div class="outseta-form-wrap">
+        <div data-o-lead-capture="1"
+             data-form-uid="Rm8rxY94"
+             data-mode="embed">
+        </div>
+      </div>
     </div>
 
   </main>
