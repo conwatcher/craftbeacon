@@ -819,26 +819,7 @@ function detectTier(user) {
       return null;
     }
 
-    function getTokenFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const fromQuery = params.get('access_token') ||
-             params.get('accessToken') ||
-             params.get('token') ||
-             [...params.values()].find(v => v && v.split('.').length === 3);
-      if (fromQuery) return fromQuery;
-      const hash = window.location.hash.substring(1);
-      if (hash) {
-        const hashParams = new URLSearchParams(hash);
-        const fromHash = hashParams.get('access_token') ||
-               hashParams.get('accessToken') ||
-               hashParams.get('token') ||
-               [...hashParams.values()].find(v => v && v.split('.').length === 3);
-        if (fromHash) return fromHash;
-      }
-      return null;
-    }
-
-    function initAuth() {
+        function initAuth() {
       let resolved = false;
 
       function resolve(user) {
