@@ -821,6 +821,11 @@ function detectTier(user) {
 
         function findStoredToken() {
       try {
+        const cbToken = localStorage.getItem('cb_token');
+        if (cbToken && cbToken.split('.').length === 3) {
+          const user = readToken(cbToken);
+          if (user && user.Email) return user;
+        }
         const keys = Object.keys(localStorage);
         for (const key of keys) {
           const val = localStorage.getItem(key);
@@ -849,11 +854,9 @@ function detectTier(user) {
       }
 
       // First: check if token is in the URL right now
-      const urlToken = getTokenFromUrl();
-      if (urlToken) {
-        resolve(readToken(urlToken));
-        return;
-      }
+      
+
+    function initAuth() {
 
       // Second: listen for Outseta to fire the event
       Outseta.on('accessToken.set', function(token) {
@@ -1040,7 +1043,7 @@ function detectTier(user) {
       try {
         const res = await fetch(RELAY, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem('cb_token') || '') },
           body: JSON.stringify({ system: SYSTEM, messages: history, membership_tier: tier })
         });
 
