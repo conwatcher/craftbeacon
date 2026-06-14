@@ -1,130 +1,54 @@
 # CraftBeacon — Decisions Log
-*Last updated: June 14, 2026*
-
-A running record of decisions made, with rationale. Newest entries at top.
+*Append new entries at the top. Most recent session first.*
 
 ---
 
-## June 14, 2026
+## Session: June 14, 2026 (evening)
 
-**Duplicate getTokenFromUrl() function removed from dashboard.html**
-- Two identical function definitions existed; caused unpredictable token behavior
-- Removed the second copy; single clean function remains
-- Root cause: paste accident during a previous edit session
+### Decisions Made
 
-**findStoredToken() function added to dashboard.html**
-- Function was called in three places inside initAuth() but never defined
-- Fresh logins worked because URL token path never called it; refresh broke because fallback path hit missing function
-- Added above initAuth(); scans localStorage for any value that looks like a valid JWT
+**1. Model routing by tier — IMPLEMENTED**
+- Free tier routes to `claude-haiku-4-5`; all paid tiers route to `claude-sonnet-4-6`
+- Rationale: Haiku is faster and significantly cheaper per message, protecting API budget as free tier grows. Sonnet's deeper reasoning serves the diagnostic and structural coaching paid members are paying for.
+- Implementation: single ternary line in Val.town relay replacing the hardcoded model string.
 
-**Token caching added for refresh resilience**
-- On successful URL token login, token now saved to cb_token in localStorage
-- findStoredToken() checks cb_token first before scanning all localStorage keys
-- Rationale: Outseta initializes slowly on refresh; scanning for our own known key is instant
+**2. Dead system prompt removed from dashboard.html**
+- Patrick performed the edit directly in VS Code — part of his developer training with Stan.
+- Rationale: ~200 lines of proprietary coaching logic were publicly visible in page source despite no longer being used (prompt now lives server-side in the relay).
+- Side effect: removal accidentally deleted `let currentUser = null;` which was adjacent to the SYSTEM block. Restored in the same session.
 
-**Val.town relay — Bearer token authentication added**
-- Relay now requires Authorization: Bearer {token} header on every request
-- Requests without a valid token receive 401 Unauthorized
-- Rationale: Stan demonstrated direct API access from browser console with no authentication
+**3. Manual regression checklist created instead of automated testing**
+- Stan recommended automated unit and regression tests via Claude Code.
+- Decision: manual checklist is the right tool for CraftBeacon's current scale and Patrick's technical comfort level. Automated testing would require terminal-level operations and infrastructure setup that doesn't justify the overhead yet.
+- File: `CraftBeacon-RegressionChecklist.md` — 20 tests across 5 sections, added to repo.
 
-**System prompt moved server-side into Val.town relay**
-- Previously: full system prompt transmitted from dashboard.html with every request
-- Now: system prompt lives only in relay; never travels over the wire
-- Rationale: System prompt was visible in browser network inspection
+**4. Cache-busting parameter added to Re-Entry Brief fetch URL**
+- GitHub's raw file CDN was serving stale cached versions of the brief.
+- Solution: append `?nocache=1` to the raw.githubusercontent.com URL in continuation prompts.
+- Documented at the bottom of the Re-Entry Brief itself.
 
-**Tier detection moved server-side**
-- Previously: dashboard sent membership_tier in request body; client could fake any tier
-- Now: relay decodes JWT, reads outseta:planUid claim, determines tier server-side
-- detectTier() function in relay maps plan UIDs to tier names
-- Rationale: Closes client-side tier spoofing vulnerability Stan identified
+### Bugs Resolved
 
-**Dashboard fetch call simplified**
-- Previously sent: system, messages, membership_tier
-- Now sends: messages, user_id only (plus Authorization header)
-- Rationale: Nothing sensitive should travel from browser to relay
+- **Free tier login loop** — duplicate `initAuth()` function and missing URL token check; merged into single clean function.
+- **Missing `currentUser` variable** — accidentally deleted during SYSTEM prompt removal; restored.
+- **Outdated model string** — `claude-sonnet-4-20250514` retired by Anthropic; updated to `claude-sonnet-4-6` (with Haiku routing for free tier).
 
-**Google Analytics added to resources.html and guide.html**
-- Both pages were missing the GA tag entirely
-- Measurement ID: G-FRZ967M5K9
-- Rationale: Resources page is heavily promoted in community outreach; guide.html is primary lead magnet; both need traffic visibility
+### Key Observations
 
-**Google Workspace billing noted**
-- Free trial ends; paid billing begins July 1, 2026
-- Payment method confirmed on file; no action required
-- Confusing email received (headline said "tomorrow" but details said July 1); confirmed July 1 is correct
+- Stan is functioning as both beta tester and developer trainer — asking Patrick "what would you prompt Claude to achieve this?" rather than just doing the work himself. This is building Patrick's product ownership skills.
+- CraftBeacon's coaching behavior confirmed working correctly: tier gating enforced, redirect protocol functional, conversation history maintained within sessions, free tier appropriately scoped.
+- API credits at $3.01 with auto-reload turned off — needs attention before launch traffic.
 
 ---
 
-## June 12, 2026
+## Session: June 14, 2026 (morning — with Stan)
 
-**Field Guide page built and launched**
-- Created guide.html as standalone lead magnet page
-- URL: thecraftbeacon.com/guide.html
-- Content: "What Nobody Tells Indie Authors" resource guide (6 sections)
-- Rationale: Drive traffic to site ungated; let free tier do conversion work
+### Decisions Made
 
-**Newsletter signup approach: Outseta lead capture form**
-- Form UID: Rm8rxY94 (Newsletter Signup)
-- Fields: Email + First Name only (Last Name removed for reduced friction)
-- Embed approach failed on GitHub Pages static site; resolved with direct Outseta form URL
-- Post-submission redirects to guide.html (set in Outseta, not in code)
-- Rationale: Stay in Outseta, keep everything under one roof, separate pipeline from member welcome email
-
-**Floating "Stay Current" button added to guide.html**
-- Fixed position bottom-right, amber pill style, envelope icon
-- Opens same Outseta form URL as bottom-of-page button
-- Rationale: Long scroll page — reader shouldn't have to reach the bottom to find signup
-
-**guide.html nav simplified**
-- Removed Dashboard link from guide.html nav
-- Kept: Home | Resources | Start Free
-- Rationale: Page audience is newcomers, not logged-in members; dashboard link would dead-end them
-
-**Field Guide nav link added to index.html and dashboard.html**
-- Label: "Field Guide"
-- index.html: added to nav-links ul after Resources
-- dashboard.html: added as header-nav-link after Resources
-
-**NotebookLM slide deck — flagged, not deployed**
-- Visual treatment is on-brand and high quality
-- Content has accuracy problems: lane descriptions drift from spec, free tier claims incorrect, Marketing Lane implies content generation
-- Decision: Do not use publicly until content is corrected
+- Relay secured with Bearer token authentication
+- System prompt moved server-side into Val.town relay
+- Tier detection moved server-side — relay reads planUid from JWT
+- Three dashboard bugs fixed (duplicate getTokenFromUrl, missing findStoredToken, refresh-logout)
+- Google Analytics added to resources.html and guide.html
 
 ---
-
-## Pre-June 12 (carried forward from previous log)
-
-**DOCX file upload removed**
-- Faulty extraction producing hallucination risk
-- Deferred proper parsing to future phase
-- Accepted file types: .txt and .md only
-
-**Outseta replaces MailerLite for welcome email**
-- No native integration existed; avoiding paid connectors (Zapier) was correct at this stage
-- Welcome email built and live in Outseta subscriber system
-
-**CSS contrast fix applied**
-- --cb-dim changed from #5a5448 to #9a8f82 in resources.html and index.html
-- Improved readability of sidebar nav text and lane card bullet points
-- Fix was to underlying variable, not font size or layout
-
-**Val.town max_tokens bumped to 4000**
-- Previous limit of 2000 was causing mid-sentence cutoffs
-- All 13 pre-launch stress tests passed after change
-
-**Free tier framing locked**
-- Language: "Free to start, no time limit, no credit card required"
-- Never use trial-adjacent language
-
-**Red Foundations Publishing footer removed**
-- CraftBeacon intentionally brand-separate from Red Foundations Publishing
-- Removed from index.html and dashboard.html
-
-**Mobile Chrome login loop — deferred**
-- Token stores but dashboard can't read it
-- Not blocking launch; post-launch fix
-
-**Model routing by tier — deferred**
-- Haiku for free / Sonnet for paid not implemented
-- All calls currently route to same model
-- Future cost management item, not urgent at current scale
