@@ -1,5 +1,5 @@
 # CraftBeacon — Re-Entry Brief
-*Last updated: June 12, 2026*
+*Last updated: June 14, 2026*
 
 ---
 
@@ -40,9 +40,11 @@ Free tier framing: *"Free to start, no time limit, no credit card required"* —
 
 ---
 
-## Current Platform Status (as of June 12, 2026)
+## Current Platform Status (as of June 14, 2026)
 
-**Launch date: June 15, 2026**
+**Launched June 15, 2026. Live and active.**
+
+Active beta tester: Stan (Australia) — assisting with security and bug testing.
 
 All core systems confirmed working:
 - Membership flow and tier gating
@@ -63,32 +65,50 @@ All core systems confirmed working:
 |---|---|---|
 | Home | thecraftbeacon.com | Main marketing page |
 | Dashboard | thecraftbeacon.com/dashboard.html | Member coaching interface |
-| Resources | thecraftbeacon.com/resources.html | Free resource library |
-| Field Guide | thecraftbeacon.com/guide.html | Lead magnet page — NEW |
+| Resources | thecraftbeacon.com/resources.html | Free resource library — Analytics added June 14 |
+| Field Guide | thecraftbeacon.com/guide.html | Lead magnet page — Analytics added June 14 |
 
 ---
 
-## Field Guide Page (NEW — built this session)
+## Security Hardening — June 14, 2026
 
-**File:** guide.html  
-**URL:** thecraftbeacon.com/guide.html  
-**Content:** "What Nobody Tells Indie Authors" — 6-section resource guide  
-**Purpose:** Lead magnet driving traffic to site; newsletter signup at bottom  
+Major security session completed with Stan's assistance. Three critical issues found and fixed:
 
-Newsletter signup:
-- Outseta lead capture form, UID: Rm8rxY94
-- Form name: Newsletter Signup
-- Fields: Email (required), First Name (required)
-- Post-submission: redirects back to guide.html
-- Trigger: "Stay Current" floating pill button (bottom-right, fixed) + inline button at bottom of page
-- Confirmation message: *"You're on the list. CraftBeacon sends periodic author intelligence..."*
+**1. Duplicate getTokenFromUrl() function removed from dashboard.html**
+- Two identical function definitions were causing unpredictable token reading behavior
+- Removed the duplicate; single clean function remains
 
-Nav on guide.html: Home | Resources | Start Free (no Dashboard link)
+**2. findStoredToken() function was missing entirely**
+- Called in three places inside initAuth() but never defined
+- Fresh logins worked (URL token path); refresh/navigation broke (fell through to missing function)
+- Function added above initAuth(); reads localStorage for valid JWT
+
+**3. Token caching added for refresh resilience**
+- On first login, token now saved to localStorage under key cb_token
+- findStoredToken() checks cb_token first before scanning all localStorage
+- Fixes dashboard logout-on-refresh behavior
+
+**4. Val.town relay secured — system prompt moved server-side**
+- Relay now requires valid Bearer token with every request (401 if missing or expired)
+- System prompt moved entirely into relay — no longer transmitted from browser
+- Tier detection moved server-side — relay reads plan UID from JWT, not from client payload
+- Dashboard now sends only: messages array + user_id. Nothing sensitive travels over the wire.
+
+**Known remaining gap:** JWT signature is not cryptographically verified at the relay — expiry and email claims are checked but Outseta's signing key is not used. Not urgent at current scale; flagged for future hardening.
+
+---
+
+## ACTIVE BUG — Needs immediate attention next session
+
+**Free tier login broken after June 14 security changes.**
+Stan reports free tier accounts spin indefinitely on the dashboard after the relay security changes were deployed. Paid tier accounts appear unaffected. Most likely cause: free tier Outseta tokens may not contain the `outseta:planUid` claim that the relay now uses for tier detection — or the claim has a different format for free accounts. The relay's token verification block may be rejecting free tokens as unauthorized. **This is the first thing to fix in the next session.**
 
 ---
 
 ## Open Items (Drinks in the Fridge)
 
+- **FREE TIER LOGIN BUG** — broken after June 14 relay security changes; first priority next session
+- **JWT signature verification** — relay checks expiry/email but not cryptographic signature; future hardening item
 - **Mobile Chrome login loop** — token stores but dashboard can't read it; deferred post-launch
 - **B3 crisis false positive edge case** — post-launch smoothing item
 - **Response length tuning** — monitor after real user sessions begin
@@ -98,21 +118,29 @@ Nav on guide.html: Home | Resources | Start Free (no Dashboard link)
 - **Ad spend strategy** — boosting window using Launch Announcement variants
 - **Custom pricing page** — individual Outseta plan signup links; future enhancement
 - **Welcome email header logo** — location within Outseta Design/Email settings unresolved
-- **Sections 4 and 5 of system prompt** — may already be in consolidated Val.town prompt; verify
-- **NotebookLM slide deck** — beautiful visuals, inaccurate content; needs correction before any public use
-- **Facebook post drafts** — Patrick has 5 drafts to review next session
-- **Newsletter broadcast cadence** — bi-weekly or monthly; content strategy not yet defined
+- **Google Workspace billing** — free trial ends; paid billing starts July 1, 2026; payment method confirmed on file
 
 ---
 
-## Session Document Locations (GitHub)
+## Key Contacts
 
-- Re-Entry Brief: github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-ReEntryBrief.md
-- Decisions Log: github.com/conwatcher/craftbeacon/blob/main/CraftBeacon-DecisionsLog.md
+| Person | Role | Notes |
+|---|---|---|
+| Stan | Beta tester | Australia; developer-level; actively probing security |
+| Elizabeth Sloan | Community member | Provided accessibility feedback |
 
 ---
 
-## How to Start a Session
+## Field Guide Page
 
-Patrick opens with a continuation prompt containing the GitHub Re-Entry Brief URL. Claude fetches it, reads the Decisions Log, and begins oriented. No re-explanation of known context needed.
+**File:** guide.html
+**URL:** thecraftbeacon.com/guide.html
+**Content:** "What Nobody Tells Indie Authors" — 6-section resource guide
+**Purpose:** Lead magnet driving traffic to site; newsletter signup at bottom
 
+Newsletter signup:
+- Outseta lead capture form, UID: Rm8rxY94
+- Form name: Newsletter Signup
+- Fields: Email (required), First Name (required)
+- Post-submission: redirects back to guide.html
+- Trigger: "Stay Current" floating pill button (bottom-right, fixed) + inline button at bottom of page
