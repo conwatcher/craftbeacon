@@ -845,7 +845,6 @@ function detectTier(user) {
         if (resolved) return;
         resolved = true;
         if (user && user.Email) {
-          // Clean the token out of the URL without reloading the page
           window.history.replaceState({}, document.title, '/dashboard.html');
           setupDashboard(user);
         } else {
@@ -854,12 +853,16 @@ function detectTier(user) {
       }
 
       // First: check if token is in the URL right now
-      
-
-    function initAuth() {
+      const urlToken = getTokenFromUrl();
+      if (urlToken) {
+        localStorage.setItem('cb_token', urlToken);
+        const user = readToken(urlToken);
+        if (user && user.Email) { resolve(user); return; }
+      }
 
       // Second: listen for Outseta to fire the event
       Outseta.on('accessToken.set', function(token) {
+        if (token) localStorage.setItem('cb_token', token);
         const user = token ? readToken(token) : findStoredToken();
         resolve(user);
       });
@@ -876,7 +879,6 @@ function detectTier(user) {
           resolve(user);
         } else if (retryCount >= maxRetries) {
           clearInterval(retryInterval);
-          // Final attempt: give Outseta one last moment then decide
           setTimeout(function() {
             if (!resolved) {
               const lastTry = findStoredToken();
