@@ -1044,7 +1044,7 @@ function detectTier(user) {
         const res = await fetch(RELAY, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem('cb_token') || '') },
-          body: JSON.stringify({ system: SYSTEM, messages: history, membership_tier: tier })
+          body: JSON.stringify({ messages: history, user_id: currentUser ? currentUser.Email : null })
         });
 
         if (!res.ok) throw new Error('relay');
