@@ -532,6 +532,7 @@
     let count     = 0;
     let tier      = 'free';
     let busy          = false;
+    let currentUser   = null;
     let attachedFile  = null;
     const CHAR_LIMIT  = 50000;
 
@@ -555,6 +556,7 @@ function detectTier(user) {
 
     // ── Auth ───────────────────────────────────────────────────────
     function setupDashboard(user) {
+      currentUser = user;
       tier = detectTier(user);
       document.getElementById('tierBadge').textContent = tierLabel(tier);
       document.getElementById('userName').textContent  = user.FirstName || user.Email || 'Member';

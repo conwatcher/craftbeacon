@@ -1,5 +1,5 @@
 # CraftBeacon — Re-Entry Brief
-*Last updated: June 14, 2026*
+*Last updated: June 14, 2026 (evening session)*
 
 ---
 
@@ -98,16 +98,23 @@ Major security session completed with Stan's assistance. Three critical issues f
 
 ---
 
-## ACTIVE BUG — Needs immediate attention next session
+## ACTIVE BUG — Resolved June 14 (evening)
 
-**Free tier login broken after June 14 security changes.**
-Stan reports free tier accounts spin indefinitely on the dashboard after the relay security changes were deployed. Paid tier accounts appear unaffected. Most likely cause: free tier Outseta tokens may not contain the `outseta:planUid` claim that the relay now uses for tier detection — or the claim has a different format for free accounts. The relay's token verification block may be rejecting free tokens as unauthorized. **This is the first thing to fix in the next session.**
+**Free tier login was broken after June 14 security changes — now fixed.**
+
+Root cause identified and resolved. The relay was not the problem — free tier tokens contain a valid `outseta:planUid` claim (`dQGgqpQ4`) already mapped correctly in the relay's `detectTier()` function. The actual problem was in dashboard.html:
+
+1. **Duplicate `initAuth()` function** — a second `function initAuth()` definition had been inserted inside the first one during the morning security session, making the inner `resolve()` function unreachable.
+2. **Missing URL token check** — the comment "First: check if token is in the URL right now" existed but the actual code calling `getTokenFromUrl()` had been deleted. Outseta delivers tokens via URL on login, so free tier users arriving fresh from login had their token ignored entirely. The dashboard fell through to the localStorage retry loop, found nothing, and spun indefinitely.
+
+Fix: merged both broken `initAuth` definitions into one clean function that correctly reads the URL token first, stores it to localStorage as `cb_token`, then falls through to the Outseta event listener and localStorage retry as fallbacks. Confirmed working on Patrick's free account. Awaiting Stan's confirmation.
 
 ---
 
 ## Open Items (Drinks in the Fridge)
 
-- **FREE TIER LOGIN BUG** — broken after June 14 relay security changes; first priority next session
+- **Dead system prompt in dashboard.html** — the full `const SYSTEM` block (approx. 200 lines of proprietary coaching logic) is still in the dashboard JavaScript from before the relay security changes. It is no longer used — the prompt lives server-side in the relay now — but it is publicly visible to anyone who views page source. Should be deleted. Simple edit: remove the `const SYSTEM = \`...\`` block entirely from dashboard.html.
+- **Stan's final confirmation** — free tier login fix deployed; awaiting Stan's test result to confirm fully resolved
 - **JWT signature verification** — relay checks expiry/email but not cryptographic signature; future hardening item
 - **Mobile Chrome login loop** — token stores but dashboard can't read it; deferred post-launch
 - **B3 crisis false positive edge case** — post-launch smoothing item
@@ -144,3 +151,9 @@ Newsletter signup:
 - Fields: Email (required), First Name (required)
 - Post-submission: redirects back to guide.html
 - Trigger: "Stay Current" floating pill button (bottom-right, fixed) + inline button at bottom of page
+
+---
+
+*How to use this document: At the start of any new CraftBeacon session, tell Claude "read the Re-Entry Brief and orient me." Claude will read this file, brief you in plain language on where things stand, and you can move directly into work. At the close of any session, ask Claude to update this document before you leave.*
+
+*Fetch URL for Claude: `https://raw.githubusercontent.com/conwatcher/craftbeacon/main/CraftBeacon-ReEntryBrief.md?nocache=1` — the `?nocache=1` parameter prevents GitHub's CDN from serving a cached version. Always use this URL in continuation prompts.*
