@@ -7,7 +7,7 @@
 
 ## Where We Stand
 
-CraftBeacon is live and functional end-to-end. GitHub Pages front end at thecraftbeacon.com, Val.town AI relay connected to the Anthropic API, Outseta handling memberships and payments via Stripe, and Supabase logging coaching sessions. The dashboard is working with streaming responses and a free-tier message counter.
+CraftBeacon is live and functional end-to-end. GitHub Pages front end at thecraftbeacon.com, Val.town AI relay connected to the Anthropic API, Outseta handling memberships and payments via Stripe, and Supabase logging coaching sessions. The dashboard is working with streaming responses and a free-tier message counter. Mobile Chrome login is now fully functional alongside desktop browsers and mobile Safari.
 
 The platform has crossed launch and is actively acquiring users. Google Analytics for the first week shows healthy traction: 164 homepage views, 100 dashboard views (400% growth — meaning real signups, not just curiosity traffic), 24 Resources page views. Traffic is splitting cleanly across Direct (72), Organic Social (31), Paid Social (16), and Referral (14). US dominant, UK second.
 
@@ -17,13 +17,26 @@ Organic growth signals are emerging: followers, shares, and 8 email subscribers 
 
 ---
 
+## Test Accounts
+
+Two test accounts are maintained for edge case testing across tiers:
+
+- **conwatcher@gmail.com** — Free tier
+- **pjcereste@gmail.com** — Premium tier
+
+Both are real accounts used deliberately to verify tier-specific behaviors without incurring test charges.
+
+---
+
 ## Last Session
 
 We resolved the mobile Chrome login loop that had been blocking real users since launch. This had been an open item across multiple sessions with several failed fix attempts. It turned out to be four stacked problems, not one — JWT base64 padding stricter on mobile Chrome, Outseta script blocking page execution, a race condition between the old initAuth function and the new bootDashboard, and URL cleanup firing before dashboard render with no fallback. Combination of all four fixes resolved it. Tablet Chrome login now lands cleanly on the dashboard, faster than expected.
 
 The temporary amber "mobile Chrome unsupported" banner has been removed from index.html. New visitors see a clean homepage.
 
-We also resolved a workflow understanding issue: GitHub repository documents can only be reliably fetched at session start when working from a desktop browser. Mobile fetches frequently fail. Patrick's workflow adjusts — only update session documents from the laptop, never from phone or tablet.
+We also resolved a workflow understanding issue: GitHub repository documents can only be reliably fetched at session start when working from a desktop browser. Mobile fetches frequently fail because the GitHub connector is not available on mobile. Patrick's workflow adjusts — only update session documents from the laptop, never from phone or tablet.
+
+We also cleared several stale items from the brief that were old artifact notes rather than pending work — Sections 4 and 5 system prompt integration, referral system text in 3.4, and the custom pricing page were all already resolved or were never pending in the first place.
 
 ---
 
@@ -33,18 +46,22 @@ We also resolved a workflow understanding issue: GitHub repository documents can
 
 - **Outseta welcome email** — needs verification that it's active and sending. Source of header logo not yet located in Outseta interface. Next priority.
 - **Weekly tips newsletter** — structure and first issue not yet built. Strategy: lesser tip on Facebook pointing to full weekly newsletter, field guide as subscriber gift. Cross-posting approach confirmed.
-- **Patrick's Outseta account** — needs to be set to Premium so all tier behaviors can be tested without charges. Not yet done.
-- **Sections 4 and 5 of the system prompt** — drafted and approved in the section files but not yet integrated into the condensed live prompt running on Val.town.
-- **Referral system text** — drafted and approved for Section 3.4 of the system prompt documents but not yet inserted into the file.
+- **Patrick's Outseta account set to Premium** — needs to be set so all tier behaviors can be tested without charges. Not yet done.
 - **Model routing by tier** — Haiku for free tier, Sonnet for paid tiers in the Val.town relay. Currently all tiers route to the same model. Flagged as a cost-management item. Not urgent yet.
 - **Author Decision Record** — a downloadable PDF report for Premium members showing coaching session summaries. Requires enriching Supabase session logging first. Future build item.
 - **Supabase inactivity warning** — managed via Friday evening calendar reminder to use Premium test account for 15 minutes until real subscriber activity takes over. Long term: upgrade to Supabase Pro (~$25/month) once consistent paying users.
-- **Adversarial prompt testing** — using Claude to systematically try to break CraftBeacon's content generation line before more testers see it. Patrick has compiled suggestions from other AI tools. Session not yet run.
 - **Analytics strategy** — Google Analytics is installed and producing data, but no one has defined what to measure long-term, what events to track, or what a useful early-signal dashboard looks like.
-- **Custom pricing page** — not yet built. Five individual Outseta plan signup URLs are saved in Patrick's Vault. Page should present tiers in Patrick's preferred order with full CraftBeacon brand styling rather than Outseta's alphabetically fixed display.
 - **Email/onboarding sequences** — no tester offboarding email, no free tier onboarding email, no nurture sequence exists yet.
 - **Organic marketing voice — lottery ticket framing** — Patrick's "lottery ticket" comment in a Facebook author group continues to resonate. Worth considering for future pain point posts, ad copy, and potentially homepage messaging.
 - **Two-piece marketing strategy — resources page as standalone asset** — strategy identified to run two parallel marketing streams: (1) brand and service marketing via scheduled posts, (2) resources page promotion framed purely as a free tool for authors with no mention of subscriptions. Next: identify communities and question types where resources page drops are most natural.
+
+---
+
+## Ongoing Disciplines
+
+*Practices that continue across sessions, not pending tasks.*
+
+- **Adversarial prompt testing** — Patrick is jumping on the platform at least a couple times per day to push its limits, try new angles, and stress-test the content generation line. This is ongoing protective discipline, not a one-time task.
 
 ---
 
@@ -64,6 +81,7 @@ We also resolved a workflow understanding issue: GitHub repository documents can
 - **Mobile browsers cache JavaScript more aggressively than browsing data clearing handles.** When updates don't appear after deployment, appending a query parameter like `?v=2` forces a fresh fetch. Worth remembering for any future code changes that need to be tested on mobile.
 - **GitHub document fetching is desktop-only in Patrick's workflow.** Mobile fetches fail. Update session documents from the laptop only.
 - **The Actions tab is no longer live-updating in real time.** Refresh manually to see build status.
+- **Watch for stale artifact notes in session documents.** Old "to do" flags can linger past the work being completed. Periodically verify open items are actually still open before treating them as pending work.
 
 ---
 

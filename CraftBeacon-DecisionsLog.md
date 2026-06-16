@@ -124,10 +124,10 @@ Why this won: Competitive research dossier confirmed this range is consistent wi
 
 ---
 
-**DECISION: Outseta plan display order is alphabetically fixed and cannot be reordered in Outseta's native UI.**
-Date: Discovered mid-build, 2026
-Status: PERMANENT constraint — workaround is individual plan signup links on a future custom pricing page.
-Why this matters: If you want plans displayed in a specific order on the website, you cannot rely on Outseta's embedded widget. Each plan has its own individual signup URL, enabling a custom-designed pricing page that presents plans in any preferred order.
+**DECISION: Outseta plan display order is alphabetically fixed; workaround uses individual plan signup URLs.**
+Date: Discovered mid-build, resolved 2026
+Status: PERMANENT — implemented on the live website.
+Why this matters: Outseta's embedded widget displays plans alphabetically with no reorder option. CraftBeacon's website now uses individual plan signup URLs to present tiers in the preferred order (Free, Writing Lane, Marketing Lane, Production Lane, Premium) with full brand styling. Each plan has its own direct signup URL stored in Patrick's Vault.
 
 ---
 
@@ -192,11 +192,12 @@ Why this configuration: Low spend allows real audience response data to accumula
 
 ---
 
-**DECISION: System prompt is structured in five sections, with a condensed version running live on the Val.town relay.**
+**DECISION: System prompt is structured in five reference sections, with a condensed full prompt as the working version running live on the Val.town relay.**
 Date: Mid-build, 2025–2026
 Status: PERMANENT in structure. Content evolves.
-Sections: 01-Identity, 02-Capabilities, 03-Tiers, 04-BannedBehavior, 05-EdgeCase.
-Note: Sections 4 and 5 are drafted and approved in the section files but not yet fully integrated into the condensed live prompt. This is an open item.
+Reference sections: 01-Identity, 02-Capabilities, 03-Tiers, 04-BannedBehavior, 05-EdgeCase.
+Working version: CraftBeacon-fullprompt.txt — this is the actual prompt running on the Val.town relay.
+Why this matters: The five sections are reference documents only. They exist to preserve the long-form reasoning behind each prompt decision. The condensed full prompt is what actually drives CraftBeacon's behavior. Changes to the live behavior require updating the condensed prompt, not the reference sections.
 
 ---
 
@@ -204,6 +205,13 @@ Note: Sections 4 and 5 are drafted and approved in the section files but not yet
 Date: Mid-build, 2025–2026
 Status: PERMANENT — built into the system prompt's emotional response handling.
 Why this won: Telling an author "this is a challenge nearly every writer faces" is not just comfort — it is accurate information that removes shame from the coaching relationship and makes the author more receptive to working through the problem.
+
+---
+
+**DECISION: Referral system rules apply to all tier interactions, not just Marketing Lane.**
+Date: Mid-build, integrated into live prompt
+Status: PERMANENT — already present in the condensed full prompt.
+The rules: Always offer two or more options from the curated resources list. Single recommendations function as endorsements and are prohibited. Each recommendation includes a one-sentence rationale connecting that specific tool to the author's situation. Every referral carries a currency caveat — verify pricing and features directly with the provider. Never recommend tools outside the curated list.
 
 ---
 
@@ -239,6 +247,21 @@ Date: June 16, 2026
 Status: PERMANENT workflow rule.
 Background: Multiple sessions ended without doc updates because Patrick tried to handle them from phone or tablet during off-hours. GitHub document fetching from mobile devices fails reliably — the connector is not available on mobile.
 Resolution: Only update session documents from the laptop, as the first or last step of a working session. Never attempt from mobile.
+
+---
+
+**DECISION: Test accounts maintained for tier-edge testing.**
+Date: Confirmed June 16, 2026
+Status: PERMANENT
+Configuration: conwatcher@gmail.com on Free tier, pjcereste@gmail.com on Premium tier. Both are real accounts deliberately maintained to verify tier-specific behaviors without incurring test charges.
+
+---
+
+**DECISION: Adversarial prompt testing is an ongoing daily discipline, not a one-time project.**
+Date: Reframed June 16, 2026
+Status: PERMANENT discipline.
+Background: Patrick is jumping on the platform at least a couple times per day to push CraftBeacon's limits, try new angles, and stress-test the content generation line. This is ongoing protective work rather than a task to be completed.
+Why this matters: As the platform grows and acquires more users, the content generation line is the single most important brand integrity boundary. Daily testing keeps it strong and surfaces any drift before users encounter it.
 
 ---
 
