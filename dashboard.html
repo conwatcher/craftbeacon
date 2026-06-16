@@ -556,6 +556,8 @@ function detectTier(user) {
 
     // ── Auth ───────────────────────────────────────────────────────
     function setupDashboard(user) {
+      try { alert('setupDashboard fired: ' + (user ? user.Email : 'no user')); } catch(e) {}
+      try {
       currentUser = user;
       tier = detectTier(user);
       document.getElementById('tierBadge').textContent = tierLabel(tier);
@@ -568,6 +570,7 @@ function detectTier(user) {
       } else {
         showUploadControls();
       }
+      } catch(err) { alert('setupDashboard ERROR: ' + err.message); }
     }
 
     function readToken(token) {
