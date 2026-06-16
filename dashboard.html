@@ -970,8 +970,46 @@ function detectTier(user) {
       document.getElementById('chatInput').focus();
     }
 
-    // ── Boot ───────────────────────────────────────────────────────
-    window.addEventListener('load', initAuth);
+    // ── Boot ──────────────────────────────────────────────────
+    function bootDashboard() {
+      try {
+        try { alert('boot fired'); } catch(e) {}
+
+        // Step 1: URL token
+        const urlToken = getTokenFromUrl();
+        if (urlToken) {
+          try { localStorage.setItem('cb_token', urlToken); } catch(e) {}
+          const user = readToken(urlToken);
+          if (user && user.Email) {
+            try { alert('using URL token: ' + user.Email); } catch(e) {}
+            window.history.replaceState({}, document.title, '/dashboard.html');
+            setupDashboard(user);
+            return;
+          }
+        }
+
+        // Step 2: stored token
+        const stored = findStoredToken();
+        if (stored && stored.Email) {
+          try { alert('using stored token: ' + stored.Email); } catch(e) {}
+          setupDashboard(stored);
+          return;
+        }
+
+        // Step 3: nothing found — redirect to homepage
+        try { alert('no token found — redirecting'); } catch(e) {}
+        window.location.href = '/index.html';
+      } catch(err) {
+        try { alert('boot CRASH: ' + (err && err.message ? err.message : err)); } catch(e) {}
+        try { window.location.href = '/index.html'; } catch(e) {}
+      }
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(bootDashboard, 0);
+    } else {
+      window.addEventListener('DOMContentLoaded', bootDashboard);
+    }
   </script>
 
 </body>
