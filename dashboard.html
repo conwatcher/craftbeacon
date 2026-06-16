@@ -848,11 +848,11 @@ function detectTier(user) {
         const urlToken = getTokenFromUrl();
         if (urlToken) {
           try { localStorage.setItem('cb_token', urlToken); } catch(e) {}
+          try { sessionStorage.setItem('cb_token', urlToken); } catch(e) {}
           const user = readToken(urlToken);
           if (user && user.Email) {
-            
-            window.history.replaceState({}, document.title, '/dashboard.html');
             setupDashboard(user);
+            try { window.history.replaceState({}, document.title, '/dashboard.html'); } catch(e) {}
             return;
           }
         }
@@ -865,8 +865,29 @@ function detectTier(user) {
           return;
         }
 
-        // Step 3: nothing found — redirect to homepage
-        
+        // Step 3: nothing found — but check if we just arrived from login
+        if (window.location.search.indexOf('access_token') !== -1 ||
+            window.location.hash.indexOf('access_token') !== -1) {
+          // We have a token in the URL but couldn't read it — try once more after a delay
+          setTimeout(function() {
+            const retry = getTokenFromUrl();
+            if (retry) {
+              try { localStorage.setItem('cb_token', retry); } catch(e) {}
+              const user = readToken(retry);
+              if (user && user.Email) {
+                setupDashboard(user);
+                return;
+              }
+            }
+            const stored2 = findStoredToken();
+            if (stored2 && stored2.Email) {
+              setupDashboard(stored2);
+              return;
+            }
+            window.location.href = '/index.html';
+          }, 1000);
+          return;
+        }
         window.location.href = '/index.html';
       } catch(err) {
         
