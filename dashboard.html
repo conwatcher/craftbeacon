@@ -581,7 +581,7 @@ function detectTier(user) {
       _planUid:  decoded['outseta:planUid'] || ''
     };
       } catch(e) {
-        return { Email: 'member', FirstName: 'Member', _plan: '' };
+        return null;
       }
     }
 
@@ -619,6 +619,16 @@ function detectTier(user) {
             if (user && user.Email) return user;
           }
         }
+        try {
+          const ssKeys = Object.keys(sessionStorage);
+          for (const key of ssKeys) {
+            const val = sessionStorage.getItem(key);
+            if (val && val.split('.').length === 3) {
+              const user = readToken(val);
+              if (user && user.Email) return user;
+            }
+          }
+        } catch(e2) {}
       } catch(e) {}
       return null;
     }
@@ -654,11 +664,21 @@ function detectTier(user) {
 
       // Third: check localStorage — retry several times to catch slow Outseta init
       let retryCount = 0;
-      const maxRetries = 8;
+      const maxRetries = 20;
       const retryInterval = setInterval(function() {
         if (resolved) { clearInterval(retryInterval); return; }
         retryCount++;
-        const user = findStoredToken();
+        let user = findStoredToken();
+        if (!user) {
+          try {
+            const nativeToken = (Outseta.getAccessToken && Outseta.getAccessToken()) ||
+                                (Outseta.auth && Outseta.auth.getAccessToken && Outseta.auth.getAccessToken());
+            if (nativeToken) {
+              localStorage.setItem('cb_token', nativeToken);
+              user = readToken(nativeToken);
+            }
+          } catch(e) {}
+        }
         if (user) {
           clearInterval(retryInterval);
           resolve(user);
