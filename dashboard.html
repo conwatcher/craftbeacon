@@ -574,7 +574,9 @@ function detectTier(user) {
       // Decode the JWT token Outseta provides — no API call needed
       try {
         const payload = token.split('.')[1];
-        const decoded = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+        const b64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const padded = b64 + '='.repeat((4 - b64.length % 4) % 4);
+        const decoded = JSON.parse(atob(padded));
         return {
       Email:     decoded.email || decoded.sub || 'member',
       FirstName: decoded.given_name || decoded.name || decoded.email || 'Member',
@@ -660,6 +662,24 @@ function detectTier(user) {
         if (token) localStorage.setItem('cb_token', token);
         const user = token ? readToken(token) : findStoredToken();
         resolve(user);
+      });
+
+      // Backup: Outseta profile event — more reliable on mobile Chrome after redirect
+      Outseta.on('profile.set', function(profile) {
+        if (!resolved && profile && profile.Email) {
+          try {
+            const nativeToken = (Outseta.getAccessToken && Outseta.getAccessToken()) ||
+                                (Outseta.auth && Outseta.auth.getAccessToken && Outseta.auth.getAccessToken());
+            const decoded = nativeToken ? readToken(nativeToken) : null;
+            resolve({
+              Email: profile.Email,
+              FirstName: profile.FirstName || profile.Email,
+              _planUid: (decoded && decoded._planUid) || ''
+            });
+          } catch(e) {
+            resolve({ Email: profile.Email, FirstName: profile.FirstName || profile.Email, _planUid: '' });
+          }
+        }
       });
 
       // Third: check localStorage — retry several times to catch slow Outseta init
