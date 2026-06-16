@@ -26,7 +26,7 @@
       load: 'auth'
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" async></script>
 
   <style>
     :root {
@@ -697,6 +697,9 @@ function detectTier(user) {
         }
       }
 
+      // PRIORITY: try stored token first if no URL token will work
+      const earlyStored = findStoredToken();
+      if (earlyStored) { resolve(earlyStored); return; }
       // First: check if token is in the URL right now
       const urlToken = getTokenFromUrl();
       if (urlToken) {
@@ -706,14 +709,14 @@ function detectTier(user) {
       }
 
       // Second: listen for Outseta to fire the event
-      Outseta.on('accessToken.set', function(token) {
-        if (token) localStorage.setItem('cb_token', token);
+      try { if (typeof Outseta !== 'undefined' && Outseta.on) Outseta.on('accessToken.set', function(token) {
+        if (token) { try { localStorage.setItem('cb_token', token); } catch(e2) {} }
         const user = token ? readToken(token) : findStoredToken();
         resolve(user);
-      });
+      }); } catch(e) {}
 
       // Backup: Outseta profile event — more reliable on mobile Chrome after redirect
-      Outseta.on('profile.set', function(profile) {
+      try { if (typeof Outseta !== 'undefined' && Outseta.on) Outseta.on('profile.set', function(profile) {
         if (!resolved && profile && profile.Email) {
           try {
             const nativeToken = (Outseta.getAccessToken && Outseta.getAccessToken()) ||
@@ -728,7 +731,7 @@ function detectTier(user) {
             resolve({ Email: profile.Email, FirstName: profile.FirstName || profile.Email, _planUid: '' });
           }
         }
-      });
+      }); } catch(e) {}
 
       // Third: check localStorage — retry several times to catch slow Outseta init
       let retryCount = 0;
