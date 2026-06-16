@@ -556,7 +556,7 @@ function detectTier(user) {
 
     // ── Auth ───────────────────────────────────────────────────────
     function setupDashboard(user) {
-      try { alert('setupDashboard fired: ' + (user ? user.Email : 'no user')); } catch(e) {}
+      
       try {
       currentUser = user;
       tier = detectTier(user);
@@ -570,7 +570,7 @@ function detectTier(user) {
       } else {
         showUploadControls();
       }
-      } catch(err) { alert('setupDashboard ERROR: ' + err.message); }
+      
     }
 
     function readToken(token) {
@@ -641,54 +641,7 @@ function detectTier(user) {
     function initAuth() {
       let resolved = false;
 
-      // ── TEMPORARY DEBUG — remove after diagnosis ────────────────
-      setTimeout(function() {
-        if (resolved) return;
-        const debugBox = document.createElement('div');
-        debugBox.style.cssText = 'position:fixed;top:10px;left:10px;right:10px;background:#000;color:#0f0;font-family:monospace;font-size:11px;padding:12px;border:2px solid #0f0;z-index:99999;max-height:80vh;overflow-y:auto;white-space:pre-wrap;word-break:break-all;';
-        let report = '=== CRAFTBEACON DEBUG ===\n';
-        report += 'URL: ' + window.location.href + '\n\n';
-        report += 'URL search: ' + window.location.search + '\n';
-        report += 'URL hash: ' + window.location.hash + '\n\n';
-        try {
-          report += 'localStorage keys: ' + Object.keys(localStorage).length + '\n';
-          Object.keys(localStorage).forEach(function(k) {
-            const v = localStorage.getItem(k) || '';
-            report += '  ' + k + ' = ' + v.substring(0, 80) + (v.length > 80 ? '...' : '') + '\n';
-            report += '    (length: ' + v.length + ', dots: ' + (v.split('.').length - 1) + ')\n';
-          });
-        } catch(e) { report += 'localStorage error: ' + e.message + '\n'; }
-        report += '\n';
-        try {
-          report += 'sessionStorage keys: ' + Object.keys(sessionStorage).length + '\n';
-          Object.keys(sessionStorage).forEach(function(k) {
-            const v = sessionStorage.getItem(k) || '';
-            report += '  ' + k + ' = ' + v.substring(0, 80) + (v.length > 80 ? '...' : '') + '\n';
-            report += '    (length: ' + v.length + ', dots: ' + (v.split('.').length - 1) + ')\n';
-          });
-        } catch(e) { report += 'sessionStorage error: ' + e.message + '\n'; }
-        report += '\n';
-        try {
-          report += 'Outseta.getAccessToken: ' + (typeof Outseta.getAccessToken) + '\n';
-          report += 'Outseta.auth: ' + (typeof Outseta.auth) + '\n';
-          if (Outseta.auth) {
-            report += 'Outseta.auth.getAccessToken: ' + (typeof Outseta.auth.getAccessToken) + '\n';
-          }
-          if (typeof Outseta.getAccessToken === 'function') {
-            const t = Outseta.getAccessToken();
-            report += 'Outseta.getAccessToken() result: ' + (t ? t.substring(0, 60) + '...' : 'null/empty') + '\n';
-          }
-        } catch(e) { report += 'Outseta error: ' + e.message + '\n'; }
-        debugBox.textContent = report;
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = 'X';
-        closeBtn.style.cssText = 'position:absolute;top:4px;right:8px;background:#0f0;color:#000;border:none;font-weight:bold;padding:2px 8px;cursor:pointer;';
-        closeBtn.onclick = function() { debugBox.remove(); };
-        debugBox.appendChild(closeBtn);
-        document.body.appendChild(debugBox);
-      }, 6000);
-      // ── END TEMPORARY DEBUG ─────────────────────────────────────
-
+ 
       function resolve(user) {
         if (resolved) return;
         resolved = true;
@@ -973,7 +926,7 @@ function detectTier(user) {
     // ── Boot ──────────────────────────────────────────────────
     function bootDashboard() {
       try {
-        try { alert('boot fired'); } catch(e) {}
+        
 
         // Step 1: URL token
         const urlToken = getTokenFromUrl();
@@ -981,7 +934,7 @@ function detectTier(user) {
           try { localStorage.setItem('cb_token', urlToken); } catch(e) {}
           const user = readToken(urlToken);
           if (user && user.Email) {
-            try { alert('using URL token: ' + user.Email); } catch(e) {}
+            
             window.history.replaceState({}, document.title, '/dashboard.html');
             setupDashboard(user);
             return;
@@ -991,16 +944,16 @@ function detectTier(user) {
         // Step 2: stored token
         const stored = findStoredToken();
         if (stored && stored.Email) {
-          try { alert('using stored token: ' + stored.Email); } catch(e) {}
+          
           setupDashboard(stored);
           return;
         }
 
         // Step 3: nothing found — redirect to homepage
-        try { alert('no token found — redirecting'); } catch(e) {}
+        
         window.location.href = '/index.html';
       } catch(err) {
-        try { alert('boot CRASH: ' + (err && err.message ? err.message : err)); } catch(e) {}
+        
         try { window.location.href = '/index.html'; } catch(e) {}
       }
     }
