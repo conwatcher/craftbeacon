@@ -556,8 +556,6 @@ function detectTier(user) {
 
     // ── Auth ───────────────────────────────────────────────────────
     function setupDashboard(user) {
-      
-      try {
       currentUser = user;
       tier = detectTier(user);
       document.getElementById('tierBadge').textContent = tierLabel(tier);
@@ -570,7 +568,6 @@ function detectTier(user) {
       } else {
         showUploadControls();
       }
-      
     }
 
     function readToken(token) {
