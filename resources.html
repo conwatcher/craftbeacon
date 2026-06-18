@@ -85,7 +85,6 @@
       background-size: 180px 180px;
     }
 
-    /* ── Nav (identical to homepage) ── */
     .cb-nav {
       position: sticky;
       top: 0;
@@ -158,7 +157,6 @@
     }
     .btn-nav-signup:hover { background: var(--cb-amber-dim); }
 
-    /* ── Page header ── */
     .page-header {
       position: relative;
       padding: 5rem 3rem 4rem;
@@ -219,7 +217,6 @@
     }
     .page-header p + p { margin-top: 0.75rem; }
 
-    /* ── Main layout ── */
     .page-body {
       display: grid;
       grid-template-columns: 220px 1fr;
@@ -230,7 +227,6 @@
       gap: 4rem;
     }
 
-    /* ── Sticky sidebar nav ── */
     .sidebar {
       padding: 3rem 0;
       position: sticky;
@@ -239,9 +235,7 @@
       max-height: calc(100vh - 100px);
       overflow-y: auto;
     }
-    .sidebar-section {
-      margin-bottom: 2rem;
-    }
+    .sidebar-section { margin-bottom: 2rem; }
     .sidebar-heading {
       font-size: 0.65rem;
       font-weight: 300;
@@ -270,15 +264,9 @@
     }
     .sidebar-links a:hover { color: var(--cb-amber-light); }
 
-    /* ── Content area ── */
-    .content {
-      padding: 3rem 0 5rem;
-    }
+    .content { padding: 3rem 0 5rem; }
 
-    /* ── Resource sections ── */
-    .resource-section {
-      margin-bottom: 4rem;
-    }
+    .resource-section { margin-bottom: 4rem; }
     .resource-section-header {
       margin-bottom: 1.75rem;
       padding-bottom: 1rem;
@@ -298,10 +286,7 @@
       line-height: 1.65;
     }
 
-    /* ── Resource group (subsection within a section) ── */
-    .resource-group {
-      margin-bottom: 2.5rem;
-    }
+    .resource-group { margin-bottom: 2.5rem; }
     .resource-group-label {
       font-size: 0.68rem;
       font-weight: 300;
@@ -320,7 +305,6 @@
       background: rgba(200,144,58,0.2);
     }
 
-    /* ── Resource cards ── */
     .resource-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -336,11 +320,10 @@
       transition: background 0.2s;
       position: relative;
     }
-    .resource-card:hover {
-      background: var(--cb-surface2);
-    }
+    .resource-card:hover { background: var(--cb-surface2); }
     .resource-card::after {
-      content: '↗';
+      content: 'arrow';
+      content: '\2197';
       position: absolute;
       top: 1.1rem;
       right: 1.1rem;
@@ -349,7 +332,6 @@
       transition: color 0.2s;
     }
     .resource-card:hover::after { color: var(--cb-amber); }
-
     .resource-card-type {
       font-size: 0.62rem;
       font-weight: 300;
@@ -374,7 +356,6 @@
       line-height: 1.6;
     }
 
-    /* ── Disclaimer box ── */
     .disclaimer {
       background: rgba(200,144,58,0.06);
       border: 0.5px solid rgba(200,144,58,0.2);
@@ -392,7 +373,6 @@
       font-weight: 400;
     }
 
-    /* ── Footer ── */
     .cb-footer {
       padding: 2.25rem 3rem;
       border-top: 0.5px solid var(--cb-border);
@@ -438,7 +418,6 @@
 </head>
 <body>
 
-  <!-- ═══════════════ NAV ═══════════════ -->
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
       <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
@@ -455,8 +434,6 @@
     </div>
   </nav>
 
-
-  <!-- ═══════════════ PAGE HEADER ═══════════════ -->
   <header class="page-header">
     <div class="page-header-bg"></div>
     <div class="page-header-vignette"></div>
@@ -468,11 +445,8 @@
     </div>
   </header>
 
-
-  <!-- ═══════════════ BODY ═══════════════ -->
   <div class="page-body">
 
-    <!-- Sidebar navigation -->
     <aside class="sidebar" aria-label="Page sections">
       <div class="sidebar-section">
         <div class="sidebar-heading">Official &amp; institutional</div>
@@ -486,8 +460,11 @@
       <div class="sidebar-section">
         <div class="sidebar-heading">Tools &amp; services</div>
         <ul class="sidebar-links">
+          <li><a href="#writing">Writing tools</a></li>
+          <li><a href="#worldbuilding">World-building tools</a></li>
           <li><a href="#newsletters">Newsletter platforms</a></li>
           <li><a href="#scheduling">Social scheduling</a></li>
+          <li><a href="#marketing">Marketing &amp; discovery</a></li>
           <li><a href="#formatting">Formatting software</a></li>
           <li><a href="#conversion">Ebook conversion</a></li>
           <li><a href="#covers">Cover design</a></li>
@@ -499,17 +476,13 @@
       </div>
     </aside>
 
-
-    <!-- Main content -->
     <main class="content">
 
-      <!-- ─── SECTION ONE: OFFICIAL & INSTITUTIONAL ─── -->
       <div class="resource-section" id="copyright">
         <div class="resource-section-header">
           <h2>Copyright &amp; legal</h2>
           <p>Official U.S. government sources for copyright registration, AI policy, trademark, and commercial email compliance. These are primary sources — not summaries or third-party interpretations.</p>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">U.S. Copyright Office</div>
           <div class="resource-grid">
@@ -535,7 +508,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">U.S. Patent &amp; Trademark Office</div>
           <div class="resource-grid">
@@ -551,7 +523,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">Federal Trade Commission</div>
           <div class="resource-grid">
@@ -569,14 +540,11 @@
         </div>
       </div>
 
-
-      <!-- ─── PUBLISHING PLATFORMS ─── -->
       <div class="resource-section" id="platforms">
         <div class="resource-section-header">
           <h2>Publishing platforms</h2>
           <p>Official documentation from the major publishing and distribution platforms. These pages contain the actual requirements — not summaries. When specifications matter, go to the source.</p>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">Amazon KDP</div>
           <div class="resource-grid">
@@ -597,7 +565,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">IngramSpark</div>
           <div class="resource-grid">
@@ -613,7 +580,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">Draft2Digital</div>
           <div class="resource-grid">
@@ -634,7 +600,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">Apple Books</div>
           <div class="resource-grid">
@@ -650,7 +615,6 @@
             </a>
           </div>
         </div>
-
         <div class="resource-group">
           <div class="resource-group-label">Kobo Writing Life</div>
           <div class="resource-grid">
@@ -663,8 +627,6 @@
         </div>
       </div>
 
-
-      <!-- ─── TRADE ORGANIZATIONS ─── -->
       <div class="resource-section" id="organizations">
         <div class="resource-section-header">
           <h2>Trade organizations</h2>
@@ -694,8 +656,6 @@
         </div>
       </div>
 
-
-      <!-- ─── BUSINESS & TAX ─── -->
       <div class="resource-section" id="business">
         <div class="resource-section-header">
           <h2>Business &amp; tax</h2>
@@ -720,14 +680,63 @@
         </div>
       </div>
 
-
-      <!-- ─── SECTION TWO: TOOLS & SERVICES ─── -->
       <div class="disclaimer">
         <p><strong>Note on tools and services:</strong> The resources below are organized by category for reference. CraftBeacon has no financial relationship with any tool or service listed. Pricing, features, and availability change frequently — verify everything directly with the provider before making any decisions.</p>
       </div>
 
+      <div class="resource-section" id="writing">
+        <div class="resource-section-header">
+          <h2>Writing &amp; drafting tools</h2>
+          <p>Software for drafting and organizing a manuscript. These are the environments where most authors do the actual work — from first words to final draft. Also see Formatting Software below for tools that handle both drafting and production.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://docs.google.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">Google Docs</div>
+            <div class="resource-card-desc">Cloud-based drafting with autosave, easy sharing, and comment-based collaboration. No install required.</div>
+          </a>
+          <a class="resource-card" href="https://www.microsoft.com/en-us/microsoft-365/word" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Microsoft Word</div>
+            <div class="resource-card-desc">The industry standard for manuscript submission to agents and editors. Widely expected in traditional publishing workflows.</div>
+          </a>
+          <a class="resource-card" href="https://spacejock.com/yWriter.html" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">yWriter</div>
+            <div class="resource-card-desc">Free scene-and-chapter organizer built specifically for authors. Useful for writers who think in scenes rather than linear pages.</div>
+          </a>
+          <a class="resource-card" href="https://novlr.org" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Novlr</div>
+            <div class="resource-card-desc">Cloud writing environment designed for daily writing habits, word-count goals, and distraction-free drafting. Verify current pricing directly.</div>
+          </a>
+        </div>
+      </div>
 
-      <!-- ─── NEWSLETTER PLATFORMS ─── -->
+      <div class="resource-section" id="worldbuilding">
+        <div class="resource-section-header">
+          <h2>World-building tools</h2>
+          <p>Dedicated platforms for building and maintaining a story bible — characters, locations, lore, timelines, and series continuity. Particularly useful for complex fiction and multi-book projects.</p>
+        </div>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.worldanvil.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">World Anvil</div>
+            <div class="resource-card-desc">Deep world-building platform for complex fictional universes — maps, lore, characters, and cross-referenced reference material. Free and paid tiers. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.campfirewriting.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Campfire Writing</div>
+            <div class="resource-card-desc">Story bible tool for building characters, locations, and lore alongside your manuscript. Designed specifically for fiction authors. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.aeontimeline.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Aeon Timeline</div>
+            <div class="resource-card-desc">Timeline and chronology management for fiction — tracks character arcs, subplots, and event sequences. Syncs with Scrivener. Verify current pricing directly.</div>
+          </a>
+        </div>
+      </div>
+
       <div class="resource-section" id="newsletters">
         <div class="resource-section-header">
           <h2>Email newsletter platforms</h2>
@@ -744,6 +753,11 @@
             <div class="resource-card-name">Kit (formerly ConvertKit)</div>
             <div class="resource-card-desc">Newsletter platform built for creators. Free newsletter plan available. Scales by list size.</div>
           </a>
+          <a class="resource-card" href="https://www.beehiiv.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Beehiiv</div>
+            <div class="resource-card-desc">Newsletter-first platform built around direct readership growth. Popular with authors building an independent audience. Free and paid tiers. Verify current pricing directly.</div>
+          </a>
           <a class="resource-card" href="https://mailchimp.com/pricing/marketing/" target="_blank" rel="noopener">
             <div class="resource-card-type">Tool</div>
             <div class="resource-card-name">Mailchimp</div>
@@ -757,8 +771,6 @@
         </div>
       </div>
 
-
-      <!-- ─── SOCIAL SCHEDULING ─── -->
       <div class="resource-section" id="scheduling">
         <div class="resource-section-header">
           <h2>Social media scheduling</h2>
@@ -780,6 +792,16 @@
             <div class="resource-card-name">Metricool</div>
             <div class="resource-card-desc">Scheduling and analytics with a free forever plan. Pricing varies by region and billing term.</div>
           </a>
+          <a class="resource-card" href="https://socialbee.com/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">SocialBee</div>
+            <div class="resource-card-desc">Scheduling tool with content category organization and evergreen post recycling. Useful for authors maintaining a consistent content rhythm. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://publer.io/pricing" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Publer</div>
+            <div class="resource-card-desc">Budget-friendly scheduling tool with broad platform support and a free tier. Verify current plan limits directly.</div>
+          </a>
           <a class="resource-card" href="https://www.hootsuite.com/plans" target="_blank" rel="noopener">
             <div class="resource-card-type">Tool</div>
             <div class="resource-card-name">Hootsuite</div>
@@ -788,8 +810,48 @@
         </div>
       </div>
 
+      <div class="resource-section" id="marketing">
+        <div class="resource-section-header">
+          <h2>Marketing &amp; discovery</h2>
+          <p>Tools for reaching readers — through discoverability research, promotion channels, reader magnets, and advance review copy distribution. These are the building blocks of an author platform strategy.</p>
+        </div>
+        <div class="resource-group">
+          <div class="resource-group-label">Discoverability &amp; promotion</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://publisherrocket.com" target="_blank" rel="noopener">
+              <div class="resource-card-type">Tool</div>
+              <div class="resource-card-name">Publisher Rocket</div>
+              <div class="resource-card-desc">Amazon keyword and category research tool for fiction and nonfiction. Helps authors find which search terms and categories give their books the best discoverability. Verify current pricing directly.</div>
+            </a>
+            <a class="resource-card" href="https://partners.bookbub.com" target="_blank" rel="noopener">
+              <div class="resource-card-type">Platform</div>
+              <div class="resource-card-name">BookBub Partners</div>
+              <div class="resource-card-desc">Reader discovery and promotional platform. Paid featured deals and free author profile for building a BookBub following. Verify current deal pricing and submission requirements directly.</div>
+            </a>
+          </div>
+        </div>
+        <div class="resource-group">
+          <div class="resource-group-label">Reader magnets, ARCs &amp; review copies</div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://bookfunnel.com" target="_blank" rel="noopener">
+              <div class="resource-card-type">Tool</div>
+              <div class="resource-card-name">BookFunnel</div>
+              <div class="resource-card-desc">Delivers reader magnets, ARC copies, and promo files directly to readers and their devices. Standard tool for indie author list-building and review campaigns. Verify current pricing directly.</div>
+            </a>
+            <a class="resource-card" href="https://storyoriginapp.com" target="_blank" rel="noopener">
+              <div class="resource-card-type">Tool</div>
+              <div class="resource-card-name">StoryOrigin</div>
+              <div class="resource-card-desc">Newsletter swap and reader magnet coordination platform. Used for cross-author promotions and ARC distribution. Verify current pricing directly.</div>
+            </a>
+            <a class="resource-card" href="https://www.netgalley.com" target="_blank" rel="noopener">
+              <div class="resource-card-type">Platform</div>
+              <div class="resource-card-name">NetGalley</div>
+              <div class="resource-card-desc">ARC distribution platform used to reach librarians, booksellers, educators, and trade reviewers. Verify current pricing and submission options directly.</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-      <!-- ─── FORMATTING SOFTWARE ─── -->
       <div class="resource-section" id="formatting">
         <div class="resource-section-header">
           <h2>Book formatting software</h2>
@@ -807,7 +869,7 @@
             <div class="resource-card-desc">Mac-only formatting software with a strong reputation among indie authors. Verify current pricing directly.</div>
           </a>
           <a class="resource-card" href="https://reedsy.com/write-a-book" target="_blank" rel="noopener">
-            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-type">Tool — Free</div>
             <div class="resource-card-name">Reedsy Studio</div>
             <div class="resource-card-desc">Free core writing and export tools with optional paid add-ons. Good starting point for new authors.</div>
           </a>
@@ -819,8 +881,6 @@
         </div>
       </div>
 
-
-      <!-- ─── EBOOK CONVERSION ─── -->
       <div class="resource-section" id="conversion">
         <div class="resource-section-header">
           <h2>Ebook conversion tools</h2>
@@ -842,11 +902,14 @@
             <div class="resource-card-name">Kindle Create</div>
             <div class="resource-card-desc">Amazon's free KDP formatting tool for ebook and print preparation. Verify supported files directly.</div>
           </a>
+          <a class="resource-card" href="https://kdp.amazon.com/en_US/help/topic/G202131170" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">Kindle Previewer</div>
+            <div class="resource-card-desc">Free Amazon desktop tool for checking exactly how an ebook will render on Kindle devices before publishing. A separate tool from Kindle Create.</div>
+          </a>
         </div>
       </div>
 
-
-      <!-- ─── COVER DESIGN ─── -->
       <div class="resource-section" id="covers">
         <div class="resource-section-header">
           <h2>Cover design tools</h2>
@@ -868,11 +931,19 @@
             <div class="resource-card-name">Book Brush</div>
             <div class="resource-card-desc">Author-specific design tool for ads, mockups, and reader-facing graphics. Verify current pricing directly.</div>
           </a>
+          <a class="resource-card" href="https://placeit.net" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Placeit</div>
+            <div class="resource-card-desc">Template-based design tool for book mockups, promotional graphics, and marketing visuals. Free and paid options. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://www.photopea.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool — Free</div>
+            <div class="resource-card-name">Photopea</div>
+            <div class="resource-card-desc">Free browser-based image editor with Photoshop-style tools. Useful for cover adjustments and file tweaks without installing software.</div>
+          </a>
         </div>
       </div>
 
-
-      <!-- ─── AUTHOR WEBSITES ─── -->
       <div class="resource-section" id="websites">
         <div class="resource-section-header">
           <h2>Author website builders</h2>
@@ -894,6 +965,16 @@
             <div class="resource-card-name">Squarespace</div>
             <div class="resource-card-desc">Design-focused website platform. No confirmed free tier — verify trial availability and current pricing.</div>
           </a>
+          <a class="resource-card" href="https://carrd.co" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Carrd</div>
+            <div class="resource-card-desc">Low-cost single-page site builder. A practical option for a simple author landing page or reader sign-up page. Free tier available. Verify current pricing directly.</div>
+          </a>
+          <a class="resource-card" href="https://ghost.org/pricing/" target="_blank" rel="noopener">
+            <div class="resource-card-type">Tool</div>
+            <div class="resource-card-name">Ghost</div>
+            <div class="resource-card-desc">Publishing platform that combines website, newsletter, and optional paid membership in one place. Useful for authors who want their blog and reader list under the same roof. Verify current pricing directly.</div>
+          </a>
           <a class="resource-card" href="https://www.pub-site.com/pricing" target="_blank" rel="noopener">
             <div class="resource-card-type">Tool</div>
             <div class="resource-card-name">Pub Site</div>
@@ -902,8 +983,6 @@
         </div>
       </div>
 
-
-      <!-- ─── ISBN ─── -->
       <div class="resource-section" id="isbn">
         <div class="resource-section-header">
           <h2>ISBN registration</h2>
@@ -928,8 +1007,6 @@
         </div>
       </div>
 
-
-      <!-- ─── PRINT ON DEMAND ─── -->
       <div class="resource-section" id="pod">
         <div class="resource-section-header">
           <h2>Print on demand</h2>
@@ -946,16 +1023,24 @@
             <div class="resource-card-name">IngramSpark</div>
             <div class="resource-card-desc">Global POD and distribution platform with wide bookstore and library reach. Verify current setup and pricing.</div>
           </a>
+          <a class="resource-card" href="https://press.barnesandnoble.com" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">Barnes &amp; Noble Press</div>
+            <div class="resource-card-desc">B&amp;N's direct publishing platform for ebook and print distribution through Barnes &amp; Noble. Free to use. Verify current royalty structure directly.</div>
+          </a>
           <a class="resource-card" href="https://www.lulu.com/create/print-books" target="_blank" rel="noopener">
             <div class="resource-card-type">Platform</div>
             <div class="resource-card-name">Lulu</div>
             <div class="resource-card-desc">POD platform with direct sales integrations for Shopify, Wix, and WooCommerce. Verify current print pricing.</div>
           </a>
+          <a class="resource-card" href="https://www.blurb.com/sell-your-book" target="_blank" rel="noopener">
+            <div class="resource-card-type">Platform</div>
+            <div class="resource-card-name">Blurb</div>
+            <div class="resource-card-desc">POD platform well suited to photo-heavy books, art books, and premium print projects. Verify current pricing and distribution options directly.</div>
+          </a>
         </div>
       </div>
 
-
-      <!-- ─── AUDIOBOOK DISTRIBUTION ─── -->
       <div class="resource-section" id="audiobook">
         <div class="resource-section-header">
           <h2>Audiobook distribution</h2>
@@ -988,8 +1073,6 @@
     </main>
   </div>
 
-
-  <!-- ═══════════════ FOOTER ═══════════════ -->
   <footer class="cb-footer" role="contentinfo">
     <div>
       <div class="footer-logo-text">
