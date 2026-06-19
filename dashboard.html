@@ -825,6 +825,18 @@ function detectTier(user) {
           }
         }
 
+        buf += decoder.decode();
+        if (buf.startsWith('data: ')) {
+          try {
+            const d = JSON.parse(buf.slice(6));
+            if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
+              full += d.delta.text;
+              inner.innerHTML = renderText(full);
+              scrollBottom();
+            }
+          } catch(e) {}
+        }
+
         history.push({ role: 'assistant', content: full });
         if (tier === 'free' && count >= LIMIT) showUpgrade();
 
