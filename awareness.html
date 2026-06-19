@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Author Awareness — CraftBeacon</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+
+  <meta name="description" content="A plain-language guide to patterns authors should recognize — not accusations, just the questions worth asking before you share your work online." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'popup',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+      --cb-caution:     rgba(200,144,58,0.08);
+      --cb-caution-border: rgba(200,144,58,0.18);
+    }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Nav ── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ── Page header ── */
+    .page-header {
+      position: relative;
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("assets/history-66948453.jpg");
+      background-size: cover;
+      background-position: center 35%;
+      filter: brightness(0.28) sepia(0.2);
+    }
+    .page-header-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.65) 100%);
+    }
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 620px;
+    }
+    .page-header p + p { margin-top: 0.75rem; }
+
+    /* ── Main layout ── */
+    .page-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 80px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      gap: 4rem;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+    .sidebar-section { margin-bottom: 2rem; }
+    .sidebar-heading {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-dim);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .sidebar-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .sidebar-links a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.5;
+      display: block;
+      padding: 0.15rem 0;
+    }
+    .sidebar-links a:hover { color: var(--cb-amber-light); }
+
+    /* ── Content ── */
+    .content { padding: 3rem 0 5rem; }
+
+    /* ── Content sections ── */
+    .content-section { margin-bottom: 4rem; }
+    .content-section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .content-section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.4rem;
+    }
+    .content-section-header p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Intro notice ── */
+    .notice {
+      background: var(--cb-caution);
+      border: 0.5px solid var(--cb-caution-border);
+      border-left: 2px solid var(--cb-amber);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .notice p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.75;
+    }
+    .notice strong {
+      color: var(--cb-amber);
+      font-weight: 400;
+    }
+
+    /* ── Value intro block ── */
+    .value-block {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      padding: 2rem 2.25rem;
+      margin-bottom: 3rem;
+    }
+    .value-block p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+    }
+    .value-block p + p { margin-top: 1rem; }
+    .value-block .value-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--cb-amber-light);
+      line-height: 1.55;
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--cb-amber);
+    }
+
+    /* ── Pattern cards ── */
+    .pattern-card {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      margin-bottom: 1.5rem;
+    }
+    .pattern-card-header {
+      padding: 1.5rem 1.75rem 1.25rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .pattern-card-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.3rem;
+    }
+    .pattern-card-header p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      font-style: italic;
+    }
+    .pattern-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .pattern-cell {
+      padding: 1.25rem 1.5rem;
+      border-right: 0.5px solid var(--cb-border);
+    }
+    .pattern-cell:last-child { border-right: none; }
+    .pattern-cell-label {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .pattern-cell-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(200,144,58,0.2);
+    }
+    .pattern-cell p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+    .pattern-cell.ask-cell {
+      background: rgba(200,144,58,0.04);
+    }
+    .pattern-cell.ask-cell p {
+      color: var(--cb-text);
+      font-style: italic;
+    }
+
+    /* ── Legitimate section ── */
+    .legit-block {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      border-left: 2px solid rgba(200,144,58,0.4);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .legit-block p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+    .legit-block p + p { margin-top: 0.85rem; }
+
+    /* ── Questions checklist ── */
+    .question-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 0.5px solid var(--cb-border);
+    }
+    .question-item {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+      background: var(--cb-surface);
+      transition: background 0.2s;
+    }
+    .question-item:last-child { border-bottom: none; }
+    .question-item:hover { background: var(--cb-surface2); }
+    .question-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--cb-amber);
+      min-width: 1.5rem;
+      padding-top: 0.15rem;
+      opacity: 0.7;
+    }
+    .question-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.65;
+    }
+    .question-text em {
+      color: var(--cb-muted);
+      font-style: normal;
+      display: block;
+      font-size: 0.84rem;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Closing note ── */
+    .closing-note {
+      margin-top: 3rem;
+      padding: 2rem 2.25rem;
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+    }
+    .closing-note p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+    }
+    .closing-note p + p { margin-top: 0.85rem; }
+    .closing-note .closing-line {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--cb-text);
+      margin-top: 1.25rem;
+    }
+
+    /* ── Footer ── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    section[id] { scroll-margin-top: 90px; }
+
+    @media (max-width: 900px) {
+      .pattern-body { grid-template-columns: 1fr; }
+      .pattern-cell { border-right: none; border-bottom: 0.5px solid var(--cb-border); }
+      .pattern-cell:last-child { border-bottom: none; }
+      .page-body { grid-template-columns: 1fr; padding: 0 1.5rem; }
+      .sidebar { position: static; max-height: none; padding: 1.5rem 0 0; }
+      .cb-nav { padding: 1rem 1.5rem; }
+      .page-header { padding: 3rem 1.5rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════ PAGE HEADER ═══════════════ -->
+  <header class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-vignette"></div>
+    <div class="page-header-content">
+      <div class="section-label">Author awareness</div>
+      <h1>Know what to question.</h1>
+      <p>Your work has value — and not everyone who wants a piece of it will tell you why. This page describes patterns worth recognizing, not to make you suspicious of every interaction, but to give you the judgment to tell the difference between someone who wants to help and someone who wants to harvest.</p>
+      <p>This page will grow as patterns evolve. It describes what we have observed, not accusations against any specific person or group.</p>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════ BODY ═══════════════ -->
+  <div class="page-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Page sections">
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Foundation</div>
+        <ul class="sidebar-links">
+          <li><a href="#value">Why your work is a target</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Common patterns</div>
+        <ul class="sidebar-links">
+          <li><a href="#engagement-bait">Engagement bait</a></li>
+          <li><a href="#cover-harvesting">Cover &amp; image harvesting</a></li>
+          <li><a href="#text-collection">Text &amp; excerpt collection</a></li>
+          <li><a href="#link-harvesting">Email &amp; link harvesting</a></li>
+          <li><a href="#fake-outreach">Fake opportunities</a></li>
+          <li><a href="#free-services">"Free" service offers</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Perspective</div>
+        <ul class="sidebar-links">
+          <li><a href="#legitimate">Legitimate requests</a></li>
+          <li><a href="#questions">What to ask yourself</a></li>
+        </ul>
+      </div>
+    </aside>
+
+
+    <!-- Main content -->
+    <main class="content">
+
+      <!-- Notice -->
+      <div class="notice">
+        <p><strong>A note on how to read this page:</strong> Nothing here is an accusation against any specific person, group, or platform. These are patterns — recurring shapes that show up across different contexts. The same post could be completely innocent or deliberately exploitative depending on who is behind it. The goal is to give you the right questions, not the verdict.</p>
+      </div>
+
+
+      <!-- WHY YOUR WORK IS A TARGET -->
+      <div class="content-section" id="value">
+        <div class="content-section-header">
+          <h2>Why your work is a target</h2>
+          <p>Understanding the value in what you create is the foundation for everything else on this page.</p>
+        </div>
+
+        <div class="value-block">
+          <p>Most authors think of their work as personal — a manuscript they are proud of, a cover they saved up for, a newsletter list they built one reader at a time. That framing is natural. But it is not the only framing that exists for your work.</p>
+
+          <div class="value-pull">Your cover, your text, your reader list, and your platform presence are all commercial assets. Other people can make money from them — sometimes without your knowledge, and sometimes without compensating you at all.</div>
+
+          <p>Your cover image can be used as ad creative for other products, fed into AI image generation training datasets, or repurposed in counterfeit listings. Your manuscript text is high-quality training data for AI language models — published fiction by real authors is exactly what those systems are trained to seek. Your newsletter link reveals your email platform, your audience size, and your marketing infrastructure to anyone who wants to target you with fake service pitches. Your social engagement tells algorithms — and the people watching those algorithms — that you are an active author with an audience worth reaching.</p>
+
+          <p>None of this means every request is a threat. It means that when you share something publicly, you are making a decision about a commercial asset, whether or not it feels like one. The patterns below describe what that looks like in practice — so you can make that decision with open eyes rather than just the assumption that everyone in the community has the same intentions you do.</p>
+        </div>
+      </div>
+
+
+      <!-- PATTERN: ENGAGEMENT BAIT -->
+      <div class="content-section" id="engagement-bait">
+        <div class="content-section-header">
+          <h2>Common patterns</h2>
+          <p>Each pattern below follows the same shape: what it tends to look like, what someone actually gains from it, and the one question worth asking before you participate.</p>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <h3>Engagement bait posts</h3>
+            <p>"Share your book cover and let's celebrate each other's achievements!"</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>A post in an author group inviting everyone to share something — their cover, their title, their genre, their first line. It's framed as community celebration or mutual discovery. These posts often appear in multiple groups within a short window, sometimes in nearly identical language.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>Every comment on a post boosts its algorithmic reach — which increases the visibility of the page or group running it. A high-engagement post builds the page owner's platform at no cost. The commenter data is also collected and can be used for ad targeting, cold outreach lists, or resale to marketing services.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>Who runs this group, and what do they get from high engagement? Is this celebrating authors, or building someone else's reach on the back of author participation?</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PATTERN: COVER HARVESTING -->
+        <div class="pattern-card" id="cover-harvesting">
+          <div class="pattern-card-header">
+            <h3>Cover and image harvesting</h3>
+            <p>"Drop your cover below — we're building a community showcase!"</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>A request to share your cover image, book banner, or author photo as part of a showcase, directory, or promotional post. Sometimes accompanied by a promise of visibility or feature placement. Often there is no follow-up after the images are collected.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>Cover images are valuable as ad creative — they can be repurposed for Facebook or Amazon ads for completely unrelated products. They are also valuable as AI image training data, where real cover art from working designers represents high-quality visual material. Counterfeit or misleading listings sometimes use legitimate covers to appear credible.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>Where exactly will this image appear, and who controls that decision? If I cannot get a clear answer to that question, what am I actually agreeing to?</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PATTERN: TEXT COLLECTION -->
+        <div class="pattern-card" id="text-collection">
+          <div class="pattern-card-header">
+            <h3>Text and excerpt collection</h3>
+            <p>"Share your first chapter — let's discover each other's writing!"</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>A request to share an excerpt — opening lines, a full chapter, your best scene, a sample of your voice. Sometimes framed as a craft exercise, a community read, or a visibility opportunity. The ask can range from a few sentences to substantial portions of a manuscript.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>Published fiction text from real authors is exactly what AI language models are trained on. High-quality prose — especially genre fiction with consistent voice and structure — is commercially valuable training data. Collecting it through community posts is significantly cheaper than licensing it. This pattern has become more common as AI development has scaled.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>Does participating in this post grant anyone rights to my text? Am I certain this interaction is what it appears to be, and not a data collection exercise with a community wrapper?</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PATTERN: LINK HARVESTING -->
+        <div class="pattern-card" id="link-harvesting">
+          <div class="pattern-card-header">
+            <h3>Email and link harvesting</h3>
+            <p>"Drop your newsletter link or author website below — let's support each other!"</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>A post asking authors to share their newsletter signup links, author websites, Amazon author pages, or reader magnet URLs. Often framed as a community directory or mutual promotion opportunity. The thread can accumulate dozens or hundreds of links.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>Each link reveals which email platform you use, signals roughly how established your list is, and provides a direct entry point to your reader relationship. These lists are used for cold outreach by fake service providers, sold to marketing companies that target authors, and used to map the author ecosystem for commercial purposes.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>Is this a genuinely curated resource exchange, or a link collection exercise? If I would not give this information to a stranger who walked up and asked for it, why am I sharing it in a public thread?</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PATTERN: FAKE OUTREACH -->
+        <div class="pattern-card" id="fake-outreach">
+          <div class="pattern-card-header">
+            <h3>Fake publishing and agent outreach</h3>
+            <p>A publisher, agent, or promoter DMs you shortly after you comment on a public post.</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>A private message arrives from someone claiming to be a literary agent, small press publisher, book promoter, or distribution service — often within hours of you commenting publicly in an author group. The message feels timely and personal. It references your book or genre specifically, which makes it feel legitimate.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>Your public comment identified you as an active author looking for visibility. That signal is deliberately harvested. The fake outreach that follows typically leads to paid services, upfront fees, manuscript requests for training purposes, or phishing attempts. The personal detail in the message was pulled from your public post, not from genuine interest in your work.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>Did this opportunity find me, or did I find it? Legitimate agents and publishers do not cold-DM authors in Facebook groups. If the timing follows a public post, that timing is not a coincidence.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PATTERN: FREE SERVICES -->
+        <div class="pattern-card" id="free-services">
+          <div class="pattern-card-header">
+            <h3>"Free" service offers</h3>
+            <p>"We'll format your book for free — just send us your manuscript file."</p>
+          </div>
+          <div class="pattern-body">
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">What it looks like</div>
+              <p>An offer of free cover design, formatting, editing, review services, or promotion — in exchange for nothing more than your manuscript or project files. The offer appears in comment threads, via DM, or as a post in author groups. It often looks professional and uses the right vocabulary.</p>
+            </div>
+            <div class="pattern-cell">
+              <div class="pattern-cell-label">Why someone wants this</div>
+              <p>The manuscript file itself is the product they are after. A full novel is extremely valuable as AI training data — far more so than a short excerpt. Metadata about your distribution setup, pricing, and platform presence is also commercially useful. "Free" services frequently monetize through the files you send, not through any service they actually deliver.</p>
+            </div>
+            <div class="pattern-cell ask-cell">
+              <div class="pattern-cell-label">What to ask yourself</div>
+              <p>What does this person actually receive from giving me something for free? Every legitimate business has a revenue model. If I cannot identify this one, that is important information.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- LEGITIMATE REQUESTS -->
+      <div class="content-section" id="legitimate">
+        <div class="content-section-header">
+          <h2>Legitimate requests exist — and they matter</h2>
+          <p>Awareness of these patterns should make you more discerning, not more isolated.</p>
+        </div>
+
+        <div class="legit-block">
+          <p>Many authors genuinely want to help other authors. A writer who shares a thread to discover new voices, a reader building a resource list, a small group creating real community — these are common, valuable, and worth participating in. The author community is one of the more generous creative communities that exists, and treating everyone as a potential threat would damage something worth protecting.</p>
+          <p>The patterns described on this page are not reasons to disengage from community. They are reasons to notice the difference between a request that feels personal and specific — made by someone with a real identity and a clear reason — and one that feels broadcast and generic, with vague framing and no clear benefit to you. That distinction is almost always detectable if you are looking for it.</p>
+          <p>Authors who share genuinely deserves to be met with genuine participation. If you dismiss a real community member because their post looks superficially similar to an engagement bait pattern, you are paying a cost for caution that could have been avoided by asking one or two questions first. The goal of this page is sharper judgment, not reflexive suspicion.</p>
+        </div>
+      </div>
+
+
+      <!-- QUESTIONS -->
+      <div class="content-section" id="questions">
+        <div class="content-section-header">
+          <h2>What to ask yourself</h2>
+          <p>Five questions. Run through them before you share. They take about thirty seconds and they will rarely steer you wrong.</p>
+        </div>
+
+        <ul class="question-list">
+          <li class="question-item">
+            <span class="question-number">01</span>
+            <span class="question-text">
+              Who benefits from this post, and how?
+              <em>Not who says they benefit — who actually does. If the answer is unclear, that is useful information.</em>
+            </span>
+          </li>
+          <li class="question-item">
+            <span class="question-number">02</span>
+            <span class="question-text">
+              Do I know anything real about this person or group?
+              <em>A name, a history, a body of work. Legitimate community members have a presence. Generic accounts with no track record are worth noticing.</em>
+            </span>
+          </li>
+          <li class="question-item">
+            <span class="question-number">03</span>
+            <span class="question-text">
+              Is this request specific to me, or broadcast to everyone?
+              <em>Specificity is the mark of genuine interest. A request that could have been sent to any author is a different kind of request than one that responds to something you actually said.</em>
+            </span>
+          </li>
+          <li class="question-item">
+            <span class="question-number">04</span>
+            <span class="question-text">
+              What exactly am I giving, and where does it go?
+              <em>Not the vague answer — the specific one. An image, a file, a link, a text excerpt. Once shared publicly, you cannot control what happens to it.</em>
+            </span>
+          </li>
+          <li class="question-item">
+            <span class="question-number">05</span>
+            <span class="question-text">
+              Did this opportunity find me, or did I find it?
+              <em>Legitimate opportunities are usually found, not received. If something arrived in your DMs immediately after a public post, the timing is rarely accidental.</em>
+            </span>
+          </li>
+        </ul>
+
+        <div class="closing-note">
+          <p>None of these questions require you to be hostile or accusatory. You can ask them quietly, in your own head, before deciding whether to engage. Most of the time the answers will be reassuring and you will participate freely. Occasionally they will give you pause, and that pause will have served its purpose.</p>
+          <p>Your work took time to build. The voice in your writing, the readers you have earned, the cover you paid for — these are yours. Protecting them is not paranoia. It is professionalism.</p>
+          <div class="closing-line">CraftBeacon exists to help authors think more clearly about their work. That includes the parts that happen outside the manuscript.</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="awareness.html">Author Awareness</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
