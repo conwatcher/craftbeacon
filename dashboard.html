@@ -830,10 +830,14 @@ function detectTier(user) {
 
         buf += decoder.decode();
         const leftover = buf.split('\n');
-        for (const line of leftover) {
-          if (!line.startsWith('data: ')) continue;
+        for (const rawLine of leftover) {
+          const line = rawLine.trim();
+          const idx = line.indexOf('data:');
+          if (idx === -1) continue;
+          const payload = line.slice(idx + 5).trim();
+          if (!payload || payload === '[DONE]') continue;
           try {
-            const d = JSON.parse(line.slice(6));
+            const d = JSON.parse(payload);
             if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
               full += d.delta.text;
               inner.innerHTML = renderText(full);
