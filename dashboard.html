@@ -811,8 +811,8 @@ function detectTier(user) {
           const { done, value } = await reader.read();
           if (done) break;
           chunkCount++;
-          console.log('[CB-DIAG] chunk', chunkCount, 'size:', value.length);
           buf += decoder.decode(value, { stream: true });
+          console.log('[CB-DIAG] chunk', chunkCount, 'size:', value.length, '| full so far:', full.length, '| buf holding:', buf.length);
           const lines = buf.split('\n');
           buf = lines.pop();
           for (const line of lines) {
