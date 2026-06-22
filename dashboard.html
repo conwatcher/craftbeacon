@@ -790,11 +790,17 @@ function detectTier(user) {
 
     function renderText(text) {
       return text.split(/\n\n+/).filter(p => p.trim())
-        .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+        .map(p => {
+          let html = p
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+          return `<p>${html.replace(/\n/g, '<br>')}</p>`;
+        }).join('');
     }
 
     function copyResponse(btn, text) {
-      navigator.clipboard.writeText(text).then(function() {
+      const plain = text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*([^*\n]+)\*/g, '$1');
+      navigator.clipboard.writeText(plain).then(function() {
         const original = btn.innerHTML;
         btn.classList.add('copied');
         btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
