@@ -434,6 +434,27 @@
     }
     .upgrade-link:hover { background: var(--accent-glow); border-color: rgba(201,165,87,0.48); }
 
+    /* ── Copy button ──────────────────────────────── */
+    .copy-btn {
+      align-self: flex-start;
+      margin-top: 2px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px 5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .copy-btn:hover { color: var(--text-secondary); background: var(--bg-elevated); }
+    .copy-btn.copied { color: var(--accent); }
+
     /* ── Loading screen ───────────────────────────── */
     .loading {
       display: flex;
@@ -674,6 +695,17 @@ function detectTier(user) {
       document.getElementById('uploadBtn').style.display = 'flex';
       document.getElementById('inputHint').style.display = 'block';
     }
+
+    function addCopyButton(wrap, text) {
+      if (tier === 'free') return;
+      if (!wrap || wrap.querySelector('.copy-btn')) return;
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.setAttribute('aria-label', 'Copy response');
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+      btn.onclick = function() { copyResponse(btn, text); };
+      wrap.appendChild(btn);
+    }
     function handleLogout() {
       try { Outseta.auth.logout(); } catch(e) {}
       localStorage.clear();
@@ -738,6 +770,7 @@ function detectTier(user) {
         <span class="msg-label">${role === 'user' ? 'You' : 'CraftBeacon'}</span>
         <div class="bubble">${renderText(text)}</div>`;
       area.appendChild(wrap);
+      if (role === 'assistant') addCopyButton(wrap, text);
       scrollBottom();
       return wrap;
     }
@@ -758,6 +791,21 @@ function detectTier(user) {
     function renderText(text) {
       return text.split(/\n\n+/).filter(p => p.trim())
         .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+    }
+
+    function copyResponse(btn, text) {
+      navigator.clipboard.writeText(text).then(function() {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          btn.innerHTML = original;
+        }, 3000);
+      }).catch(function() {
+        btn.innerHTML = 'Copy failed';
+        setTimeout(function() { btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy'; }, 2000);
+      });
     }
 
     // ── Send ───────────────────────────────────────────────────────
@@ -849,6 +897,7 @@ function detectTier(user) {
         console.log('[CB-DIAG] saved length:', full.length, 'chars');
         console.log('[CB-DIAG] last 80 chars:', JSON.stringify(full.slice(-80)));
         history.push({ role: 'assistant', content: full });
+        addCopyButton(wrap, full);
         if (tier === 'free' && count >= LIMIT) showUpgrade();
 
       } catch(err) {
