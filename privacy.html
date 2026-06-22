@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftBeacon — Privacy</title>
+  <meta name="description" content="How CraftBeacon handles your information: what is collected, why, who it is shared with, how long it is kept, and how to request access or deletion." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-red:         #8B1A2F;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Navigation ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Document header ─── */
+    .doc-head {
+      position: relative;
+      padding: 4.5rem 3rem 3rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .doc-head-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    .doc-head-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .doc-head h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+    .doc-head h1 em { font-style: italic; color: var(--cb-amber-light); }
+    .doc-updated {
+      font-size: 0.82rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cb-dim);
+    }
+
+    /* ─── Document body ─── */
+    .doc-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem 5rem;
+    }
+    .doc-intro {
+      font-size: 1.08rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+    .doc-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin: 2.75rem 0 1rem;
+      line-height: 1.3;
+    }
+    .doc-body h2 em { font-style: italic; color: var(--cb-amber-light); }
+    .doc-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.12rem;
+      font-weight: 400;
+      color: var(--cb-amber-light);
+      margin: 2rem 0 0.65rem;
+    }
+    .doc-body p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+    .doc-body p strong { color: var(--cb-text); font-weight: 400; }
+    .doc-body a {
+      color: var(--cb-amber);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .doc-body a:hover { color: var(--cb-amber-light); }
+    .doc-body ul {
+      list-style: none;
+      margin: 0 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .doc-body ul li {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .doc-body ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--cb-amber);
+      opacity: 0.5;
+    }
+    .doc-body ul li strong { color: var(--cb-text); font-weight: 400; }
+
+    /* ─── Service table ─── */
+    .svc-table {
+      border: 0.5px solid var(--cb-border);
+      margin: 1.4rem 0 1.6rem;
+    }
+    .svc-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .svc-row:last-child { border-bottom: none; }
+    .svc-name {
+      padding: 1rem 1.25rem;
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: var(--cb-amber-light);
+      border-right: 0.5px solid var(--cb-border);
+      background: rgba(200,144,58,0.04);
+    }
+    .svc-use {
+      padding: 1rem 1.25rem;
+      font-size: 0.94rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── Callout ─── */
+    .doc-callout {
+      border: 0.5px solid var(--cb-border);
+      border-left: 2px solid var(--cb-amber);
+      background: rgba(17,15,11,0.55);
+      padding: 1.5rem 1.75rem;
+      margin: 1.75rem 0;
+    }
+    .doc-callout p { margin: 0; color: var(--cb-text); }
+
+    hr.divider { border: none; border-top: 0.5px solid var(--cb-border); margin: 0; }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .doc-head { padding: 3rem 1.5rem 2.25rem; }
+      .doc-head h1 { font-size: 2rem; }
+      .doc-body { padding: 2.5rem 1.5rem 3.5rem; }
+      .svc-row { grid-template-columns: 1fr; }
+      .svc-name { border-right: none; border-bottom: 0.5px solid var(--cb-border); }
+      .cb-footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="guide.html">Field Guide</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=dQGgqpQ4&planPaymentTerm=month&skipPlanOptions=true#o-anonymous'">Start free</button>
+    </div>
+  </nav>
+
+  <!-- DOCUMENT HEADER -->
+  <header class="doc-head">
+    <div class="doc-head-bg"></div>
+    <div class="doc-head-inner">
+      <div class="section-label">Privacy</div>
+      <h1>What we hold, and <em>what we don't</em></h1>
+      <p class="doc-updated">Last updated June 22, 2026</p>
+    </div>
+  </header>
+
+  <hr class="divider" />
+
+  <!-- DOCUMENT BODY -->
+  <main class="doc-body">
+    <p class="doc-intro">CraftBeacon is a writing coach, not a data business. We collect the little we need to run your account and improve your coaching, and nothing we can't account for. This page explains, in plain language, exactly what is collected, why, who it passes through, how long it stays, and how to have it removed.</p>
+
+    <h2>Who we are</h2>
+    <p>CraftBeacon is an AI writing coaching service for authors, operated from the United States and available to authors anywhere. When this page says <strong>we</strong> or <strong>us</strong>, it means CraftBeacon. If you have a question about anything here, you can reach a real person at <a href="mailto:patrick@thecraftbeacon.com">patrick@thecraftbeacon.com</a>.</p>
+
+    <h2>What we collect</h2>
+    <p>There are three kinds of information involved in using CraftBeacon, and it's worth being precise about each.</p>
+
+    <h3>Your account information</h3>
+    <p>When you sign up, we collect your name and email address, and — if you join a paid membership — your payment is processed for us by a third party. We never see or store your full card details ourselves; those stay with the payment processor described below.</p>
+
+    <h3>A short record of your coaching sessions</h3>
+    <p>When you have a coaching session as a logged-in member, we keep a brief record of it. That record contains your email address, your membership tier, and the <strong>first 500 characters of what you typed to open the session</strong> — roughly the first paragraph. We keep this so that the coaching can be improved over time and, in the future, so that we can offer you a record of your own work and decisions.</p>
+    <p>Two things are worth saying plainly. First, we do <strong>not</strong> store the coach's responses, and we do <strong>not</strong> store your full conversation — only that opening excerpt of your own words. Second, because that excerpt is simply the first 500 characters of whatever you type, it may include a short piece of your manuscript if that's what you paste in first. We mention this so you know exactly what's retained and can decide what to put in that opening message.</p>
+
+    <h3>Basic usage information</h3>
+    <p>Like most websites, CraftBeacon uses analytics to understand how the site is used — which pages are visited, roughly where visitors come from, and how they move through the site. This is standard web traffic information, handled by the analytics service named below, and it is not tied to the content of your coaching.</p>
+
+    <h2>Who your information passes through</h2>
+    <p>Running CraftBeacon means relying on a small number of trusted services. We believe in naming them plainly rather than hiding behind "third parties." Here is each one and what it does:</p>
+
+    <div class="svc-table">
+      <div class="svc-row">
+        <div class="svc-name">Outseta</div>
+        <div class="svc-use">Handles membership accounts, sign-in, and payment processing. Your account and billing details live here.</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-name">Anthropic</div>
+        <div class="svc-use">Provides the AI model that powers the coaching. Your messages are sent here to generate each response.</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-name">Cloudflare</div>
+        <div class="svc-use">Carries the connection between your browser and the coaching service securely and reliably.</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-name">Supabase</div>
+        <div class="svc-use">Stores the short session record described above.</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-name">Google Analytics</div>
+        <div class="svc-use">Provides the basic, anonymous website usage information described above.</div>
+      </div>
+    </div>
+
+    <p>Each of these services has its own privacy practices, and we choose them because they take that responsibility seriously. We do not sell your information to anyone, and we do not share it beyond what's needed to run the service you're using.</p>
+
+    <h2>How long we keep it</h2>
+    <p>We keep your account information and session records for as long as your account is active. We hold on to your data only while it's serving you — not indefinitely, and not after you've gone.</p>
+
+    <div class="doc-callout">
+      <p>If you close your account, or ask us to, we delete the information associated with you. You don't have to give a reason, and you don't have to keep an account open to have your data removed.</p>
+    </div>
+
+    <h2>Your choices</h2>
+    <p>Whatever country you're in, the same rights apply with us. You can:</p>
+    <ul>
+      <li><strong>Ask what we hold.</strong> Request a copy of the information associated with your account.</li>
+      <li><strong>Ask us to correct it.</strong> If something is wrong, tell us and we'll fix it.</li>
+      <li><strong>Ask us to delete it.</strong> Request removal of your data at any time, whether or not you keep your account.</li>
+    </ul>
+    <p>To do any of these, email <a href="mailto:patrick@thecraftbeacon.com">patrick@thecraftbeacon.com</a>. A person will handle it.</p>
+
+    <h2>A note for visitors outside the United States</h2>
+    <p>CraftBeacon is operated from the United States, which means your information is processed there and in the locations where the services above operate. By using CraftBeacon from another country, you understand that your information is handled in the United States. The rights described above — to see, correct, and delete your information — are available to you regardless of where you are.</p>
+
+    <h2>Changes to this page</h2>
+    <p>As CraftBeacon grows, what it does with information may change — for example, when the author's own session record becomes a feature you can use directly. When that happens, we'll update this page and change the date at the top. Meaningful changes will be made clear, not slipped in quietly.</p>
+
+    <h2>Questions</h2>
+    <p>This page is meant to be readable, not to hide behind legal language. If anything here is unclear, or you want to know more about how your information is handled, write to <a href="mailto:patrick@thecraftbeacon.com">patrick@thecraftbeacon.com</a> and ask.</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cb-footer" role="contentinfo">
+    <div class="footer-brand">
+      <div class="footer-logo-text">CraftBeacon</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>

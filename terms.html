@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftBeacon — Terms</title>
+  <meta name="description" content="The terms of using CraftBeacon: what the service is, what it isn't, how membership works, and what we each agree to." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-red:         #8B1A2F;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Navigation ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Document header ─── */
+    .doc-head {
+      position: relative;
+      padding: 4.5rem 3rem 3rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .doc-head-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    .doc-head-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .doc-head h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+    .doc-head h1 em { font-style: italic; color: var(--cb-amber-light); }
+    .doc-updated {
+      font-size: 0.82rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cb-dim);
+    }
+
+    /* ─── Document body ─── */
+    .doc-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem 5rem;
+    }
+    .doc-intro {
+      font-size: 1.08rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+    .doc-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin: 2.75rem 0 1rem;
+      line-height: 1.3;
+    }
+    .doc-body h2 em { font-style: italic; color: var(--cb-amber-light); }
+    .doc-body p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+    .doc-body p strong { color: var(--cb-text); font-weight: 400; }
+    .doc-body a {
+      color: var(--cb-amber);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .doc-body a:hover { color: var(--cb-amber-light); }
+    .doc-body ul {
+      list-style: none;
+      margin: 0 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .doc-body ul li {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .doc-body ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--cb-amber);
+      opacity: 0.5;
+    }
+    .doc-body ul li strong { color: var(--cb-text); font-weight: 400; }
+
+    /* ─── Callout ─── */
+    .doc-callout {
+      border: 0.5px solid var(--cb-border);
+      border-left: 2px solid var(--cb-amber);
+      background: rgba(17,15,11,0.55);
+      padding: 1.5rem 1.75rem;
+      margin: 1.75rem 0;
+    }
+    .doc-callout p { margin: 0; color: var(--cb-text); }
+
+    hr.divider { border: none; border-top: 0.5px solid var(--cb-border); margin: 0; }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .doc-head { padding: 3rem 1.5rem 2.25rem; }
+      .doc-head h1 { font-size: 2rem; }
+      .doc-body { padding: 2.5rem 1.5rem 3.5rem; }
+      .cb-footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="guide.html">Field Guide</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=dQGgqpQ4&planPaymentTerm=month&skipPlanOptions=true#o-anonymous'">Start free</button>
+    </div>
+  </nav>
+
+  <!-- DOCUMENT HEADER -->
+  <header class="doc-head">
+    <div class="doc-head-bg"></div>
+    <div class="doc-head-inner">
+      <div class="section-label">Terms</div>
+      <h1>The understanding <em>between us</em></h1>
+      <p class="doc-updated">Last updated June 22, 2026</p>
+    </div>
+  </header>
+
+  <hr class="divider" />
+
+  <!-- DOCUMENT BODY -->
+  <main class="doc-body">
+    <p class="doc-intro">These are the terms of using CraftBeacon — what the service is, what it isn't, and what we each agree to. They're written to be read, not to be impenetrable. By using CraftBeacon, you're agreeing to what's here.</p>
+
+    <h2>What CraftBeacon is</h2>
+    <p>CraftBeacon is an AI writing coach for authors of fiction and narrative nonfiction. It helps you think more clearly about your work — diagnosing what isn't working, asking the questions that move your thinking forward, and offering frameworks and structural approaches. It's built to send you back to your own manuscript with direction and momentum.</p>
+
+    <h2>What CraftBeacon is <em>not</em></h2>
+    <p>This is the heart of it, and it's worth stating plainly: <strong>CraftBeacon does not write for you.</strong> It does not produce prose, dialogue, scenes, blurbs, marketing copy, or any other finished text you could paste into a manuscript or a listing. That isn't a limitation we apologize for — it's the entire point. Your voice, your decisions, and your authorship stay yours.</p>
+    <p>CraftBeacon is also not a substitute for professional advice. It is not a lawyer, an accountant, an agent, a medical professional, or a therapist. When a question moves into legal, financial, medical, or mental health territory, CraftBeacon will say so and point you toward people genuinely equipped to help.</p>
+
+    <div class="doc-callout">
+      <p>Because the work stays yours, so does the responsibility for it. CraftBeacon offers coaching and guidance; the creative and business decisions you make with it are your own.</p>
+    </div>
+
+    <h2>Using CraftBeacon</h2>
+    <p>You agree to use CraftBeacon for its intended purpose — coaching and guidance around your own writing. In practical terms, that means you won't:</p>
+    <ul>
+      <li>Use it to break the law or infringe someone else's rights.</li>
+      <li>Attempt to misuse, overload, or interfere with the service or the systems behind it.</li>
+      <li>Share your account access in a way that violates your membership.</li>
+      <li>Submit content you don't have the right to share.</li>
+    </ul>
+    <p>The work you bring to CraftBeacon remains yours. We don't claim ownership of your manuscript, your ideas, or anything you write. What we keep and how we handle it is described in our <a href="privacy.html">Privacy page</a>.</p>
+
+    <h2>Membership and payment</h2>
+    <p>CraftBeacon offers a free tier and several paid membership lanes. Membership, billing, and payments are handled through our payment provider, Outseta. When you join a paid plan, you authorize the recurring charge for that plan until you cancel.</p>
+    <p>You can cancel any time. There are no contracts and no cancellation penalty. When you cancel, your paid access continues through the period you've already paid for, and then returns to the free tier or closes, as you choose. Prices may change over time; if they do, we'll make that clear before any change affects you.</p>
+
+    <h2>Availability</h2>
+    <p>We work to keep CraftBeacon running well, but we can't promise it will be available without interruption. The service depends on a number of outside providers, and occasional downtime, maintenance, or changes are part of running any online tool. CraftBeacon is provided on an "as is" and "as available" basis.</p>
+
+    <h2>The limits of coaching</h2>
+    <p>CraftBeacon's guidance is built on craft knowledge and sound principle, but writing is not a solved system and no coaching can guarantee an outcome. We can't promise that a manuscript will sell, that a structural fix will land exactly as hoped, or that following any piece of guidance will produce a particular result. What CraftBeacon offers is clearer thinking and better-informed decisions — the rest is the work, and the work is yours.</p>
+
+    <h2>Changes to these terms</h2>
+    <p>As CraftBeacon grows, these terms may change. When they do, we'll update this page and change the date at the top. If a change is significant, we'll make it clear rather than quietly altering the fine print.</p>
+
+    <h2>Questions</h2>
+    <p>If anything here is unclear, or you want to understand something before agreeing to it, write to <a href="mailto:patrick@thecraftbeacon.com">patrick@thecraftbeacon.com</a>. A person will answer.</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cb-footer" role="contentinfo">
+    <div class="footer-brand">
+      <div class="footer-logo-text">CraftBeacon</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
