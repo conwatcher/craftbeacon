@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
     var o_options = {
@@ -493,6 +494,7 @@
       <div class="header-right">
         <a class="header-nav-link" href="/resources.html" target="_blank">Resources</a>
         <a class="header-nav-link" href="/guide.html" target="_blank">Field Guide</a>
+        <button class="header-nav-link" id="exportBtn" onclick="exportPDF()" style="display:none; cursor:pointer; background:none; font-style:normal;">Export PDF</button>
         <a class="header-nav-link" href="https://the-craft-beacon.outseta.com/profile" target="_blank">Manage account</a>
         <span class="tier-badge" id="tierBadge">Free</span>
         <span class="user-name"  id="userName"></span>
@@ -696,6 +698,12 @@ function detectTier(user) {
       document.getElementById('inputHint').style.display = 'block';
     }
 
+    function showExportButton() {
+      if (tier === 'free') return;
+      const btn = document.getElementById('exportBtn');
+      if (btn) btn.style.display = 'inline-block';
+    }
+
     function addCopyButton(wrap, text) {
       if (tier === 'free') return;
       if (!wrap || wrap.querySelector('.copy-btn')) return;
@@ -723,6 +731,85 @@ function detectTier(user) {
         el.className = 'counter';
         el.textContent = `${count} of ${LIMIT} free messages used this session`;
       }
+    }
+
+    function exportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+
+      const marginLeft   = 72;
+      const marginRight  = 72;
+      const marginTop    = 72;
+      const pageWidth    = doc.internal.pageSize.getWidth();
+      const usableWidth  = pageWidth - marginLeft - marginRight;
+      const pageHeight   = doc.internal.pageSize.getHeight();
+      let y = marginTop;
+
+      function checkPageBreak(needed) {
+        if (y + needed > pageHeight - 60) { doc.addPage(); y = marginTop; }
+      }
+
+      function writeWrapped(text, fontSize, isBold, color) {
+        doc.setFontSize(fontSize);
+        doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+        doc.setTextColor(color || 40);
+        const lines = doc.splitTextToSize(text, usableWidth);
+        checkPageBreak(lines.length * (fontSize * 1.4));
+        doc.text(lines, marginLeft, y);
+        y += lines.length * (fontSize * 1.4);
+      }
+
+      // Header
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(40);
+      doc.text('CraftBeacon', marginLeft, y);
+      y += 28;
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(120);
+      const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+      const memberName = currentUser ? (currentUser.FirstName || currentUser.Email || 'Member') : 'Member';
+      doc.text(`Session exported ${dateStr}  ·  ${memberName}`, marginLeft, y);
+      y += 14;
+
+      // Divider
+      doc.setDrawColor(200);
+      doc.line(marginLeft, y, pageWidth - marginRight, y);
+      y += 24;
+
+      // Messages
+      for (const msg of history) {
+        const isUser = msg.role === 'user';
+        const label  = isUser ? 'You' : 'CraftBeacon';
+        const plain  = msg.content
+          .replace(/\*\*(.+?)\*\*/g, '$1')
+          .replace(/\*([^*\n]+)\*/g, '$1');
+
+        checkPageBreak(40);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(isUser ? 100 : 160);
+        doc.text(label.toUpperCase(), marginLeft, y);
+        y += 14;
+
+        const chunks = plain.split(/\n\n+/);
+        for (const chunk of chunks) {
+          if (!chunk.trim()) continue;
+          writeWrapped(chunk.trim(), 11, false, isUser ? 60 : 40);
+          y += 8;
+        }
+        y += 10;
+
+        doc.setDrawColor(220);
+        checkPageBreak(10);
+        doc.line(marginLeft, y, pageWidth - marginRight, y);
+        y += 18;
+      }
+
+      const dateFile = new Date().toISOString().slice(0, 10);
+      doc.save(`CraftBeacon-Session-${dateFile}.pdf`);
     }
 
     function showUpgrade() {
@@ -904,6 +991,7 @@ function detectTier(user) {
         console.log('[CB-DIAG] last 80 chars:', JSON.stringify(full.slice(-80)));
         history.push({ role: 'assistant', content: full });
         addCopyButton(wrap, full);
+        showExportButton();
         if (tier === 'free' && count >= LIMIT) showUpgrade();
 
       } catch(err) {
