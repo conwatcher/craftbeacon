@@ -866,6 +866,55 @@
 
     /* ─── Smooth section anchors ─── */
     section[id] { scroll-margin-top: 70px; }
+
+    /* ─── Mobile navigation ─── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--cb-muted);
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover span { background: var(--cb-amber-light); }
+
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-actions .btn-nav-login { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .nav-mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(17,15,11,0.98);
+        border-bottom: 0.5px solid var(--cb-border);
+        padding: 1.25rem 1.5rem 1.5rem;
+        gap: 0;
+        z-index: 199;
+      }
+      .nav-mobile-open .nav-links li { border-bottom: 0.5px solid var(--cb-border); }
+      .nav-mobile-open .nav-links li:last-child { border-bottom: none; }
+      .nav-mobile-open .nav-links a {
+        display: block;
+        padding: 0.85rem 0;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -887,6 +936,9 @@
     <div class="nav-actions">
       <button class="btn-nav-login" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=login'">Sign in</button>
       <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=dQGgqpQ4&planPaymentTerm=month&skipPlanOptions=true#o-anonymous'">Start free</button>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
