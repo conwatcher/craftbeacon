@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Mechanics of Good Fiction | CraftBeacon</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+
+  <meta name="description" content="A craft reference for authors who want to understand why something isn't working — and what to do about it." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'popup',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Nav ── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ── Page header ── */
+    .page-header {
+      position: relative;
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("assets/quill-lane.jpg");
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.28) sepia(0.2);
+    }
+    .page-header-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.65) 100%);
+    }
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 620px;
+    }
+    .page-header p + p { margin-top: 0.75rem; }
+
+    /* ── Main layout ── */
+    .page-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 80px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      gap: 4rem;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+    .sidebar-section { margin-bottom: 2rem; }
+    .sidebar-heading {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-dim);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .sidebar-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .sidebar-links a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.5;
+      display: block;
+      padding: 0.15rem 0;
+    }
+    .sidebar-links a:hover { color: var(--cb-amber-light); }
+
+    /* ── Content ── */
+    .content { padding: 3rem 0 5rem; }
+
+    /* ── Content sections ── */
+    .content-section { margin-bottom: 4rem; }
+    .content-section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .content-section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.4rem;
+    }
+    .content-section-header p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Craft items ── */
+    .craft-item {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      border-left: 2px solid rgba(200,144,58,0.35);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .craft-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--cb-amber-light);
+      margin-bottom: 0.65rem;
+      line-height: 1.35;
+    }
+    .craft-item p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+
+    /* ── Reference subsection ── */
+    .ref-subsection {
+      margin-bottom: 2.5rem;
+    }
+    .ref-subsection-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .ref-subsection-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(200,144,58,0.2);
+    }
+    .word-cloud {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+    }
+    .word-tag {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      padding: 0.25rem 0.7rem;
+      border: 0.5px solid var(--cb-border);
+      background: var(--cb-surface2);
+      line-height: 1.5;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .word-tag:hover {
+      color: var(--cb-amber-light);
+      border-color: rgba(200,144,58,0.3);
+    }
+
+    /* ── Closing note ── */
+    .closing-note {
+      margin-top: 3rem;
+      padding: 2rem 2.25rem;
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+    }
+    .closing-note p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+    }
+    .closing-note p + p { margin-top: 0.85rem; }
+    .closing-note .closing-line {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--cb-text);
+      margin-top: 1.25rem;
+    }
+
+    /* ── Footer ── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    section[id], div[id] { scroll-margin-top: 90px; }
+
+    @media (max-width: 900px) {
+      .page-body { grid-template-columns: 1fr; padding: 0 1.5rem; }
+      .sidebar { position: static; max-height: none; padding: 1.5rem 0 0; }
+      .cb-nav { padding: 1rem 1.5rem; }
+      .page-header { padding: 3rem 1.5rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════ PAGE HEADER ═══════════════ -->
+  <header class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-vignette"></div>
+    <div class="page-header-content">
+      <div class="section-label">Craft reference</div>
+      <h1>The Mechanics of Good Fiction</h1>
+      <p>A craft reference for authors who want to understand why something isn't working — and what to do about it. Each section addresses a specific element of fiction and how it functions on the page.</p>
+      <p>This page grows over time. The principles here are not exhaustive — they are the ones that come up most often and matter most when they do.</p>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════ BODY ═══════════════ -->
+  <div class="page-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Page sections">
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Craft principles</div>
+        <ul class="sidebar-links">
+          <li><a href="#description">Writing description</a></li>
+          <li><a href="#dialogue">Writing dialogue</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <ul class="sidebar-links">
+          <li><a href="#descriptive-reference">Descriptive vocabulary</a></li>
+          <li><a href="#voice-laughter">— Voice and laughter</a></li>
+          <li><a href="#smile">— A smile</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Further thinking</div>
+        <ul class="sidebar-links">
+          <li><a href="#character-note">On character</a></li>
+        </ul>
+      </div>
+    </aside>
+
+
+    <!-- Main content -->
+    <main class="content">
+
+
+      <!-- SECTION 1 — DESCRIPTION -->
+      <div class="content-section" id="description">
+        <div class="content-section-header">
+          <h2>Writing Description That Works</h2>
+          <p>Description that earns its place on the page does more than locate the reader in a setting. It reveals character, carries emotional weight, and controls pace. These are the principles that separate useful description from decoration.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Describe what matters, not everything present</h3>
+          <p>The job of description is not to inventory a room. It is to give readers the details that do actual work — details that tell them something about the setting, the emotional temperature, or the person doing the looking. Selecting for meaning and leaving the rest out is not laziness. It is the decision that makes every detail you do include land harder.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Description lands harder when it reaches more than one sense</h3>
+          <p>Sight is the default. But readers can hear, smell, feel, and sometimes taste the world you are building, and a scene that reaches more than one sense becomes something readers inhabit rather than simply observe. These details do not require extra words to be earned. They require the right words — ones that are specific enough to be real and spare enough not to slow the scene down.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Introduce detail as your character would encounter it, not all at once</h3>
+          <p>A character entering a room does not process everything simultaneously. They notice what their attention is pulled toward first, then what catches their eye next. Releasing description gradually — in the order a person would actually experience it — keeps the scene moving and makes the detail feel discovered rather than delivered. Front-loaded description stops a scene in its tracks before it has had a chance to begin.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>What a character notices reveals who that character is</h3>
+          <p>Two people standing in the same room will notice entirely different things. This is not just a technique for description — it is one of the most efficient ways to establish who someone is without stopping the story to explain it. The choice of what to show the reader through any given character's attention is a character decision as much as a descriptive one. Use it deliberately.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Description reflects emotional state — the same setting can do different work</h3>
+          <p>A street at night can feel welcoming or threatening depending entirely on whose eyes the reader is seeing through and what that character is carrying into the scene. Description is not objective. The world your narrator describes is colored by their state of mind, and the best description uses that coloring deliberately rather than by accident. The setting has not changed. The character's relationship to it has.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Use comparison selectively — precision matters more than frequency</h3>
+          <p>A well-placed simile or metaphor makes an image unforgettable. But comparisons stacked through a passage draw the reader's attention to the writing itself rather than to what is being described. The test for any comparison is whether it makes the thing clearer, not whether it sounds interesting. One precise comparison outperforms three decorative ones, and a comparison that calls attention to itself has stopped doing the work description is supposed to do.</p>
+        </div>
+      </div>
+
+
+      <!-- SECTION 2 — DIALOGUE -->
+      <div class="content-section" id="dialogue">
+        <div class="content-section-header">
+          <h2>Dialogue That Sounds Like People</h2>
+          <p>Dialogue is not transcribed speech — it is the impression of speech, compressed and sharpened. These principles describe how real conversation behaves and how to reproduce that behavior on the page without reproducing its actual inefficiency.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Real conversations do not run in straight lines</h3>
+          <p>People interrupt themselves, lose the thread, and change direction before they finish a thought. Dialogue that moves in clean, complete sentences from one speaker to the next sounds constructed rather than spoken. A character who redirects mid-sentence, forgets what they were about to say, or arrives at the point only after going somewhere else first sounds like a person. The key is that the detour should feel true, not random.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Contractions are the sound of someone actually speaking</h3>
+          <p>Most people do not say "I am going to the store." They say "I'm going." A character who speaks in full formal constructions reads as stiff unless the formality is intentional — a signal about who they are or how they are presenting themselves in this particular moment. Otherwise, contractions are not a style choice. They are a naturalness choice, and their absence is always noticeable even when readers cannot name why the dialogue feels off.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>"Said" does more work than you think — and so does knowing when something else earns its place</h3>
+          <p>The reason "said" disappears from reader awareness is precisely because it handles everything without announcing itself. Tags that replace it — declared, exclaimed, interjected — call attention to themselves in a way that slows the reader down. But there are moments when a different verb earns its place: when the way something is delivered changes the meaning of what was said. Use those moments deliberately, not as a habit of avoiding a word that was not causing any problems.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Emotional characters repeat themselves</h3>
+          <p>Under pressure, people circle. They say the same thing twice because they are processing it as they speak, or because they need the other person to hear it differently than they heard it the first time. A character who is frightened, grieving, or angry will not always speak with efficient clarity — and that inefficiency, used at the right moment, makes emotion land more convincingly than a well-articulated statement ever would.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>What the character does not say is also part of the exchange</h3>
+          <p>A character who answers "Are you okay?" with "I'm tired" may genuinely be tired. Or they may be communicating that they are not going to answer that question right now. The gap between what is said and what is meant gives readers something to do while they read, and readers who are actively working out subtext are readers who are engaged. Not every exchange needs to be decoded — but the ones that carry tension almost always benefit from leaving something unsaid.</p>
+        </div>
+
+        <div class="craft-item">
+          <h3>Accent lives in word choice and rhythm, not in altered spelling</h3>
+          <p>The instinct to represent an accent phonetically — by changing the spelling of words to capture how they sound — almost always makes the text harder to read without making the accent clearer. What communicates how someone speaks is the words they reach for, the constructions they use, and the rhythm of their sentences. These carry regionality and character more accurately than respelled phonetics do, and they do it without requiring the reader to perform decoding work that slows the scene down for no narrative gain.</p>
+        </div>
+      </div>
+
+
+      <!-- SECTION 3 — DESCRIPTIVE REFERENCE -->
+      <div class="content-section" id="descriptive-reference">
+        <div class="content-section-header">
+          <h2>Descriptive Reference</h2>
+          <p>Word lists for specific descriptive challenges. These are not prescriptions — they are starting points for finding the precise word that fits the moment you are writing. The right choice will depend on the emotional register of the scene, the character doing the observing, and the effect you are after.</p>
+        </div>
+
+        <!-- Voice and Laughter -->
+        <div class="ref-subsection" id="voice-laughter">
+          <div class="ref-subsection-label">Voice and laughter</div>
+          <div class="word-cloud">
+            <span class="word-tag">velvety</span>
+            <span class="word-tag">gravelly</span>
+            <span class="word-tag">breathy</span>
+            <span class="word-tag">melodic</span>
+            <span class="word-tag">raspy</span>
+            <span class="word-tag">sharp</span>
+            <span class="word-tag">husky</span>
+            <span class="word-tag">lilting</span>
+            <span class="word-tag">hollow</span>
+            <span class="word-tag">trembling</span>
+            <span class="word-tag">silky</span>
+            <span class="word-tag">clipped</span>
+            <span class="word-tag">booming</span>
+            <span class="word-tag">flat</span>
+            <span class="word-tag">warm</span>
+            <span class="word-tag">cold</span>
+            <span class="word-tag">airy</span>
+            <span class="word-tag">strained</span>
+            <span class="word-tag">rich</span>
+            <span class="word-tag">tinny</span>
+            <span class="word-tag">cracked</span>
+            <span class="word-tag">sonorous</span>
+            <span class="word-tag">quiet</span>
+            <span class="word-tag">thunderous</span>
+            <span class="word-tag">brittle</span>
+            <span class="word-tag">honeyed</span>
+            <span class="word-tag">bubbling</span>
+            <span class="word-tag">dry</span>
+            <span class="word-tag">choked</span>
+            <span class="word-tag">light</span>
+            <span class="word-tag">uneven</span>
+            <span class="word-tag">effortless</span>
+            <span class="word-tag">stifled</span>
+            <span class="word-tag">rolling</span>
+            <span class="word-tag">low</span>
+            <span class="word-tag">sharp-edged</span>
+            <span class="word-tag">bitter</span>
+            <span class="word-tag">musical</span>
+            <span class="word-tag">nasal</span>
+          </div>
+        </div>
+
+        <!-- A Smile -->
+        <div class="ref-subsection" id="smile">
+          <div class="ref-subsection-label">A smile</div>
+          <div class="word-cloud">
+            <span class="word-tag">crooked</span>
+            <span class="word-tag">lopsided</span>
+            <span class="word-tag">slow</span>
+            <span class="word-tag">razor-thin</span>
+            <span class="word-tag">practiced</span>
+            <span class="word-tag">hollow</span>
+            <span class="word-tag">lazy</span>
+            <span class="word-tag">wide</span>
+            <span class="word-tag">fleeting</span>
+            <span class="word-tag">tired</span>
+            <span class="word-tag">genuine</span>
+            <span class="word-tag">sharp</span>
+            <span class="word-tag">soft</span>
+            <span class="word-tag">knowing</span>
+            <span class="word-tag">brittle</span>
+            <span class="word-tag">rueful</span>
+            <span class="word-tag">dim</span>
+            <span class="word-tag">radiant</span>
+            <span class="word-tag">trembling</span>
+            <span class="word-tag">teasing</span>
+            <span class="word-tag">pained</span>
+            <span class="word-tag">faint</span>
+            <span class="word-tag">absent</span>
+            <span class="word-tag">wolfish</span>
+            <span class="word-tag">smug</span>
+            <span class="word-tag">wistful</span>
+            <span class="word-tag">dazzling</span>
+            <span class="word-tag">aching</span>
+            <span class="word-tag">mirthless</span>
+            <span class="word-tag">conspiratorial</span>
+            <span class="word-tag">unguarded</span>
+            <span class="word-tag">polished</span>
+            <span class="word-tag">bewildered</span>
+            <span class="word-tag">strained</span>
+            <span class="word-tag">wicked</span>
+            <span class="word-tag">luminous</span>
+            <span class="word-tag">ghost of a smile</span>
+            <span class="word-tag">half-smile</span>
+            <span class="word-tag">sad</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- CLOSING NOTE — CHARACTER -->
+      <div class="closing-note" id="character-note">
+        <p>Character is where most craft problems eventually lead. A slow chapter, a dialogue exchange that won't land, a scene that loses momentum — often the underlying cause is a character whose construction isn't fully working. A character with unclear motivation has nowhere to go on the page. A character who is only consistent has nothing to push against. A character whose intelligence is universal removes tension rather than creating it, because a character who can solve every problem is a character the reader doesn't need to worry about.</p>
+        <p>Intelligence in fiction is worth particular attention because it is one of the most commonly mishandled qualities a character can carry. Real expertise is always domain-specific — a character who is brilliant in every situation is not a brilliant character, they are a plot device. Let capable characters excel in their actual domain and struggle genuinely outside it. Show the reader that a character is intelligent rather than asserting it: let them notice what others miss, draw connections the reader can trace, arrive at conclusions through visible reasoning. And remember that the most convincing failure modes for intelligent characters are ones that grow directly from their strengths — overconfidence, tunnel vision, the assumption that they have already seen the important information. Mistakes like these make a character more credible, not less.</p>
+        <div class="closing-line">Understanding why a character works is how you fix one that doesn't.</div>
+      </div>
+
+
+    </main>
+  </div>
+
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="awareness.html">Author Awareness</a></li>
+      <li><a href="craft.html">Craft Reference</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
