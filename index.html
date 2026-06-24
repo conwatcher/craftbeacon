@@ -1197,5 +1197,24 @@
     </ul>
   </footer>
 
+<script>
+    function toggleMobileNav() {
+      const nav = document.querySelector('.cb-nav');
+      const btn = document.getElementById('navHamburger');
+      const isOpen = nav.classList.toggle('nav-mobile-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        const nav = document.querySelector('.cb-nav');
+        const btn = document.getElementById('navHamburger');
+        nav.classList.remove('nav-mobile-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open navigation menu');
+      });
+    });
+  </script>
 </body>
 </html>
