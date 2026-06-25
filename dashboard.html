@@ -946,14 +946,12 @@ function detectTier(user) {
         const reader  = res.body.getReader();
         const decoder = new TextDecoder();
         let full = '', buf = '';
-        let chunkCount = 0;
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          chunkCount++;
           buf += decoder.decode(value, { stream: true });
-          console.log('[CB-DIAG] chunk', chunkCount, 'size:', value.length, '| full so far:', full.length, '| buf holding:', buf.length);
+          
           const lines = buf.split('\n');
           buf = lines.pop();
           for (const line of lines) {
@@ -987,8 +985,7 @@ function detectTier(user) {
           } catch(e) {}
         }
 
-        console.log('[CB-DIAG] saved length:', full.length, 'chars');
-        console.log('[CB-DIAG] last 80 chars:', JSON.stringify(full.slice(-80)));
+        
         history.push({ role: 'assistant', content: full });
         addCopyButton(wrap, full);
         showExportButton();
