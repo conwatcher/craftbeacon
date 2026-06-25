@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Beacon Brief — CraftBeacon Newsletter</title>
+  <meta name="description" content="A biweekly craft newsletter for fiction and narrative nonfiction authors. One craft principle expanded in depth, reader questions answered, and observations from inside the writing practice." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'redirect',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2420250');
+  </script>
+  <!-- End MailerLite Universal -->
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-red:         #8B1A2F;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Shared helpers ─── */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 0.5px solid var(--cb-border);
+    }
+
+    /* ─── Navigation ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cb-amber-light); }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Hero ─── */
+    .nl-hero {
+      position: relative;
+      padding: 6rem 3rem 5rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .nl-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+
+    .nl-hero-vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 100% at 50% 50%, transparent 25%, rgba(17,15,11,0.6) 70%, rgba(17,15,11,0.94) 100%),
+        radial-gradient(ellipse 50% 60% at 50% 40%, rgba(200,144,58,0.08) 0%, transparent 60%);
+    }
+
+    .nl-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .nl-hero-content .section-label {
+      justify-content: center;
+    }
+    .nl-hero-content .section-label::after {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+
+    .nl-hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--cb-text);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .nl-hero-content h1 em {
+      font-style: italic;
+      color: var(--cb-amber-light);
+    }
+
+    .nl-hero-sub {
+      font-size: 1.08rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 520px;
+      margin: 0 auto 0.5rem;
+    }
+
+    /* ─── What's Inside ─── */
+    .nl-inside {
+      position: relative;
+      padding: 5.5rem 3rem;
+      overflow: hidden;
+    }
+    .nl-inside-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+    .nl-inside-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .nl-inside-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .nl-inside-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+    .nl-inside-header h2 em { font-style: italic; color: var(--cb-amber-light); }
+    .nl-inside-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .nl-inside-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--cb-border);
+      border: 0.5px solid var(--cb-border);
+    }
+    .nl-card {
+      background: rgba(22,19,14,0.88);
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .nl-card:hover { background: rgba(28,25,18,0.95); }
+    .nl-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--cb-amber);
+      opacity: 0.32;
+      transition: opacity 0.25s;
+    }
+    .nl-card:hover::before { opacity: 0.85; }
+    .nl-card-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.85rem;
+    }
+    .nl-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .nl-card p {
+      font-size: 0.96rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.78;
+    }
+
+    /* ─── Signup Section ─── */
+    .nl-signup {
+      position: relative;
+      padding: 6rem 3rem;
+      overflow: hidden;
+    }
+    .nl-signup-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23a07830'/%3E%3C/svg%3E");
+      background-size: 500px 500px;
+    }
+    .nl-signup-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nl-signup-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+      line-height: 1.25;
+    }
+    .nl-signup-inner h2 em { font-style: italic; color: var(--cb-amber-light); }
+    .nl-signup-inner p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    /* MailerLite form wrapper — centers and constrains the embedded form */
+    .nl-form-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── Privacy reassurance ─── */
+    .nl-privacy {
+      position: relative;
+      padding: 4rem 3rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .nl-privacy-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+    }
+    .nl-privacy-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .nl-privacy-inner p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      line-height: 1.85;
+      font-style: italic;
+    }
+    .nl-privacy-inner p a {
+      color: var(--cb-amber);
+      text-decoration: none;
+      border-bottom: 0.5px solid rgba(200,144,58,0.4);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nl-privacy-inner p a:hover {
+      color: var(--cb-amber-light);
+      border-color: var(--cb-amber-light);
+    }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    /* ─── Mobile navigation ─── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--cb-muted);
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover span { background: var(--cb-amber-light); }
+
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-actions .btn-nav-login { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .nav-mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(17,15,11,0.98);
+        border-bottom: 0.5px solid var(--cb-border);
+        padding: 1.25rem 1.5rem 1.5rem;
+        gap: 0;
+        z-index: 199;
+      }
+      .nav-mobile-open .nav-links li { border-bottom: 0.5px solid var(--cb-border); }
+      .nav-mobile-open .nav-links li:last-child { border-bottom: none; }
+      .nav-mobile-open .nav-links a {
+        display: block;
+        padding: 0.85rem 0;
+        font-size: 0.9rem;
+      }
+
+      .nl-hero { padding: 4rem 1.5rem 3.5rem; }
+      .nl-hero-content h1 { font-size: 2.6rem; }
+      .nl-inside { padding: 4rem 1.5rem; }
+      .nl-inside-grid { grid-template-columns: 1fr; }
+      .nl-signup { padding: 4rem 1.5rem; }
+      .nl-signup-inner h2 { font-size: 1.85rem; }
+      .nl-privacy { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#philosophy">How it works</a></li>
+      <li><a href="index.html#lanes">The lanes</a></li>
+      <li><a href="index.html#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="guide.html">Field Guide</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=login'">Sign in</button>
+      <button class="btn-nav-signup" onclick="window.location.href='https://the-craft-beacon.outseta.com/auth?widgetMode=register&planUid=dQGgqpQ4&planPaymentTerm=month&skipPlanOptions=true#o-anonymous'">Start free</button>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════
+       HERO — Masthead and banner
+  ═══════════════════════════════════ -->
+  <section class="nl-hero" aria-labelledby="newsletter-heading">
+    <div class="nl-hero-bg"></div>
+    <div class="nl-hero-vignette"></div>
+
+    <div class="nl-hero-content">
+      <div class="section-label">The CraftBeacon Newsletter</div>
+      <h1 id="newsletter-heading">The <em>Beacon Brief</em></h1>
+      <p class="nl-hero-sub">A biweekly dispatch for fiction and narrative nonfiction authors — one craft principle expanded in depth, a reader question answered, and the occasional observation from inside the practice.</p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ═══════════════════════════════════
+       WHAT'S INSIDE
+  ═══════════════════════════════════ -->
+  <section class="nl-inside" aria-labelledby="inside-heading">
+    <div class="nl-inside-bg"></div>
+    <div class="nl-inside-inner">
+      <div class="nl-inside-header">
+        <div class="section-label" style="justify-content: center;">What's in each issue</div>
+        <h2 id="inside-heading">Built around <em>craft</em>, not noise</h2>
+        <p>Every issue is short enough to read with a coffee, deep enough to give you something to actually work on.</p>
+      </div>
+
+      <div class="nl-inside-grid">
+
+        <div class="nl-card">
+          <div class="nl-card-label">One tip, expanded</div>
+          <h3>A craft principle in depth</h3>
+          <p>One technique, structural concept, or craft idea drawn out further than a quick tip allows. The kind of explanation that gives you something you can apply to whatever you're working on this week.</p>
+        </div>
+
+        <div class="nl-card">
+          <div class="nl-card-label">The Q&amp;A</div>
+          <h3>Reader questions, answered</h3>
+          <p>A real question from a subscriber, answered with the same coaching approach CraftBeacon takes inside the platform. You can submit yours by replying to any issue.</p>
+        </div>
+
+        <div class="nl-card">
+          <div class="nl-card-label">Occasional notes</div>
+          <h3>Observations from the work</h3>
+          <p>Sometimes a longer reflection, a curated resource, or something we've noticed in author communities lately. Always tied to the craft. Never filler.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ═══════════════════════════════════
+       SIGNUP
+  ═══════════════════════════════════ -->
+  <section class="nl-signup" aria-labelledby="signup-heading">
+    <div class="nl-signup-bg"></div>
+    <div class="nl-signup-inner">
+      <div class="section-label" style="justify-content: center;">Subscribe</div>
+      <h2 id="signup-heading">Join <em>The Beacon Brief</em></h2>
+      <p>Delivered every other week. No content generation. No sales pressure. Just the kind of working observations that move a manuscript forward.</p>
+
+      <div class="nl-form-wrap">
+        <div class="ml-embedded" data-form="ePVaSP"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       PRIVACY REASSURANCE
+  ═══════════════════════════════════ -->
+  <section class="nl-privacy" aria-label="Privacy reassurance">
+    <div class="nl-privacy-bg"></div>
+    <div class="nl-privacy-inner">
+      <p>Your email stays here. We don't share it, sell it, or trade it. Unsubscribe anytime from the link at the bottom of any issue. Full details in our <a href="privacy.html">Privacy Policy</a>.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div class="footer-brand">
+      <div class="footer-logo-text">CraftBeacon</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      const nav = document.querySelector('.cb-nav');
+      const btn = document.getElementById('navHamburger');
+      const isOpen = nav.classList.toggle('nav-mobile-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        const nav = document.querySelector('.cb-nav');
+        const btn = document.getElementById('navHamburger');
+        nav.classList.remove('nav-mobile-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open navigation menu');
+      });
+    });
+  </script>
+</body>
+</html>
