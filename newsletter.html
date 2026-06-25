@@ -421,6 +421,46 @@
       border-color: var(--cb-amber-light);
     }
 
+    /* ─── Floating Subscribe Button ─── */
+    .nl-floating-subscribe {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 100;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.85rem 1.6rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+      transition: background 0.2s, transform 0.15s, opacity 0.35s;
+      opacity: 1;
+    }
+    .nl-floating-subscribe:hover {
+      background: var(--cb-amber-light);
+      transform: translateY(-1px);
+    }
+    .nl-floating-subscribe.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    @media (max-width: 768px) {
+      .nl-floating-subscribe {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        font-size: 0.74rem;
+        padding: 0.75rem 1.3rem;
+      }
+    }
+
     /* ─── Footer ─── */
     .cb-footer {
       padding: 2.25rem 3rem;
@@ -598,7 +638,9 @@
   <!-- ═══════════════════════════════════
        SIGNUP
   ═══════════════════════════════════ -->
-  <section class="nl-signup" aria-labelledby="signup-heading">
+  <a href="#signup" class="nl-floating-subscribe" id="floatingSubscribe" aria-label="Jump to subscribe form">Subscribe</a>
+
+  <section class="nl-signup" id="signup" aria-labelledby="signup-heading">
     <div class="nl-signup-bg"></div>
     <div class="nl-signup-inner">
       <div class="section-label" style="justify-content: center;">Subscribe</div>
@@ -656,6 +698,22 @@
         btn.setAttribute('aria-label', 'Open navigation menu');
       });
     });
+
+    // Hide floating subscribe button when the signup section is in view
+    const floatingBtn = document.getElementById('floatingSubscribe');
+    const signupSection = document.getElementById('signup');
+    if (floatingBtn && signupSection && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            floatingBtn.classList.add('is-hidden');
+          } else {
+            floatingBtn.classList.remove('is-hidden');
+          }
+        });
+      }, { threshold: 0.25 });
+      observer.observe(signupSection);
+    }
   </script>
 </body>
 </html>
