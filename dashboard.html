@@ -160,6 +160,48 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       transition: color 0.2s, border-color 0.2s;
     }
     .header-nav-link:hover { color: var(--text-secondary); border-color: var(--border-medium); }
+
+    /* Request Report — gold treatment matching the PREMIUM badge */
+    .header-nav-link.report-accent {
+      color: var(--accent);
+      background: var(--accent-glow);
+      border-color: rgba(201,165,87,0.22);
+      position: relative;
+    }
+    .header-nav-link.report-accent:hover {
+      color: var(--accent);
+      border-color: rgba(201,165,87,0.5);
+    }
+    /* Desktop hover tooltip */
+    .header-nav-link.report-accent .report-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 130%;
+      right: 0;
+      width: 240px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      font-style: normal;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      letter-spacing: normal;
+      text-transform: none;
+      z-index: 50;
+      transition: opacity 0.18s, visibility 0.18s;
+      pointer-events: none;
+    }
+    .header-nav-link.report-accent:hover .report-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+    @media (max-width: 640px) {
+      .header-nav-link.report-accent .report-tooltip { display: none; }
+    }
+
     /* ── Messages ─────────────────────────────────── */
     .messages {
       flex: 1;
@@ -596,7 +638,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         <a class="header-nav-link" href="/resources.html" target="_blank">Resources</a>
         <a class="header-nav-link" href="/guide.html" target="_blank">Field Guide</a>
         <button class="header-nav-link" id="exportBtn" onclick="exportPDF()" style="display:none; cursor:pointer; background:none; font-style:normal;">Export PDF</button>
-        <button class="header-nav-link" id="reportBtn" onclick="openReportModal()" style="display:none; cursor:pointer; background:none; font-style:normal;">Request Report</button>
+        <button class="header-nav-link report-accent" id="reportBtn" onclick="openReportModal()" style="display:none; cursor:pointer; font-style:normal;">Request Report<span class="report-tooltip">Request an emailed summary of your coaching sessions &mdash; separate from Export PDF, which downloads your current chat.</span></button>
         <a class="header-nav-link" href="https://the-craft-beacon.outseta.com/profile" target="_blank">Manage account</a>
         <span class="tier-badge" id="tierBadge">Free</span>
         <span class="user-name"  id="userName"></span>
