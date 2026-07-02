@@ -474,6 +474,89 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .copy-btn:hover { color: var(--text-secondary); background: var(--bg-elevated); }
     .copy-btn.copied { color: var(--accent); }
 
+    /* ── Report Request Modal ─────────────────────── */
+    .report-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .report-modal-overlay.active { display: flex; }
+    .report-modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius);
+      max-width: 440px;
+      width: 100%;
+      padding: 28px 26px;
+    }
+    .report-modal h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .report-modal p {
+      font-size: 0.87rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .report-modal ul {
+      margin: 0 0 16px 18px;
+      padding: 0;
+    }
+    .report-modal li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .report-modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .report-modal-confirm {
+      flex: 1;
+      background: var(--accent);
+      color: var(--bg-deep);
+      border: none;
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .report-modal-confirm:hover { background: var(--accent-dim); }
+    .report-modal-confirm:disabled { opacity: 0.5; cursor: default; }
+    .report-modal-cancel {
+      background: none;
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.85rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .report-modal-cancel:hover { color: var(--text-primary); border-color: var(--border-medium); }
+    .report-modal-status {
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-style: italic;
+      margin-top: 12px;
+      display: none;
+    }
+
     /* ── Loading screen ───────────────────────────── */
     .loading {
       display: flex;
@@ -513,6 +596,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         <a class="header-nav-link" href="/resources.html" target="_blank">Resources</a>
         <a class="header-nav-link" href="/guide.html" target="_blank">Field Guide</a>
         <button class="header-nav-link" id="exportBtn" onclick="exportPDF()" style="display:none; cursor:pointer; background:none; font-style:normal;">Export PDF</button>
+        <button class="header-nav-link" id="reportBtn" onclick="openReportModal()" style="display:none; cursor:pointer; background:none; font-style:normal;">Request Report</button>
         <a class="header-nav-link" href="https://the-craft-beacon.outseta.com/profile" target="_blank">Manage account</a>
         <span class="tier-badge" id="tierBadge">Free</span>
         <span class="user-name"  id="userName"></span>
@@ -561,11 +645,37 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <div class="input-hint" id="inputHint" style="display:none;">Attach a passage or chapter for feedback &mdash; Markdown (.md) and plain text (.txt), one section at a time.</div>
     </div>
 
+    <div class="report-modal-overlay" id="reportModalOverlay">
+      <div class="report-modal">
+        <h3>Request Your Decision Record</h3>
+        <p>This sends a request for a summary of your CraftBeacon coaching sessions — a record you can keep for your own files.</p>
+        <p><strong>What's included:</strong></p>
+        <ul>
+          <li>A short headline and 2&ndash;3 sentence recap for each coaching session</li>
+          <li>Which coaching lane each session covered</li>
+          <li>The date of each session</li>
+        </ul>
+        <p><strong>What's not included:</strong></p>
+        <ul>
+          <li>Full conversation transcripts</li>
+          <li>CraftBeacon's coaching responses &mdash; only your side of each session is summarized</li>
+        </ul>
+        <p>Your records are kept for as long as you're a member, so there's no need to request one after every session &mdash; only when you actually need one.</p>
+        <p>Once you confirm, your request goes to CraftBeacon's team and your report will be emailed to you.</p>
+        <div class="report-modal-actions">
+          <button class="report-modal-cancel" onclick="closeReportModal()">Cancel</button>
+          <button class="report-modal-confirm" id="reportConfirmBtn" onclick="submitReportRequest()">Yes, send my request</button>
+        </div>
+        <div class="report-modal-status" id="reportModalStatus"></div>
+      </div>
+    </div>
+
   </div>
 
   <script>
     // ── Config ─────────────────────────────────────────────────────
     const RELAY   = 'https://craftbeacon-relay-v2.conwatcher.workers.dev';
+    const REPORT_ENDPOINT = 'https://craftbeacon-report-request.conwatcher.workers.dev';
     const LIMIT   = 5;
 
     // ── State ──────────────────────────────────────────────────────
@@ -608,6 +718,9 @@ function detectTier(user) {
         updateCounter();
       } else {
         showUploadControls();
+      }
+      if (tier === 'premium') {
+        showReportButton();
       }
     }
 
@@ -720,6 +833,47 @@ function detectTier(user) {
       if (tier === 'free') return;
       const btn = document.getElementById('exportBtn');
       if (btn) btn.style.display = 'inline-block';
+    }
+
+    function showReportButton() {
+      const btn = document.getElementById('reportBtn');
+      if (btn) btn.style.display = 'inline-block';
+    }
+
+    function openReportModal() {
+      document.getElementById('reportModalOverlay').classList.add('active');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModalOverlay').classList.remove('active');
+      document.getElementById('reportModalStatus').style.display = 'none';
+      document.getElementById('reportConfirmBtn').disabled = false;
+      document.getElementById('reportConfirmBtn').textContent = 'Yes, send my request';
+    }
+
+    async function submitReportRequest() {
+      const confirmBtn = document.getElementById('reportConfirmBtn');
+      const status = document.getElementById('reportModalStatus');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(REPORT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem('cb_token') || '') },
+          body: JSON.stringify({ user_id: currentUser ? currentUser.Email : null, membership_tier: tier })
+        });
+        if (!res.ok) throw new Error('request failed');
+
+        status.textContent = 'Request received — your report will be emailed to you soon.';
+        status.style.display = 'block';
+        confirmBtn.style.display = 'none';
+      } catch (err) {
+        status.textContent = 'Something went wrong sending the request. Please try again in a moment.';
+        status.style.display = 'block';
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Yes, send my request';
+      }
     }
 
     function addCopyButton(wrap, text) {
