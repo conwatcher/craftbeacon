@@ -1,0 +1,12 @@
+# CraftBeacon — robots.txt
+# Welcome, crawlers. The whole public site is open to you.
+# Member-only areas below are asked to stay private.
+
+User-agent: *
+Allow: /
+
+# Keep member-only and utility pages out of search results
+Disallow: /dashboard.html
+
+# Here's the building directory
+Sitemap: https://thecraftbeacon.com/sitemap.xml
