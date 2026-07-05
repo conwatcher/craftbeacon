@@ -274,6 +274,27 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       margin: 0 auto 0.5rem;
     }
 
+    /* ─── Hero CTA button ─── */
+    .nl-hero-cta {
+      display: inline-block;
+      margin-top: 2.25rem;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-dark);
+      background: var(--cb-amber);
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nl-hero-cta:hover {
+      background: var(--cb-amber-light);
+      transform: translateY(-1px);
+    }
+
     /* ─── What's Inside ─── */
     .nl-inside {
       position: relative;
@@ -456,9 +477,14 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       padding: 0.85rem 1.6rem;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 18px rgba(200,144,58,0.45);
+      animation: beacon-pulse 3s ease-in-out infinite;
       transition: background 0.2s, transform 0.15s, opacity 0.35s;
       opacity: 1;
+    }
+    @keyframes beacon-pulse {
+      0%, 100% { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px rgba(200,144,58,0.3); }
+      50%       { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 28px rgba(200,144,58,0.65); }
     }
     .nl-floating-subscribe:hover {
       background: var(--cb-amber-light);
