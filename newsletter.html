@@ -534,6 +534,86 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .nav-hamburger:hover span { background: var(--cb-amber-light); }
 
+    /* ─── Sample Issue ─── */
+    .nl-sample {
+      position: relative;
+      padding: 5.5rem 3rem;
+      overflow: hidden;
+    }
+    .nl-sample-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+    }
+    .nl-sample-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .nl-sample-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .nl-sample-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      font-style: italic;
+    }
+    .nl-sample-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 1.75rem;
+      line-height: 1.4;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--cb-amber);
+    }
+    .nl-sample-body {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      font-style: italic;
+    }
+    .nl-sample-body p {
+      margin-bottom: 1.5rem;
+    }
+    .nl-sample-body p:last-child {
+      margin-bottom: 0;
+    }
+    .nl-sample-coda {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--cb-border);
+      font-size: 0.96rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      text-align: center;
+      font-style: normal;
+    }
+
+    /* ─── Signup voice paragraph ─── */
+    .nl-signup-voice {
+      font-size: 0.98rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      text-align: left;
+      border-left: 2px solid var(--cb-border);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+    }
+    .nl-signup-voice .signature {
+      display: block;
+      margin-top: 0.85rem;
+      font-style: normal;
+      color: var(--cb-dim);
+    }
     @media (max-width: 768px) {
       .cb-nav { padding: 1rem 1.25rem; }
       .nav-links { display: none; }
@@ -663,7 +743,36 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
   <hr class="divider" />
 
+<!-- ═══════════════════════════════════
+       SAMPLE ISSUE
+  ═══════════════════════════════════ -->
+  <section class="nl-sample" aria-labelledby="sample-heading">
+    <div class="nl-sample-bg"></div>
+    <div class="nl-sample-inner">
 
+      <div class="nl-sample-header">
+        <div class="section-label" style="justify-content: center;">From Issue 1</div>
+        <h2 id="sample-heading">The Q&amp;A</h2>
+      </div>
+
+      <p class="nl-sample-question">I finished. So why am I terrified instead of relieved?</p>
+
+      <div class="nl-sample-body">
+        <p>Here's what's actually happening. You spent months — maybe years — believing the hard part was getting the story out of your head and onto the page. You told yourself that finishing would feel like relief. The pressure would lift. And then you finished, and the relief didn't come. What came instead was a much quieter, much worse feeling: <em>what if it isn't good enough, and I'm about to find out in public.</em></p>
+
+        <p>That's not a flaw in you. It's the threshold. It shows up for almost everyone at exactly this point — the gap between done and out there — and it has a specific cause. You have lived inside this book as its maker the entire time. You know every seam, every compromise, every scene you almost cut. You've never once been able to read it the way a reader will, because you can't un-know how it was built. So when the doubt asks "is this good enough," you genuinely can't answer it. You're too close. You're standing with your nose against the canvas.</p>
+
+        <p>You are not asking whether your book is good enough. You already suspect it might be — that's why you're scared, because it would mean the stakes are real. You're asking for permission to believe your own judgment. I can't give you that, and neither can a Facebook thread. But your manuscript can. Go read it. Let the reader in you tell the writer in you the truth.</p>
+
+        <p><em>Then keep going.</em></p>
+      </div>
+
+      <p class="nl-sample-coda">Every issue works this way — one real problem, examined honestly, from someone who has been there.</p>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
   <!-- ═══════════════════════════════════
        SIGNUP
   ═══════════════════════════════════ -->
@@ -676,6 +785,11 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <h2 id="signup-heading">Join <em>The Beacon Brief</em></h2>
       <p>Delivered every other week. No content generation. No sales pressure. Just the kind of working observations that move a manuscript forward.</p>
 
+      <div class="nl-signup-voice">
+        I started this letter because the hardest thing about writing isn't the craft — it's seeing your own work clearly when you're too close to it to read it straight. CraftBeacon was built on that same belief: not to write for you, but to help you find the thing you already know and can't quite see. The Beacon Brief is the same idea in letter form. Every other week, one craft idea worth thinking through, one real question answered without hedging. If something in an issue is useful, reply and tell me what you're stuck on — that's where the next one comes from.
+        <span class="signature">— Patrick</span>
+      </div>
+      
       <div class="nl-form-wrap">
         <div class="ml-embedded" data-form="ePVaSP"></div>
       </div>
