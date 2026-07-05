@@ -423,7 +423,100 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .footer-links a:hover { color: var(--cb-muted); }
 
-    section[id] { scroll-margin-top: 90px; }
+    .resource-section { scroll-margin-top: 90px; }
+
+    /* ─── Mobile jump menu (hidden on desktop) ─── */
+    .mobile-jump {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 180;
+      background: rgba(17,15,11,0.97);
+      backdrop-filter: blur(6px);
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .mobile-jump-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: none;
+      padding: 0.85rem 1.25rem;
+      cursor: pointer;
+    }
+    .mobile-jump-caret {
+      font-size: 0.7rem;
+      color: var(--cb-amber);
+      transition: transform 0.25s ease;
+    }
+    .mobile-jump-toggle.open .mobile-jump-caret { transform: rotate(180deg); }
+    .mobile-jump-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-top: 0.5px solid transparent;
+    }
+    .mobile-jump-panel.open {
+      max-height: 70vh;
+      overflow-y: auto;
+      border-top: 0.5px solid var(--cb-border);
+    }
+    .mobile-jump-section { padding: 1rem 1.25rem 0.25rem; }
+    .mobile-jump-panel .sidebar-heading { margin-bottom: 0.5rem; }
+    .mobile-jump-panel .sidebar-links { padding-bottom: 0.5rem; }
+    .mobile-jump-panel .sidebar-links a { padding: 0.4rem 0; font-size: 0.9rem; }
+    .mobile-jump-panel .mobile-jump-section:last-child { padding-bottom: 1rem; }
+
+    /* ─── Mobile layout ─── */
+    @media (max-width: 768px) {
+      .cb-nav {
+        position: static;
+        flex-wrap: wrap;
+        row-gap: 0.75rem;
+        padding: 0.9rem 1.25rem;
+      }
+      .nav-logo img { height: 30px; }
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.3rem;
+      }
+      .nav-links a { font-size: 0.72rem; }
+      .btn-nav-login { font-size: 0.76rem; }
+      .btn-nav-signup { font-size: 0.76rem; padding: 0.4rem 0.85rem; }
+
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 0.95rem; }
+
+      .mobile-jump { display: block; }
+
+      .page-body {
+        grid-template-columns: 1fr;
+        padding: 0 1.25rem;
+        gap: 0;
+      }
+      .sidebar { display: none; }
+      .content { padding: 2rem 0 4rem; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .resource-section { scroll-margin-top: 64px; }
+      .resource-section-header h2 { font-size: 1.3rem; }
+
+      .cb-footer {
+        padding: 2rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
   <!-- Open Graph / social sharing -->
   <meta property="og:type" content="website" />
@@ -466,6 +559,48 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <p>CraftBeacon does not endorse, recommend, or have any financial relationship with any tool or service listed here. Every link goes to an official source. Pricing and features for any tool or platform should be verified directly with the provider, as they change frequently.</p>
     </div>
   </header>
+
+  <div class="mobile-jump">
+    <button class="mobile-jump-toggle" id="jumpToggle" aria-expanded="false" aria-controls="jumpPanel">
+      <span>Jump to a section</span>
+      <span class="mobile-jump-caret">&#9662;</span>
+    </button>
+    <nav class="mobile-jump-panel" id="jumpPanel" aria-label="Page sections">
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading">From CraftBeacon</div>
+        <ul class="sidebar-links">
+          <li><a href="#craftbeacon">Author Awareness</a></li>
+          <li><a href="#craftbeacon">Field Guide</a></li>
+        </ul>
+      </div>
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading">Official &amp; institutional</div>
+        <ul class="sidebar-links">
+          <li><a href="#copyright">Copyright &amp; legal</a></li>
+          <li><a href="#platforms">Publishing platforms</a></li>
+          <li><a href="#organizations">Trade organizations</a></li>
+          <li><a href="#business">Business &amp; tax</a></li>
+        </ul>
+      </div>
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading">Tools &amp; services</div>
+        <ul class="sidebar-links">
+          <li><a href="#writing">Writing tools</a></li>
+          <li><a href="#worldbuilding">World-building tools</a></li>
+          <li><a href="#newsletters">Newsletter platforms</a></li>
+          <li><a href="#scheduling">Social scheduling</a></li>
+          <li><a href="#marketing">Marketing &amp; discovery</a></li>
+          <li><a href="#formatting">Formatting software</a></li>
+          <li><a href="#conversion">Ebook conversion</a></li>
+          <li><a href="#covers">Cover design</a></li>
+          <li><a href="#websites">Author websites</a></li>
+          <li><a href="#isbn">ISBN registration</a></li>
+          <li><a href="#pod">Print on demand</a></li>
+          <li><a href="#audiobook">Audiobook distribution</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 
   <div class="page-body">
 
@@ -1130,7 +1265,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
   <footer class="cb-footer" role="contentinfo">
     <div>
-      <div class="footer-logo-text">
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">The AI that coaches instead of writing.</div>
     </div>
     <ul class="footer-links">
       <li><a href="privacy.html">Privacy</a></li>
@@ -1139,6 +1275,25 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
     </ul>
   </footer>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('jumpToggle');
+      var panel = document.getElementById('jumpPanel');
+      if (!toggle || !panel) return;
+      function setOpen(open) {
+        panel.classList.toggle('open', open);
+        toggle.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      toggle.addEventListener('click', function () {
+        setOpen(!panel.classList.contains('open'));
+      });
+      panel.addEventListener('click', function (e) {
+        if (e.target.closest('a')) setOpen(false);
+      });
+    })();
+  </script>
 
 </body>
 </html>
