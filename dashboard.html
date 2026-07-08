@@ -819,9 +819,14 @@ function detectTier(user) {
       if (!heading || !bodyEl) return;
 
       // 1. Do we have a real name straight from Outseta?
+      // Must be a non-empty, non-email value. Outseta sometimes returns an
+      // empty string rather than null when no name was given — that must
+      // count as "no name," or we'd greet "Welcome back, ." and skip capture.
       let name = null;
-      if (currentUser && currentUser.FirstName && !looksLikeEmail(currentUser.FirstName)) {
-        name = currentUser.FirstName;
+      const outsetaName = currentUser && currentUser.FirstName
+        ? currentUser.FirstName.trim() : '';
+      if (outsetaName && !looksLikeEmail(outsetaName)) {
+        name = outsetaName;
       }
 
       // 2. No Outseta name — ask our own store if we've saved one before.
