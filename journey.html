@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Author's Journey — CraftBeacon</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FRZ967M5K9');
+  </script>
+
+  <meta name="description" content="A field guide to the writing life from start to finish — the craft vocabulary, the marketing terms, and the production systems every author meets on the way from first draft to finished book. For every writer, published or not." />
+
+  <!-- Meta Pixel Base Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1659330215146600');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Base Code -->
+<script>fbq('track', 'ViewContent', {content_name: 'The Author Journey'});</script>
+
+<!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
+  <script>
+    var o_options = {
+      domain: 'the-craft-beacon.outseta.com',
+      load: 'auth',
+      auth: {
+        widgetMode: 'login',
+        id: 'outseta-auth-widget',
+        mode: 'popup',
+        postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
+        postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Nav ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Page header ─── */
+    .page-header {
+      position: relative;
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("assets/resource-pg.jpg");
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.35) sepia(0.15);
+    }
+    .page-header-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.6) 100%);
+    }
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 620px;
+    }
+    .page-header p + p { margin-top: 0.75rem; }
+    .page-header em { color: var(--cb-amber-light); font-style: italic; }
+
+    /* ─── Body layout ─── */
+    .page-body {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 80px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      gap: 4rem;
+    }
+
+    /* ─── Sidebar (desktop) ─── */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+    .sidebar-section { margin-bottom: 2rem; }
+    .sidebar-heading {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-dim);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    /* Lane heading in the nav gets the amber treatment — it's a primary landmark */
+    .sidebar-heading.lane {
+      color: var(--cb-amber);
+      font-weight: 400;
+    }
+    .sidebar-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .sidebar-links a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.5;
+      display: block;
+      padding: 0.15rem 0;
+    }
+    .sidebar-links a:hover { color: var(--cb-amber-light); }
+
+    /* ─── Content ─── */
+    .content { padding: 3rem 0 5rem; }
+
+    /* The three lanes — top-level landmarks */
+    .lane-section { margin-bottom: 4.5rem; scroll-margin-top: 90px; }
+    .lane-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.1rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .lane-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .lane-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .lane-header .lane-intro {
+      font-size: 0.98rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    /* Subsections — the deep-link targets */
+    .journey-sub { margin-bottom: 2.75rem; scroll-margin-top: 90px; }
+    .journey-sub-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .journey-sub-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(200,144,58,0.2);
+    }
+
+    .term { margin-bottom: 1.9rem; }
+    .term:last-child { margin-bottom: 0; }
+    .term h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.12rem;
+      font-weight: 400;
+      color: var(--cb-amber-light);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+    .term p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.8;
+    }
+    .term p + p { margin-top: 0.7rem; }
+    .term em { font-style: italic; color: var(--cb-amber-light); }
+
+    /* "Who's watching" callout */
+    .watching {
+      background: rgba(200,144,58,0.06);
+      border: 0.5px solid rgba(200,144,58,0.2);
+      border-left: 2px solid var(--cb-amber);
+      padding: 1.4rem 1.6rem;
+      margin-top: 2.25rem;
+    }
+    .watching .watching-label {
+      font-size: 0.66rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+    .watching p {
+      font-size: 0.94rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+    .watching em { font-style: italic; color: var(--cb-amber-light); }
+
+    /* Lane close — the differentiator line */
+    .lane-close {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--cb-border);
+    }
+    .lane-close p {
+      font-size: 0.96rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+    .lane-close .tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--cb-amber-light);
+      margin-top: 0.6rem;
+    }
+
+    /* ─── Newsletter block ─── */
+    .journey-newsletter {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      padding: 2.75rem 2.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .journey-newsletter .nl-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .journey-newsletter h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.3;
+      margin-bottom: 0.9rem;
+    }
+    .journey-newsletter p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto 1.75rem;
+    }
+    .journey-newsletter a.nl-btn {
+      display: inline-block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .journey-newsletter a.nl-btn:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-dim);
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    /* ─── Mobile jump menu (hidden on desktop) ─── */
+    .mobile-jump {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 180;
+      background: rgba(17,15,11,0.97);
+      backdrop-filter: blur(6px);
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .mobile-jump-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: none;
+      padding: 0.85rem 1.25rem;
+      cursor: pointer;
+    }
+    .mobile-jump-caret {
+      font-size: 0.7rem;
+      color: var(--cb-amber);
+      transition: transform 0.25s ease;
+    }
+    .mobile-jump-toggle.open .mobile-jump-caret { transform: rotate(180deg); }
+    .mobile-jump-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-top: 0.5px solid transparent;
+    }
+    .mobile-jump-panel.open {
+      max-height: 75vh;
+      overflow-y: auto;
+      border-top: 0.5px solid var(--cb-border);
+    }
+    .mobile-jump-section { padding: 1rem 1.25rem 0.25rem; }
+    .mobile-jump-panel .sidebar-heading { margin-bottom: 0.5rem; }
+    .mobile-jump-panel .sidebar-links { padding-bottom: 0.5rem; }
+    .mobile-jump-panel .sidebar-links a { padding: 0.4rem 0; font-size: 0.9rem; }
+    .mobile-jump-panel .mobile-jump-section:last-child { padding-bottom: 1rem; }
+
+    /* ─── Mobile layout ─── */
+    @media (max-width: 768px) {
+      .cb-nav {
+        position: static;
+        flex-wrap: wrap;
+        row-gap: 0.75rem;
+        padding: 0.9rem 1.25rem;
+      }
+      .nav-logo img { height: 30px; }
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.3rem;
+      }
+      .nav-links a { font-size: 0.72rem; }
+      .btn-nav-login { font-size: 0.76rem; }
+      .btn-nav-signup { font-size: 0.76rem; padding: 0.4rem 0.85rem; }
+
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 0.95rem; }
+
+      .mobile-jump { display: block; }
+
+      .page-body {
+        grid-template-columns: 1fr;
+        padding: 0 1.25rem;
+        gap: 0;
+      }
+      .sidebar { display: none; }
+      .content { padding: 2rem 0 4rem; }
+
+      .lane-section { scroll-margin-top: 64px; }
+      .journey-sub { scroll-margin-top: 64px; }
+      .lane-header h2 { font-size: 1.55rem; }
+
+      .cb-footer {
+        padding: 2rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CraftBeacon" />
+  <meta property="og:url" content="https://thecraftbeacon.com/journey.html" />
+  <meta property="og:title" content="The Author's Journey — CraftBeacon" />
+  <meta property="og:description" content="A field guide to the writing life from start to finish — the craft, marketing, and production terms every author meets on the way from first draft to finished book." />
+  <meta property="og:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Author's Journey — CraftBeacon" />
+  <meta name="twitter:description" content="A field guide to the writing life from start to finish — the craft, marketing, and production terms every author meets on the way from first draft to finished book." />
+  <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+</head>
+<body>
+
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-vignette"></div>
+    <div class="page-header-content">
+      <div class="section-label">The Author's Journey</div>
+      <h1>From the first page to the finished book</h1>
+      <p>If you are writing a book, this guide is for you — whether or not you have ever published a word. <em>Every writer is an author in the making.</em> This is the path laid out in order: the craft of the manuscript, the work of finding your readers, and the systems that carry a book to market.</p>
+      <p>Each stage has its own vocabulary — words you will meet in a beta reader's note, a rejection letter, a platform's help doc — and each one has a place where writers get lost. This walks them in the order you meet them, names where each gets misunderstood, and points out who is waiting to profit from the confusion.</p>
+    </div>
+  </header>
+
+  <!-- ─── Mobile jump menu ─── -->
+  <div class="mobile-jump">
+    <button class="mobile-jump-toggle" id="jumpToggle" aria-expanded="false" aria-controls="jumpPanel">
+      <span>Jump to a section</span>
+      <span class="mobile-jump-caret">&#9662;</span>
+    </button>
+    <nav class="mobile-jump-panel" id="jumpPanel" aria-label="Page sections">
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading lane"><a href="#writing" style="color:inherit;text-decoration:none;">Writing Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#writing-onramp">Starting out — the on-ramp</a></li>
+          <li><a href="#writing-manuscript">Building the manuscript</a></li>
+          <li><a href="#writing-structure">Structure and pacing</a></li>
+          <li><a href="#writing-revising">Revising the work</a></li>
+        </ul>
+      </div>
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading lane"><a href="#marketing" style="color:inherit;text-decoration:none;">Marketing Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#marketing-found">Being found</a></li>
+          <li><a href="#marketing-audience">Building an audience</a></li>
+          <li><a href="#marketing-reviews">Reviews and the line you can't cross</a></li>
+        </ul>
+      </div>
+      <div class="mobile-jump-section">
+        <div class="sidebar-heading lane"><a href="#production" style="color:inherit;text-decoration:none;">Production Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#production-identity">Identifying the book</a></li>
+          <li><a href="#production-files">Preparing the files</a></li>
+          <li><a href="#production-distribution">Getting it to readers</a></li>
+          <li><a href="#production-revising">Revising a published book</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="page-body">
+
+    <!-- ─── Sidebar (desktop) ─── -->
+    <aside class="sidebar" aria-label="Page sections">
+      <div class="sidebar-section">
+        <div class="sidebar-heading lane"><a href="#writing" style="color:inherit;text-decoration:none;">Writing Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#writing-onramp">Starting out — the on-ramp</a></li>
+          <li><a href="#writing-manuscript">Building the manuscript</a></li>
+          <li><a href="#writing-structure">Structure and pacing</a></li>
+          <li><a href="#writing-revising">Revising the work</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading lane"><a href="#marketing" style="color:inherit;text-decoration:none;">Marketing Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#marketing-found">Being found</a></li>
+          <li><a href="#marketing-audience">Building an audience</a></li>
+          <li><a href="#marketing-reviews">Reviews and the line you can't cross</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-heading lane"><a href="#production" style="color:inherit;text-decoration:none;">Production Lane</a></div>
+        <ul class="sidebar-links">
+          <li><a href="#production-identity">Identifying the book</a></li>
+          <li><a href="#production-files">Preparing the files</a></li>
+          <li><a href="#production-distribution">Getting it to readers</a></li>
+          <li><a href="#production-revising">Revising a published book</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!-- ════════════ WRITING LANE ════════════ -->
+      <section class="lane-section" id="writing">
+        <div class="lane-header">
+          <span class="lane-eyebrow">The craft of the manuscript</span>
+          <h2>Writing Lane</h2>
+          <p class="lane-intro">Every craft has its own language, and fiction is no exception. Most writers pick these terms up secondhand — from a beta reader's note, a craft book that assumes you already know — and end up half-understanding words they're expected to act on. This walks the vocabulary in roughly the order you meet it, from your first scene to your final revision pass. The goal isn't to make you sound like you know what you're doing. It's to make sure you actually do — so that when someone hands you feedback, you can tell whether they're right.</p>
+        </div>
+
+        <div class="journey-sub" id="writing-onramp">
+          <div class="journey-sub-label">Starting out — the on-ramp</div>
+
+          <div class="term">
+            <h3>Scene</h3>
+            <p>A unit of story in which something changes — a single continuous stretch of action in one place and time. Writers often confuse a scene with a <em>chapter</em>; a chapter is a container that can hold one scene or several, while a scene is defined by the change inside it, not by where it starts and stops on the page. If nothing shifts by the end, you have a passage, not a scene.</p>
+          </div>
+
+          <div class="term">
+            <h3>Beat</h3>
+            <p>The smallest unit of change within a scene — one action, reaction, or shift in the exchange between characters. The word gets used two ways that are easy to tangle: a story beat (a major plot turn) and a scene beat (a single moment of movement). When a critique says "the beats aren't landing," ask which kind they mean, because the fix is completely different.</p>
+          </div>
+
+          <div class="term">
+            <h3>Narrative</h3>
+            <p>The arrangement of events as the reader experiences them, which is not the same as the order in which those events happened. Confusing narrative with <em>plot</em> is the most common early mix-up: plot is what happens, narrative is how and when you reveal it. A flashback changes the narrative without changing the plot.</p>
+          </div>
+
+          <div class="term">
+            <h3>AI-generated vs. AI-assisted</h3>
+            <p>A distinction worth getting straight early, because the writing world now runs on it. AI-<em>generated</em> prose is written by the machine and pasted into your manuscript — the words aren't yours. AI-<em>assisted</em> work means the thinking, diagnosing, and questioning happen with a tool, but every word on the page is still written by you. The line matters legally, ethically, and to readers who can increasingly feel the difference — and it's the entire reason CraftBeacon exists on the assisted side of it.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="writing-manuscript">
+          <div class="journey-sub-label">Building the manuscript</div>
+
+          <div class="term">
+            <h3>Voice</h3>
+            <p>The distinctive quality of <em>how</em> a story is told — the word choices, rhythms, and sensibility that make your writing sound like you and no one else. Voice gets confused with <em>style</em> (the technical how) and <em>tone</em> (the emotional mood), but voice is the deeper fingerprint underneath both. It's also the single thing you lose fastest when you let something else write for you, which is why it's worth protecting above almost anything.</p>
+          </div>
+
+          <div class="term">
+            <h3>Point of view (POV)</h3>
+            <p>The position from which the story is told — first person (<em>I</em>), second (<em>you</em>), or third (<em>he/she/they</em>), and how much the narrator can see into characters' heads. The frequent error is confusing POV with <em>tense</em>; POV is who's telling it, tense is when. A "head-hopping" note means you've slipped between characters' viewpoints inside a single scene without control, which quietly disorients a reader even when they can't name why.</p>
+          </div>
+
+          <div class="term">
+            <h3>Narrative distance</h3>
+            <p>How close the reader feels to a character's inner experience — from deep inside their thoughts to a cool remove far outside them. Writers often don't realize this is a dial they control rather than a fixed setting, and that unintended shifts in distance are what make some scenes feel oddly flat or intrusive. Pulling in tight during a crisis and easing back during calm is a tool, not an accident.</p>
+          </div>
+
+          <div class="term">
+            <h3>Exposition</h3>
+            <p>Information the reader needs — backstory, world details, context — delivered directly rather than dramatized. The pitfall isn't exposition itself but the <em>info-dump</em>, where it arrives in an undigested block that stops the story cold. Good exposition is timed to the moment the reader actually needs it, not front-loaded because you needed to get it out of your head.</p>
+          </div>
+
+          <div class="term">
+            <h3>Show, don't tell</h3>
+            <p>The most quoted and most misunderstood rule in fiction. It doesn't mean <em>never</em> tell — telling is faster and sometimes exactly right — it means dramatize the moments that carry emotional weight rather than summarizing them. Writers who take it literally end up over-describing trivial actions; the skill is knowing which moments earn the showing.</p>
+          </div>
+
+          <div class="term">
+            <h3>Subtext</h3>
+            <p>What's meant underneath what's said — the meaning running below the surface of dialogue and action. The common mistake is putting everything <em>on</em> the text, having characters state their feelings outright, which flattens a scene. Subtext is confused with vagueness, but they're opposites: subtext is precise, the reader knows exactly what's happening, they just aren't being told it directly.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="writing-structure">
+          <div class="journey-sub-label">Structure and pacing</div>
+
+          <div class="term">
+            <h3>Structure</h3>
+            <p>The underlying architecture of the story — how it's shaped and sequenced so tension builds and pays off. Structure gets confused with <em>formula</em> (a rigid template like a beat sheet), but structure is the load-bearing frame, while a formula is one prefab version of it. A story can be perfectly structured and follow no formula at all.</p>
+          </div>
+
+          <div class="term">
+            <h3>Pacing</h3>
+            <p>The speed at which the story feels like it's moving, controlled by sentence length, scene length, and how much you dramatize versus summarize. The trap is treating pacing as a problem of <em>cutting</em> — "it drags, so trim it" — when a slow patch is usually a scene that stopped raising questions, not a scene that's too long. Faster prose won't save a section the reader has no reason to keep reading.</p>
+          </div>
+
+          <div class="term">
+            <h3>Tension</h3>
+            <p>The force that keeps a reader turning pages — the sense that something wanted is unresolved and something is at stake. Tension is routinely confused with <em>conflict</em>; conflict is two forces colliding, tension is the reader's unease about how it resolves. You can have loud conflict with no tension (the outcome feels certain) and quiet scenes thick with it.</p>
+          </div>
+
+          <div class="term">
+            <h3>Stakes</h3>
+            <p>What a character stands to gain or lose — the reason any of it matters. The frequent failure is stakes that are technically large (the world will end) but emotionally abstract; specific, personal stakes almost always pull harder than grand ones. If the reader doesn't care what happens, the size of the threat won't fix it.</p>
+          </div>
+
+          <div class="term">
+            <h3>Arc</h3>
+            <p>The line of meaningful change across a story — a character arc tracks how a person is different by the end, a story arc tracks the shape of events. The mix-up is assuming every character needs a dramatic transformation; some arcs are about a character <em>failing</em> to change, or holding firm against pressure. (Don't confuse this with an <em>ARC</em> — an advanced reader copy — which you'll meet in the Marketing Lane; same letters, entirely unrelated.)</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="writing-revising">
+          <div class="journey-sub-label">Revising the work</div>
+
+          <div class="term">
+            <h3>Draft</h3>
+            <p>A complete pass through the manuscript, start to finish. The distinction that saves grief: a <em>rough</em> draft exists to discover the story, a <em>revision</em> draft exists to fix it, and treating the first like the second — polishing sentences before the structure is sound — is how writers spend months editing scenes they'll later cut. Finish the shape before you perfect the prose.</p>
+          </div>
+
+          <div class="term">
+            <h3>Revision vs. editing</h3>
+            <p>Two different jobs writers collapse into one. <em>Revision</em> is re-seeing — changing what the story does at the level of structure, character, and meaning; <em>editing</em> is refining what's already working at the level of sentence and word. Doing them in the wrong order — line-editing a scene you haven't decided to keep — wastes the most time of any mistake on this list.</p>
+          </div>
+
+          <div class="term">
+            <h3>Line editing</h3>
+            <p>Working sentence by sentence for rhythm, clarity, and precision — the music of the prose. It's often confused with <em>copy editing</em>, which fixes grammar, consistency, and error. Line editing makes a sentence <em>better</em>; copy editing makes it <em>correct</em>. You need both, but not at the same moment, and not usually from the same pass.</p>
+          </div>
+
+          <div class="term">
+            <h3>Continuity</h3>
+            <p>The internal consistency of the story's facts — eye colors, timelines, who knew what when. The quiet danger is that continuity errors are nearly invisible to the writer, who holds the <em>intended</em> version in their head, and glaring to a reader, who only has the page. This is one place a fresh set of eyes genuinely earns its keep.</p>
+          </div>
+
+          <div class="term">
+            <h3>Beta reader</h3>
+            <p>A reader who responds to a full draft as a reader, not an editor — telling you where they got bored, confused, or pulled out of the story. The mistake is asking them to fix things; a beta reader's value is the <em>diagnosis</em> ("I lost interest here"), not the <em>prescription</em> ("you should add a subplot"). Their instinct about where something's wrong is usually sound; their idea for the fix usually isn't, because it's your book.</p>
+          </div>
+        </div>
+
+        <div class="watching">
+          <span class="watching-label">A note on who's watching</span>
+          <p>Writers early in the craft are a specific target for people selling shortcuts. The most common is the tool or service promising to <em>write the book for you</em> — to generate the prose, finish the draft, hand you a manuscript. The pitch works because the work is hard and the offer sounds like relief. But a book written by something other than you isn't the shortcut it appears to be: it's a manuscript you can't stand behind, in a voice that isn't yours, sold into a market where readers are learning to feel the difference. Learn the vocabulary here and the shortcut loses its pull — because you'll be able to see that the hard part was the point.</p>
+        </div>
+
+        <div class="lane-close">
+          <p>When you hit the moment where you know something's off but can't name it, the Writing Lane is built for exactly that: it diagnoses the root cause, asks the question that opens your thinking, and hands you back to your own manuscript with direction.</p>
+          <p class="tagline">It never writes for you. That's the point.</p>
+        </div>
+      </section>
+
+      <!-- ════════════ MARKETING LANE ════════════ -->
+      <section class="lane-section" id="marketing">
+        <div class="lane-header">
+          <span class="lane-eyebrow">Finding your readers</span>
+          <h2>Marketing Lane</h2>
+          <p class="lane-intro">Marketing is where the book meets the people who might want it, and it's the stage where the vocabulary gets slippery in a particular way — the terms sound like things you already understand. "Keywords." "Reviews." "Categories." You think you know what they mean, and that half-knowledge is exactly what platforms and predators rely on. This walks the terms in the order you meet them as you move from finished book to found readers, so you can tell the difference between advice that works, advice that wastes your money, and advice that will quietly get you flagged.</p>
+        </div>
+
+        <div class="journey-sub" id="marketing-found">
+          <div class="journey-sub-label">Being found</div>
+
+          <div class="term">
+            <h3>Metadata</h3>
+            <p>The information <em>about</em> your book that platforms use to sort, match, and surface it — title, subtitle, description, categories, keywords, author name. The mistake is treating metadata as an afterthought you fill in at the end; it's the machinery that decides whether the right readers ever see your book at all. Every field is a decision, not a formality.</p>
+          </div>
+
+          <div class="term">
+            <h3>Keywords (and keyword tags)</h3>
+            <p>The search terms you attach to your book so it surfaces when readers look for what it offers. The near-universal error is stuffing them with the most <em>popular</em> words — "fantasy," "romance" — where your book drowns among millions; the skill is finding specific phrases a real reader types, where you can actually be found. Keywords are confused with genre labels, but they're closer to <em>how your reader describes what they want</em> than to what shelf the book sits on.</p>
+          </div>
+
+          <div class="term">
+            <h3>Categories</h3>
+            <p>The classification slots a book occupies in a store's browsing structure — the paths readers follow when they're looking without a specific title in mind. The confusion is between categories (where you're <em>filed</em>) and keywords (how you're <em>searched</em>); they're separate systems, and you need both working. Choosing categories that are too broad buries you; choosing ones too narrow but accurate can make you visible, even a bestseller, in a slot readers actually browse.</p>
+          </div>
+
+          <div class="term">
+            <h3>SEO (search engine optimization)</h3>
+            <p>The practice of shaping your online presence — book page, website, author name — so search engines surface it for the right queries. For authors the confusion is scope: book-retailer search (inside Amazon) and web search (Google) are different systems with different rules, and tactics for one don't transfer cleanly to the other. You don't need to master SEO; you need to know it exists so you're making choices, not leaving them to chance.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="marketing-audience">
+          <div class="journey-sub-label">Building an audience</div>
+
+          <div class="term">
+            <h3>Author platform</h3>
+            <p>The total reach you have to connect with readers directly — newsletter list, social presence, website, community. The critical misunderstanding is equating platform with <em>follower count</em>; a small, engaged newsletter list is worth more than a large, silent social following, because platform is about <em>reach you own and can actually activate</em>, not numbers you can display. Followers you can't reach are a vanity metric; a list you can email is an asset.</p>
+          </div>
+
+          <div class="term">
+            <h3>Newsletter swap (and cross-promotion)</h3>
+            <p>An arrangement where two authors feature each other's books to their respective audiences — mutual introduction to compatible readers. The pitfall is mismatch: swapping with an author whose readers don't overlap yours spends goodwill for nothing, or worse, annoys both lists. Done well it's one of the most effective tools an indie author has; done carelessly it reads as spam to people who never asked.</p>
+          </div>
+
+          <div class="term">
+            <h3>Also-boughts (and the algorithm)</h3>
+            <p>The "customers who bought this also bought" associations a retailer builds between your book and others, based on real purchasing patterns. Authors often imagine "the algorithm" as a single mysterious force to be gamed; it's closer to a mirror — it reflects who's actually buying your book and connects you to similar titles. The practical consequence: attracting the <em>wrong</em> readers with mismatched promotion pollutes your also-boughts and points the machinery at the wrong audience.</p>
+          </div>
+
+          <div class="term">
+            <h3>ARC (advanced reader copy)</h3>
+            <p>A free early copy of your book sent to readers and reviewers before launch, to gather honest reviews and build momentum for release day. (Note the collision worth keeping straight: in the Writing Lane, an <em>arc</em> is the line of a character's or story's change — same letters, entirely unrelated to this. Here, an ARC is a physical or digital review copy.) The confusion that gets authors in trouble is between offering an ARC in exchange for an <em>honest</em> review — which is fine — and offering it in exchange for a <em>positive</em> one, which crosses into review manipulation.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="marketing-reviews">
+          <div class="journey-sub-label">Reviews and the line you can't cross</div>
+
+          <div class="term">
+            <p>Reviews are where marketing meets the platform's rulebook hardest, and where well-meaning authors stumble into penalties. The principle underneath every retailer's policy is simple: you may <em>ask</em> for reviews, you may not <em>buy, trade, or coordinate</em> them.</p>
+          </div>
+
+          <div class="term">
+            <h3>Verified reviews and review manipulation</h3>
+            <p>A review carries weight because it's presumed independent — a reader's real reaction, not something the author arranged. Manipulation is anything that breaks that independence: paying for reviews, trading them ("I'll review yours if you review mine"), incentivizing them with gifts, or organizing a group to post on cue. The trap is that some of this is marketed to authors as a normal service, which brings us to the thing worth naming directly.</p>
+          </div>
+
+          <div class="term">
+            <h3>The reviewer-for-hire and dropshipper trap</h3>
+            <p>Author marketplaces attract a specific kind of predator: services that sell reviews, followers, or sales, dressed up as legitimate promotion. A live version of this is the <em>dropshipper</em> scheme — operators who list your book (often lifted straight from Amazon) on sites like eBay at inflated or altered prices, sometimes fulfilling orders by simply buying from Amazon, sometimes never delivering at all. You didn't authorize it, you don't control the pricing or the customer experience, and the damage lands on <em>your</em> reputation and reviews. Knowing this pattern exists is the defense: an unauthorized listing of your book somewhere you never placed it is a flag to investigate, not a bonus sale to celebrate.</p>
+          </div>
+        </div>
+
+        <div class="watching">
+          <span class="watching-label">A note on who's watching</span>
+          <p>Of the three lanes, marketing is where the predators are thickest, because it's where authors feel most desperate and least certain. Fake reviewer services, follower farms, "guaranteed bestseller" packages, promotion mills that blast your book to lists of people who'll never read it — all of them sell the same thing: a shortcut around the slow work of finding real readers. They work because the real work is slow and the fear of invisibility is real. But bought reach is hollow reach; it pollutes your metrics, risks your account, and never becomes the thing you actually need, which is readers who <em>chose</em> you. The vocabulary here is the inoculation — because you can't be sold a fake version of something you understand for real.</p>
+        </div>
+
+        <div class="lane-close">
+          <p>When you hit the part you can't map, the Marketing Lane is built for exactly that: it coaches you toward a platform strategy specific to your book and your readers — not recycled advice from a marketing blog.</p>
+          <p class="tagline">It never writes for you. That's the point.</p>
+        </div>
+      </section>
+
+      <!-- ════════════ PRODUCTION LANE ════════════ -->
+      <section class="lane-section" id="production">
+        <div class="lane-header">
+          <span class="lane-eyebrow">Bringing the book to market</span>
+          <h2>Production Lane</h2>
+          <p class="lane-intro">Production is where writing turns into a product, and it's the stage where the vocabulary suddenly stops being about craft and starts being about systems — ISBNs, trim sizes, distributors, file specs. The danger here isn't that these terms are hard. It's that they're <em>opaque</em>: every platform uses them slightly differently, the rules are buried in help docs, and a small misunderstanding can cost you money, rights, or a scramble to fix a book that's already for sale. This walks the terms in the order you meet them on the way to publishing, so you understand what you're doing — and what you're agreeing to — before you click the button that makes it permanent.</p>
+        </div>
+
+        <div class="journey-sub" id="production-identity">
+          <div class="journey-sub-label">Identifying the book</div>
+
+          <div class="term">
+            <h3>ISBN</h3>
+            <p>The International Standard Book Number — the unique identifier that tells the entire book trade <em>which</em> book and <em>which format</em> you mean. Each format needs its own: the paperback, the hardcover, and often the ebook are three separate ISBNs, not one book with three faces. The most consequential misunderstanding is thinking an ISBN is tied to <em>you</em>; it's tied to the <em>edition</em>, which is why changing the book later can mean needing a new one. (Note: ISBN databases can lag — a newly assigned number may not show correctly everywhere for days or weeks. That's normal, not an error on your end.)</p>
+          </div>
+
+          <div class="term">
+            <h3>Imprint</h3>
+            <p>The publishing name a book is released under — the brand on the spine, distinct from the legal entity that owns it. Self-publishing authors often don't realize <em>they</em> are the imprint, or that whoever registers the ISBN is recorded as the publisher of record. The confusion turns costly when an author uses a free platform-assigned ISBN and later discovers the platform, not they, is listed as publisher — a detail that matters enormously for rights and for how the book reads to the trade.</p>
+          </div>
+
+          <div class="term">
+            <h3>Copyright</h3>
+            <p>The legal ownership of the work itself — automatic the moment you write it, separate entirely from the ISBN or the imprint. Writers routinely conflate these three: copyright is who owns the <em>words</em>, the ISBN identifies the <em>edition</em>, the imprint is the <em>name it's published under</em>. Registering copyright is an extra, optional step that strengthens your legal position; it is not the same as, and not replaced by, buying an ISBN.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="production-files">
+          <div class="journey-sub-label">Preparing the files</div>
+
+          <div class="term">
+            <h3>Trim size</h3>
+            <p>The finished dimensions of your printed book — 5×8, 6×9, and so on. The trap is choosing one late, after the interior is already formatted, because trim size affects page count, margins, and spine width all at once; changing it means reflowing the entire book. Pick it early, and pick it to match what's normal for your genre, because readers feel a wrong-sized book even if they can't name why.</p>
+          </div>
+
+          <div class="term">
+            <h3>Bleed</h3>
+            <p>The margin of image or color that extends <em>past</em> the trim edge so that, once the page is cut, the ink runs cleanly to the border with no white slivers. If your cover or interior images are meant to reach the edge of the page, they need bleed; if they don't have it, a tiny cutting shift leaves an unintended white line. Understanding bleed matters even if you hire someone to handle it — because now you know what you're paying for and can tell whether it was done right.</p>
+          </div>
+
+          <div class="term">
+            <h3>Margins and gutter</h3>
+            <p>The white space around your text, with the <em>gutter</em> being the inner margin swallowed by the binding. The frequent error is setting even margins all around and ending up with text disappearing into the spine, especially on higher page counts where the binding eats more. The thicker the book, the wider the gutter has to be — a relationship most first-time formatters don't know exists until a proof copy shows them.</p>
+          </div>
+
+          <div class="term">
+            <h3>Flat PDF (vs. layered/live file)</h3>
+            <p>A print-ready file where all fonts, images, and layers are locked into a single fixed layout — what a printer needs so nothing shifts or substitutes. The confusion is between a <em>flat</em> PDF and a working file that still has live, editable elements; sending the wrong one is how fonts get swapped for defaults and layouts break. When a distributor asks for a print-ready PDF, they mean flat, with fonts embedded — not your working design file.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="production-distribution">
+          <div class="journey-sub-label">Getting it to readers</div>
+
+          <div class="term">
+            <h3>KDP (Kindle Direct Publishing)</h3>
+            <p>Amazon's self-publishing platform, covering both ebook and print-on-demand. The thing to understand is that KDP is a <em>storefront and a printer</em>, not a distributor to the wider trade — a book published only through KDP reaches Amazon's customers well but doesn't automatically flow to bookstores or libraries. Knowing that shapes whether KDP alone is enough for your goals or only half the plan.</p>
+          </div>
+
+          <div class="term">
+            <h3>IngramSpark</h3>
+            <p>A print and distribution platform that reaches the broader book trade — bookstores, libraries, and retailers beyond Amazon — through the Ingram catalog. Authors often set it against KDP as an either/or, when many use <em>both</em>: KDP for Amazon, IngramSpark for everywhere else. The catch is coordinating them so you're not competing with yourself or double-listing the same ISBN in conflicting ways.</p>
+          </div>
+
+          <div class="term">
+            <h3>Distributor vs. retailer</h3>
+            <p>A <em>retailer</em> sells to readers; a <em>distributor</em> gets your book into many retailers at once. The distinction matters because "wide distribution" doesn't mean a store is stocking your book — it means it's <em>available</em> to be ordered, which is not the same thing. Understanding this keeps you from assuming that being listed everywhere means selling everywhere.</p>
+          </div>
+
+          <div class="term">
+            <h3>DRM (Digital Rights Management)</h3>
+            <p>The optional lock applied to an ebook meant to restrict copying between devices or accounts. The decision is more consequential than it looks: DRM is usually a permanent, one-time choice at publication, and it can inconvenience legitimate readers while rarely stopping determined piracy. Authors often enable it reflexively as "protection" without knowing it can't be removed later or that many choose to skip it deliberately.</p>
+          </div>
+        </div>
+
+        <div class="journey-sub" id="production-revising">
+          <div class="journey-sub-label">Revising a published book</div>
+
+          <div class="term">
+            <p>This deserves its own stop, because it's the fastest-growing mistake in the indie space and the one with the sharpest consequences. Authors reopen a book that's already for sale — to fix typos, to change a scene, sometimes to rewrite large sections — without understanding the line they may be crossing.</p>
+          </div>
+
+          <div class="term">
+            <h3>Revision vs. new edition</h3>
+            <p>A <em>revision</em> is a minor correction to the existing book — fixing typos, small errors — that keeps the same ISBN. A <em>new edition</em> is a substantive change — added chapters, rewritten content, significant new material — that legally requires a <em>new ISBN</em>, because it is, in trade terms, a different book. The critical confusion is treating a major rewrite as a "quick update": pushing heavy changes through as a revision, under the old ISBN, is exactly what triggers retailer flags and, at the extreme, account penalties.</p>
+            <p>Here's the knot underneath it. Do it wrong and you're not facing one problem, you're facing several: the ISBN now misidentifies the edition a reader receives, so reviews and print copies no longer reliably match the same book. Copyright and version history blur when there's no clean record of what changed and when. And if you used a platform-assigned ISBN, the imprint ownership question resurfaces — the publisher of record, not you, controls aspects of the very identifier you're trying to alter. What looks like a simple edit is actually a decision touching identity, rights, and ownership all at the same time.</p>
+            <p>The rule of thumb worth carrying: small fixes, same ISBN, keep it quiet and clean. Substantial changes, new edition, new ISBN, done properly. When you're not sure which one you're doing, that uncertainty <em>is</em> the signal to slow down and find out — before the change is live and for sale.</p>
+          </div>
+        </div>
+
+        <div class="watching">
+          <span class="watching-label">A note on who's watching</span>
+          <p>The production stage is thick with people ready to charge you for confusion. Vanity presses dress up as publishers and sell authors expensive packages for services they could arrange themselves — often taking the ISBN, and with it the publisher-of-record position, in the bargain. Formatting and "publishing consultant" services prey on exactly the opacity this guide is meant to dissolve. None of this means you can't hire help; plenty of honest professionals do good work. It means you should never buy a service you don't understand well enough to evaluate — because the moment you understand what you're paying for, the predatory version of it loses its grip.</p>
+        </div>
+
+        <div class="lane-close">
+          <p>When you hit the step you can't quite decode, the Production Lane is built for exactly that: it gives you answers specific to your book, your format, and your platforms — not a generic overview.</p>
+          <p class="tagline">It never writes for you. That's the point.</p>
+        </div>
+      </section>
+
+      <!-- ─── Newsletter ─── -->
+      <div class="journey-newsletter">
+        <span class="nl-eyebrow">Stay on the path</span>
+        <h2>One craft idea, every other week</h2>
+        <p>The Beacon Brief brings you one idea worth thinking about and one real question worth answering — the same coaching voice as this guide, in your inbox. No noise, no hype, no writing done for you.</p>
+        <a class="nl-btn" href="newsletter.html">Subscribe to The Beacon Brief</a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">The AI that coaches instead of writing.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('jumpToggle');
+      var panel = document.getElementById('jumpPanel');
+      if (!toggle || !panel) return;
+      function setOpen(open) {
+        panel.classList.toggle('open', open);
+        toggle.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      toggle.addEventListener('click', function () {
+        setOpen(!panel.classList.contains('open'));
+      });
+      panel.addEventListener('click', function (e) {
+        if (e.target.closest('a')) setOpen(false);
+      });
+    })();
+  </script>
+
+</body>
+</html>
