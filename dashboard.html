@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com https://assets.mailerlite.com; img-src 'self' data: https://*.outseta.com https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.outseta.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.outseta.com https://*.mailerlite.com; form-action 'self' https://*.outseta.com https://docs.google.com; base-uri 'self'; object-src 'none'">
   <!-- Meta Pixel Base Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -37,7 +38,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
     var o_options = {
@@ -949,31 +950,21 @@ function detectTier(user) {
     }
 
         function findStoredToken() {
-      try {
-        const cbToken = localStorage.getItem('cb_token');
-        if (cbToken && cbToken.split('.').length === 3) {
-          const user = readToken(cbToken);
+      // Only trust the single token we control (cb_token). Previously this
+      // scanned every localStorage/sessionStorage key and accepted any
+      // JWT-shaped value it found — anything on the origin could be picked up
+      // as identity. The real security boundary is the Worker, which
+      // re-verifies the token's signature on every call; this is just what
+      // the UI greets you as.
+      const candidates = [];
+      try { candidates.push(localStorage.getItem('cb_token')); } catch(e) {}
+      try { candidates.push(sessionStorage.getItem('cb_token')); } catch(e) {}
+      for (const val of candidates) {
+        if (val && val.split('.').length === 3) {
+          const user = readToken(val);
           if (user && user.Email) return user;
         }
-        const keys = Object.keys(localStorage);
-        for (const key of keys) {
-          const val = localStorage.getItem(key);
-          if (val && val.split('.').length === 3) {
-            const user = readToken(val);
-            if (user && user.Email) return user;
-          }
-        }
-        try {
-          const ssKeys = Object.keys(sessionStorage);
-          for (const key of ssKeys) {
-            const val = sessionStorage.getItem(key);
-            if (val && val.split('.').length === 3) {
-              const user = readToken(val);
-              if (user && user.Email) return user;
-            }
-          }
-        } catch(e2) {}
-      } catch(e) {}
+      }
       return null;
     }
 
@@ -1228,10 +1219,21 @@ function detectTier(user) {
       return wrap;
     }
 
+    // Escape HTML before any markdown transform so message content can never
+    // inject markup. Both member input and streamed coaching replies pass
+    // through here on their way into innerHTML.
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
     function renderText(text) {
       return text.split(/\n\n+/).filter(p => p.trim())
         .map(p => {
-          let html = p
+          let html = escapeHtml(p)
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
             .replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
           return `<p>${html.replace(/\n/g, '<br>')}</p>`;
@@ -1291,6 +1293,10 @@ function detectTier(user) {
           body: JSON.stringify({ messages: history, user_id: currentUser ? currentUser.Email : null })
         });
 
+        // The relay returns 429 when the member has hit the server-side
+        // daily message cap — show that plainly instead of the generic
+        // "something went wrong" message.
+        if (res.status === 429) throw new Error('daily-limit');
         if (!res.ok) throw new Error('relay');
 
         inner.className = 'bubble';
@@ -1346,7 +1352,11 @@ function detectTier(user) {
 
       } catch(err) {
         inner.className = 'bubble';
-        inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Something went wrong reaching the coaching service. Please try again in a moment.</p>';
+        if (err && err.message === 'daily-limit') {
+          inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">You’ve reached today’s message limit. Your coach will be here tomorrow — come back then and we’ll pick up right where you left off.</p>';
+        } else {
+          inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Something went wrong reaching the coaching service. Please try again in a moment.</p>';
+        }
       }
 
       busy = false;
@@ -1365,10 +1375,13 @@ function detectTier(user) {
         if (urlToken) {
           try { localStorage.setItem('cb_token', urlToken); } catch(e) {}
           try { sessionStorage.setItem('cb_token', urlToken); } catch(e) {}
+          // Scrub the token out of the address bar immediately once we've
+          // captured it — don't let it linger in history/referrer even if
+          // the decode below fails.
+          try { window.history.replaceState({}, document.title, '/dashboard.html'); } catch(e) {}
           const user = readToken(urlToken);
           if (user && user.Email) {
             setupDashboard(user);
-            try { window.history.replaceState({}, document.title, '/dashboard.html'); } catch(e) {}
             return;
           }
         }
