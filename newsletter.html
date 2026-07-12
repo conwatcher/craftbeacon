@@ -32,7 +32,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Base Code -->
-<script>fbq('track', 'Lead', {content_name: 'Newsletter Signup Page'});</script>
+<script>fbq('track', 'ViewContent', {content_name: 'Newsletter Signup Page'});</script>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
 
@@ -422,7 +422,19 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     /* MailerLite form wrapper — centers and constrains the embedded form */
     .nl-form-wrap {
       max-width: 480px;
-      margin: 0 auto;
+      margin: 0 auto 2rem;
+      /* offset the jump target so the section heading stays visible above the field
+         (below the sticky nav) when a Subscribe CTA jumps here */
+      scroll-margin-top: 280px;
+    }
+
+    /* Ad-blocker fallback — shown only if the embed fails to render */
+    .nl-form-fallback p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
     }
 
     /* ─── Privacy reassurance ─── */
@@ -632,7 +644,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       text-align: left;
       border-left: 2px solid var(--cb-border);
       padding-left: 1.25rem;
-      margin-bottom: 2.5rem;
+      margin-top: 2.5rem;
       font-style: italic;
     }
     .nl-signup-voice .signature {
@@ -726,6 +738,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <div class="section-label">The CraftBeacon Newsletter</div>
       <h1 id="newsletter-heading">The <em>Beacon Brief</em></h1>
       <p class="nl-hero-sub">The writing coach that never writes for you — now in your inbox every other week. One craft principle drawn out in depth, a reader question answered, and the occasional observation from inside the practice.</p>
+      <a href="#signup-form" class="nl-hero-cta" onclick="fbq('trackCustom', 'SubscribeClick', {placement: 'hero'}); gtag('event', 'subscribe_cta_click', {placement: 'hero'});">Subscribe free</a>
     </div>
   </section>
 
@@ -803,7 +816,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <!-- ═══════════════════════════════════
        SIGNUP
   ═══════════════════════════════════ -->
-  <a href="#signup" class="nl-floating-subscribe" id="floatingSubscribe" aria-label="Jump to subscribe form" onclick="fbq('track', 'Lead', {content_name: 'Newsletter Subscribe Click'})">Subscribe</a>
+  <a href="#signup-form" class="nl-floating-subscribe" id="floatingSubscribe" aria-label="Jump to subscribe form" onclick="fbq('trackCustom', 'SubscribeClick', {placement: 'floating'}); gtag('event', 'subscribe_cta_click', {placement: 'floating'});">Subscribe</a>
 
   <section class="nl-signup" id="signup" aria-labelledby="signup-heading">
     <div class="nl-signup-bg"></div>
@@ -812,13 +825,17 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <h2 id="signup-heading">Join <em>The Beacon Brief</em></h2>
       <p>Delivered every other week. No content generation. No sales pressure. Just the kind of working observations that move a manuscript forward.</p>
 
+      <div class="nl-form-wrap" id="signup-form">
+        <div class="ml-embedded" data-form="ePVaSP"></div>
+        <div class="nl-form-fallback" id="formFallback" hidden>
+          <p>The signup form didn't load — likely a browser extension blocking it.</p>
+          <a class="nl-hero-cta" href="https://preview.mailerlite.io/forms/2420250/191247768715527268/share" target="_blank" rel="noopener">Subscribe here instead</a>
+        </div>
+      </div>
+
       <div class="nl-signup-voice">
         I started this letter because the hardest thing about writing isn't the craft — it's seeing your own work clearly when you're too close to it to read it straight. CraftBeacon was built on that same belief: not to write for you, but to help you find the thing you already know and can't quite see. The Beacon Brief is the same idea in letter form. Every other week, one craft idea worth thinking through, one real question answered without hedging. If something in an issue is useful, reply and tell me what you're stuck on — that's where the next one comes from.
         <span class="signature">— Patrick</span>
-      </div>
-      
-      <div class="nl-form-wrap">
-        <div class="ml-embedded" data-form="ePVaSP"></div>
       </div>
     </div>
   </section>
@@ -884,6 +901,42 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       }, { threshold: 0.25 });
       observer.observe(signupSection);
     }
+
+    // Fire conversion events exactly once, when MailerLite shows its in-page success state.
+    // Double opt-in: "submitted" (pre-confirmation) is the correct moment to count a Lead.
+    (function () {
+      const mlEmbed = document.querySelector('.ml-embedded[data-form="ePVaSP"]');
+      if (!mlEmbed) return;
+      let fired = false;
+      function isVisible(el) {
+        return !!el && (el.offsetHeight > 0 || el.getClientRects().length > 0);
+      }
+      function checkSuccess() {
+        if (fired) return;
+        // MailerLite reveals a success body (.ml-form-successBody) after a valid submit.
+        const success = mlEmbed.querySelector('.ml-form-successBody, [class*="successBody"], [class*="success"]');
+        if (isVisible(success)) {
+          fired = true;
+          if (window.fbq) fbq('track', 'Lead', { content_name: 'Beacon Brief Signup' });
+          if (window.gtag) gtag('event', 'newsletter_signup');
+          obs.disconnect();
+        }
+      }
+      const obs = new MutationObserver(checkSuccess);
+      obs.observe(mlEmbed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+      checkSuccess();
+    })();
+
+    // Ad-blocker fallback: if the embed hasn't rendered after a few seconds, offer the hosted form.
+    window.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        const embed = document.querySelector('.ml-embedded[data-form="ePVaSP"]');
+        const fallback = document.getElementById('formFallback');
+        if (!embed || !fallback) return;
+        const rendered = embed.querySelector('form') || embed.children.length > 0;
+        if (!rendered) fallback.removeAttribute('hidden');
+      }, 2500);
+    });
   </script>
 </body>
 </html>
