@@ -1,2 +1,4 @@
 # GoodSync sync/index files â€” not part of the website
 _gsdata_/
+# Claude Code local session data — not part of the website
+.claude/
