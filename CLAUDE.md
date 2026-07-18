@@ -6,6 +6,12 @@ CraftBeacon (thecraftbeacon.com) is a live, revenue-generating AI writing coachi
 
 **CraftBeacon never generates content.** No prose, no dialogue, no manuscript-ready text of any kind. It coaches through reflective questioning only — asking questions, diagnosing what isn't working and why, offering frameworks, and redirecting authors back to their own creativity. This is the core product identity. Protect it in any system-prompt change, marketing copy, or feature work. If a change would let the platform write *for* the author, it's wrong.
 
+**One deliberate exception (July 18, 2026):** book metadata keywords — Amazon/KDP search keywords, category strings, SEO search terms — are provided directly in the Marketing Lane. They are analytical discovery data, not authored prose. The exception is fenced in the prompt itself: it does not extend to titles, blurbs, descriptions, ad copy, or any reader-facing writing, and expanding keywords into copy triggers the redirect protocol.
+
+### Relay prompt architecture (since July 18, 2026)
+
+The `craftbeacon-relay-v2` `SYSTEM_PROMPT` uses a **two-mode structure** to fix over-coaching: **Answer Mode** (informational requests — marketing strategy, production specs, publishing/craft questions — lead with the answer, state assumptions instead of interrogating, question only after the answer) and **Coaching Mode** (creative/structural manuscript work — diagnostic sequence applies, with clarifying questions only when the diagnosis depends on them and confirmation folded into the diagnosis reply). Turn rules: max one question per reply, every reply contains a deliverable. Answer Mode is the default in the Marketing and Production lanes. Local source of truth for the deployed Worker: `D:\conwa\Desktop\Craft Beacon Files\System\craftbeacon-relay-v2.txt` (matches production as of the Session 27 deploy).
+
 CraftBeacon is kept brand-separate from Patrick's book universe (Red Foundations Publishing). No Red Foundations references in site footers or copy — this was removed deliberately.
 
 ## Stack
