@@ -769,6 +769,23 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       color: var(--cb-dim);
     }
     @media (max-width: 768px) {
+      .cb-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 0;
+        padding: 4rem 1.5rem 3.5rem;
+      }
+      .hero-content { max-width: 100%; }
+      .hero-content h1 { font-size: 2.6rem; }
+      .hero-image {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: 360px;
+        margin: 2.75rem auto 0;
+      }
+      .hero-image img { height: 320px; }
+
       .lanes-grid { grid-template-columns: 1fr; }
       .philosophy-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .tiers-lanes { grid-template-columns: 1fr; }
