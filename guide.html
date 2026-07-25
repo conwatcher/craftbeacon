@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com https://assets.mailerlite.com; img-src 'self' data: https://*.outseta.com https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.outseta.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.outseta.com https://*.mailerlite.com; form-action 'self' https://*.outseta.com https://docs.google.com; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com; img-src 'self' data: https://*.outseta.com https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src 'self' https://*.outseta.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; frame-src https://*.outseta.com; form-action 'self' https://*.outseta.com; base-uri 'self'; object-src 'none'">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>What Nobody Tells Indie Authors | CraftBeacon</title>
@@ -14,6 +14,7 @@
     gtag('js', new Date());
     gtag('config', 'G-FRZ967M5K9');
   </script>
+
   <meta name="description" content="A field guide to the platforms that run your career — the policy changes nobody announced, the defaults working against you, and the opportunities sitting unused." />
 
   <!-- Meta Pixel Base Code -->
@@ -34,15 +35,19 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Base Code -->
 <script>fbq('track', 'ViewContent', {content_name: 'Field Guide'});</script>
-  <!-- Outseta Quickstart -->
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Outseta -->
   <script>
     var o_options = {
       domain: 'the-craft-beacon.outseta.com',
-      load: 'auth,leadCaptureForm',
+      load: 'auth',
       auth: {
         widgetMode: 'login',
         id: 'outseta-auth-widget',
-        mode: 'redirect',
+        mode: 'popup',
         postLoginRedirectUri: 'https://thecraftbeacon.com/dashboard.html',
         postSignUpRedirectUri: 'https://thecraftbeacon.com/dashboard.html'
       }
@@ -50,391 +55,323 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
   <style>
-    /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg-deep:      #0f0e0c;
-      --bg-surface:   #1a1814;
-      --bg-card:      #221f1a;
-      --border:       #2e2a24;
-      --amber:        #c8922a;
-      --amber-light:  #e0aa4a;
-      --amber-dim:    #7a5518;
-      --text-primary: #e8e0d0;
-      --text-body:    #c4b89a;
-      --text-dim:     #9a8f82;
-      --white:        #ffffff;
-      --font-serif:   'Georgia', 'Times New Roman', serif;
-      --font-sans:    'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-
     html { scroll-behavior: smooth; }
 
-    body {
-      background-color: var(--bg-deep);
-      color: var(--text-body);
-      font-family: var(--font-sans);
-      font-size: 17px;
-      line-height: 1.75;
-      min-height: 100vh;
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
     }
 
-    /* ── Header / Nav ── */
-    header {
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Nav ── */
+    .cb-nav {
       position: sticky;
       top: 0;
-      z-index: 100;
-    }
-
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-    }
-
-    .nav-brand img {
-      height: 36px;
-      width: auto;
-    }
-
-    .nav-brand-text {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      color: var(--amber-light);
-      letter-spacing: 0.02em;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    nav a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.9rem;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-
-    nav a:hover { color: var(--amber-light); }
-
-    .nav-cta {
-      background: var(--amber);
-      color: var(--bg-deep) !important;
-      padding: 0.45rem 1.1rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.85rem !important;
-      letter-spacing: 0.05em;
-      transition: background 0.2s !important;
-    }
-
-    .nav-cta:hover { background: var(--amber-light) !important; }
-
-    /* ── Hero ── */
-    .hero {
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
-      padding: 5rem 2rem 4rem;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 1.2rem;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      color: var(--text-primary);
-      line-height: 1.2;
-      max-width: 780px;
-      margin: 0 auto 1.2rem;
-    }
-
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--text-body);
-      max-width: 640px;
-      margin: 0 auto 0.5rem;
-      line-height: 1.7;
-    }
-
-    .hero-attribution {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-top: 1.5rem;
-    }
-
-    /* ── Main Content ── */
-    .content-wrapper {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-
-    /* ── Section Headers ── */
-    .guide-section {
-      margin-bottom: 4rem;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber-dim);
-      margin-bottom: 0.6rem;
-    }
-
-    .guide-section h2 {
-      font-family: var(--font-serif);
-      font-size: 1.65rem;
-      color: var(--text-primary);
-      line-height: 1.3;
-      margin-bottom: 2rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* ── Individual Items ── */
-    .guide-item {
-      margin-bottom: 2.5rem;
-    }
-
-    .guide-item h3 {
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
-      color: var(--amber-light);
-      line-height: 1.35;
-      margin-bottom: 0.75rem;
-    }
-
-    .guide-item p {
-      color: var(--text-body);
-      line-height: 1.8;
-    }
-
-    /* ── Divider ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 4rem 0;
-    }
-
-    /* ── Signpost ── */
-    .signpost-intro {
-      color: var(--text-body);
-      font-size: 1.05rem;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-
-    .signpost-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .signpost-card {
-      display: block;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--amber);
-      border-radius: 4px;
-      padding: 1.6rem 1.75rem;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .signpost-card:hover {
-      background: var(--bg-surface);
-      border-color: var(--amber-dim);
-      border-left-color: var(--amber-light);
-    }
-
-    .signpost-card h2 {
-      font-family: var(--font-serif);
-      font-size: 1.25rem;
-      color: var(--amber-light);
-      line-height: 1.3;
-      margin-bottom: 0.6rem;
-    }
-
-    .signpost-card p {
-      color: var(--text-body);
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .signpost-footnote {
-      color: var(--text-dim);
-      font-size: 0.95rem;
-      margin-bottom: 4rem;
-    }
-
-    /* ── Final Note ── */
-    .final-note {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--amber);
-      border-radius: 4px;
-      padding: 1.8rem 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .final-note p {
-      color: var(--text-body);
-      line-height: 1.8;
-      margin-bottom: 0.8rem;
-    }
-
-    .final-note p:last-child { margin-bottom: 0; }
-
-    /* ── Newsletter Block ── */
-    .newsletter-block {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 3rem 2.5rem;
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .newsletter-block .nl-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 1rem;
-    }
-
-    .newsletter-block h2 {
-      font-family: var(--font-serif);
-      font-size: 1.7rem;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-
-    .newsletter-block p {
-      color: var(--text-body);
-      font-size: 1rem;
-      max-width: 520px;
-      margin: 0 auto 2rem;
-      line-height: 1.7;
-    }
-
-    /* Outseta form styling overrides */
-    .outseta-form-wrap {
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    /* ── Footer ── */
-    footer {
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem;
-      text-align: center;
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .footer-brand {
-      font-family: var(--font-serif);
-      color: var(--amber-light);
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--amber-light); }
-
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-    }
-
-    /* ── Floating Subscribe Button ── */
-    .float-subscribe {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
       z-index: 200;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      background: var(--amber);
-      color: var(--bg-deep);
-      font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       text-decoration: none;
-      padding: 0.65rem 1.1rem;
-      border-radius: 50px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ── Page header ── */
+    .page-header {
+      position: relative;
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: #1c1914;
+      background-image: url("assets/quill-lane.jpg");
+      background-size: cover;
+      background-position: center 35%;
+      filter: brightness(0.28) sepia(0.2);
+    }
+    .page-header-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.65) 100%);
+    }
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 620px;
     }
 
-    .float-subscribe:hover {
-      background: var(--amber-light);
-      transform: translateY(-2px);
+    /* ── Signpost ── */
+    .signpost-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 3rem 5rem;
+    }
+    .signpost-intro {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+    .signpost-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--cb-border);
+      border: 0.5px solid var(--cb-border);
+      margin-bottom: 2.5rem;
+    }
+    .signpost-card {
+      background: var(--cb-surface);
+      padding: 1.75rem 1.85rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .signpost-card:hover { background: var(--cb-surface2); }
+    .signpost-card::after {
+      content: '\2197';
+      position: absolute;
+      top: 1.4rem;
+      right: 1.4rem;
+      font-size: 0.8rem;
+      color: var(--cb-dim);
+      transition: color 0.2s;
+    }
+    .signpost-card:hover::after { color: var(--cb-amber); }
+    .signpost-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--cb-amber-light);
+      line-height: 1.35;
+      margin-bottom: 0.55rem;
+      padding-right: 1.5rem;
+    }
+    .signpost-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+    .signpost-footnote {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-dim);
     }
 
-    .float-subscribe svg {
-      flex-shrink: 0;
+    /* ── Newsletter block ── */
+    .newsletter-block {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      padding: 2.5rem 2.25rem;
+      text-align: center;
+      margin-top: 4rem;
     }
+    .newsletter-block .nl-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.75rem;
+    }
+    .newsletter-block h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.85rem;
+      line-height: 1.3;
+    }
+    .newsletter-block p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    .btn-subscribe {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.7rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-subscribe:hover { background: var(--cb-amber-dim); }
 
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .nav-inner { flex-wrap: wrap; height: auto; padding: 0.8rem 0; gap: 0.8rem; }
-      nav { gap: 1rem; }
-      .content-wrapper { padding: 2.5rem 1.25rem; }
-      .newsletter-block { padding: 2rem 1.25rem; }
-      .hero { padding: 3rem 1.25rem 2.5rem; }
-      .float-subscribe { bottom: 1.25rem; right: 1.25rem; font-size: 0.78rem; padding: 0.6rem 1rem; }
+    /* ── Footer ── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: rgba(17,15,11,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-muted); }
+
+    @media (max-width: 900px) {
+      .cb-nav { padding: 1rem 1.5rem; }
+      .page-header { padding: 3rem 1.5rem 2.5rem; }
+      .page-header h1 { font-size: 2rem; }
+      .signpost-body { padding: 2.5rem 1.5rem 3.5rem; }
+      .newsletter-block { padding: 2rem 1.5rem; }
     }
   </style>
   <link rel="canonical" href="https://thecraftbeacon.com/guide.html" />
@@ -450,45 +387,50 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <meta name="twitter:description" content="A field guide to the platforms that run your career — the policy changes nobody announced, the defaults working against you, and the opportunities sitting unused." />
   <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
 </head>
-
 <body>
 
-  <!-- ── Header ── -->
-  <header>
-    <div class="nav-inner">
-      <a href="/" class="nav-brand">
-        <img src="/assets/Logo-NoBG.png" alt="CraftBeacon" onerror="this.style.display='none'" />
-        <span class="nav-brand-text">CraftBeacon</span>
-      </a>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/resources.html">Resources</a>
-        <a href="/newsletter.html">Newsletter</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="https://the-craft-beacon.outseta.com/auth?widgetMode=register" class="nav-cta">Start Free</a>
-      </nav>
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-nav-login" onclick="Outseta.auth.open({ widgetMode: 'login' })">Sign in</button>
+      <button class="btn-nav-signup" onclick="Outseta.auth.open({ widgetMode: 'register' })">Start free</button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════ PAGE HEADER ═══════════════ -->
+  <header class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-vignette"></div>
+    <div class="page-header-content">
+      <div class="section-label">CraftBeacon Field Guide</div>
+      <h1>The Field Guide has grown</h1>
+      <p>A field guide to the platforms that run your career — the policy changes nobody announced, the defaults quietly working against you, and the opportunities sitting unused.</p>
     </div>
   </header>
 
-  <!-- ── Hero ── -->
-  <section class="hero">
-    <span class="hero-eyebrow">CraftBeacon Field Guide</span>
-    <h1>The Field Guide has grown</h1>
-    <p class="hero-sub">A field guide to the platforms that run your career — the policy changes nobody announced, the defaults quietly working against you, and the opportunities sitting unused.</p>
-    <p class="hero-attribution">Produced by CraftBeacon &nbsp;·&nbsp; thecraftbeacon.com</p>
-  </section>
 
-  <!-- ── Guide Content ── -->
-  <main class="content-wrapper">
+  <!-- ═══════════════ SIGNPOST ═══════════════ -->
+  <main class="signpost-body">
 
     <p class="signpost-intro">The CraftBeacon Field Guide has been expanded and reorganized into two focused sections, so you can go straight to what you need.</p>
 
     <div class="signpost-grid">
-      <a class="signpost-card" href="/publishing.html">
+      <a class="signpost-card" href="publishing.html">
         <h2>The Business of Publishing</h2>
         <p>Amazon and KDP mechanics, the library distribution opportunity, print distribution through IngramSpark and KDP, and ISBN visibility.</p>
       </a>
-      <a class="signpost-card" href="/marketing.html">
+      <a class="signpost-card" href="marketing.html">
         <h2>Reaching Readers</h2>
         <p>Paid social and Meta ad defaults, Reddit and genre communities, Goodreads verification, and the online patterns worth recognizing.</p>
       </a>
@@ -501,25 +443,24 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <p class="nl-eyebrow">Stay Current</p>
       <h2>Author Intelligence, When It Matters</h2>
       <p>CraftBeacon publishes periodic author intelligence — platform changes, industry shifts, and practical guidance like what you just read. No noise. Just what's actually useful.</p>
-      <div style="text-align: center; margin-top: 1.5rem;">
-        <a href="/newsletter.html" style="display: inline-block; background: var(--amber); color: var(--bg-deep); font-family: var(--font-sans); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 0.95rem 2rem; border-radius: 4px; transition: background 0.2s;">Subscribe to The Beacon Brief</a>
-      </div>
+      <a class="btn-subscribe" href="newsletter.html">Subscribe to The Beacon Brief</a>
     </div>
 
   </main>
 
-  <!-- ── Footer ── -->
-  <footer>
-    <div class="footer-inner">
-      <p class="footer-brand">CraftBeacon</p>
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/resources.html">Resources</a>
-        <a href="/guide.html">Field Guide</a>
-        <a href="/dashboard.html">Dashboard</a>
-      </div>
-      <p class="footer-copy">© 2026 CraftBeacon · thecraftbeacon.com · The writing coach that never writes for you.</p>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
     </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="ai-rights.html">Rights &amp; AI</a></li>
+      <li><a href="mailto:hello@thecraftbeacon.com">Contact</a></li>
+    </ul>
   </footer>
 
 </body>
