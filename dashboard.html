@@ -733,11 +733,13 @@
     const RELAY   = 'https://craftbeacon-relay-v2.conwatcher.workers.dev';
     const REPORT_ENDPOINT = 'https://craftbeacon-report-request.conwatcher.workers.dev';
     const NAME_ENDPOINT = 'https://craftbeacon-member-name.conwatcher.workers.dev';
-    const LIMIT   = 5;
+    // Free-tier cap is enforced server-side (relay 429). The client no
+    // longer counts messages — the daily count comes from relay headers.
 
     // ── State ──────────────────────────────────────────────────────
     let history   = [];
-    let count     = 0;
+    let dailyUsed  = null;   // today's free-message count, from relay headers
+    let dailyLimit = null;   // today's free-message cap, from relay headers
     let tier      = 'free';
     let busy          = false;
     let currentUser   = null;
@@ -1047,15 +1049,39 @@ function detectTier(user) {
     }
 
     // ── Counter ────────────────────────────────────────────────────
+    function dailyResetText() {
+      // The relay's daily counter resets at midnight GMT (it counts sessions
+      // from setUTCHours(0,0,0,0)). Show that moment in the member's own
+      // timezone when the browser can format it; fall back to plain GMT.
+      try {
+        const now = new Date();
+        const reset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+        const t = reset.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        const sameDay = reset.getDate() === now.getDate();
+        return (sameDay ? 'today at ' : 'tomorrow at ') + t + ' your time';
+      } catch (e) {
+        return 'at midnight GMT';
+      }
+    }
+
     function updateCounter() {
       const el = document.getElementById('counter');
-      const left = LIMIT - count;
+      if (!el) return;
+      // The daily count comes from the relay (X-Daily-Used / X-Daily-Limit).
+      // Until the first message of this page load returns those headers, show
+      // a neutral line rather than a number that could misstate the real count.
+      if (dailyUsed == null || dailyLimit == null) {
+        el.className = 'counter';
+        el.textContent = 'Free coaching — a daily message limit applies';
+        return;
+      }
+      const left = dailyLimit - dailyUsed;
       if (left <= 1) {
         el.className = 'counter warn';
-        el.textContent = left === 1 ? '1 message remaining in this session' : 'Session limit reached';
+        el.textContent = left === 1 ? '1 free message remaining today' : 'Daily message limit reached — resets ' + dailyResetText();
       } else {
         el.className = 'counter';
-        el.textContent = `${count} of ${LIMIT} free messages used this session`;
+        el.textContent = `${dailyUsed} of ${dailyLimit} free messages used today`;
       }
     }
 
@@ -1141,8 +1167,8 @@ function detectTier(user) {
     function showUpgrade() {
       document.getElementById('inputArea').innerHTML = `
         <div class="upgrade-box">
-          <h3>You've reached the end of your free session.</h3>
-          <p>You've used your ${LIMIT} free messages for this session. Come back any time to start fresh — or unlock unlimited coaching with a lane membership.</p>
+          <h3>That's your free coaching for today.</h3>
+          <p>You've used your free messages for today — they reset ${dailyResetText()}. Come back then to keep going, or unlock unlimited coaching with a lane membership.</p>
           <a class="upgrade-link" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register" target="_blank">Explore membership options</a>
         </div>`;
     }
@@ -1238,7 +1264,7 @@ function detectTier(user) {
       const text  = input.value.trim();
       if (!text) return;
 
-      if (tier === 'free' && count >= LIMIT) { showUpgrade(); return; }
+      // Free-tier wall is now enforced by the relay (429), handled below.
 
      let fullContent = text;
       let displayText = text;
@@ -1251,8 +1277,8 @@ function detectTier(user) {
       addMessage('user', displayText);
       input.value = '';
       input.style.height = 'auto';
-      count++;
-      if (tier === 'free') updateCounter();
+      // The daily counter refreshes from the relay's response headers once
+      // this send returns — see the header read after the stream completes.
 
       busy = true;
       document.getElementById('sendBtn').disabled    = true;
@@ -1323,12 +1349,24 @@ function detectTier(user) {
         history.push({ role: 'assistant', content: full });
         addCopyButton(wrap, full);
         showExportButton();
-        if (tier === 'free' && count >= LIMIT) showUpgrade();
+
+        // The daily counter is server-authoritative: read the true count off
+        // the relay response headers so it survives reloads and can't be reset
+        // by reloading the page.
+        if (tier === 'free') {
+          const u = parseInt(res.headers.get('X-Daily-Used'), 10);
+          const l = parseInt(res.headers.get('X-Daily-Limit'), 10);
+          if (!Number.isNaN(u)) dailyUsed  = u;
+          if (!Number.isNaN(l)) dailyLimit = l;
+          updateCounter();
+          if (dailyUsed != null && dailyLimit != null && dailyUsed >= dailyLimit) showUpgrade();
+        }
 
       } catch(err) {
         inner.className = 'bubble';
         if (err && err.message === 'daily-limit') {
-          inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">You’ve reached today’s message limit. Your coach will be here tomorrow — come back then and we’ll pick up right where you left off.</p>';
+          inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">You’ve used your free messages for today — they reset ' + dailyResetText() + ', and we’ll pick up right where you left off.</p>';
+          showUpgrade();
         } else {
           inner.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Something went wrong reaching the coaching service. Please try again in a moment.</p>';
         }
