@@ -20,7 +20,12 @@
 | `craft.html` | Light |
 | `privacy.html` | Light |
 | `terms.html` | Light |
-| `tools.html` (to be built) | Light |
+| `tools.html` | Light — **converted, live** |
+| `journey.html` | Light |
+| `marketing.html` | Light |
+| `publishing.html` | Light |
+| `ai-rights.html` | Light |
+| `404.html` | Light |
 | `dashboard.html` | **Dark — do not change** |
 
 The reasoning, so it survives future decisions: public pages do the job of invitation, and a bright room invites. The dashboard is where an author works on their manuscript for an hour at a time, and a darker, quieter surface suits sustained focus. Visual grammar follows the emotional job of the page.
@@ -104,7 +109,26 @@ The test when it's ambiguous: **if a visitor has to read the amber to get the me
 
 **`--cb-dim` is decorative-only on light pages**, exactly as `--cb-amber-light` is. It may carry rules, separators, disabled-state fills, and non-essential ornament. Any text using it must move to `--cb-muted` (`#6b6357`, 5.31:1) when the page converts.
 
-**Known instance:** `journey.html` uses `--cb-dim` for its footer links and copyright line. It is correct on dark today and fails the moment that page converts. Fix it in the same pass.
+**This is site-wide, not one page.** Every page bound for light uses `--cb-dim`, between two and eight times each. Audited 16 August 2026 against `main`:
+
+| Page | `var(--cb-dim)` uses |
+|---|---|
+| `resources.html` | 8 |
+| `index.html` | 7 |
+| `awareness.html` | 7 |
+| `ai-rights.html` | 6 |
+| `newsletter.html` | 5 |
+| `journey.html` | 5 |
+| `marketing.html` | 5 |
+| `guide.html` | 4 |
+| `craft.html` | 4 |
+| `publishing.html` | 4 |
+| `privacy.html` | 3 |
+| `terms.html` | 3 |
+| `404.html` | 2 |
+| `tools.html` | 0 — built clean |
+
+Each use must be inspected when its page converts. If it carries text, it moves to `--cb-muted`. If it is a rule, separator, or ornament, it stays.
 
 ---
 
@@ -122,6 +146,13 @@ For hover states on interactive cards, deepen rather than colour-shift:
 
 ```css
 box-shadow: 0 4px 12px rgba(28,25,20,0.10);
+```
+
+`tools.html` ships these as named variables, and that is the pattern to follow on every converted page:
+
+```css
+--cb-card-shadow:       0 1px 3px rgba(28,25,20,0.06);
+--cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
 ```
 
 Do not apply either to the dashboard.
@@ -161,4 +192,10 @@ Neither is a palette question, but both surface the moment the background turns 
 
 ## 7. WHAT THIS SPEC DOES NOT COVER
 
-Typography, spacing, layout, and component structure are all unchanged. This is a colour swap and an elevation rule, nothing more. Any page can be converted by replacing its `:root` block and adding the card shadow — no markup edits, because the variable names did not change.
+Typography, spacing, layout, and component structure are all unchanged. This is a colour swap and an elevation rule, nothing more. Converting a page takes three passes, not one. The variable names did not change, so no *class* or *structural* markup edits are needed — but a `:root` swap alone is not sufficient:
+
+1. Replace the `:root` block.
+2. **Hunt hardcoded dark hexes outside `:root`.** Every page has at least one. Audited 16 August 2026: `index.html` and `newsletter.html` carry five each; `resources.html`, `guide.html`, `awareness.html`, `craft.html`, `privacy.html`, `terms.html`, `journey.html`, `marketing.html`, `publishing.html`, and `ai-rights.html` carry one each; `tools.html` and `404.html` carry none. Search each page for `#110f0b`, `#1c1914`, and `#221f18` and route every hit through the matching variable.
+3. Add the card shadow.
+
+A page that passes step 1 and skips step 2 renders a light theme with dark bands cut through it.
