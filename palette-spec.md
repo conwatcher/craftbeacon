@@ -42,7 +42,7 @@ Replace the `:root` block on light-theme pages with this. Variable names are unc
   /* Type */
   --cb-text:         #1c1914;   /* was --cb-surface in the dark theme */
   --cb-muted:        #6b6357;   /* darkened from #9a9080 for contrast */
-  --cb-dim:          #7d7466;   /* darkened from #9a8f82 */
+  --cb-dim:          #7d7466;   /* darkened from #9a8f82 — DECORATIVE ONLY on light, see §3 */
 
   /* Amber — split into two roles, see section 3 */
   --cb-amber:        #8a5a18;   /* text-safe: links, small text, labels */
@@ -98,6 +98,14 @@ So amber does two jobs, and which variable to reach for depends on whether the a
 
 The test when it's ambiguous: **if a visitor has to read the amber to get the meaning, it must be `--cb-amber`.** If removing the colour entirely would cost only warmth and not comprehension, `--cb-amber-light` is correct.
 
+### The same rule applies to `--cb-dim`
+
+`--cb-dim` (`#7d7466`) was never measured for this spec — it was carried in as a darkened equivalent and assumed safe. It is not. On light surfaces it measures 4.13:1 on `--cb-dark`, 4.53:1 on `--cb-surface`, and 3.81:1 on `--cb-surface2`. Two of the three fail WCAG AA, and the one that passes clears it by 0.03.
+
+**`--cb-dim` is decorative-only on light pages**, exactly as `--cb-amber-light` is. It may carry rules, separators, disabled-state fills, and non-essential ornament. Any text using it must move to `--cb-muted` (`#6b6357`, 5.31:1) when the page converts.
+
+**Known instance:** `journey.html` uses `--cb-dim` for its footer links and copyright line. It is correct on dark today and fails the moment that page converts. Fix it in the same pass.
+
 ---
 
 ## 4. ELEVATION
@@ -122,7 +130,7 @@ Do not apply either to the dashboard.
 
 ## 5. CONTRAST — VERIFIED
 
-Measured, not estimated. All pairings below meet WCAG AA (4.5:1) for normal text.
+Measured, not estimated. Pairings marked **decorative only** fail WCAG AA (4.5:1) for normal text and must never carry text on a light page. Everything else passes.
 
 | Pairing | Ratio |
 |---|---|
@@ -133,6 +141,9 @@ Measured, not estimated. All pairings below meet WCAG AA (4.5:1) for normal text
 | `--cb-amber` on `--cb-surface` | 5.81 : 1 |
 | `--cb-red` on `--cb-dark` | 8.23 : 1 |
 | `--cb-amber-light` on `--cb-dark` | **2.51 : 1 — decorative only** |
+| `--cb-dim` on `--cb-dark` | **4.13 : 1 — decorative only** |
+| `--cb-dim` on `--cb-surface` | **4.53 : 1 — decorative only** |
+| `--cb-dim` on `--cb-surface2` | **3.81 : 1 — decorative only** |
 
 Any new colour pairing introduced later must be measured before it ships. The failure mode is invisible to the person who chose the colours and obvious to the reader who can't read them.
 
