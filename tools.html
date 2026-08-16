@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://craftbeacon-tools.conwatcher.workers.dev; base-uri 'self'; object-src 'none'; form-action 'self'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Author Tools — CraftBeacon</title>
+
+  <meta name="description" content="One-press diagnostics for your manuscript, blurb, query letter, and metadata. Send the work, get a written report back — tools that tell you what is happening in your writing, and never write it for you." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* Light palette — palette-spec.md v1 (14 Aug 2026) */
+    :root {
+      --cb-dark:         #f7f2e8;   /* page background */
+      --cb-surface:      #fffdf8;   /* cards, raised panels */
+      --cb-surface2:     #f0e9db;   /* banded sections, subtle fills */
+      --cb-border:       rgba(28,25,20,0.12);
+
+      --cb-text:         #1c1914;
+      --cb-muted:        #6b6357;
+      /* --cb-dim carries no text here: it measures 3.81:1 on --cb-surface2 and
+         4.13:1 on --cb-dark, both under AA. Use --cb-muted for small text. */
+      --cb-dim:          #7d7466;
+
+      /* Amber split: --cb-amber is text-safe; --cb-amber-light is decorative only */
+      --cb-amber:        #8a5a18;
+      --cb-amber-light:  #c8903a;
+      --cb-amber-dim:    rgba(200,144,58,0.14);
+
+      --cb-red:          #8B1A2F;
+
+      --cb-card-shadow:       0 1px 3px rgba(28,25,20,0.06);
+      --cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
+    }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ─── Nav ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(247,242,232,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 2.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Hero ─── */
+    .page-header {
+      padding: 4.5rem 3rem 3.5rem;
+      border-bottom: 0.5px solid var(--cb-border);
+    }
+    .page-header-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 1.02rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+      max-width: 680px;
+    }
+
+    /* ─── Sections ─── */
+    .tools-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 3rem 4.5rem;
+    }
+    .tools-section { margin-bottom: 3.5rem; }
+    .tools-section:last-child { margin-bottom: 0; }
+
+    .family-label,
+    .section-heading {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+    .family-label::after,
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: rgba(200,144,58,0.35);
+    }
+    .family-group { margin-bottom: 2.5rem; }
+    .family-group:last-child { margin-bottom: 0; }
+
+    .status-note {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+    }
+    .status-note.error { color: var(--cb-red); }
+
+    /* ─── Tool cards ─── */
+    .tool-card {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      box-shadow: var(--cb-card-shadow);
+      margin-bottom: 1.25rem;
+      transition: box-shadow 0.2s;
+    }
+    .tool-card:hover { box-shadow: var(--cb-card-shadow-hover); }
+    .tool-card-head {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1.5rem;
+      text-align: left;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 1.6rem 1.8rem;
+      font-family: inherit;
+    }
+    .tool-card-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+    .tool-card-head .tagline {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+    }
+    .tool-price {
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.3rem 0.8rem;
+      white-space: nowrap;
+    }
+    .tool-panel {
+      display: none;
+      border-top: 0.5px solid var(--cb-border);
+      padding: 1.8rem;
+    }
+    .tool-card.open .tool-panel { display: block; }
+
+    /* ─── Form ─── */
+    .form-need {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      background: var(--cb-amber-dim);
+      border-left: 2px solid var(--cb-amber-light);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.6rem;
+      line-height: 1.7;
+    }
+    .field { margin-bottom: 1.4rem; }
+    .field-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.45rem;
+    }
+    .field-help {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      margin-top: 0.35rem;
+      line-height: 1.6;
+    }
+    .field input[type="text"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      background: var(--cb-surface);
+      border: 1px solid var(--cb-border);
+      padding: 0.6rem 0.8rem;
+      border-radius: 0;
+      appearance: auto;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--cb-amber-light);
+      box-shadow: 0 0 0 2px var(--cb-amber-dim);
+    }
+    .field input[type="file"] {
+      display: block;
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      border: 1px dashed var(--cb-amber-light);
+      background: var(--cb-surface);
+      padding: 0.9rem;
+      cursor: pointer;
+    }
+    .field-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+    }
+    .field-check input[type="checkbox"] {
+      margin-top: 0.35rem;
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--cb-amber);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .field-check span {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.6;
+    }
+    .req-mark { color: var(--cb-red); }
+
+    .form-error {
+      display: none;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-red);
+      background: rgba(139,26,47,0.06);
+      border-left: 2px solid var(--cb-red);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .form-error.show { display: block; }
+
+    .btn-submit {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.75rem 1.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--cb-amber-dim); }
+    .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ─── Working ─── */
+    .working { text-align: center; padding: 1.5rem 0 0.5rem; }
+    .working-message {
+      font-size: 0.98rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      max-width: 540px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.8;
+    }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      margin: 0 auto 1.25rem;
+      border: 2px solid var(--cb-amber-dim);
+      border-top-color: var(--cb-amber-light);
+      border-radius: 50%;
+      animation: cb-spin 1.1s linear infinite;
+    }
+    @keyframes cb-spin { to { transform: rotate(360deg); } }
+    .working-status {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--cb-amber);
+      margin-bottom: 1.75rem;
+      min-height: 1.5em;
+    }
+    .working-static p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 0.6rem;
+    }
+
+    /* ─── Complete ─── */
+    .complete-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.4;
+      margin-bottom: 1.4rem;
+    }
+    .complete-heading .dest-email { color: var(--cb-amber); }
+    .email-warn {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-red);
+      background: rgba(139,26,47,0.06);
+      border-left: 2px solid var(--cb-red);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.4rem;
+      line-height: 1.7;
+    }
+    .report-box {
+      background: var(--cb-dark);
+      border: 0.5px solid var(--cb-border);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+    }
+    .report-box p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.8;
+      margin-bottom: 0.9rem;
+    }
+    .report-box p:last-child { margin-bottom: 0; }
+    .report-box h3, .report-box h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.3;
+      margin: 1.4rem 0 0.7rem;
+    }
+    .report-box h3:first-child, .report-box h4:first-child { margin-top: 0; }
+    .report-box h3 { font-size: 1.25rem; }
+    .report-box h4 { font-size: 1.05rem; }
+    .report-box strong { font-weight: 400; color: var(--cb-amber); }
+    .report-box em { font-style: italic; }
+    .btn-copy {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.55rem 1.3rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: var(--cb-amber-dim); }
+
+    /* ─── Failed ─── */
+    .fail-error {
+      font-size: 0.98rem;
+      font-weight: 300;
+      color: var(--cb-red);
+      background: rgba(139,26,47,0.06);
+      border-left: 2px solid var(--cb-red);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.4rem;
+      line-height: 1.8;
+    }
+
+    /* ─── Coming soon ─── */
+    .soon-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .soon-card {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      box-shadow: var(--cb-card-shadow);
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .soon-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+    .soon-card .covers {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+    .soon-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .soon-price {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--cb-text);
+    }
+    .soon-badge {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      border: 0.5px solid var(--cb-amber-light);
+      padding: 0.25rem 0.7rem;
+      white-space: nowrap;
+    }
+
+    /* ─── Disclosure ─── */
+    .disclosure {
+      background: var(--cb-surface2);
+      border: 0.5px solid var(--cb-border);
+      padding: 2rem 2.25rem;
+    }
+    .disclosure h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--cb-text);
+      margin-bottom: 0.9rem;
+    }
+    .disclosure p {
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+    .disclosure p + p { margin-top: 0.75rem; }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: var(--cb-surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cb-amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-sub {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cb-amber); }
+    .footer-copy {
+      flex-basis: 100%;
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 768px) {
+      .cb-nav {
+        position: static;
+        flex-wrap: wrap;
+        row-gap: 0.75rem;
+        padding: 0.9rem 1.25rem;
+      }
+      .nav-logo img { height: 30px; }
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.3rem;
+      }
+      .nav-links a { font-size: 0.72rem; }
+      .btn-nav-login { font-size: 0.76rem; }
+      .btn-nav-signup { font-size: 0.76rem; padding: 0.4rem 0.85rem; }
+
+      .page-header { padding: 3rem 1.25rem 2.5rem; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 0.95rem; }
+
+      .tools-main { padding: 2.25rem 1.25rem 3.5rem; }
+
+      .tool-card-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1.25rem 1.25rem;
+      }
+      .tool-panel { padding: 1.25rem; }
+
+      .soon-grid { grid-template-columns: 1fr; }
+
+      .disclosure { padding: 1.5rem 1.25rem; }
+
+      .cb-footer {
+        padding: 2rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+  <link rel="canonical" href="https://thecraftbeacon.com/tools.html" />
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CraftBeacon" />
+  <meta property="og:url" content="https://thecraftbeacon.com/tools.html" />
+  <meta property="og:title" content="Author Tools — CraftBeacon" />
+  <meta property="og:description" content="One-press diagnostics for your manuscript, blurb, query letter, and metadata. Send the work, get a written report back — never written for you." />
+  <meta property="og:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Author Tools — CraftBeacon" />
+  <meta name="twitter:description" content="One-press diagnostics for your manuscript, blurb, query letter, and metadata. Send the work, get a written report back — never written for you." />
+  <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+</head>
+<body>
+
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-actions">
+      <!-- Hosted Outseta auth pages: keeps this page's CSP scoped to the Worker only -->
+      <a class="btn-nav-login" href="https://the-craft-beacon.outseta.com/auth?widgetMode=login">Sign in</a>
+      <a class="btn-nav-signup" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register">Start free</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header-content">
+      <h1>Author Tools</h1>
+      <p>One-press diagnostics for your manuscript, your blurb, your query letter, and your metadata. No conversation, no account required — you send the work, you get a written report back. Like everything at CraftBeacon, these tools tell you what is happening in your writing. They never write it for you.</p>
+    </div>
+  </header>
+
+  <main class="tools-main">
+
+    <section class="tools-section" id="availableTools" aria-live="polite">
+      <p class="status-note" id="loadStatus">Loading tools…</p>
+    </section>
+
+    <section class="tools-section" id="comingSoon" hidden>
+      <div class="section-heading">In development</div>
+      <div class="soon-grid" id="soonGrid"></div>
+    </section>
+
+    <section class="tools-section">
+      <div class="disclosure">
+        <h2>What happens to your work</h2>
+        <p>We keep three things: your email address, a running count of the words you have submitted, and your finished report for seven days. Your manuscript itself is not stored — it is read, analyzed, and discarded when your report is written. Reports are generated using the Anthropic API, which does not train on submitted content and deletes inputs and outputs within thirty days.</p>
+        <p>You are responsible for ensuring your use of these tools complies with the laws and regulations that apply where you live and work.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">The AI that coaches instead of writing.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 CraftBeacon · thecraftbeacon.com · The writing coach that never writes for you.</p>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var RELAY = 'https://craftbeacon-tools.conwatcher.workers.dev';
+      var POLL_INTERVAL_MS = 3000;
+      var POLL_CEILING_MS = 5 * 60 * 1000;
+      var STATUS_STEP_MS = 20000;
+
+      var WORK_STATUS = [
+        'Reading your manuscript…',
+        'Analyzing structure, prose, and character…',
+        'Writing your report…',
+        'Almost done…'
+      ];
+
+      // TEMPORARY price fallback for the coming-soon cards. The Worker's catalog
+      // returns price: null for any tool whose button is not yet live. Prefer
+      // catalog[].price whenever it is non-null — this map only fills the gap.
+      // Deletion condition: remove each row when that tool's button goes live and
+      // its real price starts arriving from /config; delete the whole map once
+      // every catalog entry carries a price.
+      var FALLBACK_PRICES = {
+        'Author Bio Diagnostic': 1.99,
+        'Blurb Diagnostic': 2.99,
+        'Query Letter Diagnostic': 2.99,
+        'Metadata Pack': 12.99,
+        'Opening Chapters Diagnostic': 24.99,
+        'Character Consistency Report': 29.99,
+        'Line-Edit Analysis': 34.99,
+        'The Query Package': 5.99
+      };
+
+      var CONFIG = null;
+
+      /* ── helpers ── */
+
+      function el(tag, cls, text) {
+        var n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (text !== undefined && text !== null) n.textContent = text;
+        return n;
+      }
+
+      function formatPrice(price) {
+        if (price === 0) return 'Free';
+        return '$' + Number(price).toFixed(2);
+      }
+
+      // Escape HTML before any markdown transform so report content can never
+      // inject markup — same order as dashboard.html renderText(). The report
+      // is model output; it never reaches innerHTML unescaped.
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function renderReport(text) {
+        return text.split(/\n\n+/).filter(function (p) { return p.trim(); })
+          .map(function (p) {
+            var esc = escapeHtml(p.trim());
+            var heading = esc.match(/^(#{1,4})\s+([^\n]+)$/);
+            if (heading) {
+              var tag = heading[1].length <= 2 ? 'h3' : 'h4';
+              return '<' + tag + '>' + heading[2] + '</' + tag + '>';
+            }
+            var html = esc
+              .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+              .replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+            return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
+          }).join('');
+      }
+
+      function errString(code, fallback) {
+        if (CONFIG && CONFIG.errors && CONFIG.errors[code]) return CONFIG.errors[code];
+        return fallback || 'Something went wrong. Please try again.';
+      }
+
+      /* ── config load and page render ── */
+
+      function loadConfig() {
+        fetch(RELAY + '/config')
+          .then(function (r) {
+            if (!r.ok) throw new Error('config ' + r.status);
+            return r.json();
+          })
+          .then(function (cfg) {
+            CONFIG = cfg;
+            renderAvailable(cfg);
+            renderComingSoon(cfg);
+          })
+          .catch(function () {
+            var status = document.getElementById('loadStatus');
+            status.textContent = 'The tools couldn’t be loaded. Check your connection and refresh the page to try again.';
+            status.classList.add('error');
+          });
+      }
+
+      function renderAvailable(cfg) {
+        var section = document.getElementById('availableTools');
+        section.textContent = '';
+
+        var familyKeys = Object.keys(cfg.families || {}).sort(function (a, b) {
+          return (cfg.families[a].order || 0) - (cfg.families[b].order || 0);
+        });
+
+        familyKeys.forEach(function (key) {
+          var tools = (cfg.buttons || []).filter(function (t) { return t.family === key; });
+          if (!tools.length) return;
+          var group = el('div', 'family-group');
+          group.appendChild(el('div', 'family-label', cfg.families[key].label));
+          tools.forEach(function (tool) {
+            group.appendChild(buildToolCard(tool));
+          });
+          section.appendChild(group);
+        });
+      }
+
+      function renderComingSoon(cfg) {
+        var items = [];
+        (cfg.catalog || []).forEach(function (entry) {
+          if (!entry.available) items.push(entry);
+        });
+        (cfg.bundles || []).forEach(function (bundle) {
+          if (!bundle.available) items.push(bundle);
+        });
+        if (!items.length) return;
+
+        var grid = document.getElementById('soonGrid');
+        items.forEach(function (item) {
+          var card = el('div', 'soon-card');
+          card.appendChild(el('h3', null, item.name));
+          card.appendChild(el('p', 'covers', item.covers));
+          var foot = el('div', 'soon-card-foot');
+          var price = (item.price !== null && item.price !== undefined)
+            ? item.price
+            : FALLBACK_PRICES[item.name];
+          foot.appendChild(el('span', 'soon-price',
+            (price !== undefined) ? formatPrice(price) : ''));
+          foot.appendChild(el('span', 'soon-badge', 'Coming soon'));
+          card.appendChild(foot);
+          grid.appendChild(card);
+        });
+        document.getElementById('comingSoon').hidden = false;
+      }
+
+      /* ── tool card + submission state machine ── */
+
+      function buildToolCard(tool) {
+        var card = el('article', 'tool-card');
+
+        var head = el('button', 'tool-card-head');
+        head.type = 'button';
+        head.setAttribute('aria-expanded', 'false');
+        var headText = el('div');
+        headText.appendChild(el('h3', null, tool.name));
+        headText.appendChild(el('p', 'tagline', tool.tagline));
+        head.appendChild(headText);
+        head.appendChild(el('span', 'tool-price', formatPrice(tool.price)));
+        card.appendChild(head);
+
+        var panel = el('div', 'tool-panel');
+        card.appendChild(panel);
+
+        var built = false;
+        head.addEventListener('click', function () {
+          var open = card.classList.toggle('open');
+          head.setAttribute('aria-expanded', open ? 'true' : 'false');
+          if (open && !built) {
+            built = true;
+            buildPanel(tool, panel);
+          }
+        });
+
+        return card;
+      }
+
+      function buildPanel(tool, panel) {
+        /* State containers */
+        var vForm = el('div');
+        var vWorking = el('div', 'working');
+        var vComplete = el('div');
+        var vFailed = el('div');
+        vWorking.style.display = 'none';
+        vComplete.style.display = 'none';
+        vFailed.style.display = 'none';
+        panel.appendChild(vForm);
+        panel.appendChild(vWorking);
+        panel.appendChild(vComplete);
+        panel.appendChild(vFailed);
+
+        function show(view) {
+          [vForm, vWorking, vComplete, vFailed].forEach(function (v) {
+            v.style.display = (v === view) ? '' : 'none';
+          });
+        }
+
+        /* ── State 1: the form ── */
+        var form = el('form');
+        form.noValidate = true;
+        vForm.appendChild(form);
+
+        if (tool.copy && tool.copy.whatYoullNeed) {
+          form.appendChild(el('p', 'form-need', tool.copy.whatYoullNeed));
+        }
+
+        var inputs = {};   // key -> input element
+        var idBase = 'f-' + tool.slug + '-';
+
+        (tool.fields || []).forEach(function (field) {
+          var wrap = el('div', 'field');
+          var input;
+          var id = idBase + field.key;
+
+          if (field.type === 'checkbox') {
+            var checkLabel = el('label', 'field-check');
+            checkLabel.htmlFor = id;
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = id;
+            var span = el('span');
+            span.appendChild(document.createTextNode(field.label + ' '));
+            if (field.required) span.appendChild(el('em', 'req-mark', '*'));
+            checkLabel.appendChild(input);
+            checkLabel.appendChild(span);
+            wrap.appendChild(checkLabel);
+          } else {
+            var label = el('label', 'field-label');
+            label.htmlFor = id;
+            label.appendChild(document.createTextNode(field.label + ' '));
+            if (field.required) label.appendChild(el('em', 'req-mark', '*'));
+            wrap.appendChild(label);
+
+            if (field.type === 'textarea') {
+              input = document.createElement('textarea');
+              input.rows = field.rows || 4;
+            } else if (field.type === 'select') {
+              input = document.createElement('select');
+              (field.options || []).forEach(function (opt) {
+                var o = document.createElement('option');
+                // Options arrive as plain strings or { value, label } objects
+                if (opt !== null && typeof opt === 'object') {
+                  o.value = opt.value;
+                  o.textContent = opt.label;
+                } else {
+                  o.value = opt;
+                  o.textContent = opt;
+                }
+                input.appendChild(o);
+              });
+            } else if (field.type === 'file') {
+              input = document.createElement('input');
+              input.type = 'file';
+              if (tool.acceptedTypes && tool.acceptedTypes.length) {
+                input.accept = tool.acceptedTypes.join(',');
+              }
+            } else if (field.type === 'number') {
+              input = document.createElement('input');
+              input.type = 'number';
+            } else {
+              input = document.createElement('input');
+              input.type = 'text';
+            }
+            input.id = id;
+            wrap.appendChild(input);
+          }
+
+          if (field.help) wrap.appendChild(el('p', 'field-help', field.help));
+          inputs[field.key] = input;
+          form.appendChild(wrap);
+        });
+
+        var errorBox = el('p', 'form-error');
+        errorBox.setAttribute('role', 'alert');
+        form.appendChild(errorBox);
+
+        var submitBtn = el('button', 'btn-submit', 'Submit');
+        submitBtn.type = 'submit';
+        form.appendChild(submitBtn);
+
+        /* A required checkbox gates the submit control: disabled until checked */
+        var requiredChecks = (tool.fields || []).filter(function (f) {
+          return f.type === 'checkbox' && f.required;
+        });
+        function updateSubmitGate() {
+          var blocked = requiredChecks.some(function (f) { return !inputs[f.key].checked; });
+          submitBtn.disabled = blocked;
+        }
+        requiredChecks.forEach(function (f) {
+          inputs[f.key].addEventListener('change', updateSubmitGate);
+        });
+        updateSubmitGate();
+
+        function showFormError(msg) {
+          errorBox.textContent = msg;
+          errorBox.classList.add('show');
+        }
+        function clearFormError() {
+          errorBox.textContent = '';
+          errorBox.classList.remove('show');
+        }
+
+        function clientValidate() {
+          var missing = (tool.fields || []).some(function (field) {
+            if (!field.required) return false;
+            var input = inputs[field.key];
+            if (field.type === 'checkbox') return false;   // gated separately below
+            if (field.type === 'file') return !(input.files && input.files.length);
+            return !String(input.value || '').trim();
+          });
+          if (missing) return errString('missingFields');
+
+          var badConsent = requiredChecks.some(function (f) { return !inputs[f.key].checked; });
+          if (badConsent) return errString('consentRequired');
+
+          var fileFields = (tool.fields || []).filter(function (f) { return f.type === 'file'; });
+          for (var i = 0; i < fileFields.length; i++) {
+            var fi = inputs[fileFields[i].key];
+            var file = fi.files && fi.files[0];
+            if (!file) continue;
+            var name = file.name.toLowerCase();
+            var okType = (tool.acceptedTypes || []).some(function (ext) {
+              return name.endsWith(ext.toLowerCase());
+            });
+            if (!okType) return errString('wrongFileType');
+            if (tool.maxFileSizeMb && file.size > tool.maxFileSizeMb * 1024 * 1024) {
+              return errString('fileTooLarge');
+            }
+          }
+          return null;
+        }
+
+        /* ── State 3: working view (built once, reused) ── */
+        var workMessage = el('p', 'working-message');
+        var workStatus = el('p', 'working-status');
+        workStatus.setAttribute('aria-live', 'polite');
+        var workStatic = el('div', 'working-static');
+        workStatic.appendChild(el('p', null,
+          'You can close this page — your report will be emailed to you either way.'));
+        workStatic.appendChild(el('p', null,
+          'If your report hasn’t arrived within 30 minutes, submit it again. A failed report never uses your allowance.'));
+        vWorking.appendChild(workMessage);
+        vWorking.appendChild(el('div', 'spinner'));
+        vWorking.appendChild(workStatus);
+        vWorking.appendChild(workStatic);
+
+        var statusTimer = null;
+        var pollTimer = null;
+
+        function startStatusCycle() {
+          var i = 0;
+          workStatus.textContent = WORK_STATUS[0];
+          statusTimer = setInterval(function () {
+            i++;
+            if (i >= WORK_STATUS.length - 1) {
+              i = WORK_STATUS.length - 1;
+              clearInterval(statusTimer);
+              statusTimer = null;
+            }
+            workStatus.textContent = WORK_STATUS[i];
+          }, STATUS_STEP_MS);
+        }
+
+        function stopTimers() {
+          if (statusTimer) { clearInterval(statusTimer); statusTimer = null; }
+          if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
+        }
+
+        /* ── State transitions ── */
+
+        function toWorking(message, jobId, email) {
+          workMessage.textContent = message || '';
+          show(vWorking);
+          startStatusCycle();
+          var started = Date.now();
+
+          function poll() {
+            if (Date.now() - started > POLL_CEILING_MS) {
+              // A job that dies without writing a failed status must not leave
+              // someone watching a spinner forever.
+              stopTimers();
+              toStillWorking();
+              return;
+            }
+            fetch(RELAY + '/job/' + encodeURIComponent(jobId))
+              .then(function (r) {
+                return r.json().then(function (d) { return { status: r.status, data: d }; });
+              })
+              .then(function (res) {
+                var d = res.data || {};
+                if (d.status === 'complete') {
+                  stopTimers();
+                  toComplete(d, email);
+                } else if (d.status === 'failed') {
+                  stopTimers();
+                  toFailed(d.error || errString('analysisFailed'));
+                } else if (d.status === 'expired' || res.status === 404) {
+                  // A 404 carrying the documented { status:'expired', error } shape
+                  // has an author-facing sentence. A bare 404 does not — the Worker
+                  // answers an unknown job id with {"error":"Not found"} — so fall
+                  // back to the config string written for this case.
+                  stopTimers();
+                  toFailed(d.status === 'expired' && d.error ? d.error : errString('jobExpired'));
+                } else {
+                  pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+                }
+              })
+              .catch(function () {
+                // Transient network trouble mid-poll: keep trying until the ceiling.
+                pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+              });
+          }
+          pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+        }
+
+        function toStillWorking() {
+          vWorking.textContent = '';
+          var note = el('p', 'working-message', errString('stillWorking'));
+          vWorking.appendChild(note);
+        }
+
+        function toComplete(d, email) {
+          vComplete.textContent = '';
+          var heading = el('h3', 'complete-heading');
+          heading.appendChild(document.createTextNode('Your report is ready and on its way to '));
+          heading.appendChild(el('span', 'dest-email', email));
+          heading.appendChild(document.createTextNode('.'));
+          vComplete.appendChild(heading);
+
+          // A complete job can still carry an error (email delivery failed) —
+          // in that case this page is the only copy of the report.
+          if (d.error) vComplete.appendChild(el('p', 'email-warn', d.error));
+
+          var box = el('div', 'report-box');
+          box.innerHTML = renderReport(String(d.report || ''));
+          vComplete.appendChild(box);
+
+          var copyBtn = el('button', 'btn-copy', 'Copy report');
+          copyBtn.type = 'button';
+          copyBtn.addEventListener('click', function () {
+            var raw = String(d.report || '');
+            function done() {
+              copyBtn.textContent = 'Copied';
+              setTimeout(function () { copyBtn.textContent = 'Copy report'; }, 2000);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(raw).then(done, function () { fallbackCopy(raw, done); });
+            } else {
+              fallbackCopy(raw, done);
+            }
+          });
+          vComplete.appendChild(copyBtn);
+          show(vComplete);
+        }
+
+        function fallbackCopy(text, done) {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          done();
+        }
+
+        function toFailed(errorMsg) {
+          vFailed.textContent = '';
+          vFailed.appendChild(el('p', 'fail-error', errorMsg));
+          var retry = el('button', 'btn-submit', 'Try again');
+          retry.type = 'button';
+          retry.addEventListener('click', function () {
+            // Back to the form with non-file values preserved — the form DOM is
+            // untouched, so everything typed is still there.
+            clearFormError();
+            submitBtn.textContent = 'Submit';
+            updateSubmitGate();
+            show(vForm);
+          });
+          vFailed.appendChild(retry);
+          show(vFailed);
+        }
+
+        /* ── State 2: submit ── */
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (submitBtn.disabled) return;
+
+          // Disable immediately — a double submission is a double debit.
+          submitBtn.disabled = true;
+          clearFormError();
+
+          var problem = clientValidate();
+          if (problem) {
+            showFormError(problem);
+            updateSubmitGate();
+            return;
+          }
+          submitBtn.textContent = 'Submitting…';
+
+          var fd = new FormData();
+          (tool.fields || []).forEach(function (field) {
+            var input = inputs[field.key];
+            if (field.type === 'file') {
+              if (input.files && input.files[0]) fd.append(field.key, input.files[0]);
+            } else if (field.type === 'checkbox') {
+              if (input.checked) fd.append(field.key, 'true');
+            } else {
+              fd.append(field.key, input.value);
+            }
+          });
+
+          var email = inputs.email ? String(inputs.email.value).trim() : '';
+
+          fetch(RELAY + '/submit?tool=' + encodeURIComponent(tool.slug), {
+            method: 'POST',
+            body: fd
+          })
+            .then(function (r) {
+              return r.json().then(
+                function (d) { return { status: r.status, data: d }; },
+                function () { return { status: r.status, data: null }; }
+              );
+            })
+            .then(function (res) {
+              if (res.status === 202 && res.data && res.data.jobId) {
+                toWorking(res.data.message, res.data.jobId, email);
+              } else {
+                var msg = (res.data && res.data.error) || errString('connectionFailed');
+                showFormError(msg);
+                submitBtn.textContent = 'Submit';
+                updateSubmitGate();
+              }
+            })
+            .catch(function () {
+              showFormError(errString('connectionFailed'));
+              submitBtn.textContent = 'Submit';
+              updateSubmitGate();
+            });
+        });
+      }
+
+      loadConfig();
+    })();
+  </script>
+
+</body>
+</html>
