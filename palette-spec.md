@@ -180,13 +180,15 @@ Any new colour pairing introduced later must be measured before it ships. The fa
 
 ---
 
-## 6. TWO ITEMS THAT NEED A DECISION BEFORE THE BUILD
+## 6. TWO ITEMS THAT WERE PENDING — BOTH NOW SETTLED
 
-Neither is a palette question, but both surface the moment the background turns light, and both will stall the build pass if they aren't settled first.
+Neither was a palette question, but both surfaced the moment the background turned light. Both have been tested against cream and resolved. **The conversion pass has no open decisions.**
 
-**The logo.** `assets/Logo-NoBG.png` is a transparent PNG built to sit on a near-black background. If the wordmark is rendered in cream or a pale amber, it will disappear against `#f7f2e8`. Check it against the light background before the build. If it vanishes, a dark-ink variant of the same logo is needed — same artwork, different ink, exported alongside the original rather than replacing it, since the dashboard still needs the light version.
+**The logo — RESOLVED, 14 August 2026.** `assets/Logo-NoBG.png` was checked against `#f7f2e8`. The deep red carries the wordmark and the amber lantern reads clearly. **No dark-ink variant is needed.** Use the existing asset unchanged on both themes.
 
-**The photography.** `hero-lighthouse.jpg`, `philosophy.jpg`, and `fresnel2.jpg` are dark, night-lit images chosen to blend into a black page. On a cream page they become heavy rectangles that fight the surrounding warmth. Three ways to handle it, in ascending order of effort: leave them and accept the contrast as deliberate drama; apply a warm overlay so they sit closer to the page; or replace them with lighter-key images. This is a taste decision, not a technical one.
+**The photography — RESOLVED, 16 August 2026.** `hero-lighthouse.jpg`, `philosophy.jpg`, and `fresnel2.jpg` were reviewed against cream. There is a noticeable difference from the dark theme, but the images hold up. The darkest of the three sits beside a text block, where the contrast reads as natural rather than heavy. **Leave all three as they are — no warm overlay, no replacement, no lighter-key reshoot.**
+
+**Standing rule this section now carries:** when a deferred decision is settled, close it here. A decision made in conversation and never written back becomes a phantom blocker — this one stalled the conversion pass across two sessions after it had already been answered.
 
 ---
 
