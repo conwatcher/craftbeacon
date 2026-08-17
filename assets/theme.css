@@ -1,0 +1,51 @@
+/* ============================================================
+   CraftBeacon — shared light palette
+   Source of truth: palette-spec.md v1 (decided 14 August 2026)
+
+   Linked by every light-theme public page. Root-relative
+   (/assets/theme.css) so 404.html resolves it from any depth.
+
+   NOT linked by dashboard.html — the dashboard keeps the dark
+   theme deliberately and carries its own :root block.
+
+   Variable names are identical to the dark theme, so every
+   existing var(--cb-*) reference resolves unchanged. This is a
+   value swap, not a rename. Do not rename anything here.
+   ============================================================ */
+
+:root {
+  /* ─── Surfaces — inverted from the dark theme ─── */
+  --cb-dark:         #f7f2e8;   /* page background      (dark was #110f0b) */
+  --cb-surface:      #fffdf8;   /* cards, raised panels (dark was #1c1914) */
+  --cb-surface2:     #f0e9db;   /* banded sections, subtle fills (dark was #221f18) */
+  --cb-border:       rgba(28,25,20,0.12);
+
+  /* ─── Type ─── */
+  --cb-text:         #1c1914;   /* 15.70:1 on --cb-dark, 17.24:1 on --cb-surface */
+  --cb-muted:        #6b6357;   /* 5.31:1 on --cb-dark — darkened from #9a9080 for contrast */
+
+  /* --cb-dim carries NO text on light pages: 4.13:1 on --cb-dark,
+     4.53:1 on --cb-surface, 3.81:1 on --cb-surface2 — two of three fail
+     WCAG AA and the third clears it by 0.03. Decorative only: rules,
+     separators, disabled fills, ornament. Small text uses --cb-muted. */
+  --cb-dim:          #7d7466;
+
+  /* ─── Amber, split by job ─── palette-spec.md §3
+     The test: if a visitor has to READ the amber to get the meaning it
+     must be --cb-amber. If removing the colour would cost only warmth
+     and not comprehension, --cb-amber-light is correct. */
+  --cb-amber:        #8a5a18;   /* text-safe: 5.29:1 on --cb-dark, 5.81:1 on --cb-surface */
+  --cb-amber-light:  #c8903a;   /* 2.51:1 — DECORATIVE ONLY: icons, borders, rules,
+                                   display type 28px+, solid button fills */
+  --cb-amber-dim:    rgba(200,144,58,0.14);
+
+  /* ─── Accent ─── */
+  --cb-red:          #8B1A2F;   /* 8.23:1 on --cb-dark — unchanged from the dark theme */
+
+  /* ─── Elevation ─── palette-spec.md §4
+     A lighter card separates itself on a dark page. On a light page it
+     does not, and reads as a flat rectangle without this. Hover deepens
+     the shadow rather than shifting colour. Never applied to the dashboard. */
+  --cb-card-shadow:       0 1px 3px rgba(28,25,20,0.06);
+  --cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
+}
