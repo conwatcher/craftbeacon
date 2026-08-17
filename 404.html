@@ -10,15 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Shared light palette — root-relative so it resolves however deep the
+       requested URL was: GitHub Pages serves this page from the visitor's
+       own path, so a relative href would 404 and leave the page unstyled. -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
   <style>
-    :root {
-      --cb-amber-light: #e8b86a;
-      --cb-amber: #c8903a;
-      --cb-dark: #110f0b;
-      --cb-dim: #9a8f82;
-      --cb-text: #ede6d8;
-      --cb-surface: #1c1914;
-    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: var(--cb-dark);
@@ -50,7 +48,7 @@
     }
     p {
       font-size: 1.15rem;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       max-width: 30rem;
       line-height: 1.6;
       margin-bottom: 2.5rem;

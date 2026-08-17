@@ -18,15 +18,20 @@
 | `guide.html` | Light |
 | `awareness.html` | Light |
 | `craft.html` | Light |
-| `privacy.html` | Light |
-| `terms.html` | Light |
+| `privacy.html` | Light — **converted** (Tranche 1) |
+| `terms.html` | Light — **converted** (Tranche 0) |
 | `tools.html` | Light — **converted, live** |
 | `journey.html` | Light |
 | `marketing.html` | Light |
 | `publishing.html` | Light |
 | `ai-rights.html` | Light |
-| `404.html` | Light |
+| `404.html` | Light — **converted** (Tranche 1) |
 | `dashboard.html` | **Dark — do not change** |
+
+Converted pages no longer carry a private `:root`. They link `/assets/theme.css`,
+which is the single source of truth for every light-palette value. Change a colour
+there and it changes everywhere at once. `dashboard.html` is not linked to it and
+keeps its own dark `:root` block.
 
 The reasoning, so it survives future decisions: public pages do the job of invitation, and a bright room invites. The dashboard is where an author works on their manuscript for an hour at a time, and a darker, quieter surface suits sustained focus. Visual grammar follows the emotional job of the page.
 
@@ -34,7 +39,14 @@ The reasoning, so it survives future decisions: public pages do the job of invit
 
 ## 2. THE VARIABLE BLOCK
 
-Replace the `:root` block on light-theme pages with this. Variable names are unchanged from the dark theme, so every existing `var(--cb-*)` reference in the markup continues to resolve — no class or markup changes are required to swap a page over.
+This block is the light palette. **It now lives in one place — `/assets/theme.css` — and
+converting a page means deleting the page's private `:root` and linking that file instead
+of pasting these values in again.** It is reproduced here as documentation; `theme.css` is
+the source of truth, and the two must not be allowed to drift.
+
+Variable names are unchanged from the dark theme, so every existing `var(--cb-*)` reference
+in the markup continues to resolve — no class or markup changes are required to swap a page
+over.
 
 ```css
 :root {
@@ -103,6 +115,34 @@ So amber does two jobs, and which variable to reach for depends on whether the a
 
 The test when it's ambiguous: **if a visitor has to read the amber to get the meaning, it must be `--cb-amber`.** If removing the colour entirely would cost only warmth and not comprehension, `--cb-amber-light` is correct.
 
+### The amber-light text sweep — added 17 August 2026
+
+The rule above was written as guidance for new work. It also has to be applied
+*retroactively*, because the dark-theme pages use `--cb-amber-light` for text in
+places where it was perfectly readable on `#110f0b` and is not readable on cream.
+
+**The mechanical rule, per converting page:**
+
+- Any **text** in `--cb-amber-light` whose computed size is **below 28px** moves to `--cb-amber`.
+- Text at **28px or above** stays — this is the sanctioned display-type use. The hero
+  `h1 em` is the canonical case and does not change. Check the mobile breakpoint too:
+  `.doc-head h1` drops to `2rem` (32px) at ≤768px, which is still above the threshold.
+- **Non-text** uses of `--cb-amber-light` are unaffected regardless of size — icons,
+  borders, rules, ornament, and solid button fills all stay.
+
+Resolve size through *computed* font-size, not the value written on the rule, since the
+colour is often declared on a descendant (`h2 em`) that inherits its size from the parent.
+If a rule's computed size cannot be determined confidently, leave it and report it —
+the same posture as the `--cb-dim` sweep below.
+
+**Known open issue — amber-light as a button fill.** §3 sanctions `--cb-amber-light`
+for solid button fills "with the label in `--cb-surface`". Measured, that pairing is
+**2.51:1** — `#fffdf8` on `#c8903a` — which fails AA just as badly as amber-light text.
+`404.html`'s primary button hits this on hover: it rests on `--cb-amber` at 5.29:1 and
+drops to 2.51:1 when hovered. The fills were left in place because §3 permits them, but
+**the sanctioned pairing is not actually accessible and needs a decision.** Logged here
+rather than silently fixed.
+
 ### The same rule applies to `--cb-dim`
 
 `--cb-dim` (`#7d7466`) was never measured for this spec — it was carried in as a darkened equivalent and assumed safe. It is not. On light surfaces it measures 4.13:1 on `--cb-dark`, 4.53:1 on `--cb-surface`, and 3.81:1 on `--cb-surface2`. Two of the three fail WCAG AA, and the one that passes clears it by 0.03.
@@ -155,7 +195,28 @@ box-shadow: 0 4px 12px rgba(28,25,20,0.10);
 --cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
 ```
 
+Both now live in `/assets/theme.css`, so a converted page gets them by linking it.
+
 Do not apply either to the dashboard.
+
+### Callouts get a real surface — decided 17 August 2026
+
+On the dark theme, `.doc-callout` was filled with `rgba(17,15,11,0.55)` — which is the
+page colour, so the fill did nothing and the border carried the whole effect. That works
+on dark. On cream it leaves the callout reading as flat page with a hairline round it.
+
+**Callouts fill with `--cb-surface` and keep `--cb-card-shadow`.** Surface plus shadow is
+the intended combination; that is what makes it read as a raised panel rather than a
+faint outline. Apply this wherever the pattern appears, on every page.
+
+`--cb-text` on `--cb-surface` measures 17.24:1, so callout body copy is unaffected by the
+fill change. If a future callout's text does drop below AA against `--cb-surface`, report
+it rather than adjusting the text colour to compensate.
+
+**Not every bordered container is a card.** `privacy.html`'s `.svc-table` is a bordered
+table with no fill, and tables read correctly flat — it was left without a shadow. The
+shadow belongs on things that are meant to sit *above* the page, not on everything with
+a border.
 
 ---
 
@@ -175,6 +236,9 @@ Measured, not estimated. Pairings marked **decorative only** fail WCAG AA (4.5:1
 | `--cb-dim` on `--cb-dark` | **4.13 : 1 — decorative only** |
 | `--cb-dim` on `--cb-surface` | **4.53 : 1 — decorative only** |
 | `--cb-dim` on `--cb-surface2` | **3.81 : 1 — decorative only** |
+| `--cb-surface` on `--cb-amber-light` fill | **2.51 : 1 — fails; see §3** |
+| `--cb-dark` on `--cb-amber-light` fill | **2.51 : 1 — fails; see §3** |
+| `--cb-dark` on `--cb-amber` fill | 5.29 : 1 — the safe solid-button pairing |
 
 Any new colour pairing introduced later must be measured before it ships. The failure mode is invisible to the person who chose the colours and obvious to the reader who can't read them.
 
@@ -196,8 +260,113 @@ Neither was a palette question, but both surfaced the moment the background turn
 
 Typography, spacing, layout, and component structure are all unchanged. This is a colour swap and an elevation rule, nothing more. Converting a page takes three passes, not one. The variable names did not change, so no *class* or *structural* markup edits are needed — but a `:root` swap alone is not sufficient:
 
-1. Replace the `:root` block.
-2. **Hunt hardcoded dark hexes outside `:root`.** Every page has at least one. Audited 16 August 2026: `index.html` and `newsletter.html` carry five each; `resources.html`, `guide.html`, `awareness.html`, `craft.html`, `privacy.html`, `terms.html`, `journey.html`, `marketing.html`, `publishing.html`, and `ai-rights.html` carry one each; `tools.html` and `404.html` carry none. Search each page for `#110f0b`, `#1c1914`, and `#221f18` and route every hit through the matching variable.
+1. Replace the `:root` block — on a converting page this means *deleting* it and linking
+   `/assets/theme.css` in `<head>`, positioned **before** the page's own `<style>` block
+   so page-specific rules still win the cascade. Use the root-relative form, never
+   `assets/theme.css` — see §9.
+2. **Hunt hardcoded dark values outside `:root`.** See the widened search below.
 3. Add the card shadow.
 
 A page that passes step 1 and skips step 2 renders a light theme with dark bands cut through it.
+
+### The widened Pass 2 search — corrected 17 August 2026
+
+The original audit searched only for hex. **The same colours also appear as `rgba()`, and
+that search could not see them.** `terms.html` was recorded as carrying one hardcoded dark
+value; it actually carried four. Search all six forms, in both comma spacings, since both
+are valid CSS and both occur:
+
+```
+#110f0b          #1c1914          #221f18
+rgba(17,15,11    rgba(28,25,20    rgba(34,31,24
+rgba(17, 15, 11  rgba(28, 25, 20  rgba(34, 31, 24
+```
+
+**The carve-out that matters: not every dark rgba is wrong on a light page.** Dark ink at
+low alpha is exactly how a shadow or a hairline border is supposed to work on cream —
+`--cb-card-shadow` is itself `rgba(28,25,20,0.06)`. A blind sweep would destroy the very
+shadows step 3 just added. Decide by **role**, not by value:
+
+| Role | Properties | Action |
+|---|---|---|
+| Background or surface fill | `background`, `background-color`, a fill inside a gradient | **Invert it** — this is a page or panel surface and must become light |
+| Shadow, border, outline | `box-shadow`, `text-shadow`, `border-color`, `outline` | **Leave it** — dark ink at low alpha over cream is correct and intended |
+
+If one shorthand declaration does both, split the decision by component rather than
+converting the whole line.
+
+**What to convert it to.** Prefer the variable: if the alpha is not actually doing work —
+the value is opaque, or sits over an already-opaque surface — use the matching variable
+from `theme.css` rather than a literal. Where alpha genuinely matters (translucent sticky
+navs, overlay panels), keep the alpha and swap the colour for its light counterpart, taken
+from `theme.css` or from `tools.html`. **Never invent an rgba value.** If you hit a dark
+rgba whose light counterpart cannot be sourced from either file, stop and report it.
+
+**The per-page counts in this spec and in the handoff tranche tables are hex-only and
+therefore undercount.** Treat them as a floor, not a target, and report actual against
+predicted per page. Recorded so far:
+
+| Page | Predicted (hex-only) | Actual hex | Actual rgba | Total |
+|---|---|---|---|---|
+| `terms.html` | 1 | 1 | 3 | 4 |
+| `privacy.html` | 1 | 1 | 3 | 4 |
+| `404.html` | 0 | 0 | 0 | 0 |
+
+The three rgba sites on both document pages were the same three every time: the sticky
+nav, the callout, and the footer. **Check those three rules explicitly on every page even
+when the search comes back clean.**
+
+---
+
+## 8. COMPONENT PATTERNS DERIVED DURING THE CONVERSION
+
+These were worked out on the first three pages and are now rules. They exist because a
+mechanical variable swap can be individually correct on every line and still break a
+component — usually by collapsing a hover state into its own base colour.
+
+**Footer links.** Base moves `--cb-dim` → `--cb-muted` under the §3 rule. When it does,
+**the hover state must move too.** Several pages set footer-link hover to `--cb-muted`
+already, so swapping the base leaves hover and base identical and silently kills the
+feedback. Set hover to `--cb-amber`, matching `tools.html`.
+
+**Nav links.** Hover moves `--cb-amber-light` → `--cb-amber` under the amber-light rule
+in §3. `tools.html` already does exactly this, so take the value from there.
+
+**In-prose links.** Base is `--cb-amber` and hover was `--cb-amber-light`. The amber-light
+rule pushes hover to `--cb-amber`, which makes it a no-op against its own base. These
+links carry `text-decoration: underline`, so they remain identifiable without the colour
+change, and AA compliance was treated as the higher obligation. `tools.html` has no
+in-prose link to source a better answer from. **Open: in-prose links currently have no
+visible hover response on converted pages.**
+
+**Source values, never invent them.** `tools.html` is the reference implementation. If it
+does not contain the pattern needed and `theme.css` does not define the value, stop and
+report rather than choosing.
+
+---
+
+## 9. ROOT-RELATIVE PATHS ARE MANDATORY, BECAUSE OF `404.html`
+
+GitHub Pages serves the 404 page from whatever URL the visitor actually requested —
+`thecraftbeacon.com/some/deep/path`. A relative `assets/theme.css` resolves against *that*
+path, 404s, and the error page renders completely unstyled.
+
+Verified 17 August 2026 by fetching both forms as a browser would resolve them from a deep
+base URL:
+
+| Form shipped | Resolves to (from `/some/deep/path`) | Status |
+|---|---|---|
+| `/assets/theme.css` | `/assets/theme.css` | **200** |
+| `assets/theme.css` | `/some/deep/assets/theme.css` | **404** |
+
+Use the root-relative form on **every** page, not just `404.html`, so there is one rule
+and no exception to remember.
+
+**CSP is the likeliest thing to break this pass, and it breaks silently.** Every page
+carries a Content-Security-Policy `<meta>` tag. Until this conversion all styling was
+inline, so a page's `style-src` may not include `'self'` — nothing needed it. Link an
+external stylesheet to a page whose `style-src` omits `'self'` and the browser blocks it,
+rendering the page unstyled with only a console warning. Check each page's CSP as part of
+its conversion; if `style-src` lacks `'self'`, add it — that page only, minimal edit, never
+rewrite the directive or copy another page's CSP across. All three pages converted so far
+already permitted `'self'` and needed no change.
