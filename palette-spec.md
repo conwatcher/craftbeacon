@@ -110,7 +110,7 @@ So amber does two jobs, and which variable to reach for depends on whether the a
 - Icons and icon fills
 - Borders, rules, and dividers
 - Display type at 28px and above, including the italic emphasis in the hero headline
-- Solid button fills — with the label in `--cb-surface`, never in `--cb-text`
+- **Never a button fill — resting or hover. See the button rule below.**
 - The logo wordmark accent
 
 The test when it's ambiguous: **if a visitor has to read the amber to get the meaning, it must be `--cb-amber`.** If removing the colour entirely would cost only warmth and not comprehension, `--cb-amber-light` is correct.
@@ -135,13 +135,42 @@ colour is often declared on a descendant (`h2 em`) that inherits its size from t
 If a rule's computed size cannot be determined confidently, leave it and report it —
 the same posture as the `--cb-dim` sweep below.
 
-**Known open issue — amber-light as a button fill.** §3 sanctions `--cb-amber-light`
-for solid button fills "with the label in `--cb-surface`". Measured, that pairing is
-**2.51:1** — `#fffdf8` on `#c8903a` — which fails AA just as badly as amber-light text.
-`404.html`'s primary button hits this on hover: it rests on `--cb-amber` at 5.29:1 and
-drops to 2.51:1 when hovered. The fills were left in place because §3 permits them, but
-**the sanctioned pairing is not actually accessible and needs a decision.** Logged here
-rather than silently fixed.
+### Solid buttons — resolved 31 August 2026
+
+The earlier version of this section sanctioned `--cb-amber-light` as a solid button fill
+"with the label in `--cb-surface`". **That pairing measures 2.51:1 and fails AA**, exactly
+as amber-light text does — the fill is the same colour either way, so putting a near-white
+label on it was never going to pass. `404.html`'s primary button hit this on hover: it
+rested on `--cb-amber` at 5.29:1 and dropped to 2.51:1 the moment it was hovered.
+
+**The rule: a solid button does not change fill colour between states.** `--cb-amber` is
+the fill at rest and on hover, so contrast is constant and always 5.29:1 against a cream
+label. Hover feedback comes from elevation instead of colour:
+
+```css
+a.btn-primary {
+  background: var(--cb-amber);
+  color: var(--cb-dark);
+}
+a.btn-primary:hover {
+  box-shadow: var(--cb-card-shadow-hover);
+  transform: translateY(-1px);
+}
+```
+
+The shadow is the existing `--cb-card-shadow-hover` token rather than a new value — the
+tool cards already use it for hover elevation, so buttons and cards now speak the same
+language. Per §8, source the value, don't invent one.
+
+**`--cb-amber-light` is never a button fill, resting or hover.** It stays reserved for
+non-text, non-fill ornament: icons, borders, rules, dividers, display type at 28px and
+above, and the logo wordmark accent.
+
+**Outline buttons are unaffected.** `.btn-nav-signup`, `.btn-submit`, and `.btn-copy` are
+transparent with an `--cb-amber` label and border, hovering to `--cb-amber-dim` — a 14%
+amber tint over cream that leaves the label at 4.71:1. That pattern already passed and
+needs no change. It is also why `tools.html` cleared its original contrast audit: it has
+no solid-fill button at all.
 
 ### The same rule applies to `--cb-dim`
 
@@ -236,9 +265,10 @@ Measured, not estimated. Pairings marked **decorative only** fail WCAG AA (4.5:1
 | `--cb-dim` on `--cb-dark` | **4.13 : 1 — decorative only** |
 | `--cb-dim` on `--cb-surface` | **4.53 : 1 — decorative only** |
 | `--cb-dim` on `--cb-surface2` | **3.81 : 1 — decorative only** |
-| `--cb-surface` on `--cb-amber-light` fill | **2.51 : 1 — fails; see §3** |
-| `--cb-dark` on `--cb-amber-light` fill | **2.51 : 1 — fails; see §3** |
-| `--cb-dark` on `--cb-amber` fill | 5.29 : 1 — the safe solid-button pairing |
+| `--cb-surface` on `--cb-amber-light` fill | **2.51 : 1 — why amber-light is banned as a fill, §3** |
+| `--cb-dark` on `--cb-amber-light` fill | **2.51 : 1 — why amber-light is banned as a fill, §3** |
+| `--cb-dark` on `--cb-amber` fill | 5.29 : 1 — the solid-button pairing, resting AND hover |
+| `--cb-amber` on `--cb-amber-dim` over `--cb-dark` | 4.71 : 1 — outline-button hover |
 
 Any new colour pairing introduced later must be measured before it ships. The failure mode is invisible to the person who chose the colours and obvious to the reader who can't read them.
 

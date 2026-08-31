@@ -67,7 +67,13 @@
       color: var(--cb-dark);
       font-weight: 400;
     }
-    a.btn-primary:hover { background: var(--cb-amber-light); }
+    /* Fill does not change on hover: --cb-amber holds 5.29:1 against the cream
+       label in both states. Hover reads as elevation, not a colour swap, reusing
+       the same --cb-card-shadow-hover the tool cards already use. */
+    a.btn-primary:hover {
+      box-shadow: var(--cb-card-shadow-hover);
+      transform: translateY(-1px);
+    }
     a.btn-ghost {
       border: 1px solid var(--cb-dim);
       color: var(--cb-text);
