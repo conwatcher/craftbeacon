@@ -278,7 +278,7 @@ Any new colour pairing introduced later must be measured before it ships. The fa
 
 Neither was a palette question, but both surfaced the moment the background turned light. Both have been tested against cream and resolved.
 
-**One decision has since opened, and it is not either of these — see §10.** The photography item below settled three images on `index.html` that sit *beside* text. The seven Tranche 2 pages use a different image, `quill-lane.jpg`, as a darkened background *behind* text, which §6 never covered.
+**A third photography question arose and was settled separately — see §10.** The item below settled three images on `index.html` that sit *beside* text. The seven Tranche 2 pages use photographs as a darkened background *behind* text, which §6 never covered; that treatment was resolved on 31 August 2026, with one residual contrast finding recorded there.
 
 **The logo — RESOLVED, 14 August 2026.** `assets/Logo-NoBG.png` was checked against `#f7f2e8`. The deep red carries the wordmark and the amber lantern reads clearly. **No dark-ink variant is needed.** Use the existing asset unchanged on both themes.
 
@@ -444,41 +444,58 @@ its conversion; if `style-src` lacks `'self'`, add it — that page only, minima
 rewrite the directive or copy another page's CSP across. All three pages converted so far
 already permitted `'self'` and needed no change.
 
-## 10. OPEN — THE PHOTOGRAPHIC PAGE HEADER
+## 10. THE PHOTOGRAPHIC PAGE HEADER — RESOLVED 31 August 2026
 
-**Status: undecided. Seven pages are converted except for this one component.**
+Seven pages shared a hero built by *darkening* a photograph so light text could sit on it:
+`filter: brightness(0.28) sepia(0.2)` over `#1c1914`, plus a dark vignette. That is a
+dark-theme device and it does not survive the palette swap — the text colours invert to
+near-black while the surface stays dark. Measured on `craft.html` before the fix, the
+`h1` sat at **1.15:1**.
 
-`awareness.html`, `journey.html`, `marketing.html`, `guide.html`, `craft.html`,
-`publishing.html` and `ai-rights.html` share a hero built from three layers:
+**Decision: lighten the photograph and keep dark text.** The hero is now a pale wash of
+the image behind normal light-theme type, rather than dark type on a dark plate:
 
 ```css
-.page-header-bg       { background: #1c1914; background-image: url("assets/quill-lane.jpg");
-                        filter: brightness(0.28) sepia(0.2); }
-.page-header-vignette { background: radial-gradient(..., rgba(17,15,11,0.65) 100%); }
+.page-header-bg {
+  background: var(--cb-dark);
+  background-image: url("assets/quill-lane.jpg");
+  filter: brightness(1.05) sepia(0.15);
+  opacity: 0.35;
+}
+.page-header-vignette {
+  background: radial-gradient(ellipse 80% 100% at 50% 0%,
+              transparent 30%, rgba(247,242,232,0.65) 100%);
+}
 ```
 
-`brightness(0.28)` exists to darken a photograph so that *light* text can sit on it. That
-is a dark-theme device, and it does not survive the palette swap: the text colours invert
-to near-black while the surface stays dark. Measured on `craft.html` after conversion,
-against the filtered fallback:
+The vignette now fades to the page colour instead of to ink. `journey.html` had drifted to
+`brightness(0.35) sepia(0.15)` over a different photograph (`resource-pg.jpg`); all seven
+are now on the one treatment. `journey.html`'s `.page-header em` measures 16px and moved to
+`--cb-amber` with every other sub-28px amber-light use.
 
-| Header text | Colour | Size | Ratio | AA needs |
-|---|---|---|---|---|
-| `.page-header h1` | `--cb-text` | 44.8px | **1.15 : 1** | 3 : 1 |
-| `.page-header p` | `--cb-muted` | 16px | **3.40 : 1** | 4.5 : 1 |
-| `.section-label` | `--cb-amber` | 11.52px | **3.41 : 1** | 4.5 : 1 |
+### Residual finding — small text over any texture
 
-**This was left untouched rather than guessed at**, because every way out is a design
-decision and `tools.html` cannot settle it — the reference implementation has no
-photographic header at all, just a plain cream hero with `--cb-text` and `--cb-muted`.
-Per §8, when the reference does not contain the pattern, stop and report.
+The heading is comfortably fixed: `--cb-text` clears **6.50:1** even against the darkest
+pixel the photo can produce. **The two small-text roles do not**, and this is a property of
+the palette rather than of this photograph:
 
-What is deliberately *not* converted on these seven pages, pending this decision:
+| Header text | On plain cream | Worst-case over the wash | AA needs |
+|---|---|---|---|
+| `.page-header h1` — `--cb-text`, 44.8px | 15.70 : 1 | **6.50 : 1** | 3 : 1 |
+| `.page-header p` — `--cb-muted`, 16px | 5.31 : 1 | **2.20 : 1** | 4.5 : 1 |
+| `.section-label` — `--cb-amber`, 11.5px | 5.29 : 1 | **2.19 : 1** | 4.5 : 1 |
 
-- `.page-header-bg`'s `#1c1914` fallback — the one hardcoded hex per page
-- `.page-header-vignette`'s `rgba(17,15,11,0.65)` gradient stop (`0.6` on `journey.html`)
-- every text colour inside `.page-header`, including `journey.html`'s `.page-header em`,
-  which measures 16px and would otherwise have moved to `--cb-amber` under §3
+`--cb-muted` (5.31:1) and `--cb-amber` (5.29:1) clear AA on flat cream with almost no
+headroom. Lowering the wash does not rescue them: even at `opacity: 0.10` the worst case
+only reaches 4.24:1, still short. The sampled photograph genuinely contains near-black
+pixels — its 1st percentile luminance is 10.4 of 255 — so the worst case is reachable, not
+theoretical.
 
-**Until this is settled these seven pages should not be pushed.** They render correctly
-everywhere below the hero and unreadably inside it.
+**The general rule this establishes: in the light palette, small text in `--cb-muted` or
+`--cb-amber` cannot sit over a photographic texture and meet AA.** Either the text sits on
+flat cream, or it uses `--cb-text`.
+
+**Open, and deliberately not decided here:** whether to move `.page-header p` and
+`.section-label` to `--cb-text` on these seven heroes, or to keep the photograph clear of
+the content area so the small text sits on flat cream. The type colours were left alone
+rather than changed unasked.

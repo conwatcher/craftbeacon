@@ -171,16 +171,20 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .page-header-bg {
       position: absolute;
       inset: 0;
-      background: #1c1914;
+      background: var(--cb-dark);
       background-image: url("assets/quill-lane.jpg");
       background-size: cover;
       background-position: center 35%;
-      filter: brightness(0.28) sepia(0.2);
+      /* Light-theme hero: the photo is lifted and dropped back to a wash so
+         the converted --cb-text / --cb-muted read against it. The dark-theme
+         original darkened the photo instead, to carry light text. See spec S10. */
+      filter: brightness(1.05) sepia(0.15);
+      opacity: 0.35;
     }
     .page-header-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(17,15,11,0.65) 100%);
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(247,242,232,0.65) 100%);
     }
     .page-header-content {
       position: relative;
