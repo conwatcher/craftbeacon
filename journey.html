@@ -60,22 +60,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
 
+  <!-- Shared light palette - must precede the page's own <style> so page rules win -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    :root {
-      --cb-dark:        #110f0b;
-      --cb-surface:     #1c1914;
-      --cb-surface2:    #221f18;
-      --cb-border:      rgba(255,255,255,0.08);
-      --cb-amber:       #c8903a;
-      --cb-amber-light: #e8b86a;
-      --cb-amber-dim:   rgba(200,144,58,0.12);
-      --cb-text:        #ede6d8;
-      --cb-muted:       #9a9080;
-      --cb-dim:         #9a8f82;
-    }
 
     body {
       background: var(--cb-dark);
@@ -106,7 +97,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(17,15,11,0.97);
+      background: rgba(247,242,232,0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -132,7 +123,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       transition: color 0.2s;
     }
     .nav-links a:hover,
-    .nav-links a.active { color: var(--cb-amber-light); }
+    .nav-links a.active { color: var(--cb-amber); }
     .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
     .btn-nav-login {
       font-family: 'Crimson Pro', serif;
@@ -250,7 +241,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       font-weight: 300;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       margin-bottom: 0.75rem;
       padding-bottom: 0.5rem;
       border-bottom: 0.5px solid var(--cb-border);
@@ -269,14 +260,14 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .sidebar-links a {
       font-size: 0.85rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       text-decoration: none;
       transition: color 0.2s;
       line-height: 1.5;
       display: block;
       padding: 0.15rem 0;
     }
-    .sidebar-links a:hover { color: var(--cb-amber-light); }
+    .sidebar-links a:hover { color: var(--cb-amber); }
 
     /* ─── Content ─── */
     .content { padding: 3rem 0 5rem; }
@@ -339,7 +330,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       font-family: 'Playfair Display', serif;
       font-size: 1.12rem;
       font-weight: 400;
-      color: var(--cb-amber-light);
+      color: var(--cb-amber);
       line-height: 1.35;
       margin-bottom: 0.5rem;
     }
@@ -350,7 +341,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       line-height: 1.8;
     }
     .term p + p { margin-top: 0.7rem; }
-    .term em { font-style: italic; color: var(--cb-amber-light); }
+    .term em { font-style: italic; color: var(--cb-amber); }
 
     /* "Who's watching" callout */
     .watching {
@@ -375,7 +366,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       color: var(--cb-muted);
       line-height: 1.8;
     }
-    .watching em { font-style: italic; color: var(--cb-amber-light); }
+    .watching em { font-style: italic; color: var(--cb-amber); }
 
     /* Lane close — the differentiator line */
     .lane-close {
@@ -393,13 +384,14 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.05rem;
-      color: var(--cb-amber-light);
+      color: var(--cb-amber);
       margin-top: 0.6rem;
     }
 
     /* ─── Newsletter block ─── */
     .journey-newsletter {
       background: var(--cb-surface);
+      box-shadow: var(--cb-card-shadow);
       border: 0.5px solid var(--cb-border);
       padding: 2.75rem 2.5rem;
       text-align: center;
@@ -450,7 +442,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .cb-footer {
       padding: 2.25rem 3rem;
       border-top: 0.5px solid var(--cb-border);
-      background: rgba(17,15,11,0.98);
+      background: rgba(247,242,232,0.98);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -468,7 +460,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .footer-sub {
       font-size: 0.74rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       letter-spacing: 0.05em;
       margin-top: 0.2rem;
     }
@@ -481,7 +473,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       font-size: 0.8rem;
       font-weight: 300;
       letter-spacing: 0.08em;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -490,7 +482,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       flex-basis: 100%;
       font-size: 0.74rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       letter-spacing: 0.05em;
     }
 
@@ -500,7 +492,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: sticky;
       top: 0;
       z-index: 180;
-      background: rgba(17,15,11,0.97);
+      background: rgba(247,242,232,0.97);
       backdrop-filter: blur(6px);
       border-bottom: 0.5px solid var(--cb-border);
     }

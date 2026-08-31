@@ -15,16 +15,16 @@
 | `index.html` | Light |
 | `resources.html` | Light |
 | `newsletter.html` | Light |
-| `guide.html` | Light |
-| `awareness.html` | Light |
-| `craft.html` | Light |
+| `guide.html` | Light — **converted** (Tranche 2, header pending) |
+| `awareness.html` | Light — **converted** (Tranche 2, header pending) |
+| `craft.html` | Light — **converted** (Tranche 2, header pending) |
 | `privacy.html` | Light — **converted** (Tranche 1) |
 | `terms.html` | Light — **converted** (Tranche 0) |
 | `tools.html` | Light — **converted, live** |
-| `journey.html` | Light |
-| `marketing.html` | Light |
-| `publishing.html` | Light |
-| `ai-rights.html` | Light |
+| `journey.html` | Light — **converted** (Tranche 2, header pending) |
+| `marketing.html` | Light — **converted** (Tranche 2, header pending) |
+| `publishing.html` | Light — **converted** (Tranche 2, header pending) |
+| `ai-rights.html` | Light — **converted** (Tranche 2, header pending) |
 | `404.html` | Light — **converted** (Tranche 1) |
 | `dashboard.html` | **Dark — do not change** |
 
@@ -276,7 +276,9 @@ Any new colour pairing introduced later must be measured before it ships. The fa
 
 ## 6. TWO ITEMS THAT WERE PENDING — BOTH NOW SETTLED
 
-Neither was a palette question, but both surfaced the moment the background turned light. Both have been tested against cream and resolved. **The conversion pass has no open decisions.**
+Neither was a palette question, but both surfaced the moment the background turned light. Both have been tested against cream and resolved.
+
+**One decision has since opened, and it is not either of these — see §10.** The photography item below settled three images on `index.html` that sit *beside* text. The seven Tranche 2 pages use a different image, `quill-lane.jpg`, as a darkened background *behind* text, which §6 never covered.
 
 **The logo — RESOLVED, 14 August 2026.** `assets/Logo-NoBG.png` was checked against `#f7f2e8`. The deep red carries the wordmark and the amber lantern reads clearly. **No dark-ink variant is needed.** Use the existing asset unchanged on both themes.
 
@@ -341,6 +343,13 @@ predicted per page. Recorded so far:
 | `terms.html` | 1 | 1 | 3 | 4 |
 | `privacy.html` | 1 | 1 | 3 | 4 |
 | `404.html` | 0 | 0 | 0 | 0 |
+| `awareness.html` | 1 | 1 | 3 | 4 |
+| `journey.html` | 1 | 1 | 4 | 5 |
+| `marketing.html` | 1 | 1 | 3 | 4 |
+| `guide.html` | 1 | 1 | 3 | 4 |
+| `craft.html` | 1 | 1 | 3 | 4 |
+| `publishing.html` | 1 | 1 | 3 | 4 |
+| `ai-rights.html` | 1 | 1 | 3 | 4 |
 
 The three rgba sites on both document pages were the same three every time: the sticky
 nav, the callout, and the footer. **Check those three rules explicitly on every page even
@@ -375,6 +384,40 @@ report rather than choosing.
 
 ---
 
+
+### Patterns added in Tranche 2 — 31 August 2026
+
+**Page-local component tokens stay page-local.** `awareness.html`, `marketing.html` and
+`ai-rights.html` define `--cb-caution` and `--cb-caution-border` in their `:root`. These
+are *not* palette variables — they are amber tints (`rgba(200,144,58,0.08)` and `0.18`)
+used for one caution panel, they need no inversion for the light theme, and `theme.css`
+does not define them. Deleting the whole `:root` would have left them undefined and broken
+those panels.
+
+The rule: **delete the eleven palette variables, keep anything else the page declared**,
+in a small `:root` sitting where the old one was, with a comment saying why it is there.
+Do not promote page-local tokens into `theme.css` without asking — that widens the shared
+contract. `publishing.html` declared both and used neither, so its block went entirely.
+
+**If a third page needs the same component CSS, say so rather than copying it a fourth
+time.** Right now `theme.css` holds only the `:root` block; shared *component* rules are a
+separate decision that has not been taken.
+
+**Decorative glyphs in pseudo-elements keep `--cb-dim`.** `.signpost-card::after` on
+`awareness.html` and `guide.html` sets `content: '\2197'` — a ↗ arrow. It is a non-text
+ornament under the §3 rule, so it stays `--cb-dim` while every other `--cb-dim` use on
+those pages moved to `--cb-muted`. Check `content` before classifying a pseudo-element:
+a `::after` carrying words is text, a `::after` carrying a glyph is not.
+
+**Card shadows follow the surface fill.** Every rule with `background: var(--cb-surface)`
+on a block container takes `--cb-card-shadow`; interactive cards that already restate a
+background on `:hover` take `--cb-card-shadow-hover` there. Small chips filled with
+`--cb-surface2` (`craft.html`'s `.word-tag`) do not — same limit as `privacy.html`'s
+`.svc-table`.
+
+---
+
+
 ## 9. ROOT-RELATIVE PATHS ARE MANDATORY, BECAUSE OF `404.html`
 
 GitHub Pages serves the 404 page from whatever URL the visitor actually requested —
@@ -400,3 +443,42 @@ rendering the page unstyled with only a console warning. Check each page's CSP a
 its conversion; if `style-src` lacks `'self'`, add it — that page only, minimal edit, never
 rewrite the directive or copy another page's CSP across. All three pages converted so far
 already permitted `'self'` and needed no change.
+
+## 10. OPEN — THE PHOTOGRAPHIC PAGE HEADER
+
+**Status: undecided. Seven pages are converted except for this one component.**
+
+`awareness.html`, `journey.html`, `marketing.html`, `guide.html`, `craft.html`,
+`publishing.html` and `ai-rights.html` share a hero built from three layers:
+
+```css
+.page-header-bg       { background: #1c1914; background-image: url("assets/quill-lane.jpg");
+                        filter: brightness(0.28) sepia(0.2); }
+.page-header-vignette { background: radial-gradient(..., rgba(17,15,11,0.65) 100%); }
+```
+
+`brightness(0.28)` exists to darken a photograph so that *light* text can sit on it. That
+is a dark-theme device, and it does not survive the palette swap: the text colours invert
+to near-black while the surface stays dark. Measured on `craft.html` after conversion,
+against the filtered fallback:
+
+| Header text | Colour | Size | Ratio | AA needs |
+|---|---|---|---|---|
+| `.page-header h1` | `--cb-text` | 44.8px | **1.15 : 1** | 3 : 1 |
+| `.page-header p` | `--cb-muted` | 16px | **3.40 : 1** | 4.5 : 1 |
+| `.section-label` | `--cb-amber` | 11.52px | **3.41 : 1** | 4.5 : 1 |
+
+**This was left untouched rather than guessed at**, because every way out is a design
+decision and `tools.html` cannot settle it — the reference implementation has no
+photographic header at all, just a plain cream hero with `--cb-text` and `--cb-muted`.
+Per §8, when the reference does not contain the pattern, stop and report.
+
+What is deliberately *not* converted on these seven pages, pending this decision:
+
+- `.page-header-bg`'s `#1c1914` fallback — the one hardcoded hex per page
+- `.page-header-vignette`'s `rgba(17,15,11,0.65)` gradient stop (`0.6` on `journey.html`)
+- every text colour inside `.page-header`, including `journey.html`'s `.page-header em`,
+  which measures 16px and would otherwise have moved to `--cb-amber` under §3
+
+**Until this is settled these seven pages should not be pushed.** They render correctly
+everywhere below the hero and unreadably inside it.
