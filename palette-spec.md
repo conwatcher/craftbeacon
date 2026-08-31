@@ -269,6 +269,9 @@ Measured, not estimated. Pairings marked **decorative only** fail WCAG AA (4.5:1
 | `--cb-dark` on `--cb-amber-light` fill | **2.51 : 1 — why amber-light is banned as a fill, §3** |
 | `--cb-dark` on `--cb-amber` fill | 5.29 : 1 — the solid-button pairing, resting AND hover |
 | `--cb-amber` on `--cb-amber-dim` over `--cb-dark` | 4.71 : 1 — outline-button hover |
+| `--cb-text` on the hero photo wash | 6.50 : 1 — the only safe small text there, §10 |
+| `--cb-muted` on the hero photo wash | **2.20 : 1 — why it was moved off, §10** |
+| `--cb-amber` on the hero photo wash | **2.19 : 1 — why it was moved off, §10** |
 
 Any new colour pairing introduced later must be measured before it ships. The failure mode is invisible to the person who chose the colours and obvious to the reader who can't read them.
 
@@ -473,29 +476,36 @@ The vignette now fades to the page colour instead of to ink. `journey.html` had 
 are now on the one treatment. `journey.html`'s `.page-header em` measures 16px and moved to
 `--cb-amber` with every other sub-28px amber-light use.
 
-### Residual finding — small text over any texture
+### Small text over the wash — fixed 31 August 2026
 
-The heading is comfortably fixed: `--cb-text` clears **6.50:1** even against the darkest
-pixel the photo can produce. **The two small-text roles do not**, and this is a property of
-the palette rather than of this photograph:
-
-| Header text | On plain cream | Worst-case over the wash | AA needs |
-|---|---|---|---|
-| `.page-header h1` — `--cb-text`, 44.8px | 15.70 : 1 | **6.50 : 1** | 3 : 1 |
-| `.page-header p` — `--cb-muted`, 16px | 5.31 : 1 | **2.20 : 1** | 4.5 : 1 |
-| `.section-label` — `--cb-amber`, 11.5px | 5.29 : 1 | **2.19 : 1** | 4.5 : 1 |
-
+The heading was fine from the start: `--cb-text` clears **6.50:1** against the darkest
+pixel either photograph can produce. The two small-text roles were not, because
 `--cb-muted` (5.31:1) and `--cb-amber` (5.29:1) clear AA on flat cream with almost no
-headroom. Lowering the wash does not rescue them: even at `opacity: 0.10` the worst case
-only reaches 4.24:1, still short. The sampled photograph genuinely contains near-black
-pixels — its 1st percentile luminance is 10.4 of 255 — so the worst case is reachable, not
-theoretical.
+headroom, so any texture behind them sank them to roughly 2.2:1. Lowering the wash could
+not rescue them — even `opacity: 0.10` only reached 4.24:1.
 
-**The general rule this establishes: in the light palette, small text in `--cb-muted` or
-`--cb-amber` cannot sit over a photographic texture and meet AA.** Either the text sits on
-flat cream, or it uses `--cb-text`.
+**Both moved to `--cb-text`.** `.page-header p` and `.section-label` now use the same
+value as the headline, which has the headroom to survive the texture:
 
-**Open, and deliberately not decided here:** whether to move `.page-header p` and
-`.section-label` to `--cb-text` on these seven heroes, or to keep the photograph clear of
-the content area so the small text sits on flat cream. The type colours were left alone
-rather than changed unasked.
+| Header text | Was | Now | Worst case over the wash | AA needs |
+|---|---|---|---|---|
+| `.page-header h1` — 44.8px | `--cb-text` | `--cb-text` (unchanged) | **6.50 : 1** | 3 : 1 |
+| `.page-header p` — 16px | `--cb-muted` — 2.20 : 1 | `--cb-text` | **6.50 : 1** | 4.5 : 1 |
+| `.section-label` — 11.52px | `--cb-amber` — 2.19 : 1 | `--cb-text` | **6.50 : 1** | 4.5 : 1 |
+
+Measured by running the full CSS pipeline — `brightness(1.05)`, then `sepia(0.15)`, then
+`opacity: 0.35` composited over `--cb-dark` — against the darkest pixel in each photograph
+sampled at 400px wide. Both images bottom out at effectively black (`quill-lane.jpg` at
+`rgb(1,1,0)`, `resource-pg.jpg` at `rgb(3,4,6)`), so the worst case is the absolute floor
+of `rgb(160,157,150)` and one number covers all seven pages: **6.50:1**, or 6.53 and 6.62
+against each photograph's true darkest pixel. The vignette only ever lightens further, so
+excluding it keeps the figure conservative.
+
+`.section-label::before` — the short amber rule before the label — keeps `--cb-amber-light`
+territory as ornament. It carries no text and no contrast requirement.
+
+`awareness.html` has no paragraph in its header, only a label and an `h1`, so its
+`.page-header p` rule is inert there. It was recoloured anyway to keep all seven identical.
+
+**The general rule this establishes: in the light palette, small text over a photographic
+texture must use `--cb-text`.** `--cb-muted` and `--cb-amber` are for flat cream only.
