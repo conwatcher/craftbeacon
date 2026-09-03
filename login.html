@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://hnhpyvvfagtkcclghikh.supabase.co; frame-src 'none'; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — CraftBeacon</title>
+  <meta name="description" content="Sign in to CraftBeacon with a one-time email link — no password required." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Supabase Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens (matches index.html) ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-surface2:    #221f18;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-amber-dim:   rgba(200,144,58,0.12);
+      --cb-red:         #8B1A2F;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+      justify-content: center;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+
+    /* ─── Navigation (stripped — single transactional ask) ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    /* ─── Login section ─── */
+    .login-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    .login-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 40%, transparent 15%, rgba(17,15,11,0.55) 65%, rgba(17,15,11,0.94) 100%);
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+
+    .login-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      margin-bottom: 2.25rem;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .login-input {
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      color: var(--cb-text);
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      padding: 0.9rem 1.1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .login-input::placeholder { color: var(--cb-dim); }
+    .login-input:focus { border-color: var(--cb-amber); }
+
+    .login-submit {
+      display: inline-block;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--cb-amber);
+      color: var(--cb-dark);
+      border: none;
+      padding: 0.9rem 2.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .login-submit:hover:not(:disabled) { background: var(--cb-amber-light); }
+    .login-submit:disabled { opacity: 0.6; cursor: default; }
+
+    .login-status {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.7;
+      margin-top: 0.5rem;
+    }
+    .login-status.error { color: var(--cb-amber-light); }
+
+    .login-sent h1 {
+      margin-bottom: 0.75rem;
+    }
+    .login-sent p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.25rem; }
+      .login-card h1 { font-size: 1.85rem; }
+    }
+  </style>
+  <link rel="canonical" href="https://thecraftbeacon.com/login.html" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAVIGATION (logo only)
+  ═══════════════════════════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       LOGIN
+  ═══════════════════════════════════ -->
+  <section class="login-wrap" aria-labelledby="login-heading">
+    <div class="login-bg"></div>
+    <div class="login-vignette"></div>
+
+    <div class="login-card">
+
+      <div id="loginIdle">
+        <div class="section-label">Sign in</div>
+        <h1 id="login-heading">Sign in to CraftBeacon</h1>
+        <p class="login-sub">No password to remember. Enter your email and we'll send you a link to sign in — new here? The same link creates your account.</p>
+
+        <form class="login-form" id="loginForm">
+          <input
+            type="email"
+            id="emailInput"
+            class="login-input"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          />
+          <button type="submit" class="login-submit" id="submitBtn">Send sign-in link</button>
+        </form>
+
+        <p class="login-status error" id="errorStatus" hidden></p>
+      </div>
+
+      <div id="loginSent" hidden>
+        <div class="section-label">Check your email</div>
+        <h1>We've sent you a link</h1>
+        <p>Click the link in the email to sign in — no need to come back here. It may take a minute to arrive; check spam if it doesn't show up.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    var SUPABASE_URL = 'https://hnhpyvvfagtkcclghikh.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_ntCnK3PSQt5WKiITrxZpDw_vmYN2qJn';
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    var form       = document.getElementById('loginForm');
+    var emailInput = document.getElementById('emailInput');
+    var submitBtn  = document.getElementById('submitBtn');
+    var errorEl    = document.getElementById('errorStatus');
+    var idleView   = document.getElementById('loginIdle');
+    var sentView   = document.getElementById('loginSent');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = emailInput.value.trim();
+      if (!email) return;
+
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      sb.auth.signInWithOtp({
+        email: email,
+        options: { emailRedirectTo: 'https://thecraftbeacon.com/dashboard.html' }
+      }).then(function (result) {
+        if (result.error) throw result.error;
+        idleView.hidden = true;
+        sentView.hidden = false;
+      }).catch(function (err) {
+        console.error('Sign-in link request failed:', err);
+        errorEl.textContent = "Something went wrong sending your link. Please try again in a moment.";
+        errorEl.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send sign-in link';
+      });
+    });
+  </script>
+
+</body>
+</html>

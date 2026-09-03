@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://cdnjs.cloudflare.com https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com https://assets.mailerlite.com; img-src 'self' data: https://*.outseta.com https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.outseta.com https://*.mailerlite.com; frame-src https://*.outseta.com https://*.mailerlite.com; form-action 'self' https://*.outseta.com https://docs.google.com; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://cdnjs.cloudflare.com https://assets.mailerlite.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com https://assets.mailerlite.com; img-src 'self' data: https://*.outseta.com https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.outseta.com https://*.mailerlite.com https://hnhpyvvfagtkcclghikh.supabase.co; frame-src https://*.outseta.com https://*.mailerlite.com; form-action 'self' https://*.outseta.com https://docs.google.com; base-uri 'self'; object-src 'none'">
   
   
   <meta charset="UTF-8" />
@@ -22,6 +22,14 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" async></script>
+
+  <!-- Supabase Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    var SUPABASE_URL = 'https://hnhpyvvfagtkcclghikh.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_ntCnK3PSQt5WKiITrxZpDw_vmYN2qJn';
+    var supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  </script>
 
   <style>
     :root {
@@ -653,7 +661,6 @@
         <a class="header-nav-link" href="/guide.html" target="_blank">Field Guide</a>
         <button class="header-nav-link" id="exportBtn" onclick="exportPDF()" style="display:none; cursor:pointer; background:none; font-style:normal;">Export PDF</button>
         <button class="header-nav-link report-accent" id="reportBtn" onclick="openReportModal()" style="display:none; cursor:pointer; font-style:normal;">Request Report<span class="report-tooltip">Request an emailed summary of your coaching sessions &mdash; separate from Export PDF, which downloads your current chat.</span></button>
-        <a class="header-nav-link" href="https://the-craft-beacon.outseta.com/profile" target="_blank">Manage account</a>
         <span class="tier-badge" id="tierBadge">Free</span>
         <span class="user-name"  id="userName"></span>
         <button class="btn-logout" onclick="handleLogout()">Sign out</button>
@@ -890,62 +897,16 @@ function detectTier(user) {
       }
     }
 
-    function readToken(token) {
-      // Decode the JWT token Outseta provides — no API call needed
-      try {
-        const payload = token.split('.')[1];
-        const b64 = payload.replace(/-/g, '+').replace(/_/g, '/');
-        const padded = b64 + '='.repeat((4 - b64.length % 4) % 4);
-        const decoded = JSON.parse(atob(padded));
-        return {
-      Email:     decoded.email || decoded.sub || 'member',
-      FirstName: decoded.given_name || decoded.name || decoded.email || 'Member',
-      _planUid:  decoded['outseta:planUid'] || ''
-    };
-      } catch(e) {
-        return null;
-      }
+    // Build the { Email, FirstName, _planUid } shape setupDashboard() expects
+    // from a Supabase session. There's no display name from magic-link auth,
+    // so FirstName falls back to the email; _planUid is unused now that tier
+    // comes from the server-side lookupMemberTier call.
+    function buildUserFromSession(session) {
+      const email = session.user.email || 'member';
+      return { Email: email, FirstName: email, _planUid: '' };
     }
 
-    function getTokenFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const fromQuery = params.get('access_token') ||
-             params.get('accessToken') ||
-             params.get('token') ||
-             [...params.values()].find(v => v && v.split('.').length === 3);
-      if (fromQuery) return fromQuery;
-      const hash = window.location.hash.substring(1);
-      if (hash) {
-        const hashParams = new URLSearchParams(hash);
-        const fromHash = hashParams.get('access_token') ||
-               hashParams.get('accessToken') ||
-               hashParams.get('token') ||
-               [...hashParams.values()].find(v => v && v.split('.').length === 3);
-        if (fromHash) return fromHash;
-      }
-      return null;
-    }
 
-        function findStoredToken() {
-      // Only trust the single token we control (cb_token). Previously this
-      // scanned every localStorage/sessionStorage key and accepted any
-      // JWT-shaped value it found — anything on the origin could be picked up
-      // as identity. The real security boundary is the Worker, which
-      // re-verifies the token's signature on every call; this is just what
-      // the UI greets you as.
-      const candidates = [];
-      try { candidates.push(localStorage.getItem('cb_token')); } catch(e) {}
-      try { candidates.push(sessionStorage.getItem('cb_token')); } catch(e) {}
-      for (const val of candidates) {
-        if (val && val.split('.').length === 3) {
-          const user = readToken(val);
-          if (user && user.Email) return user;
-        }
-      }
-      return null;
-    }
-
-    
     // ── File upload ────────────────────────────────────────────────
     function handleFileSelect(event) {
       const file = event.target.files[0];
@@ -1042,7 +1003,8 @@ function detectTier(user) {
       btn.onclick = function() { copyResponse(btn, text); };
       wrap.appendChild(btn);
     }
-    function handleLogout() {
+    async function handleLogout() {
+      try { await supabaseClient.auth.signOut(); } catch(e) {}
       try { Outseta.auth.logout(); } catch(e) {}
       localStorage.clear();
       window.location.href = '/index.html';
@@ -1379,60 +1341,36 @@ function detectTier(user) {
     }
 
     // ── Boot ──────────────────────────────────────────────────
-    function bootDashboard() {
+    let dashboardBooted = false;
+
+    function bootFromSession(session) {
+      if (!session || dashboardBooted) return;
+      dashboardBooted = true;
+      try { localStorage.setItem('cb_token', session.access_token); } catch(e) {}
+      setupDashboard(buildUserFromSession(session));
+    }
+
+    async function bootDashboard() {
       try {
-        
+        // The magic-link redirect can resolve into a session slightly after
+        // this listener is attached — catch that moment too, not just the
+        // getSession() check below.
+        supabaseClient.auth.onAuthStateChange(function(event, session) {
+          bootFromSession(session);
+        });
 
-        // Step 1: URL token
-        const urlToken = getTokenFromUrl();
-        if (urlToken) {
-          try { localStorage.setItem('cb_token', urlToken); } catch(e) {}
-          try { sessionStorage.setItem('cb_token', urlToken); } catch(e) {}
-          // Scrub the token out of the address bar immediately once we've
-          // captured it — don't let it linger in history/referrer even if
-          // the decode below fails.
-          try { window.history.replaceState({}, document.title, '/dashboard.html'); } catch(e) {}
-          const user = readToken(urlToken);
-          if (user && user.Email) {
-            setupDashboard(user);
-            return;
-          }
-        }
-
-        // Step 2: stored token
-        const stored = findStoredToken();
-        if (stored && stored.Email) {
-          
-          setupDashboard(stored);
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session) {
+          bootFromSession(session);
           return;
         }
 
-        // Step 3: nothing found — but check if we just arrived from login
-        if (window.location.search.indexOf('access_token') !== -1 ||
-            window.location.hash.indexOf('access_token') !== -1) {
-          // We have a token in the URL but couldn't read it — try once more after a delay
-          setTimeout(function() {
-            const retry = getTokenFromUrl();
-            if (retry) {
-              try { localStorage.setItem('cb_token', retry); } catch(e) {}
-              const user = readToken(retry);
-              if (user && user.Email) {
-                setupDashboard(user);
-                return;
-              }
-            }
-            const stored2 = findStoredToken();
-            if (stored2 && stored2.Email) {
-              setupDashboard(stored2);
-              return;
-            }
-            window.location.href = '/index.html';
-          }, 1000);
-          return;
-        }
-        window.location.href = '/index.html';
+        // No session yet — give onAuthStateChange a moment to resolve one
+        // from the magic-link redirect before bouncing to the homepage.
+        setTimeout(function() {
+          if (!dashboardBooted) window.location.href = '/index.html';
+        }, 1500);
       } catch(err) {
-        
         try { window.location.href = '/index.html'; } catch(e) {}
       }
     }
