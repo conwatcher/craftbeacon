@@ -756,19 +756,17 @@
     // ── System Prompt ──────────────────────────────────────────────
  
     // ── Tier helpers ───────────────────────────────────────────────
-function detectTier(user) {
-  const uid = user._planUid || '';
-  if (uid === 'L9P3lEQJ') return 'premium';
-  if (uid === 'OW48a3Wg') return 'writing_lane';
-  if (uid === 'XQYaGRQP') return 'marketing_lane';
-  if (uid === 'wQXNDaWK') return 'production_lane';
-  if (uid === 'dQGgqpQ4') return 'free';
-  return 'free';
-}
+    // Tier now arrives already-resolved on the user object, fetched
+    // straight from Supabase's members.tier column in buildUserFromSession().
+    // This replaces the old Outseta _planUid lookup, which the Supabase
+    // magic-link session never populates.
+    function detectTier(user) {
+      return (user && user.tier) || 'free';
+    }
 
     function tierLabel(t) {
-      return { free:'Free', writing_lane:'Writing Lane', marketing_lane:'Marketing Lane',
-               production_lane:'Production Lane', premium:'Premium' }[t] || 'Free';
+      return { free:'Free', writing:'Writing Lane', marketing:'Marketing Lane',
+               production:'Production Lane', premium:'Premium' }[t] || 'Free';
     }
 
     // ── Auth ───────────────────────────────────────────────────────
@@ -897,13 +895,25 @@ function detectTier(user) {
       }
     }
 
-    // Build the { Email, FirstName, _planUid } shape setupDashboard() expects
+    // Build the { Email, FirstName, tier } shape setupDashboard() expects
     // from a Supabase session. There's no display name from magic-link auth,
-    // so FirstName falls back to the email; _planUid is unused now that tier
-    // comes from the server-side lookupMemberTier call.
-    function buildUserFromSession(session) {
+    // so FirstName falls back to the email. Tier is read directly from the
+    // members table — a Supabase security rule (RLS policy) restricts this
+    // query to only ever return the logged-in member's own row, matched by
+    // email. No row found (no purchase yet) or any lookup hiccup quietly
+    // falls back to 'free' rather than blocking login.
+    async function buildUserFromSession(session) {
       const email = session.user.email || 'member';
-      return { Email: email, FirstName: email, _planUid: '' };
+      let tier = 'free';
+      try {
+        const { data, error } = await supabaseClient
+          .from('members')
+          .select('tier')
+          .eq('email', email)
+          .maybeSingle();
+        if (!error && data && data.tier) tier = data.tier;
+      } catch (e) { /* network hiccup — fall back to free, never block login */ }
+      return { Email: email, FirstName: email, tier: tier };
     }
 
 
@@ -1343,11 +1353,12 @@ function detectTier(user) {
     // ── Boot ──────────────────────────────────────────────────
     let dashboardBooted = false;
 
-    function bootFromSession(session) {
+    async function bootFromSession(session) {
       if (!session || dashboardBooted) return;
       dashboardBooted = true;
       try { localStorage.setItem('cb_token', session.access_token); } catch(e) {}
-      setupDashboard(buildUserFromSession(session));
+      const user = await buildUserFromSession(session);
+      setupDashboard(user);
     }
 
     async function bootDashboard() {
