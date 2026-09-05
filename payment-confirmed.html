@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'; form-action 'self'; base-uri 'self'; object-src 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Confirmed — CraftBeacon</title>
+  <meta name="description" content="Your CraftBeacon payment is confirmed — check your email for your sign-in link." />
+  <meta name="robots" content="noindex" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─── Tokens (matches login.html / dashboard.html) ─── */
+    :root {
+      --cb-dark:        #110f0b;
+      --cb-surface:     #1c1914;
+      --cb-border:      rgba(255,255,255,0.08);
+      --cb-amber:       #c8903a;
+      --cb-amber-light: #e8b86a;
+      --cb-text:        #ede6d8;
+      --cb-muted:       #9a9080;
+      --cb-dim:         #9a8f82;
+    }
+
+    /* ─── Base ─── */
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Grain overlay ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+      justify-content: center;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 0.5px;
+      background: var(--cb-amber);
+    }
+
+    /* ─── Navigation (stripped — single transactional ask) ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      padding: 1.1rem 3rem;
+      background: rgba(17,15,11,0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    /* ─── Confirmation section ─── */
+    .confirm-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .confirm-bg {
+      position: absolute;
+      inset: 0;
+      background: #110f0b;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-size: 400px 400px;
+    }
+    .confirm-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 40%, transparent 15%, rgba(17,15,11,0.55) 65%, rgba(17,15,11,0.94) 100%);
+    }
+
+    .confirm-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+    }
+
+    .confirm-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--cb-text);
+      margin-bottom: 1rem;
+    }
+
+    .confirm-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.8;
+      margin-bottom: 2.25rem;
+    }
+
+    .confirm-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      align-items: center;
+    }
+
+    .confirm-links a {
+      color: var(--cb-amber);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-bottom: 0.5px solid var(--cb-amber-dim, rgba(200,144,58,0.35));
+      padding-bottom: 0.15rem;
+      transition: color 0.2s;
+    }
+    .confirm-links a:hover { color: var(--cb-amber-light); }
+
+    .confirm-links .home-link {
+      color: var(--cb-muted);
+      border-bottom-color: transparent;
+    }
+    .confirm-links .home-link:hover { color: var(--cb-text); }
+
+    @media (max-width: 768px) {
+      .cb-nav { padding: 1rem 1.25rem; }
+      .confirm-card h1 { font-size: 1.85rem; }
+    }
+  </style>
+  <link rel="canonical" href="https://thecraftbeacon.com/payment-confirmed.html" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAVIGATION (logo only)
+  ═══════════════════════════════════ -->
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+    </a>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       PAYMENT CONFIRMED
+  ═══════════════════════════════════ -->
+  <section class="confirm-wrap" aria-labelledby="confirm-heading">
+    <div class="confirm-bg"></div>
+    <div class="confirm-vignette"></div>
+
+    <div class="confirm-card">
+      <div class="section-label">Payment confirmed</div>
+      <h1 id="confirm-heading">You're all set — welcome to CraftBeacon</h1>
+      <p class="confirm-sub">Check your email for your sign-in link — it'll take you straight to your dashboard. It may take a minute to arrive; check spam if it doesn't show up.</p>
+
+      <div class="confirm-links">
+        <a href="login.html">Didn't get it? Request a new link here</a>
+        <a class="home-link" href="/index.html">Back to home</a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
