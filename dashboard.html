@@ -1141,7 +1141,7 @@
         <div class="upgrade-box">
           <h3>That's your free coaching for today.</h3>
           <p>You've used your free messages for today — they reset ${dailyResetText()}. Come back then to keep going, or unlock unlimited coaching with a lane membership.</p>
-          <a class="upgrade-link" href="https://the-craft-beacon.outseta.com/auth?widgetMode=register" target="_blank">Explore membership options</a>
+          <a class="upgrade-link" href="/index.html" target="_blank">Explore membership options</a>
         </div>`;
     }
 
@@ -1351,11 +1351,19 @@
     }
 
     // ── Boot ──────────────────────────────────────────────────
-    let dashboardBooted = false;
+    // Tracks which account is currently loaded (by email), not just
+    // whether *some* account has loaded. A stale session left over from
+    // an earlier login on this browser (e.g. an old test account) can
+    // fire before the real one resolves — this only ignores a session
+    // if it's the SAME account already on screen, so a genuinely
+    // different login still takes over instead of being silently
+    // dropped in favor of whichever session arrived first.
+    let bootedEmail = null;
 
     async function bootFromSession(session) {
-      if (!session || dashboardBooted) return;
-      dashboardBooted = true;
+      const email = session && session.user && session.user.email;
+      if (!email || email === bootedEmail) return;
+      bootedEmail = email;
       try { localStorage.setItem('cb_token', session.access_token); } catch(e) {}
       const user = await buildUserFromSession(session);
       setupDashboard(user);
@@ -1379,7 +1387,7 @@
         // No session yet — give onAuthStateChange a moment to resolve one
         // from the magic-link redirect before bouncing to the homepage.
         setTimeout(function() {
-          if (!dashboardBooted) window.location.href = '/index.html';
+          if (!bootedEmail) window.location.href = '/index.html';
         }, 1500);
       } catch(err) {
         try { window.location.href = '/index.html'; } catch(e) {}
