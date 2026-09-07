@@ -67,25 +67,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   </script>
   <!-- End MailerLite Universal -->
 
+  <!-- Shared light palette - must precede the page's own <style> so page rules win -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
   <style>
     /* ─── Reset ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
-    /* ─── Tokens ─── */
-    :root {
-      --cb-dark:        #110f0b;
-      --cb-surface:     #1c1914;
-      --cb-surface2:    #221f18;
-      --cb-border:      rgba(255,255,255,0.08);
-      --cb-amber:       #c8903a;
-      --cb-amber-light: #e8b86a;
-      --cb-amber-dim:   rgba(200,144,58,0.12);
-      --cb-red:         #8B1A2F;
-      --cb-text:        #ede6d8;
-      --cb-muted:       #9a9080;
-      --cb-dim:         #9a8f82;
-    }
 
     /* ─── Base ─── */
     body {
@@ -143,7 +131,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(17,15,11,0.97);
+      background: rgba(247,242,232,0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -205,7 +193,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-hero-bg {
       position: absolute;
       inset: 0;
-      background: #110f0b;
+      background: var(--cb-dark);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
       background-size: 400px 400px;
     }
@@ -214,7 +202,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 100% at 50% 50%, transparent 25%, rgba(17,15,11,0.6) 70%, rgba(17,15,11,0.94) 100%),
+        radial-gradient(ellipse 80% 100% at 50% 50%, transparent 25%, rgba(247,242,232,0.6) 70%, rgba(247,242,232,0.94) 100%),
         radial-gradient(ellipse 50% 60% at 50% 40%, rgba(200,144,58,0.08) 0%, transparent 60%);
     }
 
@@ -277,6 +265,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .nl-hero-cta:hover {
       background: var(--cb-amber-light);
+      color: var(--cb-text);
       transform: translateY(-1px);
     }
 
@@ -289,7 +278,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-inside-bg {
       position: absolute;
       inset: 0;
-      background: #1c1914;
+      background: var(--cb-surface2);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
       background-size: 300px 300px;
     }
@@ -326,13 +315,14 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       border: 0.5px solid var(--cb-border);
     }
     .nl-card {
-      background: rgba(22,19,14,0.88);
+      background: var(--cb-surface);
+      box-shadow: var(--cb-card-shadow);
       padding: 2.75rem 2.25rem;
       position: relative;
       overflow: hidden;
-      transition: background 0.25s;
+      transition: box-shadow 0.25s;
     }
-    .nl-card:hover { background: rgba(28,25,18,0.95); }
+    .nl-card:hover { box-shadow: var(--cb-card-shadow-hover); }
     .nl-card::before {
       content: '';
       position: absolute;
@@ -375,7 +365,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-signup-bg {
       position: absolute;
       inset: 0;
-      background: #110f0b;
+      background: var(--cb-dark);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23a07830'/%3E%3C/svg%3E");
       background-size: 500px 500px;
     }
@@ -431,7 +421,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-privacy-bg {
       position: absolute;
       inset: 0;
-      background: #1c1914;
+      background: var(--cb-surface2);
     }
     .nl-privacy-inner {
       position: relative;
@@ -442,7 +432,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-privacy-inner p {
       font-size: 0.92rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       line-height: 1.85;
       font-style: italic;
     }
@@ -453,7 +443,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       transition: color 0.2s, border-color 0.2s;
     }
     .nl-privacy-inner p a:hover {
-      color: var(--cb-amber-light);
+      color: var(--cb-amber);
       border-color: var(--cb-amber-light);
     }
 
@@ -485,6 +475,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .nl-floating-subscribe:hover {
       background: var(--cb-amber-light);
+      color: var(--cb-text);
       transform: translateY(-1px);
     }
     .nl-floating-subscribe.is-hidden {
@@ -506,7 +497,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .cb-footer {
       padding: 2.25rem 3rem;
       border-top: 0.5px solid var(--cb-border);
-      background: rgba(17,15,11,0.98);
+      background: var(--cb-surface2);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -530,16 +521,16 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       font-size: 0.8rem;
       font-weight: 300;
       letter-spacing: 0.08em;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--cb-muted); }
+    .footer-links a:hover { color: var(--cb-amber); }
     .footer-copy {
       flex-basis: 100%;
       font-size: 0.74rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       letter-spacing: 0.05em;
     }
 
@@ -552,7 +543,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-sample-bg {
       position: absolute;
       inset: 0;
-      background: #110f0b;
+      background: var(--cb-dark);
     }
     .nl-sample-inner {
       position: relative;
@@ -600,7 +591,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       border-top: 0.5px solid var(--cb-border);
       font-size: 0.96rem;
       font-weight: 300;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
       text-align: center;
       font-style: normal;
     }
@@ -621,7 +612,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       display: block;
       margin-top: 0.85rem;
       font-style: normal;
-      color: var(--cb-dim);
+      color: var(--cb-muted);
     }
     @media (max-width: 768px) {
       .cb-nav { padding: 1rem 1.25rem; }
