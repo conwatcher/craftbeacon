@@ -738,6 +738,7 @@
   <script>
     // ── Config ─────────────────────────────────────────────────────
     const RELAY   = 'https://craftbeacon-relay-v2.conwatcher.workers.dev';
+    const COUNSELOR = 'https://craftbeacon-counselor.conwatcher.workers.dev';
     const REPORT_ENDPOINT = 'https://craftbeacon-report-request.conwatcher.workers.dev';
     const NAME_ENDPOINT = 'https://craftbeacon-member-name.conwatcher.workers.dev';
     // Free-tier cap is enforced server-side (relay 429). The client no
@@ -1260,36 +1261,63 @@
       const inner = wrap.querySelector('.typing');
 
       try {
-        const res = await fetch(RELAY, {
+        const endpoint = tier === 'free' ? COUNSELOR : RELAY;
+
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem('cb_token') || '') },
           body: JSON.stringify({ messages: history, user_id: currentUser ? currentUser.Email : null })
         });
 
-        // The relay returns 429 when the member has hit the server-side
-        // daily message cap — show that plainly instead of the generic
-        // "something went wrong" message.
+        // Both the relay and the Counselor return 429 on the server-side daily cap.
         if (res.status === 429) throw new Error('daily-limit');
         if (!res.ok) throw new Error('relay');
 
         inner.className = 'bubble';
         inner.innerHTML = '';
 
-        const reader  = res.body.getReader();
-        const decoder = new TextDecoder();
-        let full = '', buf = '';
+        let full = '';
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buf += decoder.decode(value, { stream: true });
-          
-          const lines = buf.split('\n');
-          buf = lines.pop();
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue;
+        if (tier === 'free') {
+          // Counselor Worker: single JSON reply, not a stream.
+          const data = await res.json();
+          full = data.reply || '';
+          inner.innerHTML = renderText(full);
+        } else {
+          // relay-v2: SSE stream — existing logic, unchanged.
+          const reader  = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buf = '';
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            const lines = buf.split('\n');
+            buf = lines.pop();
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              try {
+                const d = JSON.parse(line.slice(6));
+                if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
+                  full += d.delta.text;
+                  inner.innerHTML = renderText(full);
+                  scrollBottom();
+                }
+              } catch(e) {}
+            }
+          }
+
+          buf += decoder.decode();
+          const leftover = buf.split('\n');
+          for (const rawLine of leftover) {
+            const line = rawLine.trim();
+            const idx = line.indexOf('data:');
+            if (idx === -1) continue;
+            const payload = line.slice(idx + 5).trim();
+            if (!payload || payload === '[DONE]') continue;
             try {
-              const d = JSON.parse(line.slice(6));
+              const d = JSON.parse(payload);
               if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
                 full += d.delta.text;
                 inner.innerHTML = renderText(full);
@@ -1299,25 +1327,6 @@
           }
         }
 
-        buf += decoder.decode();
-        const leftover = buf.split('\n');
-        for (const rawLine of leftover) {
-          const line = rawLine.trim();
-          const idx = line.indexOf('data:');
-          if (idx === -1) continue;
-          const payload = line.slice(idx + 5).trim();
-          if (!payload || payload === '[DONE]') continue;
-          try {
-            const d = JSON.parse(payload);
-            if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
-              full += d.delta.text;
-              inner.innerHTML = renderText(full);
-              scrollBottom();
-            }
-          } catch(e) {}
-        }
-
-        
         history.push({ role: 'assistant', content: full });
         addCopyButton(wrap, full);
         showExportButton();
