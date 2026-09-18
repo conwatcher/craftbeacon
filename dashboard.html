@@ -1273,21 +1273,20 @@
         if (res.status === 429) throw new Error('daily-limit');
         if (!res.ok) throw new Error('relay');
 
-        inner.className = 'bubble';
-        inner.innerHTML = '';
-
         let full = '';
 
         if (tier === 'free') {
           // Counselor Worker: single JSON reply, not a stream.
           const data = await res.json();
           full = data.reply || '';
+          inner.className = 'bubble';
           inner.innerHTML = renderText(full);
         } else {
           // relay-v2: SSE stream — existing logic, unchanged.
           const reader  = res.body.getReader();
           const decoder = new TextDecoder();
           let buf = '';
+          let started = false;
 
           while (true) {
             const { done, value } = await reader.read();
@@ -1301,6 +1300,10 @@
                 const d = JSON.parse(line.slice(6));
                 if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
                   full += d.delta.text;
+                  if (!started && full.trim()) {
+                    inner.className = 'bubble';
+                    started = true;
+                  }
                   inner.innerHTML = renderText(full);
                   scrollBottom();
                 }
@@ -1320,6 +1323,10 @@
               const d = JSON.parse(payload);
               if (d.type === 'content_block_delta' && d.delta?.type === 'text_delta') {
                 full += d.delta.text;
+                if (!started && full.trim()) {
+                  inner.className = 'bubble';
+                  started = true;
+                }
                 inner.innerHTML = renderText(full);
                 scrollBottom();
               }
