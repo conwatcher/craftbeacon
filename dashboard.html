@@ -1340,9 +1340,16 @@
 
     async function bootFromSession(session) {
       const email = session && session.user && session.user.email;
-      if (!email || email === bootedEmail) return;
-      bootedEmail = email;
+      if (!email) return;
+
+      // Always keep the stored token current. Supabase silently refreshes
+      // the underlying session in the background (TOKEN_REFRESHED events);
+      // without this, a long-open tab can go on looking signed in while
+      // every relay call quietly 401s once the original token expires.
       try { localStorage.setItem('cb_token', session.access_token); } catch(e) {}
+
+      if (email === bootedEmail) return;
+      bootedEmail = email;
       const user = await buildUserFromSession(session);
       setupDashboard(user);
     }
