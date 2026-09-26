@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://*.outseta.com https://cdnjs.cloudflare.com https://assets.mailerlite.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.outseta.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://*.outseta.com https://assets.mailerlite.com; img-src 'self' data: https://*.outseta.com https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.outseta.com https://*.mailerlite.com https://hnhpyvvfagtkcclghikh.supabase.co; frame-src https://*.outseta.com https://*.mailerlite.com; form-action 'self' https://*.outseta.com https://docs.google.com; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://assets.mailerlite.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://assets.mailerlite.com; img-src 'self' data: https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.mailerlite.com https://hnhpyvvfagtkcclghikh.supabase.co; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   
   
   <meta charset="UTF-8" />
@@ -14,14 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script>
-    var o_options = {
-      domain: 'the-craft-beacon.outseta.com',
-      load: 'auth'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" async></script>
 
   <!-- Supabase Auth -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1022,7 +1014,6 @@
     }
     async function handleLogout() {
       try { await supabaseClient.auth.signOut(); } catch(e) {}
-      try { Outseta.auth.logout(); } catch(e) {}
       localStorage.clear();
       window.location.href = '/index.html';
     }
