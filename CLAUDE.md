@@ -19,7 +19,7 @@ CraftBeacon is kept brand-separate from Patrick's book universe (Red Foundations
 - **Front end:** GitHub Pages, 11 static HTML pages. Repo `conwatcher/craftbeacon` (public).
 - **Relay layer:** Cloudflare Workers — `craftbeacon-relay-v2` (main API relay), `craftbeacon-report-request`, `craftbeacon-member-name`, `craftbeacon-signup-bridge`.
 - **AI:** Anthropic API — Haiku for free tier, Sonnet for paid.
-- **Auth/membership:** Outseta (subdomain `the-craft-beacon.outseta.com`).
+- **Auth/membership:** Supabase Auth (magic-link sign-in via `login.html`) + Stripe Payment Links; membership tier lives in the Supabase `members` table.
 - **Database:** Supabase, project `craftbeacon-sessions`.
 - **Email:** MailerLite (newsletter "The Beacon Brief"), Resend (transactional alerts).
 - **Analytics:** Google Analytics `G-FRZ967M5K9`, Meta Pixel `1659330215146600`.
