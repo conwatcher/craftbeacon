@@ -263,7 +263,7 @@
       <div id="loginSent" hidden>
         <div class="section-label">Check your email</div>
         <h1>We've sent you a link</h1>
-        <p>Click the link in the email to sign in — no need to come back here. It may take a minute to arrive; check spam if it doesn't show up.</p>
+        <p>Click the link in the email to sign in — no need to come back here. Open it in this same browser for the smoothest sign-in. It may take a minute to arrive; check spam if it doesn't show up.</p>
       </div>
 
     </div>
@@ -272,7 +272,7 @@
   <script>
     var SUPABASE_URL = 'https://hnhpyvvfagtkcclghikh.supabase.co';
     var SUPABASE_KEY = 'sb_publishable_ntCnK3PSQt5WKiITrxZpDw_vmYN2qJn';
-    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { flowType: 'pkce' } });
 
     var form       = document.getElementById('loginForm');
     var emailInput = document.getElementById('emailInput');
