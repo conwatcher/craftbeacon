@@ -737,9 +737,7 @@
       // its real price starts arriving from /config; delete the whole map once
       // every catalog entry carries a price.
       var FALLBACK_PRICES = {
-        'Author Bio Diagnostic': 1.99,
         'Blurb Diagnostic': 2.99,
-        'Query Letter Diagnostic': 2.99,
         'Metadata Pack': 12.99,
         'Opening Chapters Diagnostic': 24.99,
         'Character Consistency Report': 29.99,
@@ -981,6 +979,8 @@
               input.type = 'text';
             }
             input.id = id;
+            // The Worker enforces the same limit; this just stops the paste early.
+            if (field.maxChars && 'maxLength' in input) input.maxLength = field.maxChars;
             wrap.appendChild(input);
           }
 
