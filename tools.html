@@ -361,6 +361,21 @@
     .btn-submit:hover:not(:disabled) { background: var(--cb-amber-dim); }
     .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
 
+    .buy-step {
+      border-left: 2px solid var(--cb-amber);
+      padding: 0.2rem 0 0.2rem 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .buy-lead, .buy-note {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.6;
+      margin: 0 0 0.8rem;
+    }
+    .buy-note { margin: 0.9rem 0 0; color: var(--cb-muted); }
+    .btn-buy { display: inline-block; text-decoration: none; }
+
     /* ─── Working ─── */
     .working { text-align: center; padding: 1.5rem 0 0.5rem; }
     .working-message {
@@ -919,6 +934,21 @@
 
         if (tool.copy && tool.copy.whatYoullNeed) {
           form.appendChild(el('p', 'form-need', tool.copy.whatYoullNeed));
+        }
+
+        // Paid tools: purchase first, then redeem with the same email.
+        if (tool.entitlement === 'token' && tool.paymentUrl) {
+          var buy = el('div', 'buy-step');
+          buy.appendChild(el('p', 'buy-lead',
+            'Step 1 — Purchase this report: ' + formatPrice(tool.price) + ', one time. ' +
+            'Checkout brings you straight back to this page.'));
+          var buyLink = el('a', 'btn-submit btn-buy', 'Buy — ' + formatPrice(tool.price));
+          buyLink.href = tool.paymentUrl;
+          buy.appendChild(buyLink);
+          buy.appendChild(el('p', 'buy-note',
+            'Step 2 — Fill in the form below using the same email address you paid with. ' +
+            'Each purchase covers one report and stays available for twelve months.'));
+          form.appendChild(buy);
         }
 
         var inputs = {};   // key -> input element
