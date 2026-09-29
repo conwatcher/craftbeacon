@@ -247,6 +247,20 @@
       padding: 1.8rem;
     }
     .tool-card.open .tool-panel { display: block; }
+    /* Anchor landings: keep the card clear of the fixed site header */
+    .tool-card, .soon-card { scroll-margin-top: 6.5rem; }
+
+    .purchase-banner {
+      border-left: 2px solid var(--cb-amber);
+      background: var(--cb-surface);
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.6;
+    }
+    .purchase-banner strong { font-weight: 500; color: var(--cb-amber); }
 
     /* ─── Form ─── */
     .form-need {
@@ -808,6 +822,70 @@
         return fallback || 'Something went wrong. Please try again.';
       }
 
+      /* ── anchors, post-purchase landing, session ── */
+
+      // Same rule the homepage mockups use to build tools.html#<slug> links.
+      function slugify(s) {
+        return String(s || '').toLowerCase().replace(/&/g, 'and')
+          .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      }
+
+      // Stripe returns buyers to tools.html?purchased=<slug>#<slug>. Read it
+      // once, then strip it from the address bar so a refresh doesn't
+      // announce the payment again.
+      var PURCHASED = (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var p = params.get('purchased');
+          if (!p) return null;
+          params.delete('purchased');
+          var qs = params.toString();
+          var hash = window.location.hash || ('#' + p);
+          history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : '') + hash);
+          return slugify(p);
+        } catch (e) { return null; }
+      })();
+
+      function findCard(target) {
+        if (!target) return null;
+        return document.getElementById(target) ||
+          document.querySelector('[data-name-slug="' + target + '"]');
+      }
+
+      // Open (and build) the targeted tool, then bring it into view.
+      function landOnTarget() {
+        var hash = window.location.hash.slice(1);
+        try { hash = decodeURIComponent(hash); } catch (e) { /* leave as-is */ }
+        var target = PURCHASED || slugify(hash);
+        var card = findCard(target);
+        if (!card) return;
+        if (card.classList.contains('tool-card') && !card.classList.contains('open')) {
+          var head = card.querySelector('.tool-card-head');
+          if (head) head.click();
+        }
+        card.scrollIntoView({ block: 'start' });
+        if (PURCHASED) {
+          var emailInput = card.querySelector('input[id$="-email"]');
+          if (emailInput) emailInput.focus({ preventScroll: true });
+        }
+      }
+
+      window.addEventListener('hashchange', function () { if (CONFIG) landOnTarget(); });
+
+      // Signed-in visitors carry their dashboard sign-in here automatically
+      // (same site, same browser storage). Sent with each submission so the
+      // Worker can verify who is asking; an expired session is simply not sent.
+      function currentSessionToken() {
+        try {
+          var raw = localStorage.getItem('sb-hnhpyvvfagtkcclghikh-auth-token');
+          if (!raw) return null;
+          var s = JSON.parse(raw);
+          if (!s || !s.access_token) return null;
+          if (s.expires_at && s.expires_at * 1000 < Date.now() + 30000) return null;
+          return s.access_token;
+        } catch (e) { return null; }
+      }
+
       /* ── config load and page render ── */
 
       function loadConfig() {
@@ -820,6 +898,7 @@
             CONFIG = cfg;
             renderAvailable(cfg);
             renderComingSoon(cfg);
+            landOnTarget();
           })
           .catch(function () {
             var status = document.getElementById('loadStatus');
@@ -861,6 +940,8 @@
         var grid = document.getElementById('soonGrid');
         items.forEach(function (item) {
           var card = el('div', 'soon-card');
+          card.id = item.slug || slugify(item.name);
+          card.setAttribute('data-name-slug', slugify(item.name));
           card.appendChild(el('h3', null, item.name));
           card.appendChild(el('p', 'covers', item.covers));
           var foot = el('div', 'soon-card-foot');
@@ -880,6 +961,8 @@
 
       function buildToolCard(tool) {
         var card = el('article', 'tool-card');
+        card.id = tool.slug;
+        card.setAttribute('data-name-slug', slugify(tool.name));
 
         var head = el('button', 'tool-card-head');
         head.type = 'button';
@@ -936,8 +1019,19 @@
           form.appendChild(el('p', 'form-need', tool.copy.whatYoullNeed));
         }
 
+        // Returning from Stripe checkout for this tool.
+        if (PURCHASED === tool.slug) {
+          var banner = el('div', 'purchase-banner');
+          banner.setAttribute('role', 'status');
+          banner.appendChild(el('strong', null, 'Payment received. '));
+          banner.appendChild(document.createTextNode(
+            'Fill in the form below using the same email address you paid with, and your report will be on its way.'));
+          form.appendChild(banner);
+        }
+
         // Paid tools: purchase first, then redeem with the same email.
-        if (tool.entitlement === 'token' && tool.paymentUrl) {
+        // Skipped for a buyer who has just paid — the banner replaces it.
+        if (tool.entitlement === 'token' && tool.paymentUrl && PURCHASED !== tool.slug) {
           var buy = el('div', 'buy-step');
           buy.appendChild(el('p', 'buy-lead',
             'Step 1 — Purchase this report: ' + formatPrice(tool.price) + ', one time. ' +
@@ -1262,10 +1356,11 @@
 
           var email = inputs.email ? String(inputs.email.value).trim() : '';
 
-          fetch(RELAY + '/submit?tool=' + encodeURIComponent(tool.slug), {
-            method: 'POST',
-            body: fd
-          })
+          var submitOpts = { method: 'POST', body: fd };
+          var sessionToken = currentSessionToken();
+          if (sessionToken) submitOpts.headers = { 'Authorization': 'Bearer ' + sessionToken };
+
+          fetch(RELAY + '/submit?tool=' + encodeURIComponent(tool.slug), submitOpts)
             .then(function (r) {
               return r.json().then(
                 function (d) { return { status: r.status, data: d }; },
