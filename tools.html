@@ -389,6 +389,20 @@
     }
     .buy-note { margin: 0.9rem 0 0; color: var(--cb-muted); }
     .btn-buy { display: inline-block; text-decoration: none; }
+    .premium-step {
+      border-left: 2px solid var(--cb-amber);
+      background: var(--cb-surface);
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.6;
+    }
+    .premium-step strong { font-weight: 500; color: var(--cb-amber); }
+    .premium-note { font-size: 0.88rem; }
+    .premium-note a { color: var(--cb-amber); }
+    input[readonly] { opacity: 0.75; }
 
     /* ─── Working ─── */
     .working { text-align: center; padding: 1.5rem 0 0.5rem; }
@@ -775,6 +789,7 @@
       };
 
       var CONFIG = null;
+      var ME = null;   // from /me: { signedIn, email, tier, premium, allowances }
 
       /* ── helpers ── */
 
@@ -888,11 +903,25 @@
 
       /* ── config load and page render ── */
 
+      // Who is signed in and, for Premium, what's included. Never blocks the
+      // page: no session, or any failure, simply means the normal buy flow.
+      function loadMe() {
+        var token = currentSessionToken();
+        if (!token) return Promise.resolve(null);
+        return fetch(RELAY + '/me', { headers: { 'Authorization': 'Bearer ' + token } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .catch(function () { return null; });
+      }
+
       function loadConfig() {
+        var mePromise = loadMe();
         fetch(RELAY + '/config')
           .then(function (r) {
             if (!r.ok) throw new Error('config ' + r.status);
             return r.json();
+          })
+          .then(function (cfg) {
+            return mePromise.then(function (me) { ME = me; return cfg; });
           })
           .then(function (cfg) {
             CONFIG = cfg;
@@ -1029,9 +1058,31 @@
           form.appendChild(banner);
         }
 
+        // Premium members: included, up to their allowance.
+        var allowance = (ME && ME.premium && ME.allowances) ? ME.allowances[tool.slug] : null;
+        var premiumActive = !!(allowance && allowance.remaining > 0);
+        if (allowance) {
+          var prem = el('div', 'premium-step');
+          prem.setAttribute('role', 'status');
+          var period = allowance.windowDays === 1 ? 'today' : 'in this ' + allowance.windowDays + '-day period';
+          if (premiumActive) {
+            prem.appendChild(el('strong', null, 'Included with your Premium membership. '));
+            prem.appendChild(document.createTextNode(
+              allowance.remaining + ' of ' + allowance.limit + ' left ' + period +
+              '. No purchase needed — your report goes to ' + ME.email + '.'));
+          } else {
+            prem.appendChild(el('strong', null, 'Premium allowance used. '));
+            prem.appendChild(document.createTextNode(
+              'You have used all ' + allowance.limit + ' included ' + period +
+              '. It refreshes on a rolling basis, or you can purchase a report below.'));
+          }
+          form.appendChild(prem);
+        }
+
         // Paid tools: purchase first, then redeem with the same email.
-        // Skipped for a buyer who has just paid — the banner replaces it.
-        if (tool.entitlement === 'token' && tool.paymentUrl && PURCHASED !== tool.slug) {
+        // Skipped for a buyer who has just paid — the banner replaces it —
+        // and for a Premium member with allowance left.
+        if (tool.entitlement === 'token' && tool.paymentUrl && PURCHASED !== tool.slug && !premiumActive) {
           var buy = el('div', 'buy-step');
           buy.appendChild(el('p', 'buy-lead',
             'Step 1 — Purchase this report: ' + formatPrice(tool.price) + ', one time. ' +
@@ -1042,6 +1093,15 @@
           buy.appendChild(el('p', 'buy-note',
             'Step 2 — Fill in the form below using the same email address you paid with. ' +
             'Each purchase covers one report and stays available for twelve months.'));
+          if (!ME || !ME.signedIn) {
+            var pn = el('p', 'buy-note premium-note');
+            pn.appendChild(document.createTextNode('Premium member? '));
+            var signIn = el('a', null, 'Sign in');
+            signIn.href = 'login.html';
+            pn.appendChild(signIn);
+            pn.appendChild(document.createTextNode(' and this report is included with your membership.'));
+            buy.appendChild(pn);
+          }
           form.appendChild(buy);
         }
 
@@ -1112,6 +1172,11 @@
           inputs[field.key] = input;
           form.appendChild(wrap);
         });
+
+        if (premiumActive && inputs.email) {
+          inputs.email.value = ME.email;
+          inputs.email.readOnly = true;
+        }
 
         var errorBox = el('p', 'form-error');
         errorBox.setAttribute('role', 'alert');
@@ -1369,6 +1434,7 @@
             })
             .then(function (res) {
               if (res.status === 202 && res.data && res.data.jobId) {
+                if (premiumActive && allowance) allowance.remaining = Math.max(0, allowance.remaining - 1);
                 toWorking(res.data.message, res.data.jobId, email);
               } else {
                 var msg = (res.data && res.data.error) || errString('connectionFailed');
