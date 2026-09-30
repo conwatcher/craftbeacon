@@ -261,6 +261,22 @@
       line-height: 1.6;
     }
     .purchase-banner strong { font-weight: 500; color: var(--cb-amber); }
+    .purchase-banner a { color: var(--cb-amber); }
+
+    /* ─── Bundle card ─── */
+    .bundle-card .tool-card-head { cursor: default; }
+    .bundle-card .tool-panel { display: block; }
+    .bundle-includes {
+      list-style: none;
+      margin: 0 0 1.4rem;
+      padding: 0;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      line-height: 1.9;
+    }
+    .bundle-includes a { color: var(--cb-text); }
+    .bundle-includes a:hover { color: var(--cb-amber); }
 
     /* ─── Form ─── */
     .form-need {
@@ -867,11 +883,29 @@
           document.querySelector('[data-name-slug="' + target + '"]');
       }
 
+      // The bundle just paid for, if the return from Stripe was a bundle.
+      function purchasedBundle() {
+        if (!PURCHASED || !CONFIG) return null;
+        var list = CONFIG.bundles || [];
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].slug === PURCHASED || slugify(list[i].name) === PURCHASED) return list[i];
+        }
+        return null;
+      }
+
+      // True when the buyer has just paid for this tool, alone or in a bundle.
+      function justPurchased(tool) {
+        if (PURCHASED === tool.slug) return true;
+        var b = purchasedBundle();
+        return !!(b && (b.includeSlugs || []).indexOf(tool.slug) !== -1);
+      }
+
       // Open (and build) the targeted tool, then bring it into view.
       function landOnTarget() {
         var hash = window.location.hash.slice(1);
         try { hash = decodeURIComponent(hash); } catch (e) { /* leave as-is */ }
-        var target = PURCHASED || slugify(hash);
+        // A bundle return lands on the tool named in the hash, not the bundle.
+        var target = (PURCHASED && !purchasedBundle()) ? PURCHASED : slugify(hash);
         var card = findCard(target);
         if (!card) return;
         if (card.classList.contains('tool-card') && !card.classList.contains('open')) {
@@ -952,6 +986,11 @@
           tools.forEach(function (tool) {
             group.appendChild(buildToolCard(tool));
           });
+          (cfg.bundles || []).forEach(function (bundle) {
+            if (bundle.available && bundle.family === key && bundle.paymentUrl) {
+              group.appendChild(buildBundleCard(bundle, cfg));
+            }
+          });
           section.appendChild(group);
         });
       }
@@ -984,6 +1023,54 @@
           grid.appendChild(card);
         });
         document.getElementById('comingSoon').hidden = false;
+      }
+
+      /* ── bundle card ── */
+
+      function buildBundleCard(bundle, cfg) {
+        var card = el('article', 'tool-card bundle-card open');
+        card.id = bundle.slug;
+        card.setAttribute('data-name-slug', slugify(bundle.name));
+
+        var head = el('div', 'tool-card-head');
+        var headText = el('div');
+        headText.appendChild(el('h3', null, bundle.name));
+        headText.appendChild(el('p', 'tagline', 'One purchase covers ' + bundle.covers + '.'));
+        head.appendChild(headText);
+        head.appendChild(el('span', 'tool-price', formatPrice(bundle.price)));
+        card.appendChild(head);
+
+        var panel = el('div', 'tool-panel');
+        var list = el('ul', 'bundle-includes');
+        var separate = 0;
+        (bundle.includeSlugs || []).forEach(function (slug) {
+          var tool = (cfg.buttons || []).filter(function (t) { return t.slug === slug; })[0];
+          if (!tool) return;
+          separate += Number(tool.price) || 0;
+          var li = el('li');
+          var a = el('a', null, tool.name);
+          a.href = '#' + tool.slug;
+          li.appendChild(a);
+          li.appendChild(document.createTextNode(' — one report'));
+          list.appendChild(li);
+        });
+        panel.appendChild(list);
+
+        var buy = el('div', 'buy-step');
+        var lead = 'Step 1 — Purchase the package: ' + formatPrice(bundle.price) + ', one time';
+        if (separate > bundle.price) {
+          lead += ' (' + formatPrice(Math.round((separate - bundle.price) * 100) / 100) + ' less than buying each separately)';
+        }
+        buy.appendChild(el('p', 'buy-lead', lead + '. Checkout brings you straight back to this page.'));
+        var buyLink = el('a', 'btn-submit btn-buy', 'Buy — ' + formatPrice(bundle.price));
+        buyLink.href = bundle.paymentUrl;
+        buy.appendChild(buyLink);
+        buy.appendChild(el('p', 'buy-note',
+          'Step 2 — Open each tool above and fill in its form using the same email address you paid with. ' +
+          'Use them in any order; each report stays available for twelve months.'));
+        panel.appendChild(buy);
+        card.appendChild(panel);
+        return card;
       }
 
       /* ── tool card + submission state machine ── */
@@ -1048,13 +1135,32 @@
           form.appendChild(el('p', 'form-need', tool.copy.whatYoullNeed));
         }
 
-        // Returning from Stripe checkout for this tool.
-        if (PURCHASED === tool.slug) {
+        // Returning from Stripe checkout for this tool, or a bundle that includes it.
+        var boughtHere = justPurchased(tool);
+        var bundleBought = boughtHere ? purchasedBundle() : null;
+        if (boughtHere) {
           var banner = el('div', 'purchase-banner');
           banner.setAttribute('role', 'status');
-          banner.appendChild(el('strong', null, 'Payment received. '));
-          banner.appendChild(document.createTextNode(
-            'Fill in the form below using the same email address you paid with, and your report will be on its way.'));
+          if (bundleBought) {
+            banner.appendChild(el('strong', null, 'Payment received for ' + bundleBought.name + '. '));
+            banner.appendChild(document.createTextNode(
+              'It covers one report each from this tool and '));
+            var others = (bundleBought.includeSlugs || []).filter(function (s) { return s !== tool.slug; });
+            others.forEach(function (slug, i) {
+              var other = (CONFIG.buttons || []).filter(function (t) { return t.slug === slug; })[0];
+              if (!other) return;
+              if (i > 0) banner.appendChild(document.createTextNode(i === others.length - 1 ? ' and ' : ', '));
+              var a = el('a', null, 'the ' + other.name);
+              a.href = '#' + other.slug;
+              banner.appendChild(a);
+            });
+            banner.appendChild(document.createTextNode(
+              '. Use them in any order, each with the same email address you paid with.'));
+          } else {
+            banner.appendChild(el('strong', null, 'Payment received. '));
+            banner.appendChild(document.createTextNode(
+              'Fill in the form below using the same email address you paid with, and your report will be on its way.'));
+          }
           form.appendChild(banner);
         }
 
@@ -1082,7 +1188,7 @@
         // Paid tools: purchase first, then redeem with the same email.
         // Skipped for a buyer who has just paid — the banner replaces it —
         // and for a Premium member with allowance left.
-        if (tool.entitlement === 'token' && tool.paymentUrl && PURCHASED !== tool.slug && !premiumActive) {
+        if (tool.entitlement === 'token' && tool.paymentUrl && !boughtHere && !premiumActive) {
           var buy = el('div', 'buy-step');
           buy.appendChild(el('p', 'buy-lead',
             'Step 1 — Purchase this report: ' + formatPrice(tool.price) + ', one time. ' +
