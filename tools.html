@@ -949,7 +949,9 @@
 
       function loadConfig() {
         var mePromise = loadMe();
-        fetch(RELAY + '/config')
+        // ?preview=1 also lists tools built but not yet on sale (signed-in testing).
+        var preview = new URLSearchParams(window.location.search).get('preview') === '1';
+        fetch(RELAY + '/config' + (preview ? '?preview=1' : ''))
           .then(function (r) {
             if (!r.ok) throw new Error('config ' + r.status);
             return r.json();
