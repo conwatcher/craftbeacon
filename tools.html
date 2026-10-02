@@ -264,8 +264,6 @@
     .purchase-banner a { color: var(--cb-amber); }
 
     /* ─── Bundle card ─── */
-    .bundle-card .tool-card-head { cursor: default; }
-    .bundle-card .tool-panel { display: block; }
     .bundle-includes {
       list-style: none;
       margin: 0 0 1.4rem;
@@ -1042,11 +1040,14 @@
       /* ── bundle card ── */
 
       function buildBundleCard(bundle, cfg) {
-        var card = el('article', 'tool-card bundle-card open');
+        var card = el('article', 'tool-card bundle-card');
         card.id = bundle.slug;
         card.setAttribute('data-name-slug', slugify(bundle.name));
 
-        var head = el('div', 'tool-card-head');
+        // Collapsed until clicked, the same as every tool card.
+        var head = el('button', 'tool-card-head');
+        head.type = 'button';
+        head.setAttribute('aria-expanded', 'false');
         var headText = el('div');
         headText.appendChild(el('h3', null, bundle.name));
         headText.appendChild(el('p', 'tagline', 'One purchase covers ' + bundle.covers + '.'));
@@ -1084,6 +1085,11 @@
           'Use them in any order; each report stays available for twelve months.'));
         panel.appendChild(buy);
         card.appendChild(panel);
+
+        head.addEventListener('click', function () {
+          var open = card.classList.toggle('open');
+          head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
         return card;
       }
 
