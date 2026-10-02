@@ -795,7 +795,8 @@
         'author-bio-diagnostic':       ['Reading your bio…', 'Checking it against where it will appear…'],
         'query-letter-diagnostic':     ['Reading your query letter…', 'Reading it the way an agent would…'],
         'blurb-diagnostic':            ['Reading your blurb…', 'Reading it the way a browsing reader would…'],
-        'metadata-pack':               ['Reading your book description…', 'Checking current KDP keyword and category rules…']
+        'metadata-pack':               ['Reading your book description…', 'Checking current KDP keyword and category rules…'],
+        'character-consistency-report': ['Reading your whole manuscript…', 'Tracking every character across the book…']
       };
       function workStatusFor(slug) {
         var own = WORK_STATUS[slug];
@@ -809,7 +810,6 @@
       // its real price starts arriving from /config; delete the whole map once
       // every catalog entry carries a price.
       var FALLBACK_PRICES = {
-        'Character Consistency Report': 29.99,
         'Line-Edit Analysis': 34.99,
         'The Query Package': 5.99
       };
