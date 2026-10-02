@@ -1125,6 +1125,19 @@
           [vForm, vWorking, vComplete, vFailed].forEach(function (v) {
             v.style.display = (v === view) ? '' : 'none';
           });
+          // Swapping the tall form for the short working view shrinks the page
+          // under the reader, who is left looking at the cards below. Bring the
+          // tool back into view whenever its new state is off screen.
+          if (view !== vForm) bringIntoView(view);
+        }
+
+        function bringIntoView(view) {
+          var card = panel.closest('.tool-card') || panel;
+          var top = view.getBoundingClientRect().top;
+          var headerRoom = 110;   // matches the card's scroll-margin-top (6.5rem)
+          if (top >= headerRoom && top <= window.innerHeight - 120) return;
+          var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          card.scrollIntoView({ block: 'start', behavior: still ? 'auto' : 'smooth' });
         }
 
         /* ── State 1: the form ── */
