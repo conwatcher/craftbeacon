@@ -567,6 +567,23 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         align-items: flex-start;
       }
     }
+    /* ─── REVAMP v2: photo header as a dusk banner ───
+       The light wash over this busy photo left thin text at low local
+       contrast. The photo now sits under a deep navy veil and the text
+       goes light: #eceef8 heading ~14:1, #c9cce6 body ~10:1. */
+    .page-header { border-bottom: none; }
+    .page-header-bg { opacity: 1; filter: saturate(0.55) brightness(0.9); }
+    .page-header-vignette {
+      background:
+        linear-gradient(90deg, rgba(15,17,41,0.93) 0%, rgba(15,17,41,0.84) 45%, rgba(15,17,41,0.62) 100%),
+        linear-gradient(180deg, rgba(91,71,194,0.10) 0%, rgba(14,114,104,0.12) 100%);
+    }
+    .page-header .section-label { color: #7fd8ca; }
+    .page-header .section-label::before { background: #7fd8ca; }
+    .page-header h1 { color: #eceef8; }
+    .page-header h1 em { color: #7fd8ca; }
+    .page-header p { color: #c9cce6; font-weight: 400; }
+    .page-header p em, .page-header p a { color: #7fd8ca; }
   </style>
 
   <link rel="canonical" href="https://thecraftbeacon.com/journey.html" />

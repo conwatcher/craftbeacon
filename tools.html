@@ -688,19 +688,7 @@
     .trust-strip span { font-size: 0.9rem; font-weight: 300; color: var(--cb-muted); line-height: 1.55; padding-left: 0.9rem; border-left: 2px solid rgba(var(--cb-accent-rgb),0.35); }
     .trust-strip strong { display: block; font-family: var(--cb-ui); font-size: 0.82rem; font-weight: 600; color: var(--cb-text); }
 
-    .jump-links {
-      position: sticky; top: 64px; z-index: 50;
-      display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap;
-      padding: 0.75rem 1.25rem; background: rgba(var(--cb-bg-rgb),0.94);
-      border-bottom: 1px solid var(--cb-border); backdrop-filter: blur(6px);
-    }
-    .jump-links a {
-      font-family: var(--cb-ui); font-size: 0.8rem; font-weight: 500; color: var(--cb-text);
-      text-decoration: none; padding: 0.35rem 0.9rem; border-radius: 999px;
-      border: 1px solid var(--cb-border); background: var(--cb-surface);
-    }
-    .jump-links a:hover { border-color: var(--cb-amber); color: var(--cb-amber); }
-    .family-group { scroll-margin-top: 8.5rem; }
+    .family-group { scroll-margin-top: 6.5rem; }
 
     .family-label, .section-heading { font-family: var(--cb-ui); font-weight: 600; letter-spacing: 0.14em; }
     .family-label::after, .section-heading::after { height: 1px; background: var(--cb-border); }
@@ -740,8 +728,6 @@
       .page-header { padding: 2.75rem 1.25rem 1.75rem; }
       .page-header h1 { font-size: 2.1rem; }
       .trust-strip { grid-template-columns: 1fr; gap: 0.9rem; margin-top: 1.5rem; }
-      .jump-links { top: 58px; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; }
-      .jump-links a { white-space: nowrap; }
       .tool-grid { grid-template-columns: 1fr; }
       .tools-main { padding: 2rem 1.25rem 3.5rem; }
     }
@@ -793,7 +779,6 @@
       <span><strong>Fast.</strong> Delivered by email, usually within minutes.</span>
     </div>
   </header>
-  <nav class="jump-links" id="jumpLinks" aria-label="Tool groups" hidden></nav>
 
   <main class="tools-main">
 
@@ -1049,17 +1034,6 @@
         h3.parentNode.insertBefore(tag, h3);
       }
 
-      // Jump links to each tool group, built from what is actually on the page.
-      var JUMPS = {};
-      function addJumpLink(key, label) {
-        if (JUMPS[key]) return;
-        JUMPS[key] = true;
-        var nav = document.getElementById('jumpLinks');
-        var a = el('a', null, label);
-        a.href = '#family-' + key;
-        nav.appendChild(a);
-        nav.hidden = false;
-      }
 
       function renderAvailable(cfg) {
         var section = document.getElementById('availableTools');
@@ -1088,7 +1062,6 @@
           });
           group.appendChild(grid);
           section.appendChild(group);
-          addJumpLink(key, cfg.families[key].label);
         });
         // Launch pause: the Worker lists no live tools, only the coming-soon cards.
         if (!(cfg.buttons || []).length) {
@@ -1116,7 +1089,6 @@
           if (key !== '_') {
             group.id = 'family-' + key;
             group.appendChild(el('div', 'family-label', cfg.families[key].label));
-            addJumpLink(key, cfg.families[key].label);
           }
           var g = el('div', 'tool-grid');
           group.appendChild(g);
