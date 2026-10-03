@@ -743,7 +743,7 @@
     </section>
 
     <section class="tools-section" id="comingSoon" hidden>
-      <div class="section-heading">In development</div>
+      <div class="section-heading" id="soonHeading">In development</div>
       <div class="soon-grid" id="soonGrid"></div>
     </section>
 
@@ -1005,6 +1005,11 @@
           });
           section.appendChild(group);
         });
+        // Launch pause: the Worker lists no live tools, only the coming-soon cards.
+        if (!(cfg.buttons || []).length) {
+          section.appendChild(el('p', 'status-note',
+            'Author Tools are opening soon. Here’s what’s on the way.'));
+        }
       }
 
       function renderComingSoon(cfg) {
@@ -1034,6 +1039,7 @@
           card.appendChild(foot);
           grid.appendChild(card);
         });
+        if (cfg.paused) document.getElementById('soonHeading').textContent = 'Coming soon';
         document.getElementById('comingSoon').hidden = false;
       }
 
