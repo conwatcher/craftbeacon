@@ -264,8 +264,6 @@
     .purchase-banner a { color: var(--cb-amber); }
 
     /* ─── Bundle card ─── */
-    .bundle-card .tool-card-head { cursor: default; }
-    .bundle-card .tool-panel { display: block; }
     .bundle-includes {
       list-style: none;
       margin: 0 0 1.4rem;
@@ -745,7 +743,7 @@
     </section>
 
     <section class="tools-section" id="comingSoon" hidden>
-      <div class="section-heading">In development</div>
+      <div class="section-heading" id="soonHeading">In development</div>
       <div class="soon-grid" id="soonGrid"></div>
     </section>
 
@@ -782,12 +780,29 @@
       var POLL_CEILING_MS = 5 * 60 * 1000;
       var STATUS_STEP_MS = 20000;
 
-      var WORK_STATUS = [
-        'Reading your manuscript…',
-        'Analyzing structure, prose, and character…',
+      // Working-status lines, per tool. The first line names what the tool is
+      // actually reading; the last two are shared. Unknown slugs fall back to
+      // WORK_STATUS_DEFAULT.
+      var WORK_STATUS_DEFAULT = [
+        'Reading your submission…',
+        'Analyzing what you sent…',
         'Writing your report…',
         'Almost done…'
       ];
+      var WORK_STATUS = {
+        'manuscript-health-report':    ['Reading your manuscript…', 'Analyzing structure, prose, and character…'],
+        'opening-chapters-diagnostic': ['Reading your opening pages…', 'Finding where a reader would stop…'],
+        'author-bio-diagnostic':       ['Reading your bio…', 'Checking it against where it will appear…'],
+        'query-letter-diagnostic':     ['Reading your query letter…', 'Reading it the way an agent would…'],
+        'blurb-diagnostic':            ['Reading your blurb…', 'Reading it the way a browsing reader would…'],
+        'metadata-pack':               ['Reading your book description…', 'Checking current KDP keyword and category rules…'],
+        'character-consistency-report': ['Reading your whole manuscript…', 'Tracking every character across the book…'],
+        'line-edit-analysis':          ['Counting your writing habits across the book…', 'Editing the chosen chapters sentence by sentence…']
+      };
+      function workStatusFor(slug) {
+        var own = WORK_STATUS[slug];
+        return own ? own.concat(['Writing your report…', 'Almost done…']) : WORK_STATUS_DEFAULT;
+      }
 
       // TEMPORARY price fallback for the coming-soon cards. The Worker's catalog
       // returns price: null for any tool whose button is not yet live. Prefer
@@ -796,10 +811,6 @@
       // its real price starts arriving from /config; delete the whole map once
       // every catalog entry carries a price.
       var FALLBACK_PRICES = {
-        'Blurb Diagnostic': 2.99,
-        'Opening Chapters Diagnostic': 24.99,
-        'Character Consistency Report': 29.99,
-        'Line-Edit Analysis': 34.99,
         'The Query Package': 5.99
       };
 
@@ -994,6 +1005,11 @@
           });
           section.appendChild(group);
         });
+        // Launch pause: the Worker lists no live tools, only the coming-soon cards.
+        if (!(cfg.buttons || []).length) {
+          section.appendChild(el('p', 'status-note',
+            'Author Tools are opening soon. Here’s what’s on the way.'));
+        }
       }
 
       function renderComingSoon(cfg) {
@@ -1023,17 +1039,21 @@
           card.appendChild(foot);
           grid.appendChild(card);
         });
+        if (cfg.paused) document.getElementById('soonHeading').textContent = 'Coming soon';
         document.getElementById('comingSoon').hidden = false;
       }
 
       /* ── bundle card ── */
 
       function buildBundleCard(bundle, cfg) {
-        var card = el('article', 'tool-card bundle-card open');
+        var card = el('article', 'tool-card bundle-card');
         card.id = bundle.slug;
         card.setAttribute('data-name-slug', slugify(bundle.name));
 
-        var head = el('div', 'tool-card-head');
+        // Collapsed until clicked, the same as every tool card.
+        var head = el('button', 'tool-card-head');
+        head.type = 'button';
+        head.setAttribute('aria-expanded', 'false');
         var headText = el('div');
         headText.appendChild(el('h3', null, bundle.name));
         headText.appendChild(el('p', 'tagline', 'One purchase covers ' + bundle.covers + '.'));
@@ -1071,6 +1091,11 @@
           'Use them in any order; each report stays available for twelve months.'));
         panel.appendChild(buy);
         card.appendChild(panel);
+
+        head.addEventListener('click', function () {
+          var open = card.classList.toggle('open');
+          head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
         return card;
       }
 
@@ -1376,16 +1401,17 @@
         var pollTimer = null;
 
         function startStatusCycle() {
+          var steps = workStatusFor(tool.slug);
           var i = 0;
-          workStatus.textContent = WORK_STATUS[0];
+          workStatus.textContent = steps[0];
           statusTimer = setInterval(function () {
             i++;
-            if (i >= WORK_STATUS.length - 1) {
-              i = WORK_STATUS.length - 1;
+            if (i >= steps.length - 1) {
+              i = steps.length - 1;
               clearInterval(statusTimer);
               statusTimer = null;
             }
-            workStatus.textContent = WORK_STATUS[i];
+            workStatus.textContent = steps[i];
           }, STATUS_STEP_MS);
         }
 
