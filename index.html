@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://assets.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   <!-- Meta Pixel Base Code -->
 <script>
@@ -28,13 +29,12 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
   gtag('config', 'G-FRZ967M5K9');
 </script>
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CraftBeacon — The Writing Coach That Never Writes For You</title>
   <meta name="description" content="A writing coach that never writes for you. CraftBeacon diagnoses what's not working in your manuscript and asks the questions that get you unstuck." />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,8 +124,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .btn-ghost:hover { color: var(--cb-text); }
     .browser-notice {
-  background: rgba(200,144,58,0.12);
-  border-bottom: 1px solid rgba(200,144,58,0.25);
+  background: rgba(var(--cb-accent-rgb),0.12);
+  border-bottom: 1px solid rgba(var(--cb-accent-rgb),0.25);
   color: var(--cb-amber-light);
   text-align: center;
   font-size: 0.78rem;
@@ -153,7 +153,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(247,242,232,0.97);
+      background: rgba(var(--cb-bg-rgb),0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -242,7 +242,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-dark);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 400px 400px;
     }
 
@@ -250,16 +250,16 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 72px, rgba(200,144,58,0.035) 72px, rgba(200,144,58,0.035) 73px),
-        repeating-linear-gradient(90deg, transparent, transparent 72px, rgba(200,144,58,0.02) 72px, rgba(200,144,58,0.02) 73px);
+        repeating-linear-gradient(0deg, transparent, transparent 72px, rgba(var(--cb-accent-rgb),0.035) 72px, rgba(var(--cb-accent-rgb),0.035) 73px),
+        repeating-linear-gradient(90deg, transparent, transparent 72px, rgba(var(--cb-accent-rgb),0.02) 72px, rgba(var(--cb-accent-rgb),0.02) 73px);
     }
 
     .hero-vignette {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 55% 80% at 32% 55%, transparent 15%, rgba(247,242,232,0.55) 60%, rgba(247,242,232,0.94) 100%),
-        radial-gradient(ellipse 42% 65% at 72% 48%, rgba(200,144,58,0.065) 0%, transparent 60%);
+        radial-gradient(ellipse 55% 80% at 32% 55%, transparent 15%, rgba(var(--cb-bg-rgb),0.55) 60%, rgba(var(--cb-bg-rgb),0.94) 100%),
+        radial-gradient(ellipse 42% 65% at 72% 48%, rgba(var(--cb-accent-rgb),0.065) 0%, transparent 60%);
     }
 
     .hero-beam {
@@ -270,9 +270,9 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       width: 0.5px;
       background: linear-gradient(to bottom,
         transparent 5%,
-        rgba(200,144,58,0.18) 28%,
-        rgba(200,144,58,0.42) 54%,
-        rgba(200,144,58,0.1) 80%,
+        rgba(var(--cb-accent-rgb),0.18) 28%,
+        rgba(var(--cb-accent-rgb),0.42) 54%,
+        rgba(var(--cb-accent-rgb),0.1) 80%,
         transparent 96%);
     }
 
@@ -327,15 +327,15 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       object-fit: cover;
       object-position: center top;
       display: block;
-      border: 0.5px solid rgba(200,144,58,0.18);
+      border: 0.5px solid rgba(var(--cb-accent-rgb),0.18);
       filter: brightness(0.88) sepia(0.08);
     }
     .hero-image::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(17,15,11,0.7) 100%),
-                  linear-gradient(to left, transparent 70%, rgba(17,15,11,0.5) 100%);
+      background: linear-gradient(to bottom, transparent 55%, rgba(var(--cb-ink-rgb),0.7) 100%),
+                  linear-gradient(to left, transparent 70%, rgba(var(--cb-ink-rgb),0.5) 100%);
       pointer-events: none;
     }
 
@@ -349,7 +349,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-surface2);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 300px 300px;
     }
     .philosophy-inner {
@@ -387,7 +387,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .philosophy-image {
       position: relative;
       overflow: hidden;
-      border: 0.5px solid rgba(200,144,58,0.15);
+      border: 0.5px solid rgba(var(--cb-accent-rgb),0.15);
     }
     .philosophy-image img {
       width: 100%;
@@ -404,7 +404,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(247,242,232,0.2) 0%, transparent 40%, rgba(247,242,232,0.4) 100%);
+      background: linear-gradient(to bottom, rgba(var(--cb-bg-rgb),0.2) 0%, transparent 40%, rgba(var(--cb-bg-rgb),0.4) 100%);
       pointer-events: none;
     }
     .contrast-card {
@@ -439,7 +439,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-dark);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23a07830'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 500px 500px;
     }
     .lanes-inner {
@@ -555,7 +555,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-surface2);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='350'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.021 0.031' numOctaves='5' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='350'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.021 0.031' numOctaves='5' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 350px 350px;
     }
     .tiers-inner {
@@ -623,7 +623,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .tier-card.featured {
       background: var(--cb-surface);
       box-shadow: var(--cb-card-shadow-hover);
-      border: 0.5px solid rgba(200,144,58,0.28);
+      border: 0.5px solid rgba(var(--cb-accent-rgb),0.28);
       padding: 2.5rem 3rem;
       max-width: 760px;
       margin: 0 auto;
@@ -796,13 +796,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-dark);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.011 0.019' numOctaves='6' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.085'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23b07828'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.011 0.019' numOctaves='6' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.085'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 600px 400px;
     }
     .cta-warm {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 55% 120% at 50% 115%, rgba(200,144,58,0.07) 0%, transparent 65%);
+      background: radial-gradient(ellipse 55% 120% at 50% 115%, rgba(var(--cb-accent-rgb),0.07) 0%, transparent 65%);
     }
     .cta-content { position: relative; z-index: 1; }
     .cta-content h2 {
@@ -923,7 +923,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(247,242,232,0.98);
+        background: rgba(var(--cb-bg-rgb),0.98);
         border-bottom: 0.5px solid var(--cb-border);
         padding: 1.25rem 1.5rem 1.5rem;
         gap: 0;
@@ -936,6 +936,127 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         padding: 0.85rem 0;
         font-size: 0.9rem;
       }
+    }
+
+    /* ════════════════════════════════════════════
+       REVAMP v2 — lighthouse dusk (October 2026)
+       Overrides the warm-era section styling above.
+       Palette values live in /assets/theme.css.
+       ════════════════════════════════════════════ */
+    body::after { opacity: 0.018; }
+
+    /* Hero: soft wash on the left, lighthouse photo bleeding in from the right */
+    .cb-hero { min-height: 640px; padding: 5.5rem 3rem; }
+    .hero-bg { background: var(--cb-wash); background-image: var(--cb-wash); }
+    .hero-grid-lines, .hero-beam { display: none; }
+    .hero-vignette { background: none; }
+    .hero-content { max-width: 560px; }
+    .hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.4rem; }
+    .hero-content h1 em { color: var(--cb-amber); }
+    .hero-sub { color: var(--cb-muted); font-size: 1.12rem; max-width: 500px; margin-bottom: 0.9rem; }
+    .hero-motto { margin-bottom: 2.3rem; }
+    .hero-actions { gap: 1.4rem; }
+    .hero-tools-link {
+      font-family: var(--cb-ui); font-size: 0.9rem; font-weight: 500;
+      color: var(--cb-text); text-decoration: underline; text-underline-offset: 4px;
+      text-decoration-color: rgba(var(--cb-accent-rgb),0.45);
+    }
+    .hero-tools-link:hover { color: var(--cb-amber); }
+    .hero-image {
+      right: 0; top: 0; bottom: 0; transform: none; width: 46%;
+    }
+    .hero-image img {
+      height: 100%; border: none; filter: none; object-position: center 35%;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 32%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 32%);
+    }
+    .hero-image::after { display: none; }
+
+    /* Philosophy */
+    .philosophy-bg { background: var(--cb-surface); background-image: none; }
+    .philosophy-inner h2 em { color: var(--cb-amber); }
+    .philosophy-image { border: none; border-radius: var(--cb-radius); }
+    .philosophy-image img { filter: saturate(0.85); }
+    .philosophy-image::after { background: linear-gradient(to bottom, transparent 55%, rgba(var(--cb-ink-rgb),0.25) 100%); }
+    .contrast-card { background-color: var(--cb-dark); border: 1px solid var(--cb-border); border-radius: var(--cb-radius); border-left: 3px solid var(--cb-dim); }
+    .contrast-card:last-child { border-left-color: var(--cb-amber); }
+
+    /* Diagnostics */
+    .cb-diag { position: relative; padding: 5.5rem 3rem; background: var(--cb-wash-soft); }
+    .diag-inner { max-width: 1100px; margin: 0 auto; }
+    .diag-header { text-align: center; max-width: 720px; margin: 0 auto 3rem; }
+    .diag-header h2 { font-family: 'Playfair Display', serif; font-size: 2.3rem; font-weight: 400; line-height: 1.22; color: var(--cb-text); margin-bottom: 1.1rem; }
+    .diag-header h2 em { color: var(--cb-amber); }
+    .diag-header p { font-size: 1.02rem; font-weight: 300; color: var(--cb-muted); line-height: 1.8; }
+    .diag-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .diag-card {
+      display: flex; flex-direction: column; text-decoration: none;
+      background-color: var(--cb-surface); border: 1px solid var(--cb-border);
+      border-radius: var(--cb-radius); box-shadow: var(--cb-card-shadow);
+      border-top: 3px solid var(--cb-violet-light);
+      padding: 1.6rem 1.5rem 1.4rem; transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .diag-card:hover { box-shadow: var(--cb-card-shadow-hover); transform: translateY(-2px); }
+    .diag-card.featured { border-top-color: var(--cb-amber); }
+    .diag-tag { font-family: var(--cb-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cb-amber); margin-bottom: 0.55rem; }
+    .diag-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--cb-text); line-height: 1.3; margin-bottom: 0.6rem; }
+    .diag-card p { font-size: 0.93rem; font-weight: 300; color: var(--cb-muted); line-height: 1.65; flex: 1; margin-bottom: 1.2rem; }
+    .diag-foot { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--cb-ui); }
+    .diag-price { font-size: 0.95rem; font-weight: 600; color: var(--cb-violet); }
+    .diag-card.featured .diag-price { color: var(--cb-amber); }
+    .diag-go { font-size: 0.82rem; font-weight: 500; color: var(--cb-text); }
+    .diag-card.soon .diag-go { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cb-muted); }
+    .diag-more { text-align: center; margin-top: 2rem; font-size: 0.95rem; font-weight: 300; color: var(--cb-muted); }
+    .diag-more a { font-family: var(--cb-ui); font-weight: 500; color: var(--cb-amber); white-space: nowrap; }
+
+    /* Lanes */
+    .lanes-bg { background: var(--cb-dark); background-image: none; }
+    .lanes-grid { gap: 1.25rem; background: none; border: none; }
+    .lane-card { background-color: var(--cb-surface); border: 1px solid var(--cb-border); border-radius: var(--cb-radius); }
+    .lane-card::before { height: 3px; opacity: 0.75; }
+    .lane-icon { opacity: 1; }
+    .lane-best { font-family: var(--cb-ui); font-size: 0.82rem; font-weight: 500; color: var(--cb-violet); line-height: 1.5; margin: -0.4rem 0 1rem; }
+    .lane-list li::before { opacity: 0.8; }
+
+    /* Membership */
+    .tiers-bg { background: var(--cb-surface2); background-image: none; }
+    .tiers-lanes { gap: 1.25rem; background: none; border: none; margin-bottom: 1.5rem; }
+    .tier-card { background-color: var(--cb-surface); border: 1px solid var(--cb-border); border-radius: var(--cb-radius); }
+    .tier-card.featured { border: 1.5px solid rgba(var(--cb-accent-rgb),0.45); }
+    .tier-card.featured::before { font-family: var(--cb-ui); font-weight: 600; color: #fff; border-radius: 6px; }
+    .tier-icon { opacity: 1; }
+    .tier-btn { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: none; border: 1.5px solid var(--cb-amber); border-radius: 8px; }
+    .tier-btn:hover, .tier-btn.tier-btn-primary { background: var(--cb-amber); color: #fff; }
+    .tier-btn.tier-btn-primary:hover { background: #0b5f57; color: #fff; }
+
+    /* Closing CTA */
+    .cta-bg { background: var(--cb-wash); background-image: var(--cb-wash); }
+    .cta-content h2 em { color: var(--cb-amber); }
+    .cta-fresnel { opacity: 0.08; filter: grayscale(1); }
+
+    /* Trust band */
+    .cb-trust { background: var(--cb-surface); border-top: 1px solid var(--cb-border); padding: 2.25rem 3rem; }
+    .trust-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .trust-item { font-size: 0.92rem; font-weight: 300; color: var(--cb-muted); line-height: 1.65; padding-left: 1rem; border-left: 2px solid rgba(var(--cb-accent-rgb),0.35); }
+    .trust-item strong { display: block; font-size: 0.85rem; font-weight: 600; color: var(--cb-text); margin-bottom: 0.2rem; }
+    .trust-item a { color: var(--cb-amber); white-space: nowrap; }
+
+    .cb-footer { background: var(--cb-surface2); }
+    .footer-logo-text { color: var(--cb-text); }
+
+    @media (max-width: 1000px) {
+      .diag-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .cb-hero { padding: 3.5rem 1.25rem 0; }
+      .hero-content h1 { font-size: 2.35rem; }
+      .hero-image { position: relative; width: calc(100% + 2.5rem); max-width: none; margin: 2.25rem -1.25rem 0; height: 260px; }
+      .hero-image img { height: 260px; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); }
+      .cb-diag, .cb-philosophy, .cb-lanes, .cb-tiers { padding: 3.75rem 1.25rem; }
+      .diag-header h2 { font-size: 1.8rem; }
+      .diag-grid { grid-template-columns: 1fr; }
+      .trust-inner { grid-template-columns: 1fr; gap: 1.1rem; }
+      .cb-trust { padding: 2rem 1.25rem; }
     }
   </style>
   <link rel="canonical" href="https://thecraftbeacon.com/" />
@@ -958,11 +1079,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   ═══════════════════════════════════ -->
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
-      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
     </a>
     <ul class="nav-links">
       <li><a href="#philosophy">How it works</a></li>
       <li><a href="#lanes">The lanes</a></li>
+      <li><a href="tools.html">Tools</a></li>
       <li><a href="#tiers">Pricing</a></li>
       <li><a href="resources.html">Resources</a></li>
       <li><a href="newsletter.html">Newsletter</a></li>
@@ -987,12 +1110,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     <div class="hero-beam"></div>
 
     <div class="hero-content">
-      <div class="section-label">AI writing coaching for authors</div>
-      <h1 id="hero-heading">Your work.<br><em>Clearer thinking.</em><br>Your words.</h1>
-      <p class="hero-sub">CraftBeacon is an AI writing coach that diagnoses what isn't working, asks the right questions, and sends you back to your manuscript with something to act on. It never writes for you. That's the point.</p>
+      <div class="section-label">Writing coaching for authors</div>
+      <h1 id="hero-heading">See what isn't working.<br><em>Fix it in your own words.</em></h1>
+      <p class="hero-sub">CraftBeacon finds what's holding your manuscript back, asks the questions that get you unstuck, and sends you back to the page knowing what to do.</p>
+      <p class="cb-motto hero-motto">It never writes for you. That's the point.</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="window.location.href='/login.html'">Start coaching — it's free</button>
-        <a class="btn-ghost" href="#philosophy">See how it works</a>
+        <button class="btn-primary" onclick="window.location.href='/login.html'">Start coaching — it's free <span aria-hidden="true">→</span></button>
+        <a class="hero-tools-link" id="heroToolsLink" href="tools.html#manuscript-health-report">or try a free manuscript report <span aria-hidden="true">→</span></a>
       </div>
     </div>
 
@@ -1033,7 +1157,46 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     </div>
   </section>
 
-  <hr class="divider" />
+  <!-- ═══════════════════════════════════
+       ONE-PRESS DIAGNOSTICS
+       Names, descriptions, prices and availability come live from the
+       tools Worker's /config — the same source as tools.html — so nothing
+       here can drift from the tools page. While the tools are paused the
+       cards show "Coming soon" automatically.
+  ═══════════════════════════════════ -->
+  <section class="cb-diag" id="diagnostics" aria-labelledby="diag-heading">
+    <div class="diag-inner">
+      <div class="diag-header">
+        <div class="section-label" style="justify-content: center;">One-press diagnostics</div>
+        <h2 id="diag-heading">No conversation required.<br><em>Send the work, get a written report.</em></h2>
+        <p>Coaching is one way to work with CraftBeacon. The other is a single report: send a manuscript, a blurb, a query letter, or a bio, and a written diagnosis arrives by email — usually within minutes. Like everything here, it tells you what's happening in your writing. It never writes it for you.</p>
+      </div>
+      <div class="diag-grid" id="diagGrid">
+        <a class="diag-card featured" href="tools.html#manuscript-health-report">
+          <span class="diag-tag">Start here</span>
+          <h3>Manuscript Health Report</h3>
+          <p>A broad diagnostic scan across prose, structure, character, dialogue, and continuity.</p>
+          <span class="diag-foot"><span class="diag-price">Free</span><span class="diag-go">View tool →</span></span>
+        </a>
+        <a class="diag-card" href="tools.html#opening-chapters-diagnostic">
+          <h3>Opening Chapters Diagnostic</h3>
+          <p>The first three chapters read as an agent or browsing reader would, including where a reader is most likely to stop.</p>
+          <span class="diag-foot"><span class="diag-price"></span><span class="diag-go">View tool →</span></span>
+        </a>
+        <a class="diag-card" href="tools.html#character-consistency-report">
+          <h3>Character Consistency Report</h3>
+          <p>Cast tracking across the book — factual contradictions, voice distinctness, knowledge timing, and whether arcs are earned.</p>
+          <span class="diag-foot"><span class="diag-price"></span><span class="diag-go">View tool →</span></span>
+        </a>
+        <a class="diag-card" href="tools.html#line-edit-analysis">
+          <h3>Line-Edit Analysis</h3>
+          <p>A sentence-by-sentence line edit of about 10,000 words, plus counts of your writing habits across the whole book.</p>
+          <span class="diag-foot"><span class="diag-price"></span><span class="diag-go">View tool →</span></span>
+        </a>
+      </div>
+      <p class="diag-more">Also available: diagnostics for your author bio, blurb, and query letter, and a metadata pack for retailer keywords and categories. <a href="tools.html">See all the tools →</a></p>
+    </div>
+  </section>
 
 
   <!-- ═══════════════════════════════════
@@ -1053,6 +1216,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
           <span class="lane-icon" aria-hidden="true">✒</span>
           <div class="lane-name">Writing Lane</div>
           <h3>The craft of the manuscript</h3>
+          <div class="lane-best">Best for: a draft that isn't landing, when you can't yet say why.</div>
           <p>Diagnostic coaching oriented around your specific work in progress. When something isn't landing, CraftBeacon helps you find out why.</p>
           <ul class="lane-list">
             <li>Scene and structure diagnosis</li>
@@ -1066,6 +1230,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
           <span class="lane-icon" aria-hidden="true">◈</span>
           <div class="lane-name">Marketing Lane</div>
           <h3>Finding your readers</h3>
+          <div class="lane-best">Best for: building a readership before and after launch.</div>
           <p>Author platform, newsletter strategy, launch orientation, and reader engagement — built around your book and your presence, not generic advice.</p>
           <ul class="lane-list">
             <li>Author platform assessment</li>
@@ -1079,6 +1244,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
           <span class="lane-icon" aria-hidden="true">⊟</span>
           <div class="lane-name">Production Lane</div>
           <h3>Bringing the book to market</h3>
+          <div class="lane-best">Best for: turning a finished manuscript into a published book.</div>
           <p>Formatting specifications, platform requirements, distribution path guidance, and production sequencing — specific to your project and your tools.</p>
           <ul class="lane-list">
             <li>Format and trim specifications</li>
@@ -1217,6 +1383,18 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
 
   <!-- ═══════════════════════════════════
+       WHAT HAPPENS TO YOUR WORK
+  ═══════════════════════════════════ -->
+  <section class="cb-trust" aria-label="What happens to your work">
+    <div class="trust-inner">
+      <div class="trust-item"><strong>Your words stay yours.</strong> CraftBeacon never writes for you and never claims your work.</div>
+      <div class="trust-item"><strong>Never used for training.</strong> Your writing is not used to train any AI model — ours or anyone's.</div>
+      <div class="trust-item"><strong>Tool submissions aren't kept.</strong> A manuscript sent to a tool is read, analyzed, and discarded. <a href="privacy.html">Privacy details →</a></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
        FOOTER
   ═══════════════════════════════════ -->
   <footer class="cb-footer" role="contentinfo">
@@ -1233,6 +1411,34 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   </footer>
 
 <script>
+    // Diagnostics cards: fill prices and availability from the tools Worker.
+    (function () {
+      var RELAY = 'https://craftbeacon-tools.conwatcher.workers.dev';
+      function money(p) { return p === 0 ? 'Free' : '$' + Number(p).toFixed(2); }
+      fetch(RELAY + '/config').then(function (r) { return r.ok ? r.json() : null; }).then(function (cfg) {
+        if (!cfg) return;
+        var bySlug = {};
+        (cfg.catalog || []).forEach(function (t) {
+          bySlug[t.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')] = t;
+        });
+        document.querySelectorAll('#diagGrid .diag-card').forEach(function (card) {
+          var slug = card.getAttribute('href').split('#')[1];
+          var t = bySlug[slug];
+          if (!t) return;
+          if (t.price !== null && t.price !== undefined) card.querySelector('.diag-price').textContent = money(t.price);
+          if (!t.available) {
+            card.querySelector('.diag-go').textContent = 'Coming soon';
+            card.classList.add('soon');
+          }
+        });
+        if (cfg.paused) {
+          var link = document.getElementById('heroToolsLink');
+          link.innerHTML = 'or see the one-press manuscript tools <span aria-hidden="true">→</span>';
+          link.setAttribute('href', '#diagnostics');
+        }
+      }).catch(function () {});
+    })();
+
     function toggleMobileNav() {
       const nav = document.querySelector('.cb-nav');
       const btn = document.getElementById('navHamburger');

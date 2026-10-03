@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://assets.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://assets.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Mechanics of Good Fiction | CraftBeacon</title>
 
@@ -36,7 +36,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 <!-- End Meta Pixel Base Code -->
 <script>fbq('track', 'ViewContent', {content_name: 'Mechanics of Good Fiction'});</script>
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,7 +80,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(247,242,232,0.97);
+      background: rgba(var(--cb-bg-rgb),0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -159,7 +159,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .page-header-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(247,242,232,0.65) 100%);
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(var(--cb-bg-rgb),0.65) 100%);
     }
     .page-header-content {
       position: relative;
@@ -279,7 +279,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       background: var(--cb-surface);
       box-shadow: var(--cb-card-shadow);
       border: 0.5px solid var(--cb-border);
-      border-left: 2px solid rgba(200,144,58,0.35);
+      border-left: 2px solid rgba(var(--cb-accent-rgb),0.35);
       padding: 1.5rem 1.75rem;
       margin-bottom: 1.25rem;
     }
@@ -317,7 +317,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       content: '';
       flex: 1;
       height: 0.5px;
-      background: rgba(200,144,58,0.2);
+      background: rgba(var(--cb-accent-rgb),0.2);
     }
     .word-cloud {
       background: var(--cb-surface);
@@ -340,7 +340,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     }
     .word-tag:hover {
       color: var(--cb-amber);
-      border-color: rgba(200,144,58,0.3);
+      border-color: rgba(var(--cb-accent-rgb),0.3);
     }
 
     /* ── Closing note ── */
@@ -370,7 +370,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .cb-footer {
       padding: 2.25rem 3rem;
       border-top: 0.5px solid var(--cb-border);
-      background: rgba(247,242,232,0.98);
+      background: rgba(var(--cb-bg-rgb),0.98);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -434,11 +434,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <!-- ═══════════════ NAV ═══════════════ -->
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
-      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
     </a>
     <ul class="nav-links">
       <li><a href="/#philosophy">How it works</a></li>
       <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="tools.html">Tools</a></li>
       <li><a href="/#tiers">Pricing</a></li>
       <li><a href="resources.html">Resources</a></li>
       <li><a href="newsletter.html">Newsletter</a></li>

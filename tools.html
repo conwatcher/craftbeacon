@@ -9,40 +9,21 @@
   <meta name="description" content="One-press diagnostics for your manuscript, blurb, query letter, and metadata. Send the work, get a written report back — tools that tell you what is happening in your writing, and never write it for you." />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
 
+  <!-- Shared light palette - must precede the page's own <style> so page rules win -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     /* Light palette — palette-spec.md v1 (14 Aug 2026) */
-    :root {
-      --cb-dark:         #f7f2e8;   /* page background */
-      --cb-surface:      #fffdf8;   /* cards, raised panels */
-      --cb-surface2:     #f0e9db;   /* banded sections, subtle fills */
-      --cb-border:       rgba(28,25,20,0.12);
-
-      --cb-text:         #1c1914;
-      --cb-muted:        #6b6357;
-      /* --cb-dim carries no text here: it measures 3.81:1 on --cb-surface2 and
-         4.13:1 on --cb-dark, both under AA. Use --cb-muted for small text. */
-      --cb-dim:          #7d7466;
-
-      /* Amber split: --cb-amber is text-safe; --cb-amber-light is decorative only */
-      --cb-amber:        #8a5a18;
-      --cb-amber-light:  #c8903a;
-      --cb-amber-dim:    rgba(200,144,58,0.14);
-
-      --cb-red:          #8B1A2F;
-
-      --cb-card-shadow:       0 1px 3px rgba(28,25,20,0.06);
-      --cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
-    }
 
     body {
       background: var(--cb-dark);
@@ -73,7 +54,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(247,242,232,0.97);
+      background: rgba(var(--cb-bg-rgb),0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -182,7 +163,7 @@
       content: '';
       flex: 1;
       height: 0.5px;
-      background: rgba(200,144,58,0.35);
+      background: rgba(var(--cb-accent-rgb),0.35);
     }
     .family-group { margin-bottom: 2.5rem; }
     .family-group:last-child { margin-bottom: 0; }
@@ -694,6 +675,76 @@
         align-items: flex-start;
       }
     }
+
+    /* ════════════════════════════════════════════
+       REVAMP v2 — lighthouse dusk (October 2026)
+       ════════════════════════════════════════════ */
+    body::after { opacity: 0.018; }
+    .page-header { background: var(--cb-wash); border-bottom: 1px solid var(--cb-border); padding: 4rem 3rem 2.25rem; }
+    .page-header-content, .tools-main { max-width: 1060px; }
+    .page-label { font-family: var(--cb-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cb-amber); margin-bottom: 0.9rem; }
+    .page-header h1 { font-size: 3rem; }
+    .trust-strip { max-width: 1060px; margin: 2.25rem auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .trust-strip span { font-size: 0.9rem; font-weight: 300; color: var(--cb-muted); line-height: 1.55; padding-left: 0.9rem; border-left: 2px solid rgba(var(--cb-accent-rgb),0.35); }
+    .trust-strip strong { display: block; font-family: var(--cb-ui); font-size: 0.82rem; font-weight: 600; color: var(--cb-text); }
+
+    .jump-links {
+      position: sticky; top: 64px; z-index: 50;
+      display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap;
+      padding: 0.75rem 1.25rem; background: rgba(var(--cb-bg-rgb),0.94);
+      border-bottom: 1px solid var(--cb-border); backdrop-filter: blur(6px);
+    }
+    .jump-links a {
+      font-family: var(--cb-ui); font-size: 0.8rem; font-weight: 500; color: var(--cb-text);
+      text-decoration: none; padding: 0.35rem 0.9rem; border-radius: 999px;
+      border: 1px solid var(--cb-border); background: var(--cb-surface);
+    }
+    .jump-links a:hover { border-color: var(--cb-amber); color: var(--cb-amber); }
+    .family-group { scroll-margin-top: 8.5rem; }
+
+    .family-label, .section-heading { font-family: var(--cb-ui); font-weight: 600; letter-spacing: 0.14em; }
+    .family-label::after, .section-heading::after { height: 1px; background: var(--cb-border); }
+    .fam-manuscript { --fam: var(--cb-amber); }
+    .fam-metadata   { --fam: var(--cb-violet); }
+    .fam-micro      { --fam: #3d4aa8; }
+    .fam-_          { --fam: var(--cb-dim); }
+    .family-group .family-label { color: var(--fam); }
+
+    .tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; align-items: start; }
+    .tool-card, .soon-card {
+      margin-bottom: 0; background-color: var(--cb-surface);
+      border: 1px solid var(--cb-border); border-left: 4px solid var(--fam, var(--cb-amber));
+      border-radius: var(--cb-radius); overflow: hidden;
+    }
+    .tool-card.featured, .soon-card.featured, .tool-card.open, .bundle-card { grid-column: 1 / -1; }
+    .tool-card.featured, .soon-card.featured {
+      background-image: var(--cb-paper), linear-gradient(120deg, rgba(var(--cb-accent-rgb),0.07), rgba(var(--cb-violet-rgb),0.05));
+      background-size: 240px 240px, 100% 100%; background-repeat: repeat, no-repeat;
+    }
+    .start-tag { display: inline-block; font-family: var(--cb-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cb-amber); margin-bottom: 0.4rem; }
+    .tool-card-head { align-items: center; }
+    .tool-card-head h3, .soon-card h3 { font-size: 1.25rem; }
+    .tool-card.featured .tool-card-head h3, .soon-card.featured h3 { font-size: 1.55rem; }
+    .tool-price { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: var(--fam, var(--cb-amber)); border: 1.5px solid currentColor; border-radius: 8px; padding: 0.35rem 0.85rem; }
+    .soon-card { padding: 1.5rem 1.6rem; }
+    .soon-price { font-weight: 600; color: var(--fam, var(--cb-text)); }
+    .soon-badge { font-weight: 600; letter-spacing: 0.12em; color: var(--cb-muted); border: 1px solid var(--cb-border); border-radius: 999px; padding: 0.28rem 0.75rem; }
+    .soon-grid { display: block; }
+    .soon-grid .family-group { margin-bottom: 2.5rem; }
+
+    .disclosure { border-radius: var(--cb-radius); border: 1px solid var(--cb-border); background-color: var(--cb-surface); }
+    .purchase-banner { border-left-color: var(--cb-amber); border-radius: 8px; }
+    .form-need { border-radius: 0 8px 8px 0; }
+
+    @media (max-width: 768px) {
+      .page-header { padding: 2.75rem 1.25rem 1.75rem; }
+      .page-header h1 { font-size: 2.1rem; }
+      .trust-strip { grid-template-columns: 1fr; gap: 0.9rem; margin-top: 1.5rem; }
+      .jump-links { top: 58px; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; }
+      .jump-links a { white-space: nowrap; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .tools-main { padding: 2rem 1.25rem 3.5rem; }
+    }
   </style>
 
   <link rel="canonical" href="https://thecraftbeacon.com/tools.html" />
@@ -713,11 +764,13 @@
 
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
-      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
     </a>
     <ul class="nav-links">
       <li><a href="/#philosophy">How it works</a></li>
       <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="tools.html" aria-current="page">Tools</a></li>
       <li><a href="/#tiers">Pricing</a></li>
       <li><a href="resources.html">Resources</a></li>
       <li><a href="newsletter.html">Newsletter</a></li>
@@ -731,10 +784,17 @@
 
   <header class="page-header">
     <div class="page-header-content">
+      <div class="page-label">One-press diagnostics</div>
       <h1>Author Tools</h1>
       <p>One-press diagnostics for your manuscript, your blurb, your query letter, and your metadata. No conversation, no account required — you send the work, you get a written report back. Like everything at CraftBeacon, these tools tell you what is happening in your writing. They never write it for you.</p>
     </div>
+    <div class="trust-strip">
+      <span><strong>Never writes for you.</strong> Every report diagnoses; you do the writing.</span>
+      <span><strong>Not stored.</strong> Your manuscript is read, analyzed, and discarded.</span>
+      <span><strong>Fast.</strong> Delivered by email, usually within minutes.</span>
+    </div>
   </header>
+  <nav class="jump-links" id="jumpLinks" aria-label="Tool groups" hidden></nav>
 
   <main class="tools-main">
 
@@ -982,6 +1042,26 @@
           });
       }
 
+      // The free tool leads its group, full width, as the place to start.
+      function markFeatured(card) {
+        card.classList.add('featured');
+        var tag = el('span', 'start-tag', 'Start here');
+        var h3 = card.querySelector('h3');
+        h3.parentNode.insertBefore(tag, h3);
+      }
+
+      // Jump links to each tool group, built from what is actually on the page.
+      var JUMPS = {};
+      function addJumpLink(key, label) {
+        if (JUMPS[key]) return;
+        JUMPS[key] = true;
+        var nav = document.getElementById('jumpLinks');
+        var a = el('a', null, label);
+        a.href = '#family-' + key;
+        nav.appendChild(a);
+        nav.hidden = false;
+      }
+
       function renderAvailable(cfg) {
         var section = document.getElementById('availableTools');
         section.textContent = '';
@@ -993,17 +1073,23 @@
         familyKeys.forEach(function (key) {
           var tools = (cfg.buttons || []).filter(function (t) { return t.family === key; });
           if (!tools.length) return;
-          var group = el('div', 'family-group');
+          var group = el('div', 'family-group fam-' + key);
+          group.id = 'family-' + key;
           group.appendChild(el('div', 'family-label', cfg.families[key].label));
+          var grid = el('div', 'tool-grid');
           tools.forEach(function (tool) {
-            group.appendChild(buildToolCard(tool));
+            var card = buildToolCard(tool);
+            if (tool.price === 0) markFeatured(card);
+            grid.appendChild(card);
           });
           (cfg.bundles || []).forEach(function (bundle) {
             if (bundle.available && bundle.family === key && bundle.paymentUrl) {
-              group.appendChild(buildBundleCard(bundle, cfg));
+              grid.appendChild(buildBundleCard(bundle, cfg));
             }
           });
+          group.appendChild(grid);
           section.appendChild(group);
+          addJumpLink(key, cfg.families[key].label);
         });
         // Launch pause: the Worker lists no live tools, only the coming-soon cards.
         if (!(cfg.buttons || []).length) {
@@ -1022,13 +1108,35 @@
         });
         if (!items.length) return;
 
-        var grid = document.getElementById('soonGrid');
+        var holder = document.getElementById('soonGrid');
+        var grids = {};
+        function gridFor(item) {
+          var key = (item.family && cfg.families && cfg.families[item.family]) ? item.family : '_';
+          if (grids[key]) return grids[key];
+          var group = el('div', 'family-group fam-' + key);
+          if (key !== '_') {
+            group.id = 'family-' + key;
+            group.appendChild(el('div', 'family-label', cfg.families[key].label));
+            addJumpLink(key, cfg.families[key].label);
+          }
+          var g = el('div', 'tool-grid');
+          group.appendChild(g);
+          holder.appendChild(group);
+          grids[key] = g;
+          return g;
+        }
+        items.sort(function (a, b) {
+          var fa = (cfg.families[a.family] || {}).order || 99, fb = (cfg.families[b.family] || {}).order || 99;
+          return fa - fb;
+        });
         items.forEach(function (item) {
+          var grid = gridFor(item);
           var card = el('div', 'soon-card');
           card.id = item.slug || slugify(item.name);
           card.setAttribute('data-name-slug', slugify(item.name));
           card.appendChild(el('h3', null, item.name));
-          card.appendChild(el('p', 'covers', item.covers));
+          var covers = String(item.covers || '');
+          card.appendChild(el('p', 'covers', covers.charAt(0).toUpperCase() + covers.slice(1) + (/[.!?]$/.test(covers) ? '' : '.')));
           var foot = el('div', 'soon-card-foot');
           var price = (item.price !== null && item.price !== undefined)
             ? item.price
@@ -1037,9 +1145,12 @@
             (price !== undefined) ? formatPrice(price) : ''));
           foot.appendChild(el('span', 'soon-badge', 'Coming soon'));
           card.appendChild(foot);
+          if (price === 0) markFeatured(card);
           grid.appendChild(card);
         });
         if (cfg.paused) document.getElementById('soonHeading').textContent = 'Coming soon';
+        // Grouped under family labels, the section heading only repeats itself.
+        if (Object.keys(grids).some(function (k) { return k !== '_'; })) document.getElementById('soonHeading').style.display = 'none';
         document.getElementById('comingSoon').hidden = false;
       }
 

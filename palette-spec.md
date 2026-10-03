@@ -1,3 +1,10 @@
+> **SUPERSEDED IN PART — October 3, 2026 (v2, "lighthouse dusk").** The light palette moved from cream/amber to
+> lavender-white, navy, teal and violet. Values now live in `/assets/theme.css` (variable names unchanged — the
+> `--cb-amber*` variables now hold the teal accent). New: `--cb-violet*`, `--cb-*-rgb` channels, `--cb-wash`,
+> `--cb-paper` (card grain), `--cb-ui` (Inter for interface text), and a shared component layer for nav, buttons and
+> labels. The dark member pages (dashboard, login, payment-confirmed) stay dark, retinted to navy-night with a teal
+> accent. Contrast figures for v2 are recorded beside each value in `theme.css`. The sections below describe v1.
+
 # CRAFTBEACON — PUBLIC PAGE PALETTE SPEC v1
 
 **Decided:** 14 August 2026. Approved from `palette-comparison.html`.

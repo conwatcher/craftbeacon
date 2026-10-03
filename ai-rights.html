@@ -37,7 +37,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 <script>fbq('track', 'ViewContent', {content_name: 'Rights and AI'});</script>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,8 +56,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
        inversion for the light theme. Kept here rather than promoted to the
        shared sheet without asking. */
     :root {
-      --cb-caution:        rgba(200,144,58,0.08);
-      --cb-caution-border: rgba(200,144,58,0.18);
+      --cb-caution:        rgba(var(--cb-accent-rgb),0.08);
+      --cb-caution-border: rgba(var(--cb-accent-rgb),0.18);
     }
 
     body {
@@ -89,7 +89,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(247,242,232,0.97);
+      background: rgba(var(--cb-bg-rgb),0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -168,7 +168,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .page-header-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(247,242,232,0.65) 100%);
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, transparent 30%, rgba(var(--cb-bg-rgb),0.65) 100%);
     }
     .page-header-content {
       position: relative;
@@ -369,7 +369,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       color: var(--cb-amber);
       text-decoration: none;
       word-break: break-word;
-      border-bottom: 0.5px solid rgba(200,144,58,0.35);
+      border-bottom: 0.5px solid rgba(var(--cb-accent-rgb),0.35);
     }
     .guide-item a:hover { border-bottom-color: var(--cb-amber); }
 
@@ -398,7 +398,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       color: var(--cb-amber);
       text-decoration: none;
       word-break: break-word;
-      border-bottom: 0.5px solid rgba(200,144,58,0.35);
+      border-bottom: 0.5px solid rgba(var(--cb-accent-rgb),0.35);
     }
     .source-list a:hover { border-bottom-color: var(--cb-amber); }
 
@@ -450,7 +450,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       content: '';
       flex: 1;
       height: 0.5px;
-      background: rgba(200,144,58,0.2);
+      background: rgba(var(--cb-accent-rgb),0.2);
     }
     .pattern-cell p {
       font-size: 0.88rem;
@@ -459,7 +459,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       line-height: 1.7;
     }
     .pattern-cell.ask-cell {
-      background: rgba(200,144,58,0.04);
+      background: rgba(var(--cb-accent-rgb),0.04);
     }
     .pattern-cell.ask-cell p {
       color: var(--cb-text);
@@ -471,7 +471,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       background: var(--cb-surface);
       box-shadow: var(--cb-card-shadow);
       border: 0.5px solid var(--cb-border);
-      border-left: 2px solid rgba(200,144,58,0.4);
+      border-left: 2px solid rgba(var(--cb-accent-rgb),0.4);
       padding: 1.75rem 2rem;
       margin-bottom: 1.5rem;
     }
@@ -602,7 +602,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .cb-footer {
       padding: 2.25rem 3rem;
       border-top: 0.5px solid var(--cb-border);
-      background: rgba(247,242,232,0.98);
+      background: rgba(var(--cb-bg-rgb),0.98);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -672,11 +672,13 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <!-- ═══════════════ NAV ═══════════════ -->
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
-      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
     </a>
     <ul class="nav-links">
       <li><a href="/#philosophy">How it works</a></li>
       <li><a href="/#lanes">The lanes</a></li>
+      <li><a href="tools.html">Tools</a></li>
       <li><a href="/#tiers">Pricing</a></li>
       <li><a href="resources.html">Resources</a></li>
       <li><a href="newsletter.html">Newsletter</a></li>

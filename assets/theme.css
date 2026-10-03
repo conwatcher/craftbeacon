@@ -1,51 +1,136 @@
 /* ============================================================
-   CraftBeacon — shared light palette
-   Source of truth: palette-spec.md v1 (decided 14 August 2026)
+   CraftBeacon — shared light palette  (v2, "lighthouse dusk")
+   Source of truth: palette-spec.md v2 (October 2026)
 
    Linked by every light-theme public page. Root-relative
    (/assets/theme.css) so 404.html resolves it from any depth.
 
-   NOT linked by dashboard.html — the dashboard keeps the dark
+   NOT linked by dashboard.html — the dashboard keeps its dark
    theme deliberately and carries its own :root block.
 
-   Variable names are identical to the dark theme, so every
-   existing var(--cb-*) reference resolves unchanged. This is a
-   value swap, not a rename. Do not rename anything here.
+   Variable NAMES are unchanged from v1, so every existing
+   var(--cb-*) reference resolves. "amber" is now the teal
+   family — the names describe a role, not a colour:
+     --cb-amber        primary accent, text-safe
+     --cb-amber-light  primary accent, decorative / display 28px+
+   Do not rename anything here.
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 :root {
-  /* ─── Surfaces — inverted from the dark theme ─── */
-  --cb-dark:         #f7f2e8;   /* page background      (dark was #110f0b) */
-  --cb-surface:      #fffdf8;   /* cards, raised panels (dark was #1c1914) */
-  --cb-surface2:     #f0e9db;   /* banded sections, subtle fills (dark was #221f18) */
-  --cb-border:       rgba(28,25,20,0.12);
+  /* ─── Surfaces ─── */
+  --cb-dark:         #f5f4fb;   /* page background — lavender-white */
+  --cb-surface:      #ffffff;   /* cards, raised panels */
+  --cb-surface2:     #edebf7;   /* banded sections, subtle fills */
+  --cb-border:       rgba(27,30,74,0.12);
 
   /* ─── Type ─── */
-  --cb-text:         #1c1914;   /* 15.70:1 on --cb-dark, 17.24:1 on --cb-surface */
-  --cb-muted:        #6b6357;   /* 5.31:1 on --cb-dark — darkened from #9a9080 for contrast */
+  --cb-text:         #1b1e4a;   /* navy — 14.4:1 on --cb-dark, 15.8:1 on white */
+  --cb-muted:        #4f5478;   /* 6.7:1 on --cb-dark, 6.2:1 on --cb-surface2 */
+  --cb-dim:          #8c8fae;   /* DECORATIVE ONLY — rules, separators, ornament */
 
-  /* --cb-dim carries NO text on light pages: 4.13:1 on --cb-dark,
-     4.53:1 on --cb-surface, 3.81:1 on --cb-surface2 — two of three fail
-     WCAG AA and the third clears it by 0.03. Decorative only: rules,
-     separators, disabled fills, ornament. Small text uses --cb-muted. */
-  --cb-dim:          #7d7466;
+  /* ─── Primary accent: teal ─── */
+  --cb-amber:        #0e7268;   /* text-safe: 5.3:1 on --cb-dark; white on it 5.8:1 */
+  --cb-amber-light:  #1c9283;   /* decorative + display type 28px+ (3.2–3.8:1) */
+  --cb-amber-dim:    rgba(14,114,104,0.10);
 
-  /* ─── Amber, split by job ─── palette-spec.md §3
-     The test: if a visitor has to READ the amber to get the meaning it
-     must be --cb-amber. If removing the colour would cost only warmth
-     and not comprehension, --cb-amber-light is correct. */
-  --cb-amber:        #8a5a18;   /* text-safe: 5.29:1 on --cb-dark, 5.81:1 on --cb-surface */
-  --cb-amber-light:  #c8903a;   /* 2.51:1 — DECORATIVE ONLY: icons, borders, rules,
-                                   display type 28px+, solid button fills */
-  --cb-amber-dim:    rgba(200,144,58,0.14);
+  /* ─── Secondary accent: violet ─── */
+  --cb-violet:       #5b47c2;   /* text-safe: 6.2:1 on --cb-dark; white on it 6.7:1 */
+  --cb-violet-light: #8e7ce6;   /* decorative only */
+  --cb-violet-dim:   rgba(91,71,194,0.10);
 
   /* ─── Accent ─── */
-  --cb-red:          #8B1A2F;   /* 8.23:1 on --cb-dark — unchanged from the dark theme */
+  --cb-red:          #8b1a2f;   /* 8.4:1 on --cb-dark — warnings, "other tools" */
 
-  /* ─── Elevation ─── palette-spec.md §4
-     A lighter card separates itself on a dark page. On a light page it
-     does not, and reads as a flat rectangle without this. Hover deepens
-     the shadow rather than shifting colour. Never applied to the dashboard. */
-  --cb-card-shadow:       0 1px 3px rgba(28,25,20,0.06);
-  --cb-card-shadow-hover: 0 4px 12px rgba(28,25,20,0.10);
+  /* ─── Channels, for rgba(var(--x), a) in page CSS ─── */
+  --cb-accent-rgb:   14,114,104;
+  --cb-violet-rgb:   91,71,194;
+  --cb-ink-rgb:      27,30,74;
+  --cb-bg-rgb:       245,244,251;
+
+  /* ─── Atmosphere ─── */
+  --cb-wash:   linear-gradient(135deg, #ece8fb 0%, #eef1fb 48%, #e1f3f0 100%);
+  --cb-wash-soft: linear-gradient(180deg, #f1effb 0%, #f5f4fb 100%);
+  /* Paper grain for cards: a whisper of texture, drawn in code (no image file). */
+  --cb-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
+
+  /* ─── Type families ─── */
+  --cb-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ─── Elevation ─── */
+  --cb-card-shadow:       0 1px 2px rgba(27,30,74,0.05), 0 2px 8px rgba(27,30,74,0.04);
+  --cb-card-shadow-hover: 0 6px 18px rgba(27,30,74,0.10);
+  --cb-radius:            10px;
+}
+
+/* ============================================================
+   SHARED COMPONENT LAYER
+   Every public page duplicates its nav, buttons, and labels in
+   its own <style>. These rules carry one extra element in the
+   selector (body …) so they win over the page copies without
+   !important, and keep the look identical everywhere.
+   ============================================================ */
+
+/* Clean sans for interface text; the serifs stay on reading text and headings. */
+body .cb-nav, body .nav-links a, body .btn-nav-login, body .btn-nav-signup,
+body .btn-primary, body .btn-ghost, body .section-label, body .tier-btn,
+body .tier-name, body .tier-price-note, body .tier-price-annual,
+body .lane-name, body .contrast-label, body .family-label, body .section-heading,
+body .tool-price, body .soon-badge, body .soon-price, body .field-label,
+body .submit-btn, body .buy-btn, body .footer-links a, body .footer-copy,
+body .jump-links a, body .trust-item strong, body .cb-motto {
+  font-family: var(--cb-ui);
+}
+
+/* Navigation */
+body .cb-nav {
+  background: rgba(245,244,251,0.92);
+  border-bottom: 1px solid var(--cb-border);
+}
+body .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; color: var(--cb-muted); }
+body .nav-links a:hover, body .nav-links a[aria-current="page"] { color: var(--cb-amber); }
+body .btn-nav-login { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; color: var(--cb-text); }
+body .btn-nav-signup {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--cb-amber); border: 1.5px solid var(--cb-amber); border-radius: 8px;
+}
+body .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+
+/* Buttons */
+body .btn-primary {
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em; text-transform: none;
+  background: var(--cb-amber); color: #fff; border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(14,114,104,0.22);
+}
+body .btn-primary:hover { background: #0b5f57; color: #fff; }
+body .btn-ghost { font-size: 0.9rem; font-weight: 500; letter-spacing: 0; color: var(--cb-text); }
+body .btn-ghost:hover { color: var(--cb-amber); }
+
+/* Section labels */
+body .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; color: var(--cb-amber); }
+
+/* Footer */
+body .footer-links a { font-size: 0.8rem; letter-spacing: 0.04em; }
+body .footer-copy { font-size: 0.78rem; }
+
+/* Paper grain — opt-in for card surfaces */
+.cb-paper, body .tool-card, body .soon-card, body .lane-card, body .tier-card, body .contrast-card, body .diag-card {
+  background-image: var(--cb-paper);
+  background-size: 240px 240px;
+}
+
+/* The motto — understated, never oversized */
+.cb-motto {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  color: var(--cb-amber);
+}
+
+/* Logo + wordmark in the navigation */
+body .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+body .nav-logo img { height: 34px; width: auto; }
+.nav-wordmark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.28rem; font-weight: 600; letter-spacing: 0.005em;
+  color: var(--cb-text); line-height: 1;
 }

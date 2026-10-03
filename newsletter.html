@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://*.mailerlite.com https://*.mlcdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.mailerlite.com https://*.mlcdn.com; font-src 'self' data: https://fonts.gstatic.com https://*.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com https://*.mailerlite.com; base-uri 'self'; object-src 'none'">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
@@ -10,7 +11,6 @@
     gtag('js', new Date());
     gtag('config', 'G-FRZ967M5K9');
   </script>
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Beacon Brief — CraftBeacon Newsletter</title>
   <meta name="description" content="A biweekly craft newsletter for fiction and narrative nonfiction authors. One craft principle expanded in depth, reader questions answered, and observations from inside the writing practice." />
@@ -34,7 +34,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 <!-- End Meta Pixel Base Code -->
 <script>fbq('track', 'ViewContent', {content_name: 'Newsletter Signup Page'});</script>
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Favicon-NoBG.png" />
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -115,7 +115,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(247,242,232,0.97);
+      background: rgba(var(--cb-bg-rgb),0.97);
       border-bottom: 0.5px solid var(--cb-border);
       backdrop-filter: blur(6px);
     }
@@ -178,7 +178,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-dark);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.014 0.024' numOctaves='6' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.075'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 400px 400px;
     }
 
@@ -186,8 +186,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 100% at 50% 50%, transparent 25%, rgba(247,242,232,0.6) 70%, rgba(247,242,232,0.94) 100%),
-        radial-gradient(ellipse 50% 60% at 50% 40%, rgba(200,144,58,0.08) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 100% at 50% 50%, transparent 25%, rgba(var(--cb-bg-rgb),0.6) 70%, rgba(var(--cb-bg-rgb),0.94) 100%),
+        radial-gradient(ellipse 50% 60% at 50% 40%, rgba(var(--cb-accent-rgb),0.08) 0%, transparent 60%);
     }
 
     .nl-hero-content {
@@ -263,7 +263,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-surface2);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23c8903a'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.033' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.052'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 300px 300px;
     }
     .nl-inside-inner {
@@ -350,7 +350,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       position: absolute;
       inset: 0;
       background: var(--cb-dark);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%23a07830'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.026' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' fill='%231b1e4a'/%3E%3C/svg%3E");
       background-size: 500px 500px;
     }
     .nl-signup-inner {
@@ -423,7 +423,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .nl-privacy-inner p a {
       color: var(--cb-amber);
       text-decoration: none;
-      border-bottom: 0.5px solid rgba(200,144,58,0.4);
+      border-bottom: 0.5px solid rgba(var(--cb-accent-rgb),0.4);
       transition: color 0.2s, border-color 0.2s;
     }
     .nl-privacy-inner p a:hover {
@@ -448,14 +448,14 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       padding: 0.85rem 1.6rem;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 18px rgba(200,144,58,0.45);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 18px rgba(var(--cb-accent-rgb),0.45);
       animation: beacon-pulse 3s ease-in-out infinite;
       transition: background 0.2s, transform 0.15s, opacity 0.35s;
       opacity: 1;
     }
     @keyframes beacon-pulse {
-      0%, 100% { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px rgba(200,144,58,0.3); }
-      50%       { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 28px rgba(200,144,58,0.65); }
+      0%, 100% { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 12px rgba(var(--cb-accent-rgb),0.3); }
+      50%       { box-shadow: 0 4px 14px rgba(0,0,0,0.45), 0 0 28px rgba(var(--cb-accent-rgb),0.65); }
     }
     .nl-floating-subscribe:hover {
       background: var(--cb-amber-light);
@@ -630,7 +630,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   ═══════════════════════════════════ -->
   <nav class="cb-nav" role="navigation" aria-label="Main navigation">
     <a class="nav-logo" href="/">
-      <img src="assets/Logo-NoBG.png" alt="CraftBeacon logo" />
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
     </a>
     <div class="nav-actions">
       <button class="btn-nav-login" onclick="window.location.href='/login.html'">Sign in</button>
