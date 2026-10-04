@@ -1113,7 +1113,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     </ul>
     <div class="nav-actions">
       <button class="btn-nav-login" onclick="window.location.href='/login.html'">Sign in</button>
-      <button class="btn-nav-signup" onclick="fbq('track', 'InitiateCheckout', {content_name: 'Free Tier CTA'}); window.location.href='/login.html'">Start free</button>
+      <button class="btn-nav-signup" onclick="if (window.fbq) fbq('trackCustom', 'StartFreeClick', {placement: 'nav'}); if (window.gtag) gtag('event', 'start_free_click', {placement: 'nav'}); window.location.href='/login.html'">Start free</button>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>

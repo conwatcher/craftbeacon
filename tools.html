@@ -1,8 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://craftbeacon-tools.conwatcher.workers.dev; base-uri 'self'; object-src 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src 'self' https://craftbeacon-tools.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'self'">
   <meta charset="UTF-8" />
+  <!-- Meta Pixel Base Code — autoConfig off: no automatic button/form capture on the page where manuscripts are submitted -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('set', 'autoConfig', false, '1659330215146600');
+fbq('init', '1659330215146600');
+fbq('track', 'PageView');
+fbq('track', 'ViewContent', {content_name: 'Author Tools'});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Base Code -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FRZ967M5K9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FRZ967M5K9');
+</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Author Tools — CraftBeacon</title>
 
@@ -1662,6 +1690,10 @@
             })
             .then(function (res) {
               if (res.status === 202 && res.data && res.data.jobId) {
+                // Conversion events fire only here — the Worker accepted a genuine submission.
+                // Tool slug and list price only; no form contents, no email.
+                if (window.fbq) fbq('trackCustom', 'ReportRequested', { tool: tool.slug, price: Number(tool.price) || 0 });
+                if (window.gtag) gtag('event', 'report_requested', { tool: tool.slug, price: Number(tool.price) || 0 });
                 if (premiumActive && allowance) allowance.remaining = Math.max(0, allowance.remaining - 1);
                 toWorking(res.data.message, res.data.jobId, email);
               } else {
