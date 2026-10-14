@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src 'self' https://craftbeacon-tools.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src 'self' https://hnhpyvvfagtkcclghikh.supabase.co https://craftbeacon-tools.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'self'">
   <meta charset="UTF-8" />
   <!-- Meta Pixel Base Code — autoConfig off: no automatic button/form capture on the page where manuscripts are submitted -->
 <script>
@@ -773,6 +773,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <meta name="twitter:title" content="Author Tools — CraftBeacon" />
   <meta name="twitter:description" content="One-press diagnostics for your manuscript, blurb, query letter, and metadata. Send the work, get a written report back — never written for you." />
   <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+  <!-- Supabase Auth: renews member sign-in so tools recognise logged-in members -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -789,9 +791,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       <li><a href="newsletter.html">Newsletter</a></li>
     </ul>
     <div class="nav-actions">
-      <!-- Supabase login page: keeps this page's CSP scoped to the Worker only -->
-      <a class="btn-nav-login" href="/login.html">Sign in</a>
-      <a class="btn-nav-signup" href="/login.html">Start free</a>
+      <a class="btn-nav-login" id="navSignIn" href="/login.html">Sign in</a>
+      <a class="btn-nav-signup" id="navStartFree" href="/login.html">Start free</a>
     </div>
   </nav>
 
@@ -1004,8 +1005,43 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       window.addEventListener('hashchange', function () { if (CONFIG) landOnTarget(); });
 
       // Signed-in visitors carry their dashboard sign-in here automatically
-      // (same site, same browser storage). Sent with each submission so the
-      // Worker can verify who is asking; an expired session is simply not sent.
+      // (same site, same browser storage). The Supabase client renews an
+      // expired access token from the stored refresh token, so a member who
+      // closed the dashboard an hour ago is still recognised here.
+      // Falls back to a raw storage read if the library failed to load.
+      var sbClient = null;
+      try {
+        if (window.supabase) {
+          sbClient = window.supabase.createClient(
+            'https://hnhpyvvfagtkcclghikh.supabase.co',
+            'sb_publishable_ntCnK3PSQt5WKiITrxZpDw_vmYN2qJn',
+            { auth: { flowType: 'pkce', detectSessionInUrl: false } }
+          );
+        }
+      } catch (e) { sbClient = null; }
+
+      function getSessionToken() {
+        if (!sbClient) return Promise.resolve(currentSessionToken());
+        return sbClient.auth.getSession()
+          .then(function (res) {
+            var s = res && res.data && res.data.session;
+            return (s && s.access_token) || null;
+          })
+          .catch(function () { return currentSessionToken(); });
+      }
+
+      // Signed-in members get a way back to their dashboard instead of "Sign in".
+      function updateNavForMember() {
+        if (!ME || !ME.signedIn) return;
+        var signIn = document.getElementById('navSignIn');
+        var startFree = document.getElementById('navStartFree');
+        if (signIn) signIn.style.display = 'none';
+        if (startFree) {
+          startFree.textContent = 'My Dashboard';
+          startFree.href = '/dashboard.html';
+        }
+      }
+
       function currentSessionToken() {
         try {
           var raw = localStorage.getItem('sb-hnhpyvvfagtkcclghikh-auth-token');
@@ -1022,11 +1058,11 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       // Who is signed in and, for Premium, what's included. Never blocks the
       // page: no session, or any failure, simply means the normal buy flow.
       function loadMe() {
-        var token = currentSessionToken();
-        if (!token) return Promise.resolve(null);
-        return fetch(RELAY + '/me', { headers: { 'Authorization': 'Bearer ' + token } })
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .catch(function () { return null; });
+        return getSessionToken().then(function (token) {
+          if (!token) return null;
+          return fetch(RELAY + '/me', { headers: { 'Authorization': 'Bearer ' + token } })
+            .then(function (r) { return r.ok ? r.json() : null; });
+        }).catch(function () { return null; });
       }
 
       function loadConfig() {
@@ -1039,7 +1075,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
             return r.json();
           })
           .then(function (cfg) {
-            return mePromise.then(function (me) { ME = me; return cfg; });
+            return mePromise.then(function (me) { ME = me; updateNavForMember(); return cfg; });
           })
           .then(function (cfg) {
             CONFIG = cfg;
@@ -1678,10 +1714,12 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
           var email = inputs.email ? String(inputs.email.value).trim() : '';
 
           var submitOpts = { method: 'POST', body: fd };
-          var sessionToken = currentSessionToken();
-          if (sessionToken) submitOpts.headers = { 'Authorization': 'Bearer ' + sessionToken };
 
-          fetch(RELAY + '/submit?tool=' + encodeURIComponent(tool.slug), submitOpts)
+          getSessionToken()
+            .then(function (sessionToken) {
+              if (sessionToken) submitOpts.headers = { 'Authorization': 'Bearer ' + sessionToken };
+              return fetch(RELAY + '/submit?tool=' + encodeURIComponent(tool.slug), submitOpts);
+            })
             .then(function (r) {
               return r.json().then(
                 function (d) { return { status: r.status, data: d }; },

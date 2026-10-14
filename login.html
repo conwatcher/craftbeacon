@@ -264,6 +264,24 @@
         <div class="section-label">Check your email</div>
         <h1>We've sent you a link</h1>
         <p>Click the link in the email to sign in — no need to come back here. Open it in this same browser for the smoothest sign-in. It may take a minute to arrive; check spam if it doesn't show up.</p>
+
+        <div class="login-code">
+          <p class="login-sub" style="margin-top:1.5rem;">Reading your email on a different device, or the link didn't work? Type the code from the same email here instead.</p>
+          <form class="login-form" id="codeForm">
+            <input
+              type="text"
+              id="codeInput"
+              class="login-input"
+              placeholder="Code from your email"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="10"
+              required
+            />
+            <button type="submit" class="login-submit" id="codeBtn">Sign in with code</button>
+          </form>
+          <p class="login-status error" id="codeError" hidden></p>
+        </div>
       </div>
 
     </div>
@@ -281,9 +299,12 @@
     var idleView   = document.getElementById('loginIdle');
     var sentView   = document.getElementById('loginSent');
 
+    var sentEmail = '';
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var email = emailInput.value.trim();
+      sentEmail = email;
       if (!email) return;
 
       errorEl.hidden = true;
@@ -304,6 +325,36 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send sign-in link';
       });
+    });
+
+    // Code fallback: works on any device, because it doesn't depend on the
+    // browser that requested the link (unlike the link itself under PKCE).
+    var codeForm  = document.getElementById('codeForm');
+    var codeInput = document.getElementById('codeInput');
+    var codeBtn   = document.getElementById('codeBtn');
+    var codeError = document.getElementById('codeError');
+
+    codeForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var code = codeInput.value.replace(/\s+/g, '');
+      if (!code || !sentEmail) return;
+
+      codeError.hidden = true;
+      codeBtn.disabled = true;
+      codeBtn.textContent = 'Checking…';
+
+      sb.auth.verifyOtp({ email: sentEmail, token: code, type: 'email' })
+        .then(function (result) {
+          if (result.error) throw result.error;
+          window.location.href = '/dashboard.html';
+        })
+        .catch(function (err) {
+          console.error('Code sign-in failed:', err);
+          codeError.textContent = "That code didn't work. It may have expired — check you're using the newest email, or go back and request a fresh one.";
+          codeError.hidden = false;
+          codeBtn.disabled = false;
+          codeBtn.textContent = 'Sign in with code';
+        });
     });
   </script>
 
