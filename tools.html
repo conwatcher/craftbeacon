@@ -874,7 +874,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     <section class="tools-section">
       <div class="disclosure">
         <h2>What happens to your work</h2>
-        <p>We keep three things: your email address, a running count of the words you have submitted, and your finished report for seven days. Your manuscript itself is not stored — it is read, analyzed, and discarded when your report is written. Reports are generated using the Anthropic API, which does not train on submitted content and deletes inputs and outputs within thirty days.</p>
+        <p>We keep three things: your email address, a running count of the words you have submitted, and your finished report for seven days. Your manuscript itself is not stored — it is read, analyzed, and discarded when your report is written. To enforce the free report's three-a-day limit, we also hold a count tied to your IP address for 24 hours; it then deletes itself. Reports are generated using the Anthropic API, which by default does not train on submitted content and deletes inputs and outputs within thirty days (longer only if a request is flagged under Anthropic's usage policy).</p>
         <p>You are responsible for ensuring your use of these tools complies with the laws and regulations that apply where you live and work.</p>
       </div>
     </section>
