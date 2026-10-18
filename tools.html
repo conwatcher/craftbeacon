@@ -1055,6 +1055,21 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
       window.addEventListener('hashchange', function () { if (CONFIG) landOnTarget(); });
 
+      // Meta Pixel Purchase event for a buyer just back from Stripe. Fires once:
+      // PURCHASED is read from the address bar and stripped on first load, so a
+      // refresh or the Back button can't send it again. The price comes from
+      // /config, so it follows any price change in the Worker.
+      function trackPurchase(cfg) {
+        if (!PURCHASED || typeof window.fbq !== 'function') return;
+        var item = purchasedBundle() ||
+          (cfg.buttons || []).filter(function (t) { return t.slug === PURCHASED; })[0];
+        if (!item) return;
+        var data = { currency: 'USD', content_type: 'product',
+          content_ids: [item.slug || PURCHASED], content_name: item.name || PURCHASED };
+        if (typeof item.price === 'number' && item.price > 0) data.value = item.price;
+        try { window.fbq('track', 'Purchase', data); } catch (e) { /* tracking never blocks the page */ }
+      }
+
       // Signed-in visitors carry their dashboard sign-in here automatically
       // (same site, same browser storage). The Supabase client renews an
       // expired access token from the stored refresh token, so a member who
@@ -1133,6 +1148,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
             renderAvailable(cfg);
             renderComingSoon(cfg);
             landOnTarget();
+            trackPurchase(cfg);
           })
           .catch(function () {
             var status = document.getElementById('loadStatus');
