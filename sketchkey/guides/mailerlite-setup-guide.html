@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Setting up your mailing list — MailerLite</title>
+<style>
+  :root{
+    --paper:#f6f8f7;
+    --paper-raised:#ffffff;
+    --ink:#20302d;
+    --body:#333f3c;
+    --muted:#67726d;
+    --accent:#2f6f62;
+    --accent-deep:#245449;
+    --accent-wash:#e6efec;
+    --line:#dbe3df;
+    --tbc-bg:#fbf1dd;
+    --tbc-line:#e4c684;
+    --tbc-ink:#7a5a17;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0;background:var(--paper);color:var(--body);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px;}
+
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 14px;font-family:var(--sans);z-index:10;}
+  .skip:focus{left:12px;top:12px;}
+
+  header.masthead{background:var(--ink);color:var(--paper);padding:44px 0 40px;border-bottom:3px solid var(--accent);}
+  .eyebrow{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9fc4ba;margin:0 0 14px;}
+  h1{font-family:var(--sans);font-weight:600;font-size:30px;line-height:1.2;margin:0 0 14px;color:#fff;}
+  header.masthead p{margin:0 0 10px;color:#c8d6d1;font-size:17px;max-width:54ch;}
+
+  nav.toc{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:20px 22px 22px;margin:34px 0 8px;}
+  nav.toc h2{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 14px;}
+  nav.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc;}
+  nav.toc li{counter-increment:toc;}
+  nav.toc a{display:flex;gap:12px;align-items:baseline;padding:7px 0;color:var(--body);text-decoration:none;border-bottom:1px solid var(--line);font-size:16.5px;}
+  nav.toc li:last-child a{border-bottom:none;}
+  nav.toc a::before{content:counter(toc,decimal-leading-zero);font-family:var(--sans);font-size:12px;color:var(--accent);font-weight:700;min-width:22px;}
+
+  section{padding:34px 0 6px;border-top:1px solid var(--line);margin-top:22px;}
+  section:first-of-type{border-top:none;margin-top:8px;}
+  .sec-num{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;display:block;margin-bottom:8px;}
+  h2.sec{font-family:var(--sans);font-weight:600;font-size:24px;line-height:1.25;color:var(--ink);margin:0 0 16px;}
+  h3{font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);margin:26px 0 8px;}
+  p{margin:0 0 16px;}
+  strong{color:var(--ink);}
+  a{color:var(--accent-deep);}
+
+  ol.steps{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:step;}
+  ol.steps > li{counter-increment:step;position:relative;padding-left:40px;margin-bottom:14px;}
+  ol.steps > li::before{
+    content:counter(step);position:absolute;left:0;top:1px;
+    width:26px;height:26px;border-radius:50%;background:var(--accent-wash);color:var(--accent-deep);
+    font-family:var(--sans);font-size:13px;font-weight:700;text-align:center;line-height:26px;
+  }
+  ul{margin:0 0 16px;padding-left:0;list-style:none;}
+  ul li{position:relative;padding-left:24px;margin-bottom:10px;}
+  ul li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+
+  .callout{background:var(--accent-wash);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;margin:4px 0 20px;}
+  .callout p{margin:0;color:var(--accent-deep);font-size:17px;}
+  .callout p + p{margin-top:10px;}
+
+  .sendme{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:6px 0 20px;}
+  .sendme h3{margin-top:0;}
+  .sendme ul{margin-bottom:0;}
+
+  .tbc{background:var(--tbc-bg);border:1px solid var(--tbc-line);border-radius:4px;padding:1px 7px;font-family:var(--sans);font-size:14px;color:var(--tbc-ink);}
+  .note{color:var(--muted);font-size:16px;}
+  h3[id]{scroll-margin-top:16px;}
+
+  figure.shot{margin:6px 0 22px;}
+  figure.shot img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff;box-shadow:0 1px 3px rgba(32,48,45,.08);}
+  figure.shot figcaption{font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.45;color:var(--ink);margin-top:10px;padding-left:12px;border-left:3px solid var(--accent);}
+  @media print{figure.shot{break-inside:avoid;}}
+
+  header.masthead p.tip{font-size:15px;color:#9fc4ba;}
+  .print-btn{margin-top:8px;font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink);background:var(--paper);border:0;border-radius:6px;padding:9px 16px;cursor:pointer;}
+  .print-btn:hover{background:#fff;}
+  .print-btn:focus-visible{outline:2px solid #9fc4ba;outline-offset:3px;}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0 60px;color:var(--muted);font-size:16px;}
+
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+  @media print{
+    body{background:#fff;font-size:12pt;}
+    .wrap{max-width:100%;padding:0;}
+    header.masthead{background:#fff;color:var(--ink);padding:0 0 18px;}
+    header.masthead h1{color:var(--ink);}
+    header.masthead p{color:var(--body);}
+    .eyebrow{color:var(--accent-deep);}
+    .callout,.sendme{background:#fff;}
+    .tbc{background:#fff;border:1px solid #999;color:#000;}
+    nav.toc,.skip,.print-btn,header.masthead p.tip{display:none;}
+    section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<!--
+  BASE COPY. Send as-is; client copies are filled versions saved in each client folder.
+  Contact email: Find & Replace All on sketchkey@thecraftbeacon.com
+-->
+
+<a class="skip" href="#start">Skip to the guide</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Setup guide · MailerLite</p>
+    <h1>Setting up your mailing list</h1>
+    <p>This guide walks you through creating your MailerLite account, setting it up properly, and gathering the few pieces I need to connect it to your website.</p>
+    <p class="tip">Tip: keep this guide open in one window and MailerLite in another, side by side.</p>
+    <button type="button" class="print-btn" onclick="window.print()">Print this guide</button>
+  </div>
+</header>
+
+<main class="wrap" id="start">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>What's in this guide</h2>
+    <ol>
+      <li><a href="#before">Before you start</a></li>
+      <li><a href="#account">Create your account</a></li>
+      <li><a href="#approval">Getting approved (later)</a></li>
+      <li><a href="#domain">Connect your email address</a></li>
+      <li><a href="#group">Create your mailing list</a></li>
+      <li><a href="#embed">Make your signup form</a></li>
+      <li><a href="#popup">Pop-up form (optional)</a></li>
+      <li><a href="#settings">Two things to check</a></li>
+      <li><a href="#send">What to send me</a></li>
+    </ol>
+  </nav>
+
+  <!-- 01 -->
+  <section id="before" aria-labelledby="before-h">
+    <span class="sec-num">Step 01</span>
+    <h2 class="sec" id="before-h">Before you start</h2>
+    <p>Your mailing list belongs to you, the same as your website. The account is in your name, and your subscribers are yours to keep, wherever you take them. I never hold the login.</p>
+    <h3>You'll need</h3>
+    <ul>
+      <li>An email address on your own domain, such as <strong>hello@yourauthorname.com</strong>. MailerLite won't send newsletters from Gmail, Hotmail or similar addresses. Don&#39;t have one yet? It&#39;s usually free; see just below.</li>
+      <li>About 45 minutes.</li>
+      <li>A place to paste a few pieces of information to send me, such as a blank email.</li>
+    </ul>
+    <h3>How this guide is written</h3>
+    <p>Each step names the menu, tab or button to use, exactly as MailerLite labels it, rather than describing where it sits on the screen. If you use a screen reader, search the page for that name. MailerLite updates its layout from time to time. If a name doesn't match, look for the closest wording, or stop and ask me.</p>
+    <h3 id="address">Getting an address on your domain</h3>
+    <p>You don't need a new inbox. The company you bought your web address from, your <strong>registrar</strong>, can usually <strong>forward</strong> an address such as hello@ to the inbox you already use, free of charge. MailerLite's emails, and any replies from your readers, will then arrive where you already read your mail.</p>
+    <ol class="steps">
+      <li>Sign in to your registrar's account and open your domain.</li>
+      <li>Look for <strong>Email forwarding</strong>, <strong>Mail forwarding</strong> or <strong>Forwarders</strong>. It may be listed under <strong>Email</strong>.</li>
+      <li>Create a new forwarding address. In the address box type <strong>hello</strong>. As the destination, enter the email address you use every day. Save.</li>
+      <li>From any other email account, send a short test to your new address, and check that it arrives in your usual inbox.</li>
+    </ol>
+    <div class="callout">
+      <p><strong>Happy to do this one together</strong>, on a call or by text. Every registrar arranges its screens a little differently.</p>
+    </div>
+    <p class="note">Forwarding only receives mail, so you can't write everyday emails <em>from</em> this address. MailerLite does all the sending for your newsletters, so that doesn't matter here. If you ever want to send ordinary emails from it too, your domain company can add a small mailbox for a modest monthly fee, and nothing else needs to change.</p>
+    <div class="callout">
+      <p><strong>You don't have to do this alone.</strong> If any step is unclear, call or text me, or we can go through it together on a video call or over Messenger.</p>
+      <p><strong>Never send me your password.</strong> Nothing in this guide needs it. Everything I ask for at the end is safe to share by email.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="account" aria-labelledby="account-h">
+    <span class="sec-num">Step 02</span>
+    <h2 class="sec" id="account-h">Create your account</h2>
+    <ol class="steps">
+      <li>Go to <strong>mailerlite.com</strong> and choose <strong>Sign up</strong>. The free plan is all you need.</li>
+      <li>Sign up using your own-domain email address from Step 01.</li>
+      <li>MailerLite emails you a link to confirm your address. Open that email and follow the link.</li>
+      <li>Log in. MailerLite asks a few short questions about you. Answer them as below, choosing <strong>Continue</strong> after each.</li>
+    </ol>
+    <h3>The setup questions</h3>
+    <ul>
+      <li><strong>How many email subscribers do you have?</strong> If you're starting out, choose <strong>Less than 500</strong>. For <strong>Which marketing tool are you moving from?</strong> choose <strong>I'm starting fresh</strong>, unless you already use another newsletter service.</li>
+      <li><strong>What industry is your business in?</strong> Choose <strong>Author</strong> from the list. You can start typing it to find it quickly.</li>
+      <li><strong>Your business website</strong> says optional, but fill it in. It helps when MailerLite reviews your account. If your site isn't live yet, enter the address anyway.</li>
+      <li><strong>Your address.</strong> This is required by law and appears at the foot of every newsletter. It doesn't have to be your home; see Step 08.</li>
+    </ul>
+    <figure class="shot">
+      <img src="images/mailerlite/01-onboarding-subscribers.png" alt="MailerLite question: How many email subscribers do you have? with Less than 500 selected, and a box asking which marketing tool you are moving from, set to I'm starting fresh." loading="lazy">
+      <figcaption>Starting from scratch is normal. Most authors begin here.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/02-onboarding-industry.png" alt="MailerLite question: What industry is your business in? with Author chosen, and an optional box for your business website." loading="lazy">
+      <figcaption>Choose Author, and fill in your website even though it says optional.</figcaption>
+    </figure>
+    <ul>
+      <li><strong>What do you want to start with?</strong> Choose <strong>Get more subscribers</strong>. That matches what we're building: a signup form on your website.</li>
+    </ul>
+    <figure class="shot">
+      <img src="images/mailerlite/03-onboarding-start-with.png" alt="MailerLite question: What do you want to start with? with three options. Get more subscribers is selected." loading="lazy">
+      <figcaption>Choose Get more subscribers.</figcaption>
+    </figure>
+    <h3>Your dashboard</h3>
+    <p>You'll land on your <strong>Dashboard</strong>, with a menu down the left side. This guide uses that menu to get around. Two things you'll notice:</p>
+    <ul>
+      <li><strong>A "Let's get you started" checklist.</strong> You can ignore it, or choose <strong>Dismiss checklist</strong> and confirm when asked. This guide covers everything you need, in a better order.</li>
+      <li><strong>"Trial · 14 days left" and an Upgrade button.</strong> New accounts get a free two-week taste of the paid features, then move to the free plan on their own. Nothing is charged and nothing breaks. You don't need to upgrade, so ignore the <strong>Upgrade</strong> button.</li>
+    </ul>
+    <figure class="shot">
+      <img src="images/mailerlite/04-dashboard-checklist.png" alt="The MailerLite Dashboard. The left menu lists Dashboard, Subscribers, Campaigns, Automations, Forms, Sites, Products, Account settings, Integrations and File manager. A Let's get you started checklist fills the main area, with Dismiss checklist at the bottom right." loading="lazy">
+      <figcaption>The left-hand menu is how you'll find everything in this guide.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 03 -->
+  <section id="approval" aria-labelledby="approval-h">
+    <span class="sec-num">Step 03</span>
+    <h2 class="sec" id="approval-h">Getting approved (later)</h2>
+    <p>MailerLite reviews every account before it can send newsletters. This is how they keep spammers out, which is part of why their emails reach inboxes reliably.</p>
+    <p>The review doesn't happen during setup. It usually comes up <strong>the first time you go to send a newsletter</strong>, so there's nothing to do now. When it appears, answer plainly:</p>
+    <ul>
+      <li><strong>What you'll send:</strong> news about your books, new releases and events.</li>
+      <li><strong>Where your subscribers come from:</strong> readers who sign up on your website. Say so directly.</li>
+      <li><strong>Your website:</strong> your web address. If the site isn't finished yet, say it's launching soon.</li>
+    </ul>
+    <div class="callout">
+      <p><strong>Never say you'll be importing a list of people who didn't sign up</strong>, such as contacts from your phone or a bought list. That alone can get an account refused, and the decision is usually final.</p>
+    </div>
+    <p>Approval can take anywhere from minutes to a few days. If you're declined, tell me before contacting MailerLite.</p>
+  </section>
+
+  <!-- 04 -->
+  <section id="domain" aria-labelledby="domain-h">
+    <span class="sec-num">Step 04</span>
+    <h2 class="sec" id="domain-h">Connect your email address</h2>
+    <p>This step tells email providers that MailerLite is allowed to send on your behalf. Without it, your newsletters are likely to land in spam. It's called <em>domain authentication</em>.</p>
+    <p>Most of the time MailerLite can do this for you. It signs in to your registrar, the company you bought your web address from, and adds the records itself. Your part is a few clicks and one sign-in.</p>
+    <ol class="steps">
+      <li>In the left menu, choose <strong>Account settings</strong>. It opens its own menu. Choose <strong>Domains</strong>.</li>
+      <li>Under <strong>Sending domains</strong>, choose <strong>Add domain</strong>.</li>
+      <li>Enter your own-domain email address and choose <strong>Save</strong>. MailerLite sends a confirmation email to it. If your address forwards to your usual inbox, look for it there. Open it and confirm.</li>
+      <li>Back on <strong>Domains</strong>, choose <strong>Authenticate</strong> next to your domain.</li>
+      <li>If MailerLite offers <strong>Continue</strong> to set it up automatically, choose it. A new tab opens at your registrar. Sign in there and approve the change.</li>
+      <li>Return to the MailerLite tab. When your domain shows a green <strong>Authenticated</strong> badge, this step is done.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/mailerlite/05-domains-empty.png" alt="Account settings, Domains page, before anything is added. The Sending domains box says No sending domains, with an Add domain button." loading="lazy">
+      <figcaption>Where you start: Account settings, then Domains.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/06-add-domain-dialog.png" alt="The Add sending domain window, asking for an email address, with Cancel and Save buttons." loading="lazy">
+      <figcaption>Enter your own-domain address, then Save.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/16-authenticated-badge.png" alt="The Sending domains box with one domain listed. Its status is a green Authenticated badge. Beside it is a grey Add custom domain button." loading="lazy">
+      <figcaption>What finished looks like. The domain name is hidden here; yours will show.</figcaption>
+    </figure>
+    <div class="callout">
+      <p><strong>Ignore "Add custom domain"</strong>, and any banner about custom domains or Sites. Those are paid features for a different job. Your newsletter doesn't need them.</p>
+    </div>
+    <h3>If there's no Continue button</h3>
+    <p>Not every registrar is supported. Choose <strong>Or manually authenticate your domain</strong> instead. You'll see two or three records, each with a <strong>Type</strong> (TXT or CNAME), a <strong>Name</strong> (sometimes called Host) and a <strong>Value</strong>. Copy every one of them exactly as shown and paste them into an email to me. Leave the MailerLite page alone; we'll add the records at your registrar together, then come back and choose <strong>Check DNS records</strong>.</p>
+    <p class="note">Manual records must match character for character, so copy rather than retype. They aren't secret; they only prove the connection. Once they're added, it can take up to a day or two for MailerLite to recognise them.</p>
+  </section>
+
+  <!-- 05 -->
+  <section id="group" aria-labelledby="group-h">
+    <span class="sec-num">Step 05</span>
+    <h2 class="sec" id="group-h">Create your mailing list</h2>
+    <p>MailerLite calls a mailing list a <strong>group</strong>. You need one, so that everyone who signs up on your website lands in the same place.</p>
+    <ol class="steps">
+      <li>In the left menu, choose <strong>Subscribers</strong>, then the <strong>Groups</strong> tab.</li>
+      <li>Choose <strong>Create group</strong>.</li>
+      <li>Name it <strong>Newsletter</strong> and save.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/mailerlite/07-groups-empty.png" alt="Subscribers page, Groups tab, with no groups yet and a Create group button in the middle." loading="lazy">
+      <figcaption>Subscribers, then Groups.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/08-group-created.png" alt="The Groups tab now listing one group called Newsletter, with 0 subscribers." loading="lazy">
+      <figcaption>Done: your Newsletter group, ready for signups.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 06 -->
+  <section id="embed" aria-labelledby="embed-h">
+    <span class="sec-num">Step 06</span>
+    <h2 class="sec" id="embed-h">Make your signup form</h2>
+    <p>This is the form that sits on a page of your website, where readers type their email address to join.</p>
+    <ol class="steps">
+      <li>In the left menu, choose <strong>Forms</strong>, then the <strong>Embedded forms</strong> tab. Choose <strong>Create</strong>.</li>
+      <li>Under <strong>Form name</strong>, type <strong>Website signup</strong>. Under <strong>Type</strong>, choose <strong>Embedded form</strong>. Choose <strong>Save and continue</strong>.</li>
+      <li>On the next screen, <strong>Select subscriber groups</strong>, tick <strong>Newsletter</strong> and choose <strong>Continue</strong>.</li>
+      <li>The form editor opens. Click the heading ("Newsletter") and the line under it, and change them to your own words, such as "Join my readers' list" and one line about what they'll get. The look can stay as it is; I'll match it to your site. Leave the <strong>Settings</strong> tab alone.</li>
+      <li>Choose <strong>Done editing</strong>. You'll land on your form's <strong>Overview</strong> page.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/mailerlite/09-forms-embedded-empty.png" alt="Forms page with three tabs: Pop-ups, Embedded forms and Promotions. Embedded forms is selected, showing Create your first embedded form and a Create button." loading="lazy">
+      <figcaption>Forms, then Embedded forms, then Create. Ignore the Promotions tab.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/10-new-form-details.png" alt="New form screen. Form name reads Website signup. Under Type, Embedded form is selected. Save and continue is at the bottom." loading="lazy">
+      <figcaption>Name it, choose Embedded form, then Save and continue.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/10b-form-choose-group.png" alt="Select subscriber groups screen with the Newsletter group ticked, and a Continue button." loading="lazy">
+      <figcaption>Tick your Newsletter group, then Continue.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/mailerlite/11-form-editor.png" alt="The form editor. A simple form in the middle shows the heading Newsletter, a line of text, an email box and a Subscribe button. Design and Settings tabs are on the right, and Done editing is at the top right." loading="lazy">
+      <figcaption>Change the heading and the line under it, then Done editing.</figcaption>
+    </figure>
+    <h3>Copy the code for me</h3>
+    <ol class="steps">
+      <li>On the <strong>Overview</strong> page, <strong>scroll to the bottom</strong>. The box you need is called <strong>Embed form into your website</strong>.</li>
+      <li>Leave it on the <strong>JavaScript snippet</strong> tab. You'll see two boxes of code, each with a <strong>Copy</strong> button.</li>
+      <li>Copy both, one at a time, and paste them into your email to me, labelled "embedded form".</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/mailerlite/13-embed-code.png" alt="The Embed form into your website box, on the JavaScript snippet tab, showing two dark code boxes, each with a Copy button. Notes about WordPress and Shopify sit underneath." loading="lazy">
+      <figcaption>Two code boxes, two Copy buttons. Part of the code is hidden here; yours will be complete.</figcaption>
+    </figure>
+    <p class="note">Ignore the notes about WordPress and Shopify under the code. They're for other kinds of website.</p>
+  </section>
+
+  <!-- 07 -->
+  <section id="popup" aria-labelledby="popup-h">
+    <span class="sec-num">Step 07</span>
+    <h2 class="sec" id="popup-h">Pop-up form (optional)</h2>
+    <p>A pop-up appears over the page instead of sitting within it. Your signup form already does the main job, so a pop-up is an extra, not a must.</p>
+    <p>If we've agreed your site will have one, <strong>we'll set it up together</strong> on a call. It takes about ten minutes, and choosing a design is easier side by side, especially if you'd like your book cover on it. Nothing to do on your own here.</p>
+  </section>
+
+  <!-- 08 -->
+  <section id="settings" aria-labelledby="settings-h">
+    <span class="sec-num">Step 08</span>
+    <h2 class="sec" id="settings-h">Two things to check</h2>
+    <h3>Double opt-in: on</h3>
+    <p>With double opt-in, a new subscriber gets an email asking them to confirm before they join. It keeps out mistyped addresses and fake signups, and it's your proof that every reader asked to hear from you. That matters under data-protection rules such as the UK's and EU's GDPR.</p>
+    <p>MailerLite usually switches it on for you. To check, open <strong>Forms</strong>, then <strong>Embedded forms</strong>, then your <strong>Website signup</strong> form. On its <strong>Overview</strong> page, the <strong>Double opt-in</strong> switch should be green. If it isn't, switch it on.</p>
+    <figure class="shot">
+      <img src="images/mailerlite/12-form-overview-double-optin.png" alt="The Website signup form's Overview page. On the right, a Double opt-in switch is on and shows green." loading="lazy">
+      <figcaption>The Double opt-in switch, on (green).</figcaption>
+    </figure>
+    <p class="note">You may also find a <strong>Double opt-in for API and integrations</strong> switch under Account settings, Subscribe settings. That one is for other connections, not your website form, so leave it as it is.</p>
+    <h3>Your postal address</h3>
+    <p>The law requires every newsletter to include a postal address in its footer. You entered one when you signed up. To check or change it, open <strong>Account settings</strong>, then <strong>Company profile</strong>.</p>
+    <ul>
+      <li>It doesn't have to be your home. A PO box, a virtual mailbox or a business address all work.</li>
+    </ul>
+  </section>
+
+  <!-- 09 -->
+  <section id="send" aria-labelledby="send-h">
+    <span class="sec-num">Step 09</span>
+    <h2 class="sec" id="send-h">What to send me</h2>
+    <p>One email with everything below is perfect. Paste the code as plain text. If anything is missing or doesn't look right, send what you have and we'll sort out the rest together.</p>
+    <div class="sendme">
+      <h3>Checklist</h3>
+      <ul>
+        <li>Whether your domain shows <strong>Authenticated</strong> (Step 04). If you used the manual route instead, the records: Type, Name and Value for each</li>
+        <li>The <strong>embedded form code</strong> from Step 06: both pieces</li>
+        <li>Confirmation that <strong>double opt-in</strong> is on and your <strong>postal address</strong> is set</li>
+        <li>Whether you'd like a <strong>pop-up</strong>, so we can book ten minutes for it</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <p><strong>Not on the list:</strong> your password, or anything called an "API key" or "token". I don't need either, and you should never send them by email to anyone.</p>
+    </div>
+    <p>Once I have these, I'll connect the form to your site and let you know when to do a test signup. A separate guide covers writing and sending your newsletters.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Stuck on a step, or something on screen doesn't match? Stop there and ask. It's quicker than guessing.</p>
+    <p class="note">Steps last checked against MailerLite: October 2026 · Questions? Call or text me, or email <a href="mailto:sketchkey@thecraftbeacon.com">sketchkey@thecraftbeacon.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
