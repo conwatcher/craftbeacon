@@ -2,3 +2,6 @@
 _gsdata_/
 # Claude Code local session data — not part of the website
 .claude/
+
+# Windows/FUSE leftovers from file handles held open â€” never part of the website
+.fuse_hidden*
