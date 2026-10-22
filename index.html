@@ -1043,6 +1043,31 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
     .trust-item strong { display: block; font-size: 0.85rem; font-weight: 600; color: var(--cb-text); margin-bottom: 0.2rem; }
     .trust-item a { color: var(--cb-amber); white-space: nowrap; }
 
+    /* FAQ */
+    .cb-faq { padding: 5.5rem 3rem; }
+    .faq-inner { max-width: 760px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 2.5rem; }
+    .faq-header h2 { font-family: 'Playfair Display', serif; font-size: 2.3rem; font-weight: 400; color: var(--cb-text); }
+    .faq-item { border-bottom: 1px solid var(--cb-border); }
+    .faq-item:first-of-type { border-top: 1px solid var(--cb-border); }
+    .faq-item summary {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+      font-family: var(--cb-ui); font-size: 0.98rem; font-weight: 500; color: var(--cb-text); line-height: 1.5;
+      padding: 1.1rem 0; cursor: pointer; list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; flex-shrink: 0; font-size: 1.25rem; font-weight: 300; color: var(--cb-amber); }
+    .faq-item[open] summary::after { content: '\2212'; }
+    .faq-item summary:hover { color: var(--cb-amber); }
+    .faq-item summary:focus-visible { outline: 2px solid var(--cb-amber); outline-offset: 2px; }
+    .faq-answer { padding: 0 0 1.25rem; font-size: 1.05rem; font-weight: 400; color: var(--cb-muted); line-height: 1.7; }
+    .faq-answer p { margin: 0; }
+    .faq-answer a { color: var(--cb-amber); text-decoration: underline; }
+    @media (max-width: 768px) {
+      .cb-faq { padding: 3.75rem 1.25rem; }
+      .faq-header h2 { font-size: 1.8rem; }
+    }
+
     .cb-footer { background: var(--cb-surface2); }
     .footer-logo-text { color: var(--cb-text); }
 
@@ -1122,6 +1147,47 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         "alternateName": "Craft Beacon",
         "url": "https://thecraftbeacon.com/",
         "publisher": { "@id": "https://thecraftbeacon.com/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://thecraftbeacon.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is CraftBeacon?",
+            "acceptedAnswer": { "@type": "Answer", "text": "CraftBeacon is an AI writing coach for fiction and narrative nonfiction authors. It diagnoses what isn't working in your manuscript, your author platform or your production plan, then asks the questions that help you fix it yourself." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does CraftBeacon write or rewrite my book?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It never writes for you — no prose, no dialogue, no blurbs, no query letters, no rewrites. It names what is working, what isn't and why, and every word on the page stays yours. That's the point." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is it different from other AI writing tools?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Most AI writing tools generate text for you. CraftBeacon is built on the opposite belief — that your voice is the thing worth protecting. It works like a coach reading over your shoulder: diagnosis and questions, not replacement text." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a free option?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The free tier has no time limit and needs no credit card, and includes up to 30 coaching messages a day. The Manuscript Health Report — a written diagnostic of your manuscript — is also free from the tools page, for up to 150,000 words a year. Paid coaching lanes start at $10 a month." }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to my manuscript when I upload it?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your work is used only to produce your report or coaching reply. It is never used to train AI models, and tool reports are deleted after seven days. The privacy page has the full detail." }
+          },
+          {
+            "@type": "Question",
+            "name": "Which coaching lane should I choose?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Choose by where you are. The Writing Lane is for a draft that isn't landing, the Marketing Lane for building a readership, and the Production Lane for turning a finished manuscript into a published book. Premium covers all three for $29 a month." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I change or cancel my membership?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Members can switch lanes, update payment details or cancel from the Manage billing link in their dashboard. A cancellation takes effect at the end of the current billing period." }
+          }
+        ]
       }
     ]
   }
@@ -1371,6 +1437,48 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
         </div>
       </div>
       <p class="tiers-note">Annual plans available at a reduced rate. No contracts. Cancel anytime.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       FAQ
+       Visible text must match the FAQPage node in the JSON-LD in <head>.
+  ═══════════════════════════════════ -->
+  <section class="cb-faq" id="faq" aria-labelledby="faq-heading">
+    <div class="faq-inner">
+      <div class="faq-header">
+        <div class="section-label" style="justify-content: center;">FAQ</div>
+        <h2 id="faq-heading">Questions authors ask</h2>
+      </div>
+      <details class="faq-item">
+        <summary>What is CraftBeacon?</summary>
+        <div class="faq-answer"><p>CraftBeacon is an AI writing coach for fiction and narrative nonfiction authors. It diagnoses what isn't working in your manuscript, your author platform or your production plan, then asks the questions that help you fix it yourself.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Does CraftBeacon write or rewrite my book?</summary>
+        <div class="faq-answer"><p>No. It never writes for you — no prose, no dialogue, no blurbs, no query letters, no rewrites. It names what is working, what isn't and why, and every word on the page stays yours. That's the point.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How is it different from other AI writing tools?</summary>
+        <div class="faq-answer"><p>Most AI writing tools generate text for you. CraftBeacon is built on the opposite belief — that your voice is the thing worth protecting. It works like a coach reading over your shoulder: diagnosis and questions, not replacement text.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there a free option?</summary>
+        <div class="faq-answer"><p>Yes. The free tier has no time limit and needs no credit card, and includes up to 30 coaching messages a day. The Manuscript Health Report — a written diagnostic of your manuscript — is also free from the <a href="tools.html#manuscript-health-report">tools page</a>, for up to 150,000 words a year. Paid coaching lanes start at $10 a month.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens to my manuscript when I upload it?</summary>
+        <div class="faq-answer"><p>Your work is used only to produce your report or coaching reply. It is never used to train AI models, and tool reports are deleted after seven days. The <a href="privacy.html">privacy page</a> has the full detail.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Which coaching lane should I choose?</summary>
+        <div class="faq-answer"><p>Choose by where you are. The Writing Lane is for a draft that isn't landing, the Marketing Lane for building a readership, and the Production Lane for turning a finished manuscript into a published book. Premium covers all three for $29 a month.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I change or cancel my membership?</summary>
+        <div class="faq-answer"><p>Yes. Members can switch lanes, update payment details or cancel from the Manage billing link in their dashboard. A cancellation takes effect at the end of the current billing period.</p></div>
+      </details>
     </div>
   </section>
 
