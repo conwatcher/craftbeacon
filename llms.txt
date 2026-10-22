@@ -1,0 +1,39 @@
+# CraftBeacon
+
+> CraftBeacon is an AI writing coach for fiction and narrative nonfiction authors. It diagnoses what isn't working in a manuscript, an author platform or a production plan, and asks the questions that help the author fix it. It never writes for the author — no prose, dialogue, blurbs, query letters or rewrites.
+
+CraftBeacon is organized into three coaching lanes: Writing (the craft of the manuscript), Marketing (finding readers) and Production (bringing the book to market). Each lane is $10 a month or $96 a year; Premium covers all three for $29 a month or $276 a year. A free tier has no time limit, needs no credit card and allows up to 30 coaching messages a day; the Manuscript Health Report is free for up to 150,000 words a year. Author work is never used to train AI models.
+
+## Core pages
+
+- [Home](https://thecraftbeacon.com/): what CraftBeacon is, the three coaching lanes and membership pricing
+- [Author tools](https://thecraftbeacon.com/tools.html): one-press written diagnostic reports, including the free Manuscript Health Report
+- [The Beacon Brief](https://thecraftbeacon.com/newsletter.html): biweekly craft newsletter, one topic explored in depth per issue
+
+## Author tools
+
+- [Manuscript Health Report](https://thecraftbeacon.com/tools.html#manuscript-health-report): free whole-manuscript diagnostic
+- [Line-Edit Analysis](https://thecraftbeacon.com/tools.html#line-edit-analysis): sentence-level analysis of about 10,000 words plus writing habits counted across the whole book ($34.99)
+- [Character Consistency](https://thecraftbeacon.com/tools.html#character-consistency-report): tracks characters and continuity across a full manuscript ($19.99)
+- [Opening Chapters Diagnostic](https://thecraftbeacon.com/tools.html#opening-chapters-diagnostic): diagnostic of the opening chapters ($14.99)
+- [Metadata Pack](https://thecraftbeacon.com/tools.html#metadata-pack): retailer search keywords and browse categories ($9.99)
+- [Query Package](https://thecraftbeacon.com/tools.html#query-package): author bio, query letter and blurb diagnostics together ($6.99)
+- [Blurb Diagnostic](https://thecraftbeacon.com/tools.html#blurb-diagnostic): book description diagnostic, fiction ($3.99)
+- [Query Letter Diagnostic](https://thecraftbeacon.com/tools.html#query-letter-diagnostic): query letter diagnostic, fiction ($3.99)
+- [Author Bio Diagnostic](https://thecraftbeacon.com/tools.html#author-bio-diagnostic): author bio diagnostic ($2.99)
+
+## Field guides
+
+- [The author's journey](https://thecraftbeacon.com/journey.html): craft, marketing and production vocabulary from first draft to finished book
+- [The mechanics of good fiction](https://thecraftbeacon.com/craft.html): craft reference for diagnosing why a story isn't working
+- [Reaching readers](https://thecraftbeacon.com/marketing.html): platform defaults, community rules and reader outreach
+- [The business of publishing](https://thecraftbeacon.com/publishing.html): KDP policy, distribution, ISBNs
+- [What nobody tells indie authors](https://thecraftbeacon.com/guide.html): platform policy changes and defaults that work against authors
+- [Rights & AI](https://thecraftbeacon.com/ai-rights.html): authors' work as AI training data, and what authors can do
+- [Author awareness](https://thecraftbeacon.com/awareness.html): patterns and scams authors should recognize
+
+## Optional
+
+- [Author resources](https://thecraftbeacon.com/resources.html): curated, verified official resources for authors
+- [Privacy](https://thecraftbeacon.com/privacy.html): what is collected, how long it is kept, how to request deletion
+- [Terms](https://thecraftbeacon.com/terms.html)
