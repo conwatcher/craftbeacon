@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Your GitHub account — setup and care</title>
+<style>
+  :root{
+    --paper:#f6f8f7;
+    --paper-raised:#ffffff;
+    --ink:#20302d;
+    --body:#333f3c;
+    --muted:#67726d;
+    --accent:#2f6f62;
+    --accent-deep:#245449;
+    --accent-wash:#e6efec;
+    --line:#dbe3df;
+    --tbc-bg:#fbf1dd;
+    --tbc-line:#e4c684;
+    --tbc-ink:#7a5a17;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0;background:var(--paper);color:var(--body);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px;}
+
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 14px;font-family:var(--sans);z-index:10;}
+  .skip:focus{left:12px;top:12px;}
+
+  header.masthead{background:var(--ink);color:var(--paper);padding:44px 0 40px;border-bottom:3px solid var(--accent);}
+  .eyebrow{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9fc4ba;margin:0 0 14px;}
+  h1{font-family:var(--sans);font-weight:600;font-size:30px;line-height:1.2;margin:0 0 14px;color:#fff;}
+  header.masthead p{margin:0 0 10px;color:#c8d6d1;font-size:17px;max-width:54ch;}
+
+  nav.toc{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:20px 22px 22px;margin:34px 0 8px;}
+  nav.toc h2{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 14px;}
+  nav.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc;}
+  nav.toc li{counter-increment:toc;}
+  nav.toc a{display:flex;gap:12px;align-items:baseline;padding:7px 0;color:var(--body);text-decoration:none;border-bottom:1px solid var(--line);font-size:16.5px;}
+  nav.toc li:last-child a{border-bottom:none;}
+  nav.toc a::before{content:counter(toc,decimal-leading-zero);font-family:var(--sans);font-size:12px;color:var(--accent);font-weight:700;min-width:22px;}
+
+  section{padding:34px 0 6px;border-top:1px solid var(--line);margin-top:22px;}
+  section:first-of-type{border-top:none;margin-top:8px;}
+  .sec-num{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;display:block;margin-bottom:8px;}
+  h2.sec{font-family:var(--sans);font-weight:600;font-size:24px;line-height:1.25;color:var(--ink);margin:0 0 16px;}
+  h3{font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);margin:26px 0 8px;}
+  p{margin:0 0 16px;}
+  strong{color:var(--ink);}
+  a{color:var(--accent-deep);}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;background:var(--accent-wash);padding:1px 6px;border-radius:4px;color:var(--ink);}
+
+  ol.steps{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:step;}
+  ol.steps > li{counter-increment:step;position:relative;padding-left:40px;margin-bottom:14px;}
+  ol.steps > li::before{
+    content:counter(step);position:absolute;left:0;top:1px;
+    width:26px;height:26px;border-radius:50%;background:var(--accent-wash);color:var(--accent-deep);
+    font-family:var(--sans);font-size:13px;font-weight:700;text-align:center;line-height:26px;
+  }
+  ul{margin:0 0 16px;padding-left:0;list-style:none;}
+  ul li{position:relative;padding-left:24px;margin-bottom:10px;}
+  ul li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+
+  .callout{background:var(--accent-wash);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;margin:4px 0 20px;}
+  .callout p{margin:0;color:var(--accent-deep);font-size:17px;}
+  .callout p + p{margin-top:10px;}
+
+  .sendme{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:6px 0 20px;}
+  .sendme h3{margin-top:0;}
+  .sendme ul{margin-bottom:0;}
+
+  table.recs{width:100%;border-collapse:collapse;margin:4px 0 16px;font-size:16px;}
+  table.recs th,table.recs td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.recs th{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--muted);}
+  table.recs caption{text-align:left;font-family:var(--sans);font-size:14px;color:var(--muted);padding-bottom:6px;}
+
+  .tbc{background:var(--tbc-bg);border:1px solid var(--tbc-line);border-radius:4px;padding:1px 7px;font-family:var(--sans);font-size:14px;color:var(--tbc-ink);}
+  .note{color:var(--muted);font-size:16px;}
+  figure.shot{margin:6px 0 22px;}
+  figure.shot img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff;box-shadow:0 1px 3px rgba(32,48,45,.08);}
+  figure.shot figcaption{font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.45;color:var(--ink);margin-top:10px;padding-left:12px;border-left:3px solid var(--accent);}
+  @media print{figure.shot{break-inside:avoid;}}
+  ol.steps ul{margin:10px 0 10px;}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0 60px;color:var(--muted);font-size:16px;}
+
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+  @media print{
+    body{background:#fff;font-size:12pt;}
+    .wrap{max-width:100%;padding:0;}
+    header.masthead{background:#fff;color:var(--ink);padding:0 0 18px;}
+    header.masthead h1{color:var(--ink);}
+    header.masthead p{color:var(--body);}
+    .eyebrow{color:var(--accent-deep);}
+    .callout,.sendme{background:#fff;}
+    code{background:#fff;border:1px solid #ccc;}
+    .tbc{background:#fff;border:1px solid #999;color:#000;}
+    nav.toc,.skip{display:none;}
+    section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<!--
+  BASE COPY. Send as-is, no client blanks to fill.
+  To change the contact email, Find & Replace All on: sketchkey@thecraftbeacon.com (Step 04, Step 06, footer link)
+  When GitHub's menus change, re-check the steps and update the "last checked" date in the footer.
+-->
+
+<a class="skip" href="#start">Skip to the guide</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Setup guide · GitHub</p>
+    <h1>Your GitHub account: setup and care</h1>
+    <p>GitHub is where your website lives. This guide covers creating your account, keeping it secure, setting up your site's home and giving me access to it, and the very little you'll ever need to do afterwards.</p>
+  </div>
+</header>
+
+<main class="wrap" id="start">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>What's in this guide</h2>
+    <ol>
+      <li><a href="#what">What GitHub is, and why it's yours</a></li>
+      <li><a href="#account">Create your account</a></li>
+      <li><a href="#secure">Secure it — the step that matters most</a></li>
+      <li><a href="#repo">Create your site's home and add me</a></li>
+      <li><a href="#domain">Switching on your site and connecting your web address</a></li>
+      <li><a href="#send">What to send me</a></li>
+      <li><a href="#after">Afterwards — the very short care guide</a></li>
+    </ol>
+  </nav>
+
+  <!-- 01 -->
+  <section id="what" aria-labelledby="what-h">
+    <span class="sec-num">Step 01</span>
+    <h2 class="sec" id="what-h">What GitHub is, and why it's yours</h2>
+    <p>GitHub stores the files your website is built from, and hosts the site for free. Think of it as the building your site lives in. The account is in your name, so the building is yours, not mine, from the very first day.</p>
+    <ul>
+      <li><strong>It's free.</strong> You won't need a paid plan or a card.</li>
+      <li><strong>Your site's files are public.</strong> Free hosting on GitHub requires it. That's fine: they're the same words and pictures anyone can see on your website. Nothing private ever goes in there.</li>
+      <li><strong>You'll rarely log in.</strong> After setup, most people visit once or twice a year, if that.</li>
+    </ul>
+    <h3>You'll need</h3>
+    <ul>
+      <li>An email address you check regularly. GitHub sends important notices there.</li>
+      <li>Your phone, or a password manager, for the security step.</li>
+      <li>About 20 minutes.</li>
+    </ul>
+    <div class="callout">
+      <p><strong>You don't have to do this alone.</strong> If any step is unclear, or you'd simply rather have company, call or text me. We can also go through it together on a video call or over Messenger.</p>
+      <p><strong>Never send me your password or security codes.</strong> I work on your site through my own account, with permission you give me. I never need your login.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="account" aria-labelledby="account-h">
+    <span class="sec-num">Step 02</span>
+    <h2 class="sec" id="account-h">Create your account</h2>
+    <ol class="steps">
+      <li>Go to <strong>github.com</strong> and choose <strong>Sign up</strong>.</li>
+      <li>Enter an email address you plan to keep for years, and create a strong password. Save it in your password manager if you use one.</li>
+      <li><strong>Choose your username carefully.</strong> It can appear in your site's backup address, so pick something tied to your author name, such as <strong>janesmithauthor</strong> or <strong>janesmithbooks</strong>. Avoid anything personal you'd rather keep private.</li>
+      <li>GitHub asks you to solve a short puzzle to prove you're a person. If you use a screen reader, look for the <strong>audio</strong> option.</li>
+      <li>GitHub emails you a short code. Enter it to confirm your address.</li>
+      <li>If asked to choose a plan, choose <strong>Free</strong>. You can skip any questions about how you'll use GitHub.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/signup-page.png" alt="GitHub's Sign up for GitHub form with boxes for email, password and username, a country menu, an email-preferences tick box, and a green Create account button. Buttons above the form offer Continue with Google or Continue with Apple." loading="lazy">
+      <figcaption>This is the sign-up form. Fill in the three boxes, then choose Create account.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 03 -->
+  <section id="secure" aria-labelledby="secure-h">
+    <span class="sec-num">Step 03</span>
+    <h2 class="sec" id="secure-h">Secure it — the step that matters most</h2>
+    <p>GitHub requires <strong>two-step verification</strong>: after your password, you confirm it's really you with your phone or another device. It may prompt you straight away or within a few weeks. Do it now, while this guide is open.</p>
+    <ol class="steps">
+      <li>Open your profile menu (your picture, top right), then <strong>Settings</strong>, then <strong>Password and authentication</strong>.</li>
+      <li>Choose <strong>Enable two-factor authentication</strong>.</li>
+      <li>Pick a method. Any of these is fine:
+        <ul>
+          <li><strong>A passkey</strong> uses your phone's or computer's fingerprint, face or PIN. It's the most secure and, for many people, the easiest.</li>
+          <li><strong>An authenticator app</strong>, or the <strong>GitHub Mobile</strong> app, shows a fresh code on your phone each time.</li>
+          <li><strong>A text message</strong> to your phone is the simplest, where GitHub offers it. GitHub marks it <em>less secure</em>, so choose one of the others if you can.</li>
+        </ul>
+        If you're not sure which suits you, ask me and we'll pick together.</li>
+      <li>GitHub then shows you a set of <strong>recovery codes</strong>. Download or copy them.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/two-factor-start.png" alt="The Two-factor authentication section of GitHub's Password and authentication settings, saying two-factor authentication is not enabled yet, with a green Enable two-factor authentication button." loading="lazy">
+      <figcaption>Settings, then Password and authentication. Choose the green button to begin.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/github/settings-2FA.png" alt="GitHub's Two-factor authentication settings listing the available methods: Authenticator app, SMS or text message (marked Less secure), Security keys and GitHub Mobile, each with a button, followed by Recovery options with a recovery codes button." loading="lazy">
+      <figcaption>These are your choices. On a new account each will say Add. Pick one. The authenticator app, GitHub Mobile and a passkey are the most secure.</figcaption>
+    </figure>
+    <p class="note">About a month later, GitHub may ask you to sign in and confirm two-step verification once more. That's normal, and it only takes a minute.</p>
+    <div class="callout">
+      <p><strong>Keep your recovery codes somewhere safe and separate</strong>: your password manager, or printed and filed with important papers.</p>
+      <p>If you lose your phone and your recovery codes, GitHub may be unable to give you your account back. Neither can I. This is the one step in this guide that can't be fixed later.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="repo" aria-labelledby="repo-h">
+    <span class="sec-num">Step 04</span>
+    <h2 class="sec" id="repo-h">Create your site's home and add me</h2>
+    <p>Your site's files live in what GitHub calls a <strong>repository</strong>. Think of it as one labelled folder. You create it in your account, then give me permission to work in it, and I build your site straight into it. Nothing is handed over at the end, because it was never anywhere but yours.</p>
+
+    <h3>Create the repository</h3>
+    <ol class="steps">
+      <li>While signed in, choose the <strong>+</strong> in the top-right corner, then <strong>New repository</strong>.</li>
+      <li><strong>Owner</strong> should already show your username.</li>
+      <li>For <strong>Repository name</strong>, type <code>author-website</code>. Once your web address is connected, visitors never see this name.</li>
+      <li>Choose <strong>Public</strong>. Free hosting requires it (see Step 01).</li>
+      <li>Leave every other option as it is, then choose <strong>Create repository</strong>.</li>
+      <li>You'll land on a page with setup instructions written for programmers. You can ignore nearly all of it; that part's mine. The one useful bit is the <strong>Invite collaborators</strong> box near the top, which we use next.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/new-repo.png" alt="GitHub's home page with the plus menu open and New repository highlighted in yellow." loading="lazy">
+      <figcaption>Choose the + at the top right, then New repository.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/github/new-repo-name.png" alt="GitHub's Create a new repository form. The repository name box reads author-website with a green tick saying it is available, visibility is set to Public, and Add README is switched off." loading="lazy">
+      <figcaption>Name it author-website, keep it Public, and leave the rest alone.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/github/new-repo-done.png" alt="The new, empty repository page. Near the top are two boxes: Start coding with Codespaces, and Add collaborators to this repository with an Invite collaborators button." loading="lazy">
+      <figcaption>This is the page you land on. The Invite collaborators box is the one we want.</figcaption>
+    </figure>
+
+    <h3>Add me as a collaborator</h3>
+    <p>A <strong>collaborator</strong> is someone you allow to change the files in one repository. It lets me build your site and, later, make the changes you ask for. You can remove me at any time, and your site keeps running.</p>
+    <ol class="steps">
+      <li>On the page you've just landed on, choose <strong>Invite collaborators</strong>.</li>
+      <li>Type my email address, <strong>sketchkey@thecraftbeacon.com</strong>, select me when I appear, and confirm. If GitHub can't find me that way, try my GitHub username instead: <strong>conwatcher</strong>.</li>
+      <li>GitHub emails me an invitation. Let me know you've sent it, and I'll accept.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/collaborator-add2.png" alt="GitHub's Add people dialog with sketchkey@thecraftbeacon.com entered and a green button reading Add sketchkey@thecraftbeacon.com." loading="lazy">
+      <figcaption>Type my address, then choose the green button.</figcaption>
+    </figure>
+    <p class="note">Left that page? You can get there again: open your repository, choose <strong>Settings</strong> along the top (on a small screen it may be tucked under the <strong>•••</strong> menu), then <strong>Collaborators</strong> under <strong>Access</strong>, then <strong>Add people</strong>. GitHub may ask for your password or security code again. That's normal.</p>
+    <div class="callout">
+      <p>Adding me lets me change the files in this one repository, and nothing else. I can't see your password or your account settings, I can't delete the repository or make it private, and I can't touch anything else in your account.</p>
+    </div>
+
+    <h3>Follow along, if you'd like to</h3>
+    <p>Once I start building, your repository's page shows every change as it happens. Choose <strong>Commits</strong> (next to a small clock icon) to see a dated list of everything I've changed, each with a short note. Look as often or as rarely as you like. You never need to do anything there.</p>
+  </section>
+
+  <!-- 05 -->
+  <section id="domain" aria-labelledby="domain-h">
+    <span class="sec-num">Step 05</span>
+    <h2 class="sec" id="domain-h">Switching on your site and connecting your web address</h2>
+    <p>Once your site is built, two last things connect it to the world: switching it on in GitHub, and pointing your web address at it. Because the repository is yours, GitHub only lets you, the owner, flip these switches. It takes about half an hour, and it's the one part we usually do together.</p>
+    <div class="callout">
+      <p><strong>We'll do this together, however suits you:</strong> a video call, a phone call, Messenger, or texts back and forth. The directions below are here for reference, so you can see what's coming. You don't need to work through them alone, and if you get stuck at any point, I'm a phone call or a text away.</p>
+    </div>
+    <p class="note"><strong>Want to watch it take shape?</strong> Some people like to switch their site on part-way through the build, so they can look in on progress at its real address whenever they like. That's fine. Just know that anyone could come across it before it's finished, so hold off on sharing the address until we're done.</p>
+
+    <h3>A. Prove the address is yours (in your GitHub account)</h3>
+    <ol class="steps">
+      <li>Open your profile menu, then <strong>Settings</strong> (your account's this time), then <strong>Pages</strong> in the left-hand menu.</li>
+      <li>Choose <strong>Add a domain</strong>, type your web address (for example, <strong>janesmithbooks.com</strong>), and confirm.</li>
+      <li>GitHub shows a <strong>TXT record</strong>. Leave the page open; it goes in at your registrar in part C. Afterwards, come back and choose <strong>Verify</strong>.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/repo-add-domain.png" alt="GitHub's Add a verified domain page, with a box asking What domain would you like to add? and a green Add domain button." loading="lazy">
+      <figcaption>Type your web address, with no https:// and no www, then choose Add domain.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/github/repo-add-domain-txt.png" alt="GitHub's Add a DNS TXT record page. Step 1 shows a hostname beginning _github-pages-challenge- followed by a username. Step 2 shows a code to use as the value. Step 3 says to wait for your DNS to change, then choose the green Verify button." loading="lazy">
+      <figcaption>GitHub gives you a name and a code. Keep this page open, and don't choose Verify until the record is added at your registrar.</figcaption>
+    </figure>
+    <p class="note">GitHub shows the name with your web address on the end. At most registrars, including VentraIP, you type only the first part: <code>_github-pages-challenge-</code> and your username. The registrar adds the rest itself.</p>
+    <p class="note">This step stops anyone else's GitHub site from ever using your web address.</p>
+
+    <h3>B. Switch on your site (in your repository)</h3>
+    <p class="note">If Pages says it is <strong>currently disabled</strong> and the branch box reads <strong>None</strong>, that just means I haven't added your site's files yet. There's nothing wrong, and nothing for you to do until I tell you the site is built.</p>
+    <figure class="shot">
+      <img src="images/github/new-repo-pages-disabled.png" alt="The GitHub Pages settings of a brand-new repository. Source is Deploy from a branch, and the Branch box reads None, with a message that GitHub Pages is currently disabled." loading="lazy">
+      <figcaption>What Pages looks like before any files are added.</figcaption>
+    </figure>
+    <ol class="steps">
+      <li>Open your repository, choose <strong>Settings</strong>, then <strong>Pages</strong> in the left-hand menu.</li>
+      <li>Under <strong>Build and deployment</strong>, set <strong>Source</strong> to <strong>Deploy from a branch</strong>. Set the branch to <strong>main</strong>, leave the folder as <strong>/ (root)</strong>, and choose <strong>Save</strong>.</li>
+      <li>Under <strong>Custom domain</strong>, type your web address and choose <strong>Save</strong>. Do this before changing anything at your registrar.</li>
+    </ol>
+    <figure class="shot">
+      <img src="images/github/new-repo-branch.png" alt="The Select branch list in GitHub Pages settings, showing main ticked and None below it, next to a folder box reading / (root) and a Save button." loading="lazy">
+      <figcaption>Pick main, leave the folder as / (root), then choose Save.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/github/new-repo-custom-domain.png" alt="GitHub Pages settings after saving a branch. A Custom domain box with Save and Remove buttons has appeared, and Enforce HTTPS is ticked and greyed out." loading="lazy">
+      <figcaption>The Custom domain box appears once the branch is saved. That's where your web address goes.</figcaption>
+    </figure>
+
+    <h3>C. Point your web address at GitHub (at your registrar)</h3>
+    <p>The company you bought your web address from is called a <strong>registrar</strong>. Namecheap, GoDaddy, Porkbun, Cloudflare and Fasthosts are common ones. Each registrar arranges its screens a little differently, so we'll find the right one together. Look for a section called <strong>DNS</strong>, <strong>DNS records</strong> or <strong>Manage DNS</strong>. The records themselves are the same for every site hosted on GitHub:</p>
+    <table class="recs">
+      <caption>DNS records for GitHub hosting</caption>
+      <thead>
+        <tr><th scope="col">Type</th><th scope="col">Name</th><th scope="col">Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A</td><td>@ (blank on some registrars)</td><td><code>185.199.108.153</code></td></tr>
+        <tr><td>A</td><td>@</td><td><code>185.199.109.153</code></td></tr>
+        <tr><td>A</td><td>@</td><td><code>185.199.110.153</code></td></tr>
+        <tr><td>A</td><td>@</td><td><code>185.199.111.153</code></td></tr>
+        <tr><td>CNAME</td><td>www</td><td><code>your-username.github.io</code> (your GitHub username, then <code>.github.io</code>)</td></tr>
+        <tr><td>TXT</td><td>Shown by GitHub in part A</td><td>Shown by GitHub in part A</td></tr>
+      </tbody>
+    </table>
+    <p class="note">If your registrar already has records with the same Type and Name, those old ones are usually removed first. That's one reason to do this together rather than alone. Changes usually take effect within a few hours, and occasionally up to a day.</p>
+
+    <h3>D. Turn on the padlock (back in your repository)</h3>
+    <ol class="steps">
+      <li>Once your web address opens your site, go back to your repository's <strong>Settings</strong>, then <strong>Pages</strong>.</li>
+      <li>Tick <strong>Enforce HTTPS</strong>. This gives your site the padlock in the address bar. If the box isn't available yet, it can take up to a day to appear. I'll check on it and remind you. (Until your web address is connected, the box looks ticked and greyed out. That's normal.)</li>
+    </ol>
+  </section>
+
+  <!-- 06 -->
+  <section id="send" aria-labelledby="send-h">
+    <span class="sec-num">Step 06</span>
+    <h2 class="sec" id="send-h">What to send me</h2>
+    <div class="sendme">
+      <h3>Checklist</h3>
+      <ul>
+        <li>Your GitHub <strong>username</strong>, as soon as your account exists</li>
+        <li>A note that <strong>two-step verification</strong> is on and your <strong>recovery codes</strong> are saved. Tell me they're saved; don't send them.</li>
+        <li>A note that you've <strong>created the repository</strong> and <strong>added me as a collaborator</strong> using <strong>sketchkey@thecraftbeacon.com</strong>. That's everything I need to start building.</li>
+        <li>Later, when your site is ready: <strong>a time that suits you</strong> to switch it on and connect your web address together</li>
+      </ul>
+    </div>
+    <p>Text, call or email, whichever is easiest. Your username isn't private; it's how GitHub accounts find each other.</p>
+  </section>
+
+  <!-- 07 -->
+  <section id="after" aria-labelledby="after-h">
+    <span class="sec-num">Step 07</span>
+    <h2 class="sec" id="after-h">Afterwards — the very short care guide</h2>
+    <p>Your site needs nothing from you to keep running: no updates, no renewals and no fees on GitHub's side. Changes go through me as they always have. Here's the short list of things that are yours to look after:</p>
+    <h3>Do</h3>
+    <ul>
+      <li><strong>Keep your email address current</strong> in GitHub's settings. If you change email providers, update it there, or you'll miss account notices.</li>
+      <li><strong>Keep your recovery codes safe</strong>, and update your security method if you get a new phone.</li>
+      <li><strong>Read any email from GitHub about your account's security</strong>. If you're unsure whether one is genuine, forward it to me before clicking anything.</li>
+    </ul>
+    <h3>Don't</h3>
+    <ul>
+      <li><strong>Don't delete, rename or make the repository private.</strong> Any of these takes your site offline.</li>
+      <li><strong>Don't edit files directly</strong> unless we've agreed it together. It's easy to undo, but easier not to need to.</li>
+      <li><strong>Don't give anyone else access</strong> unless you mean to. Collaborators can change your site.</li>
+    </ul>
+    <h3>If you ever move on</h3>
+    <p>Everything is already yours. To end my access, open your repository's <strong>Settings</strong>, then <strong>Collaborators</strong>, and remove me. Your site keeps running exactly as it is. Your ownership record lists everything else you'd need.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>If anything on screen doesn't match this guide, stop and ask. GitHub moves its menus around from time to time, and a quick question beats a wrong turn.</p>
+    <p class="note">Steps last checked against GitHub: October 2026 · Questions? Call or text me, or email <a href="mailto:sketchkey@thecraftbeacon.com">sketchkey@thecraftbeacon.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
