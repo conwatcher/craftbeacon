@@ -272,12 +272,14 @@
     </div>
     <p class="note"><strong>Want to watch it take shape?</strong> Some people like to switch their site on part-way through the build, so they can look in on progress at its real address whenever they like. That's fine. Just know that anyone could come across it before it's finished, so hold off on sharing the address until we're done.</p>
 
-    <h3>A. Prove the address is yours (in your GitHub account)</h3>
+    <h3>A. Prove the address is yours (on your account's Pages screen)</h3>
+    <p class="note">GitHub has <strong>two screens</strong> that are both called Pages. This part uses the one that belongs to your <strong>account</strong>. Part B uses a different one, inside your <strong>repository</strong>.</p>
     <ol class="steps">
-      <li>Open your profile menu, then <strong>Settings</strong> (your account's this time), then <strong>Pages</strong> in the left-hand menu.</li>
+      <li>Open your profile menu (your picture, top right), then <strong>Settings</strong> (your account's this time), then <strong>Pages</strong> in the left-hand menu. This is <strong>your account's Pages screen</strong>. You'll know you're in the right place because the page is about <em>you</em>: your username is shown, with menus such as <strong>Your profile</strong>, and there is no repository name at the top.</li>
       <li>Choose <strong>Add a domain</strong>, type your web address (for example, <strong>janesmithbooks.com</strong>), and confirm.</li>
-      <li>GitHub shows a <strong>TXT record</strong>. Leave the page open; it goes in at your registrar in part C. Afterwards, come back and choose <strong>Verify</strong>.</li>
+      <li>GitHub shows a <strong>TXT record</strong>. Leave the page open; it goes in at your registrar in part C. Afterwards, come back to your account's Pages screen and choose <strong>Verify</strong>.</li>
     </ol>
+    <p class="note"><span class="tbc">[ screenshot: your account's Pages screen, showing username and account menu ]</span></p>
     <figure class="shot">
       <img src="images/github/repo-add-domain.png" alt="GitHub's Add a verified domain page, with a box asking What domain would you like to add? and a green Add domain button." loading="lazy">
       <figcaption>Type your web address, with no https:// and no www, then choose Add domain.</figcaption>
@@ -289,15 +291,16 @@
     <p class="note">GitHub shows the name with your web address on the end. At most registrars, including VentraIP, you type only the first part: <code>_github-pages-challenge-</code> and your username. The registrar adds the rest itself.</p>
     <p class="note">This step stops anyone else's GitHub site from ever using your web address.</p>
 
-    <h3>B. Switch on your site (in your repository)</h3>
+    <h3>B. Switch on your site (on your repository's Pages screen)</h3>
+    <p><strong>Leave your account menu and open your repository first</strong> (choose your profile menu, then <strong>Your repositories</strong>, then <strong>author-website</strong>), then <strong>Settings</strong>, then <strong>Pages</strong>. It's easy to land back on your account's Pages screen by mistake.</p>
     <p class="note">Because you ticked <strong>Add a README file</strong> in Step 04, the branch box will already offer <strong>main</strong>, and you can carry on with the steps below when we get here.</p>
     <p class="note">If your repository was created empty, without a README, Pages may say it is <strong>currently disabled</strong> and the branch box will read <strong>None</strong>. That just means there are no files in it yet. There's nothing wrong, and nothing for you to do until I tell you the site is built.</p>
     <figure class="shot">
       <img src="images/github/new-repo-pages-disabled.png" alt="The GitHub Pages settings of a brand-new repository. Source is Deploy from a branch, and the Branch box reads None, with a message that GitHub Pages is currently disabled." loading="lazy">
-      <figcaption>What Pages looks like before any files are added.</figcaption>
+      <figcaption>What your repository's Pages screen looks like before any files are added.</figcaption>
     </figure>
     <ol class="steps">
-      <li>Open your repository, choose <strong>Settings</strong>, then <strong>Pages</strong> in the left-hand menu.</li>
+      <li>With your repository open, choose <strong>Settings</strong> along the top, then <strong>Pages</strong> in the left-hand menu. This is <strong>your repository's Pages screen</strong>. You'll know you're in the right place because the repository's name, <strong>author-website</strong>, is at the top of the page, with the tabs <strong>Code</strong>, <strong>Issues</strong>, <strong>Pull requests</strong> and <strong>Settings</strong> beneath it.</li>
       <li>Under <strong>Build and deployment</strong>, set <strong>Source</strong> to <strong>Deploy from a branch</strong>. Set the branch to <strong>main</strong>, leave the folder as <strong>/ (root)</strong>, and choose <strong>Save</strong>.</li>
       <li>Under <strong>Custom domain</strong>, type your web address and choose <strong>Save</strong>. Do this before changing anything at your registrar.</li>
     </ol>
@@ -309,6 +312,8 @@
       <img src="images/github/new-repo-custom-domain.png" alt="GitHub Pages settings after saving a branch. A Custom domain box with Save and Remove buttons has appeared, and Enforce HTTPS is ticked and greyed out." loading="lazy">
       <figcaption>The Custom domain box appears once the branch is saved. That's where your web address goes.</figcaption>
     </figure>
+    <p class="note"><span class="tbc">[ screenshot: your repository's Pages screen, showing the repository name and the Code / Issues / Pull requests / Settings tabs ]</span></p>
+    <p class="note"><strong>Optional, if you like a moment of "this is mine":</strong> after you choose the branch and save it (step 2), give it a minute or two, then open your repository's own GitHub address, <code>your-username.github.io/author-website</code>. It shows whatever has been added so far, at first just a placeholder. You can do this before adding your web address, or skip it. The order of the steps above stays the same either way.</p>
 
     <h3>C. Point your web address at GitHub (at your registrar)</h3>
     <p>The company you bought your web address from is called a <strong>registrar</strong>. Namecheap, GoDaddy, Porkbun, Cloudflare and Fasthosts are common ones. Each registrar arranges its screens a little differently, so we'll find the right one together. Look for a section called <strong>DNS</strong>, <strong>DNS records</strong> or <strong>Manage DNS</strong>. The records themselves are the same for every site hosted on GitHub:</p>
@@ -328,9 +333,9 @@
     </table>
     <p class="note">If your registrar already has records with the same Type and Name, those old ones are usually removed first. That's one reason to do this together rather than alone. Changes usually take effect within a few hours, and occasionally up to a day.</p>
 
-    <h3>D. Turn on the padlock (back in your repository)</h3>
+    <h3>D. Turn on the padlock (back on your repository's Pages screen)</h3>
     <ol class="steps">
-      <li>Once your web address opens your site, go back to your repository's <strong>Settings</strong>, then <strong>Pages</strong>.</li>
+      <li>Once your web address opens your site, go back to your <strong>repository's Pages screen</strong> (your repository, then <strong>Settings</strong>, then <strong>Pages</strong>), not your account's.</li>
       <li>Tick <strong>Enforce HTTPS</strong>. This gives your site the padlock in the address bar. If the box isn't available yet, it can take up to a day to appear. I'll check on it and remind you. (Until your web address is connected, the box looks ticked and greyed out. That's normal.)</li>
     </ol>
   </section>
