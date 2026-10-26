@@ -224,26 +224,29 @@
       <li><strong>Owner</strong> should already show your username.</li>
       <li>For <strong>Repository name</strong>, type <code>author-website</code>. Once your web address is connected, visitors never see this name.</li>
       <li>Choose <strong>Public</strong>. Free hosting requires it (see Step 01).</li>
-      <li>Leave every other option as it is, then choose <strong>Create repository</strong>.</li>
-      <li>You'll land on a page with setup instructions written for programmers. You can ignore nearly all of it; that part's mine. The one useful bit is the <strong>Invite collaborators</strong> box near the top, which we use next.</li>
+      <li>Tick <strong>Add a README file</strong>. This puts one small starter file in your repository, so it isn't empty. GitHub needs that before it can switch your site on in Step 05.</li>
+      <li>Leave every other option as it is, except tick <strong>Add a README file</strong>, then choose <strong>Create repository</strong>.</li>
+      <li>You'll land on your new repository's page, which shows the README file in a short list of files. You can ignore nearly all of it; that part's mine. Next, we'll give me access.</li>
     </ol>
     <figure class="shot">
       <img src="images/github/new-repo.png" alt="GitHub's home page with the plus menu open and New repository highlighted in yellow." loading="lazy">
       <figcaption>Choose the + at the top right, then New repository.</figcaption>
     </figure>
     <figure class="shot">
-      <img src="images/github/new-repo-name.png" alt="GitHub's Create a new repository form. The repository name box reads author-website with a green tick saying it is available, visibility is set to Public, and Add README is switched off." loading="lazy">
-      <figcaption>Name it author-website, keep it Public, and leave the rest alone.</figcaption>
+      <img src="images/github/new-repo-name.png" alt="GitHub's Create a new repository form. The repository name box reads author-website with a green tick saying it is available, visibility is set to Public, and Add a README file is ticked." loading="lazy">
+      <figcaption>Name it author-website, keep it Public, and tick Add a README file. Leave the rest alone.</figcaption>
+      <p class="note"><span class="tbc">[ retake screenshot: Add a README file ticked ]</span></p>
     </figure>
+    <!-- Old screenshot images/github/new-repo-done.png showed the EMPTY repo page with an Invite collaborators box, which no longer matches. Replace with a shot of the repo page showing the README, then restore the img tag. -->
     <figure class="shot">
-      <img src="images/github/new-repo-done.png" alt="The new, empty repository page. Near the top are two boxes: Start coding with Codespaces, and Add collaborators to this repository with an Invite collaborators button." loading="lazy">
-      <figcaption>This is the page you land on. The Invite collaborators box is the one we want.</figcaption>
+      <p class="note"><span class="tbc">[ retake screenshot: new repository page showing the README file ]</span></p>
+      <figcaption>This is the page you land on. You'll see your README file listed.</figcaption>
     </figure>
 
     <h3>Add me as a collaborator</h3>
     <p>A <strong>collaborator</strong> is someone you allow to change the files in one repository. It lets me build your site and, later, make the changes you ask for. You can remove me at any time, and your site keeps running.</p>
     <ol class="steps">
-      <li>On the page you've just landed on, choose <strong>Invite collaborators</strong>.</li>
+      <li>In your repository, choose <strong>Settings</strong> along the top (on a small screen it may be tucked under the <strong>•••</strong> menu), then <strong>Collaborators</strong> under <strong>Access</strong>, then <strong>Add people</strong>. GitHub may ask for your password or security code again. That's normal.</li>
       <li>Type my email address, <strong>sketchkey@thecraftbeacon.com</strong>, select me when I appear, and confirm. If GitHub can't find me that way, try my GitHub username instead: <strong>conwatcher</strong>.</li>
       <li>GitHub emails me an invitation. Let me know you've sent it, and I'll accept.</li>
     </ol>
@@ -251,7 +254,6 @@
       <img src="images/github/collaborator-add2.png" alt="GitHub's Add people dialog with sketchkey@thecraftbeacon.com entered and a green button reading Add sketchkey@thecraftbeacon.com." loading="lazy">
       <figcaption>Type my address, then choose the green button.</figcaption>
     </figure>
-    <p class="note">Left that page? You can get there again: open your repository, choose <strong>Settings</strong> along the top (on a small screen it may be tucked under the <strong>•••</strong> menu), then <strong>Collaborators</strong> under <strong>Access</strong>, then <strong>Add people</strong>. GitHub may ask for your password or security code again. That's normal.</p>
     <div class="callout">
       <p>Adding me lets me change the files in this one repository, and nothing else. I can't see your password or your account settings, I can't delete the repository or make it private, and I can't touch anything else in your account.</p>
     </div>
@@ -288,7 +290,8 @@
     <p class="note">This step stops anyone else's GitHub site from ever using your web address.</p>
 
     <h3>B. Switch on your site (in your repository)</h3>
-    <p class="note">If Pages says it is <strong>currently disabled</strong> and the branch box reads <strong>None</strong>, that just means I haven't added your site's files yet. There's nothing wrong, and nothing for you to do until I tell you the site is built.</p>
+    <p class="note">Because you ticked <strong>Add a README file</strong> in Step 04, the branch box will already offer <strong>main</strong>, and you can carry on with the steps below when we get here.</p>
+    <p class="note">If your repository was created empty, without a README, Pages may say it is <strong>currently disabled</strong> and the branch box will read <strong>None</strong>. That just means there are no files in it yet. There's nothing wrong, and nothing for you to do until I tell you the site is built.</p>
     <figure class="shot">
       <img src="images/github/new-repo-pages-disabled.png" alt="The GitHub Pages settings of a brand-new repository. Source is Deploy from a branch, and the Branch box reads None, with a message that GitHub Pages is currently disabled." loading="lazy">
       <figcaption>What Pages looks like before any files are added.</figcaption>
