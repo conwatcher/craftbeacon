@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Connecting your web address at VentraIP</title>
+<style>
+  :root{
+    --paper:#f6f8f7;
+    --paper-raised:#ffffff;
+    --ink:#20302d;
+    --body:#333f3c;
+    --muted:#67726d;
+    --accent:#2f6f62;
+    --accent-deep:#245449;
+    --accent-wash:#e6efec;
+    --line:#dbe3df;
+    --tbc-bg:#fbf1dd;
+    --tbc-line:#e4c684;
+    --tbc-ink:#7a5a17;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0;background:var(--paper);color:var(--body);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px;}
+
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 14px;font-family:var(--sans);z-index:10;}
+  .skip:focus{left:12px;top:12px;}
+
+  header.masthead{background:var(--ink);color:var(--paper);padding:44px 0 40px;border-bottom:3px solid var(--accent);}
+  .eyebrow{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9fc4ba;margin:0 0 14px;}
+  h1{font-family:var(--sans);font-weight:600;font-size:30px;line-height:1.2;margin:0 0 14px;color:#fff;}
+  header.masthead p{margin:0 0 10px;color:#c8d6d1;font-size:17px;max-width:54ch;}
+
+  nav.toc{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:20px 22px 22px;margin:34px 0 8px;}
+  nav.toc h2{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 14px;}
+  nav.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc;}
+  nav.toc li{counter-increment:toc;}
+  nav.toc a{display:flex;gap:12px;align-items:baseline;padding:7px 0;color:var(--body);text-decoration:none;border-bottom:1px solid var(--line);font-size:16.5px;}
+  nav.toc li:last-child a{border-bottom:none;}
+  nav.toc a::before{content:counter(toc,decimal-leading-zero);font-family:var(--sans);font-size:12px;color:var(--accent);font-weight:700;min-width:22px;}
+
+  section{padding:34px 0 6px;border-top:1px solid var(--line);margin-top:22px;}
+  section:first-of-type{border-top:none;margin-top:8px;}
+  .sec-num{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;display:block;margin-bottom:8px;}
+  h2.sec{font-family:var(--sans);font-weight:600;font-size:24px;line-height:1.25;color:var(--ink);margin:0 0 16px;}
+  h3{font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);margin:26px 0 8px;}
+  p{margin:0 0 16px;}
+  strong{color:var(--ink);}
+  a{color:var(--accent-deep);}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;background:var(--accent-wash);padding:1px 6px;border-radius:4px;color:var(--ink);}
+
+  ol.steps{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:step;}
+  ol.steps > li{counter-increment:step;position:relative;padding-left:40px;margin-bottom:14px;}
+  ol.steps > li::before{
+    content:counter(step);position:absolute;left:0;top:1px;
+    width:26px;height:26px;border-radius:50%;background:var(--accent-wash);color:var(--accent-deep);
+    font-family:var(--sans);font-size:13px;font-weight:700;text-align:center;line-height:26px;
+  }
+  ul{margin:0 0 16px;padding-left:0;list-style:none;}
+  ul li{position:relative;padding-left:24px;margin-bottom:10px;}
+  ul li::before{content:"";position:absolute;left:2px;top:11px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+
+  .callout{background:var(--accent-wash);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;margin:4px 0 20px;}
+  .callout p{margin:0;color:var(--accent-deep);font-size:17px;}
+  .callout p + p{margin-top:10px;}
+
+  .sendme{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:6px 0 20px;}
+  .sendme h3{margin-top:0;}
+  .sendme ul{margin-bottom:0;}
+
+  table.recs{width:100%;border-collapse:collapse;margin:4px 0 16px;font-size:16px;}
+  table.recs th,table.recs td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.recs th{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--muted);}
+  table.recs caption{text-align:left;font-family:var(--sans);font-size:14px;color:var(--muted);padding-bottom:6px;}
+
+  .tbc{background:var(--tbc-bg);border:1px solid var(--tbc-line);border-radius:4px;padding:1px 7px;font-family:var(--sans);font-size:14px;color:var(--tbc-ink);}
+  .note{color:var(--muted);font-size:16px;}
+  ol.steps ul{margin:10px 0 10px;}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0 60px;color:var(--muted);font-size:16px;}
+
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+  @media print{
+    body{background:#fff;font-size:12pt;}
+    .wrap{max-width:100%;padding:0;}
+    header.masthead{background:#fff;color:var(--ink);padding:0 0 18px;}
+    header.masthead h1{color:var(--ink);}
+    header.masthead p{color:var(--body);}
+    .eyebrow{color:var(--accent-deep);}
+    .callout,.sendme{background:#fff;}
+    code{background:#fff;border:1px solid #ccc;}
+    .tbc{background:#fff;border:1px solid #999;color:#000;}
+    nav.toc,.skip{display:none;}
+    section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<!--
+  BASE COPY. Send as-is, no client blanks to fill.
+  Registrar-specific replacement for part C of Step 05 in github-account-guide.html (VentraIP clients only).
+  To change the contact email, Find & Replace All on: sketchkey@thecraftbeacon.com (Step 07, footer link)
+  Written from VentraIP's own VIPcontrol help pages. When a client's screens differ from these steps, update the steps and the "last checked" date in the footer.
+-->
+
+<a class="skip" href="#start">Skip to the guide</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Setup guide · VentraIP</p>
+    <h1>Connecting your web address at VentraIP</h1>
+    <p>Your web address lives at VentraIP, and your website lives at GitHub. This short guide shows you how to point one at the other, so that typing your address opens your site.</p>
+  </div>
+</header>
+
+<main class="wrap" id="start">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>What's in this guide</h2>
+    <ol>
+      <li><a href="#what">What you're doing, and what to expect</a></li>
+      <li><a href="#before">Before you start</a></li>
+      <li><a href="#open">Open your DNS settings</a></li>
+      <li><a href="#clear">Clear out old records</a></li>
+      <li><a href="#add">Add the records that point to GitHub</a></li>
+      <li><a href="#txt">Add the verification record</a></li>
+      <li><a href="#send">Wait, check, and what to send me</a></li>
+    </ol>
+  </nav>
+
+  <!-- 01 -->
+  <section id="what" aria-labelledby="what-h">
+    <span class="sec-num">Step 01</span>
+    <h2 class="sec" id="what-h">What you're doing, and what to expect</h2>
+    <p>A web address is like a street name, and a <strong>DNS record</strong> is a signpost that says which building it leads to. You'll add a handful of signposts at VentraIP that point to your site's home at GitHub. That's all this is.</p>
+    <ul>
+      <li><strong>VentraIP doesn't connect it for you.</strong> Registering the address doesn't point it anywhere useful. You add the records yourself, once, and they stay put.</li>
+      <li><strong>It takes about 15 minutes</strong> to enter the records, then a wait. VentraIP says changes usually show up within a few hours, and GitHub occasionally takes up to a day.</li>
+      <li><strong>Nothing here can break your site.</strong> It isn't switched on yet, or, if it is, a wrong record just means the address doesn't open it until we fix it.</li>
+    </ul>
+    <div class="callout">
+      <p><strong>You don't have to do this alone.</strong> Call or text me, or share your screen on a video call, and we'll do it together. This guide is here so you can see what's coming and follow along.</p>
+      <p><strong>Never send me your VentraIP password.</strong> I never need it. If a step needs something only you can do, I'll talk you through it.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="before" aria-labelledby="before-h">
+    <span class="sec-num">Step 02</span>
+    <h2 class="sec" id="before-h">Before you start</h2>
+    <h3>Have these ready</h3>
+    <ul>
+      <li>Your <strong>VentraIP login</strong> (the one you use for VIPcontrol, VentraIP's account area).</li>
+      <li>Your <strong>GitHub username</strong>.</li>
+      <li>GitHub's <strong>verification record</strong>. You get it in your GitHub guide, Step 05, part A, when you add your web address in your account's Pages settings. Leave that GitHub page open if you can.</li>
+      <li>Your web address already <strong>saved in your repository's Pages settings</strong> (Step 05, part B of the GitHub guide). GitHub asks for this before the records go in, so no one else can claim your address.</li>
+    </ul>
+    <div class="callout">
+      <p><strong>Check this before Step 03:</strong> do you use email at this web address, such as <strong>you@yourdomain.com</strong>, or does anything else already use it? Tell me before you open any settings at VentraIP, and wait for my go-ahead.</p>
+      <p>Email depends on records of its own. We'll leave those exactly as they are, but a wrong click at VentraIP could switch them off, so it's worth a quick check first.</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="open" aria-labelledby="open-h">
+    <span class="sec-num">Step 03</span>
+    <h2 class="sec" id="open-h">Open your DNS settings</h2>
+    <ol class="steps">
+      <li>Log in to <strong>VIPcontrol</strong> at VentraIP.</li>
+      <li>Choose <strong>My Services</strong>, then the <strong>Domains</strong> tab.</li>
+      <li>Find your web address in the list and choose it to open the page for that domain.</li>
+      <li>In the menu down the left-hand side, choose <strong>Manage DNS</strong>.</li>
+      <li>Across the top of the page you'll see a row of tabs: <strong>VentraIP Hosting</strong>, <strong>Custom Nameservers</strong>, <strong>DNS Hosting</strong>, <strong>Forwarding</strong> and <strong>Park Domain</strong>. Choose the <strong>DNS Hosting</strong> tab.</li>
+      <li>You should see a <strong>table of records</strong>, with a row along the top for adding new ones. That's where everything below happens.</li>
+    </ol>
+    <p class="note"><span class="tbc">[ screenshot: Manage DNS menu and DNS Hosting tab ]</span></p>
+    <p class="note"><span class="tbc">[ screenshot: the DNS Hosting tab showing the table of records ]</span></p>
+    <div class="callout">
+      <p><strong>Stop and send me a screenshot if a message says something will be switched or replaced</strong>, before you confirm anything. Existing records, including email records, can be replaced, and it's an easy fix when we do it on purpose and an annoying one when it happens by accident.</p>
+      <p><strong>Stop here too if you don't see a table</strong> after choosing the DNS Hosting tab. Stay on that page and message me with a screenshot of what you see instead.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="clear" aria-labelledby="clear-h">
+    <span class="sec-num">Step 04</span>
+    <h2 class="sec" id="clear-h">Clear out old records</h2>
+    <p>Your address may already have records pointing somewhere else, such as a placeholder page. They'd compete with the new ones, so they go first.</p>
+    <ol class="steps">
+      <li>Look down the table for any <strong>A</strong> or <strong>AAAA</strong> record with a <strong>blank hostname</strong>, and any <strong>A</strong> or <strong>CNAME</strong> record whose hostname is <strong>www</strong>.</li>
+      <li>For each one, choose the <strong>red x</strong> beside it to remove it.</li>
+      <li><strong>Leave everything else alone</strong>, especially any <strong>MX</strong> records (these run email) and anything you don't recognise.</li>
+    </ol>
+    <p class="note">Not sure whether a record is safe to remove? Leave it, and send me a screenshot of the table. A screenshot of DNS records contains no passwords, so it's safe to share.</p>
+  </section>
+
+  <!-- 05 -->
+  <section id="add" aria-labelledby="add-h">
+    <span class="sec-num">Step 05</span>
+    <h2 class="sec" id="add-h">Add the records that point to GitHub</h2>
+    <p>You'll add five records in all. Each is added from the row along the top of the table: set the <strong>Type</strong>, fill in the <strong>Hostname</strong> and <strong>Value</strong>, then choose the <strong>plus icon</strong> at the end of the row.</p>
+    <table class="recs">
+      <caption>The five records to add</caption>
+      <thead>
+        <tr><th scope="col">Type</th><th scope="col">Hostname</th><th scope="col">Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A</td><td><strong>Leave blank</strong></td><td><code>185.199.108.153</code></td></tr>
+        <tr><td>A</td><td><strong>Leave blank</strong></td><td><code>185.199.109.153</code></td></tr>
+        <tr><td>A</td><td><strong>Leave blank</strong></td><td><code>185.199.110.153</code></td></tr>
+        <tr><td>A</td><td><strong>Leave blank</strong></td><td><code>185.199.111.153</code></td></tr>
+        <tr><td>CNAME</td><td><code>www</code></td><td><code>your-username.github.io</code> (your GitHub username, then <code>.github.io</code>)</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>Hostname: leave it blank, don't type @.</strong> Other registrars use an @ sign for "the main address". VentraIP uses an empty box.</li>
+      <li><strong>Leave the TTL as it is.</strong> The default is right.</li>
+      <li><strong>Leave Priority empty.</strong> It's only for email records.</li>
+      <li><strong>Copy and paste the values</strong> rather than typing them. One wrong digit is easy to make and hard to spot.</li>
+      <li>For the CNAME value, use <strong>your username only</strong>, ending in <code>.github.io</code>. Don't add your repository's name.</li>
+    </ul>
+    <p>There are four A records because GitHub has four servers, and it uses whichever is free. All four should be there.</p>
+  </section>
+
+  <!-- 06 -->
+  <section id="txt" aria-labelledby="txt-h">
+    <span class="sec-num">Step 06</span>
+    <h2 class="sec" id="txt-h">Add the verification record</h2>
+    <p>One more record proves to GitHub that the address is really yours.</p>
+    <ol class="steps">
+      <li>Back on your GitHub page (Step 05, part A of the GitHub guide), find the <strong>TXT record</strong> GitHub shows you.</li>
+      <li>At VentraIP, set the <strong>Type</strong> to <strong>TXT</strong>.</li>
+      <li>For <strong>Hostname</strong>, enter <code>_github-pages-challenge-your-username</code>, using your GitHub username. Type only this much, without your web address on the end.</li>
+      <li>For <strong>Value</strong>, paste the code GitHub gave you, then choose the <strong>plus icon</strong>.</li>
+    </ol>
+    <div class="callout">
+      <p><strong>Keep this record for good.</strong> GitHub needs it to go on recognising your address as yours. Please don't delete it later, even though it looks like leftover clutter.</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="send" aria-labelledby="send-h">
+    <span class="sec-num">Step 07</span>
+    <h2 class="sec" id="send-h">Wait, check, and what to send me</h2>
+    <h3>Wait a little</h3>
+    <p>VentraIP says new records usually take a few hours to spread across the internet. Occasionally, GitHub takes up to a day. Go and make a cup of tea. Nothing needs doing in the meantime.</p>
+    <h3>Check it worked</h3>
+    <ol class="steps">
+      <li>Open your repository's <strong>Settings</strong>, then <strong>Pages</strong>. Once things are connected, GitHub shows <strong>DNS check successful</strong>.</li>
+      <li>Open your web address in your browser. Your site should appear.</li>
+      <li>In your GitHub account's Pages settings, choose <strong>Verify</strong> beside your address if you haven't yet.</li>
+      <li>Last, back in your repository's Pages settings, tick <strong>Enforce HTTPS</strong> to get the padlock. It can take up to a day to become available, and I'll remind you.</li>
+    </ol>
+    <div class="sendme">
+      <h3>Checklist</h3>
+      <ul>
+        <li>A note that <strong>all six records are added</strong> (four A, one CNAME, one TXT)</li>
+        <li>A <strong>screenshot of the DNS table</strong>, if you'd like me to double-check it. It contains no passwords.</li>
+        <li>Anything on screen that <strong>didn't match this guide</strong>, even if you worked around it</li>
+      </ul>
+    </div>
+    <h3>Looking after your address</h3>
+    <ul>
+      <li><strong>Keep your web address renewed at VentraIP.</strong> If it lapses, your site goes offline until it's renewed. This is the one recurring cost you'll have, and it's yours to manage. I never handle it.</li>
+      <li><strong>Keep your email address current</strong> in VIPcontrol, because that's where VentraIP sends renewal reminders.</li>
+      <li><strong>Check with me before changing DNS records.</strong> The six you added are all that your site needs.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>If anything on screen doesn't match this guide, stop and ask. VentraIP moves its menus around from time to time, and a quick question beats a wrong turn.</p>
+    <p class="note">Steps last checked against VentraIP's help pages: October 2026 · Questions? Call or text me, or email <a href="mailto:sketchkey@thecraftbeacon.com">sketchkey@thecraftbeacon.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
