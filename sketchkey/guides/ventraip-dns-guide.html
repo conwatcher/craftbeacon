@@ -160,9 +160,10 @@
     <h3>Have these ready</h3>
     <ul>
       <li>Your <strong>VentraIP login</strong> (the one you use for VIPcontrol, VentraIP's account area).</li>
+      <li>Your <strong>web address, spelled exactly as it appears in your VentraIP domain list</strong>. Check the ending too (<code>.com</code>, <code>.com.au</code>, <code>.au</code> and so on), because it's easy to remember a shorter version than the one you actually own.</li>
       <li>Your <strong>GitHub username</strong>.</li>
-      <li>GitHub's <strong>verification record</strong>. You get it in your GitHub guide, Step 05, part A, when you add your web address in your account's Pages settings. Leave that GitHub page open if you can.</li>
-      <li>Your web address already <strong>saved in your repository's Pages settings</strong> (Step 05, part B of the GitHub guide). GitHub asks for this before the records go in, so no one else can claim your address.</li>
+      <li>GitHub's <strong>verification record</strong>. You get it in your GitHub guide, Step 05, part A, when you add your web address on your account's Pages screen. Leave that GitHub page open if you can.</li>
+      <li>Your web address already <strong>saved on your repository's Pages screen</strong> (Step 05, part B of the GitHub guide). GitHub asks for this before the records go in, so no one else can claim your address.</li>
     </ul>
     <div class="callout">
       <p><strong>Check this before Step 03:</strong> do you use email at this web address, such as <strong>you@yourdomain.com</strong>, or does anything else already use it? Tell me before you open any settings at VentraIP, and wait for my go-ahead.</p>
@@ -179,14 +180,19 @@
       <li>Choose <strong>My Services</strong>, then the <strong>Domains</strong> tab.</li>
       <li>Find your web address in the list and choose it to open the page for that domain.</li>
       <li>In the menu down the left-hand side, choose <strong>Manage DNS</strong>.</li>
-      <li>Across the top of the page you'll see a row of tabs: <strong>VentraIP Hosting</strong>, <strong>Custom Nameservers</strong>, <strong>DNS Hosting</strong>, <strong>Forwarding</strong> and <strong>Park Domain</strong>. Choose the <strong>DNS Hosting</strong> tab.</li>
-      <li>You should see a <strong>table of records</strong>, with a row along the top for adding new ones. That's where everything below happens.</li>
+      <li>Across the top of the page you'll see a row of tabs: <strong>VentraIP Hosting</strong>, <strong>Custom Nameservers</strong>, <strong>DNS Hosting</strong>, <strong>Forwarding</strong> and <strong>Park Domain</strong>. Choose the <strong>DNS Hosting</strong> tab. A new domain often shows <strong>Custom Nameservers</strong> as the current setting. That's normal, so don't worry about it.</li>
+      <li>The DNS Hosting box at the top of the page has an <strong>Enable</strong> button. Choose it.</li>
+      <li>A screen headed <strong>Current DNS settings will be overridden</strong> appears, listing your old nameservers and the new ones. This is expected. If the two lists are the same (a new domain is usually already on VentraIP's own, <code>ns1</code>, <code>ns2</code> and <code>ns3.nameserver.net.au</code>), nothing is lost. Tick the box saying you understand DNS propagation may take up to an hour, then choose <strong>Set DNS</strong>.</li>
+      <li>You should now see a <strong>table of records</strong>, with a row along the top for adding new ones. That's where everything below happens.</li>
     </ol>
-    <p class="note"><span class="tbc">[ screenshot: Manage DNS menu and DNS Hosting tab ]</span></p>
-    <p class="note"><span class="tbc">[ screenshot: the DNS Hosting tab showing the table of records ]</span></p>
+    <p class="note"><span class="tbc">[ screenshot: DNS Hosting tab with the Enable button ]</span></p>
+    <p class="note"><span class="tbc">[ screenshot: the "Current DNS settings will be overridden" screen ]</span></p>
     <div class="callout">
-      <p><strong>Stop and send me a screenshot if a message says something will be switched or replaced</strong>, before you confirm anything. Existing records, including email records, can be replaced, and it's an easy fix when we do it on purpose and an annoying one when it happens by accident.</p>
-      <p><strong>Stop here too if you don't see a table</strong> after choosing the DNS Hosting tab. Stay on that page and message me with a screenshot of what you see instead.</p>
+      <p><strong>Stop and send me a screenshot before you choose Set DNS</strong> if the old and new nameservers on that screen are <em>different</em>, or if you use email at this web address. The screen warns that active records are replaced, which is harmless on a fresh domain but can switch email off on one that's in use.</p>
+      <p><strong>Stop here too if you don't see a table</strong> after setting DNS. Stay on that page and message me with a screenshot of what you see instead.</p>
+    </div>
+    <div class="callout">
+      <p><strong>Ignore the Create New Records button</strong> lower down the page. It belongs to <em>Child Nameservers</em>, which you don't need, and it isn't where DNS records go. Your records table is in the DNS Hosting box at the top.</p>
     </div>
   </section>
 
@@ -200,6 +206,11 @@
       <li>For each one, choose the <strong>red x</strong> beside it to remove it.</li>
       <li><strong>Leave everything else alone</strong>, especially any <strong>MX</strong> records (these run email) and anything you don't recognise.</li>
     </ol>
+    <p>On a new domain the table usually holds just five rows: two <strong>A</strong> records pointing at <code>103.42.108.46</code> (one for the bare address, one for <code>www</code>) and three <strong>NS</strong> records. Remove the two A records and leave the three NS records. A new domain has no MX record.</p>
+    <div class="callout">
+      <p><strong>Deleting isn't instant, and VentraIP doesn't tell you it has worked.</strong> The red x has no Save button and no confirmation. The row only disappears after you've refreshed the page, or left it and reopened it, sometimes a few times. Refresh before you decide it hasn't worked.</p>
+      <p>This matters later: the <code>www</code> record in Step 05 can't be added until the old <code>www</code> A record has really gone.</p>
+    </div>
     <p class="note">Not sure whether a record is safe to remove? Leave it, and send me a screenshot of the table. A screenshot of DNS records contains no passwords, so it's safe to share.</p>
   </section>
 
@@ -222,13 +233,15 @@
       </tbody>
     </table>
     <ul>
-      <li><strong>Hostname: leave it blank, don't type @.</strong> Other registrars use an @ sign for "the main address". VentraIP uses an empty box.</li>
+      <li><strong>Choose the Type first.</strong> The Type box starts on <strong>A</strong>. If you leave it there and type something like <code>your-username.github.io</code>, VentraIP says <em>Must be a valid IPv4 address</em>. For the CNAME, change the Type to CNAME before you fill in anything else.</li>
+      <li><strong>Hostname: leave it blank, don't type @.</strong> Other registrars use an @ sign for "the main address". VentraIP uses an empty box. Your web address sits greyed out at the end of the Hostname box, so blank means the bare address, and for <code>www</code> you type only <code>www</code>.</li>
       <li><strong>Leave the TTL as it is.</strong> The default is right.</li>
       <li><strong>Leave Priority empty.</strong> It's only for email records.</li>
       <li><strong>Copy and paste the values</strong> rather than typing them. One wrong digit is easy to make and hard to spot.</li>
       <li>For the CNAME value, use <strong>your username only</strong>, ending in <code>.github.io</code>. Don't add your repository's name.</li>
     </ul>
     <p>There are four A records because GitHub has four servers, and it uses whichever is free. All four should be there.</p>
+    <p class="note">If VentraIP says a record <strong>already exists</strong>, it may simply mean you've already added it. Refresh and look in the table before you try again. If it's the <code>www</code> record that's refused, the old <code>www</code> A record from Step 04 probably hasn't gone yet. Refresh until it has.</p>
   </section>
 
   <!-- 06 -->
@@ -239,7 +252,7 @@
     <ol class="steps">
       <li>Back on your GitHub page (Step 05, part A of the GitHub guide), find the <strong>TXT record</strong> GitHub shows you.</li>
       <li>At VentraIP, set the <strong>Type</strong> to <strong>TXT</strong>.</li>
-      <li>For <strong>Hostname</strong>, enter <code>_github-pages-challenge-your-username</code>, using your GitHub username. Type only this much, without your web address on the end.</li>
+      <li>For <strong>Hostname</strong>, enter <code>_github-pages-challenge-your-username</code>, using your GitHub username. Type only this much, without your web address on the end (the Hostname box adds it for you). Capital letters don't matter.</li>
       <li>For <strong>Value</strong>, paste the code GitHub gave you, then choose the <strong>plus icon</strong>.</li>
     </ol>
     <div class="callout">
@@ -251,14 +264,24 @@
   <section id="send" aria-labelledby="send-h">
     <span class="sec-num">Step 07</span>
     <h2 class="sec" id="send-h">Wait, check, and what to send me</h2>
+    <h3>What your finished table should look like</h3>
+    <p>Before you wait, check your table against this list. It should hold exactly:</p>
+    <ul>
+      <li><strong>Four A records</strong> with a blank hostname, pointing at the four <code>185.199.…</code> addresses</li>
+      <li><strong>One CNAME record</strong> for <code>www</code>, pointing at <code>your-username.github.io</code></li>
+      <li><strong>One TXT record</strong> starting <code>_github-pages-challenge-</code></li>
+      <li><strong>Three NS records</strong>, left as they were</li>
+      <li><strong>No rows pointing at <code>103.42.108.46</code></strong></li>
+    </ul>
+    <p class="note"><span class="tbc">[ screenshot: the finished DNS table ]</span></p>
     <h3>Wait a little</h3>
     <p>VentraIP says new records usually take a few hours to spread across the internet. Occasionally, GitHub takes up to a day. Go and make a cup of tea. Nothing needs doing in the meantime.</p>
     <h3>Check it worked</h3>
     <ol class="steps">
-      <li>Open your repository's <strong>Settings</strong>, then <strong>Pages</strong>. Once things are connected, GitHub shows <strong>DNS check successful</strong>.</li>
+      <li>Open your <strong>repository's Pages screen</strong> (your repository, then <strong>Settings</strong>, then <strong>Pages</strong>). Once things are connected, GitHub shows <strong>DNS check successful</strong>.</li>
       <li>Open your web address in your browser. Your site should appear.</li>
-      <li>In your GitHub account's Pages settings, choose <strong>Verify</strong> beside your address if you haven't yet.</li>
-      <li>Last, back in your repository's Pages settings, tick <strong>Enforce HTTPS</strong> to get the padlock. It can take up to a day to become available, and I'll remind you.</li>
+      <li>On your <strong>account's Pages screen</strong> (your profile menu, then <strong>Settings</strong>, then <strong>Pages</strong>), choose <strong>Verify</strong> beside your address if you haven't yet.</li>
+      <li>Last, back on your repository's Pages screen, tick <strong>Enforce HTTPS</strong> to get the padlock. It can take up to a day to become available, and I'll remind you.</li>
     </ol>
     <div class="sendme">
       <h3>Checklist</h3>
