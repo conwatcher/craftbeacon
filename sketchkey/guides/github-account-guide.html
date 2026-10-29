@@ -277,7 +277,7 @@
     <ol class="steps">
       <li>Open your profile menu (your picture, top right), then <strong>Settings</strong> (your account's this time), then <strong>Pages</strong> in the left-hand menu. This is <strong>your account's Pages screen</strong>. You'll know you're in the right place because the page is about <em>you</em>: your username is shown, with menus such as <strong>Your profile</strong>, and there is no repository name at the top.</li>
       <li>Choose <strong>Add a domain</strong>, type your web address (for example, <strong>janesmithbooks.com</strong>), and confirm.</li>
-      <li>GitHub shows a <strong>TXT record</strong>. Leave the page open; it goes in at your registrar in part C. Afterwards, come back to your account's Pages screen and choose <strong>Verify</strong>.</li>
+      <li>GitHub's page shows <strong>two things to copy</strong>: the <strong>name</strong> (step 1 on that page, a hostname beginning <code>_github-pages-challenge-</code>), which goes in the <strong>Hostname</strong> box at your registrar, and the <strong>code</strong> (step 2 on that page), which goes in the <strong>Value</strong> box. Each has a <strong>copy button</strong> beside it. Use the copy button rather than retyping the code. Leave the page open; both go in at your registrar in part C. Afterwards, come back to your account's Pages screen and choose <strong>Verify</strong>. <span class="tbc">[ confirm: how to find the TXT name and code again after leaving this page ]</span></li>
     </ol>
     <p class="note"><span class="tbc">[ screenshot: your account's Pages screen, showing username and account menu ]</span></p>
     <figure class="shot">
@@ -289,6 +289,7 @@
       <figcaption>GitHub gives you a name and a code. Keep this page open, and don't choose Verify until the record is added at your registrar.</figcaption>
     </figure>
     <p class="note">GitHub shows the name with your web address on the end. At most registrars, including VentraIP, you type only the first part: <code>_github-pages-challenge-</code> and your username. The registrar adds the rest itself.</p>
+    <p class="note">Name into Hostname, code into Value. If they get swapped, GitHub can't find your record. The VentraIP guide shows a finished row so you can compare.</p>
     <p class="note">This step stops anyone else's GitHub site from ever using your web address.</p>
 
     <h3>B. Switch on your site (on your repository's Pages screen)</h3>
@@ -328,7 +329,7 @@
         <tr><td>A</td><td>@</td><td><code>185.199.110.153</code></td></tr>
         <tr><td>A</td><td>@</td><td><code>185.199.111.153</code></td></tr>
         <tr><td>CNAME</td><td>www</td><td><code>your-username.github.io</code> (your GitHub username, then <code>.github.io</code>)</td></tr>
-        <tr><td>TXT</td><td>Shown by GitHub in part A</td><td>Shown by GitHub in part A</td></tr>
+        <tr><td>TXT</td><td>The name from GitHub (the first part only)</td><td>The code from GitHub (use its copy button)</td></tr>
       </tbody>
     </table>
     <p class="note">If your registrar already has records with the same Type and Name, those old ones are usually removed first. That's one reason to do this together rather than alone. Changes usually take effect within a few hours, and occasionally up to a day.</p>
