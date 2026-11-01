@@ -250,6 +250,7 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       padding: 0.3rem 0.8rem;
       white-space: nowrap;
     }
+    a.tool-card-head { text-decoration: none; color: inherit; }
     .tool-panel {
       display: none;
       border-top: 0.5px solid var(--cb-border);
@@ -928,6 +929,20 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
 
     <section class="tools-section" id="availableTools" aria-live="polite">
       <p class="status-note" id="loadStatus">Loading tools…</p>
+    </section>
+
+    <!-- Static: lives outside #availableTools / #comingSoon so it shows even if the catalog fetch fails -->
+    <section class="tools-section" id="freeUtilities">
+      <div class="section-heading">Free utilities</div>
+      <div class="tool-card">
+        <a class="tool-card-head" href="codes.html">
+          <div>
+            <h3>QR &amp; Barcode Maker</h3>
+            <div class="tagline">Make a QR code or an ISBN barcode for your book. It runs in your browser, and nothing is uploaded or stored.</div>
+          </div>
+          <span class="tool-price">Free</span>
+        </a>
+      </div>
     </section>
 
     <section class="tools-section" id="comingSoon" hidden>
