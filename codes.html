@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free QR &amp; Barcode Maker for Authors — CraftBeacon</title>
+
+  <meta name="description" content="Make a QR code or an ISBN barcode for your book, free. Everything happens in your browser. Nothing is uploaded or stored." />
+
+  <!-- Analytics start-up lives in an external file so script-src needs no 'unsafe-inline' -->
+  <script src="assets/codes-analytics.js"></script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
+  alt="" /></noscript>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Shared light palette - must precede the page's own <style> so page rules win -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav (same as tools.html) ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(var(--cb-bg-rgb),0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cb-muted); transition: background 0.2s; }
+    .nav-hamburger:hover span { background: var(--cb-amber); }
+
+    /* ─── Header ─── */
+    .page-header {
+      background: var(--cb-wash);
+      border-bottom: 1px solid var(--cb-border);
+      padding: 4rem 3rem 2.75rem;
+    }
+    .page-header-content { max-width: 900px; margin: 0 auto; }
+    .page-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.9rem;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p { font-size: 1.02rem; font-weight: 300; color: var(--cb-muted); line-height: 1.85; max-width: 680px; }
+    .explain { list-style: none; margin-top: 1.5rem; max-width: 680px; }
+    .explain li {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.75;
+      padding-left: 0.9rem;
+      border-left: 2px solid rgba(var(--cb-accent-rgb),0.35);
+      margin-bottom: 0.9rem;
+    }
+    .explain strong { font-weight: 500; color: var(--cb-text); }
+
+    /* ─── Makers ─── */
+    .codes-main { max-width: 900px; margin: 0 auto; padding: 3rem 3rem 4.5rem; }
+    .maker {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      box-shadow: var(--cb-card-shadow);
+      padding: 1.8rem;
+      margin-bottom: 2.25rem;
+      scroll-margin-top: 6.5rem;
+    }
+    .maker h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+    .maker > p, .maker-body > p { font-size: 1rem; font-weight: 300; color: var(--cb-muted); line-height: 1.8; margin-bottom: 1rem; }
+    .maker-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 280px); gap: 2rem; align-items: start; }
+    .maker-out { text-align: center; }
+    .preview-frame {
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid var(--cb-border);
+      padding: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .preview-frame img { display: block; max-width: 100%; height: auto; }
+    .preview-empty { font-size: 0.9rem; font-weight: 300; color: var(--cb-muted); }
+    .preview-frame img:not([hidden]) + .preview-empty { display: none; }
+    .dl-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+    .dl-note { font-size: 0.85rem; font-weight: 300; color: var(--cb-muted); line-height: 1.6; margin-top: 0.7rem; }
+
+    .caution {
+      border-left: 2px solid var(--cb-amber);
+      background: var(--cb-amber-dim);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.3rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .caution strong { font-weight: 500; color: var(--cb-amber); }
+    .caution.warn { border-left-color: var(--cb-red); background: rgba(139,26,47,0.06); }
+    .caution.warn strong { color: var(--cb-red); }
+
+    .field { margin-bottom: 1.3rem; }
+    .field-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.45rem;
+    }
+    .field-help { font-size: 0.85rem; font-weight: 300; color: var(--cb-muted); margin-top: 0.35rem; line-height: 1.6; }
+    .field input[type="text"],
+    .field select {
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      background: var(--cb-surface);
+      border: 1px solid var(--cb-border);
+      padding: 0.6rem 0.8rem;
+      border-radius: 0;
+      appearance: auto;
+    }
+    .field input:disabled { opacity: 0.5; cursor: not-allowed; }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--cb-amber-light);
+      box-shadow: 0 0 0 2px var(--cb-amber-dim);
+    }
+    .field input[type="file"] {
+      display: block;
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      border: 1px dashed var(--cb-amber-light);
+      background: var(--cb-surface);
+      padding: 0.9rem;
+      cursor: pointer;
+    }
+    .field-check { display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; }
+    .field-check input[type="checkbox"] { margin-top: 0.4rem; width: 1rem; height: 1rem; accent-color: var(--cb-amber); flex-shrink: 0; cursor: pointer; }
+    .field-check span { font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
+    .sub-block { border-top: 0.5px solid var(--cb-border); padding-top: 1.3rem; margin-top: 0.4rem; }
+    .sub-block h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-error {
+      display: none;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-red);
+      background: rgba(139,26,47,0.06);
+      border-left: 2px solid var(--cb-red);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .form-error.show { display: block; }
+    .form-note {
+      display: none;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      background: var(--cb-amber-dim);
+      border-left: 2px solid var(--cb-amber-light);
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .form-note.show { display: block; }
+    .status-line { font-size: 0.88rem; font-weight: 300; color: var(--cb-muted); margin-bottom: 1rem; }
+
+    .btn-submit, .btn-link {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.7rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-link { padding: 0.45rem 1rem; margin-top: 0.6rem; }
+    .btn-submit:hover:not(:disabled), .btn-link:hover { background: var(--cb-amber-dim); }
+    .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .handoff-note {
+      border-top: 0.5px solid var(--cb-border);
+      padding-top: 1.6rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+    }
+    .handoff-note strong { font-weight: 500; color: var(--cb-text); }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: var(--cb-surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 0.92rem; font-weight: 600; color: var(--cb-amber); letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-sub { font-size: 0.75rem; font-weight: 400; color: var(--cb-muted); letter-spacing: 0.05em; margin-top: 0.2rem; }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; row-gap: 0.6rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.08em; color: var(--cb-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cb-amber); }
+    .footer-copy { flex-basis: 100%; font-size: 0.75rem; font-weight: 400; color: var(--cb-muted); letter-spacing: 0.05em; }
+
+    .nav-links .nav-faq-mobile, .nav-links .nav-signin-mobile { display: none; }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 980px) {
+      .cb-nav { flex-wrap: nowrap; padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-actions .btn-nav-login { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--cb-dark);
+        border-bottom: 0.5px solid var(--cb-border);
+        padding: 1.25rem 1.5rem 1.5rem;
+        gap: 0;
+        z-index: 199;
+      }
+      .nav-mobile-open .nav-links li { border-bottom: 0.5px solid var(--cb-border); }
+      .nav-mobile-open .nav-links li:last-child { border-bottom: none; }
+      .nav-mobile-open .nav-links a { display: block; padding: 0.85rem 0; font-size: 0.9rem; }
+      .nav-links .nav-faq-mobile, .nav-links .nav-signin-mobile { display: list-item; }
+    }
+    @media (max-width: 768px) {
+      .nav-logo img { height: 30px; }
+      .btn-nav-signup { font-size: 0.76rem; padding: 0.4rem 0.85rem; }
+      .page-header { padding: 3rem 1.25rem 2rem; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 0.95rem; }
+      .codes-main { padding: 2.25rem 1.25rem 3.5rem; }
+      .maker { padding: 1.25rem; }
+      .maker-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+      .row2 { grid-template-columns: 1fr; gap: 0; }
+      .cb-footer { padding: 2rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 400px) {
+      .nav-wordmark { font-size: 0.95rem; }
+      .btn-nav-signup { padding: 0.35rem 0.6rem; letter-spacing: 0.06em; }
+    }
+  </style>
+
+  <link rel="canonical" href="https://thecraftbeacon.com/codes.html" />
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CraftBeacon" />
+  <meta property="og:url" content="https://thecraftbeacon.com/codes.html" />
+  <meta property="og:title" content="Free QR &amp; Barcode Maker for Authors — CraftBeacon" />
+  <meta property="og:description" content="Make a QR code or an ISBN barcode for your book, free. Everything happens in your browser. Nothing is uploaded or stored." />
+  <meta property="og:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free QR &amp; Barcode Maker for Authors — CraftBeacon" />
+  <meta name="twitter:description" content="Make a QR code or an ISBN barcode for your book, free. Everything happens in your browser. Nothing is uploaded or stored." />
+  <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+</head>
+<body>
+
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="tools.html" aria-current="page">Tools</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li class="nav-faq-mobile"><a href="/#faq">FAQ</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li class="nav-signin-mobile"><a href="/login.html">Sign in</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="btn-nav-login" href="/login.html">Sign in</a>
+      <a class="btn-nav-signup" href="/login.html">Start free</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header-content">
+      <div class="page-label">Free utility</div>
+      <h1>Free QR &amp; Barcode Maker for Authors</h1>
+      <p>Three small makers for the things that go on a book: a QR code, an ISBN barcode, and an optional price strip. Everything happens in your browser. Nothing you type or upload is sent to us or stored. These tools turn information you already have into a picture. They don&rsquo;t write anything for your book.</p>
+      <ul class="explain">
+        <li><strong>QR code.</strong> A web address drawn as a picture a phone can read.</li>
+        <li><strong>ISBN barcode.</strong> Your book&rsquo;s ISBN drawn as bars so retailers&rsquo; scanners can read it. The ISBN is the number; the barcode is just that number drawn as bars. This page draws an ISBN you already own. It never issues or looks up ISBNs.</li>
+        <li><strong>Price add-on.</strong> An optional five-digit strip printed beside the ISBN barcode.</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="codes-main">
+
+    <!-- ═══ QR code maker ═══ -->
+    <section class="maker" id="qr-maker" aria-labelledby="qrHeading">
+      <h2 id="qrHeading">QR code maker</h2>
+      <p>Type the web address you want the code to open. This makes a <em>static</em> code: the address is baked into the picture.</p>
+
+      <div class="caution warn">
+        <strong>Before you print one:</strong> a printed QR code points at an address, not at a page. The page can change, but if the address ever dies (a domain lapses, a page moves, a site is rebuilt), every printed copy points at nothing, and it can&rsquo;t be fixed. Point the code at a page on a domain you control for the long term, such as a /book page on your own site, and repoint that page whenever the destination changes.
+      </div>
+
+      <div class="maker-grid">
+        <div class="maker-body">
+          <div class="field">
+            <label class="field-label" for="qrUrl">Web address</label>
+            <input type="text" id="qrUrl" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="thecraftbeacon.com/book" />
+            <p class="field-help">Black on white, with the blank border (the quiet zone) included. Low contrast is the commonest reason scans fail.</p>
+          </div>
+          <div class="form-error" id="qrError" role="alert"></div>
+          <div class="form-note" id="qrNote" aria-live="polite"></div>
+          <p class="status-line" id="qrLevel">Error correction: M</p>
+
+          <div class="sub-block">
+            <h3>Optional: add your own logo to the center</h3>
+            <p class="field-help" style="margin-bottom:0.8rem;">The image stays on your device. Adding a logo switches the code to its strongest error correction and keeps the logo to about a fifth of the code&rsquo;s width, on a white backing.</p>
+            <div class="field">
+              <label class="field-label" for="qrLogo">Logo image</label>
+              <input type="file" id="qrLogo" accept="image/*" />
+              <button type="button" class="btn-link" id="qrLogoRemove" hidden>Remove logo</button>
+            </div>
+            <div class="form-error" id="qrLogoError" role="alert"></div>
+            <div class="caution warn" id="qrLogoWarn" hidden>
+              <strong>A logo still reduces scan margin.</strong> Test at the smallest size you&rsquo;ll print, in poor light, on more than one phone.
+            </div>
+          </div>
+        </div>
+
+        <div class="maker-out">
+          <div class="preview-frame">
+            <img id="qrPreview" alt="Your QR code" hidden />
+            <span class="preview-empty">Your code will appear here.</span>
+          </div>
+          <div class="dl-row">
+            <button type="button" class="btn-submit" id="qrSvg" disabled>Download SVG</button>
+            <button type="button" class="btn-submit" id="qrPng" disabled>Download PNG</button>
+          </div>
+          <p class="dl-note">SVG is the right choice for print, since it stays sharp at any size. PNG is for screens and quick uploads.</p>
+          <p class="dl-note" id="qrSize"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ISBN barcode maker ═══ -->
+    <section class="maker" id="isbn-maker" aria-labelledby="isbnHeading">
+      <h2 id="isbnHeading">ISBN barcode maker</h2>
+      <p>Enter an ISBN-13 (starting 978 or 979). Hyphens and spaces are fine. If you enter a valid ISBN-10, we&rsquo;ll convert it to ISBN-13 and tell you.</p>
+
+      <div class="caution warn">
+        <strong>The barcode is only as correct as the number you typed.</strong> A wrong barcode on a printed run is expensive. Confirm the number against your ISBN agency record, and ask your printer for their final specs before you print.
+      </div>
+
+      <div class="maker-grid">
+        <div class="maker-body">
+          <div class="field">
+            <label class="field-label" for="isbnInput">ISBN</label>
+            <input type="text" id="isbnInput" inputmode="text" autocomplete="off" spellcheck="false" placeholder="978-0-306-40615-7" />
+            <p class="field-help">The number is printed beneath the bars. Books often also print the hyphenated ISBN above the barcode. Your ISBN agency record or your printer can give you the right hyphenation. Plain digits under the bars are fine.</p>
+          </div>
+          <div class="form-error" id="isbnError" role="alert"></div>
+          <div class="form-note" id="isbnNote" aria-live="polite"></div>
+
+          <div class="sub-block">
+            <h3>Price add-on (optional)</h3>
+            <div class="caution">
+              <strong>Most authors should skip this.</strong> The add-on is a five-digit strip beside the ISBN barcode. The first digit is the currency and the other four are the price in cents, so a US$12.99 book is 51299. The &ldquo;no price&rdquo; code, 90000, is the safe default.<br />
+              <strong>Caution:</strong> the add-on bakes the price into every printed copy. If you change the price later, the printed books are wrong. Retailers often apply their own pricing anyway, so this is mostly useful for direct sales (your own site, events).
+            </div>
+            <div class="field">
+              <label class="field-check">
+                <input type="checkbox" id="addonOn" />
+                <span>Add a price strip</span>
+              </label>
+            </div>
+            <div id="addonBox" hidden>
+              <div class="row2">
+                <div class="field">
+                  <label class="field-label" for="addonCurrency">Currency</label>
+                  <select id="addonCurrency">
+                    <option value="none" selected>No price</option>
+                    <option value="usd">US dollar</option>
+                    <option value="cad">Canadian dollar</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="addonPrice">Price</label>
+                  <input type="text" id="addonPrice" inputmode="decimal" autocomplete="off" placeholder="12.99" disabled />
+                </div>
+              </div>
+              <div class="form-error" id="addonError" role="alert"></div>
+              <p class="status-line" id="addonDigits"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="maker-out">
+          <div class="preview-frame">
+            <img id="isbnPreview" alt="Your ISBN barcode" hidden />
+            <span class="preview-empty">Your barcode will appear here.</span>
+          </div>
+          <div class="dl-row">
+            <button type="button" class="btn-submit" id="isbnSvg" disabled>Download SVG</button>
+            <button type="button" class="btn-submit" id="isbnPng" disabled>Download PNG</button>
+          </div>
+          <p class="dl-note">SVG is the right choice for print.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="handoff-note"><strong>We make the code.</strong> Where it goes on the book, how big it is, the blank space around it, the colors, and the final print specs are up to you, your designer, and your printer.</p>
+
+  </main>
+
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">The AI that coaches instead of writing.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 CraftBeacon · thecraftbeacon.com · The writing coach that never writes for you.</p>
+  </footer>
+
+  <script src="assets/vendor/bwip-js-4.11.4.min.js"></script>
+  <script src="assets/codes.js"></script>
+</body>
+</html>
