@@ -22,6 +22,10 @@ CraftBeacon is organized into three coaching lanes: Writing (the craft of the ma
 - [Query Letter Diagnostic](https://thecraftbeacon.com/tools.html#query-letter-diagnostic): query letter diagnostic, fiction ($3.99)
 - [Author Bio Diagnostic](https://thecraftbeacon.com/tools.html#author-bio-diagnostic): author bio diagnostic ($2.99)
 
+## Free utilities
+
+- [QR & Barcode Maker](https://thecraftbeacon.com/codes.html): free QR codes and ISBN barcodes for authors, made in the browser; it encodes numbers and addresses the author already has and writes nothing
+
 ## Field guides
 
 - [The author's journey](https://thecraftbeacon.com/journey.html): craft, marketing and production vocabulary from first draft to finished book
