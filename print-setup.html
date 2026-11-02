@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net; connect-src https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Print Setup Guide — CraftBeacon</title>
+
+  <meta name="description" content="Get your trim, spine and cover numbers for KDP and IngramSpark, then the exact steps to enter them in Word or LibreOffice. Free, in your browser, nothing uploaded." />
+
+  <!-- Analytics start-up lives in an external file so script-src needs no 'unsafe-inline' -->
+  <script src="assets/print-analytics.js"></script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
+  alt="" /></noscript>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/Favicon-Navy.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Shared light palette - must precede the page's own <style> so page rules win -->
+  <link rel="stylesheet" href="/assets/theme.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    [hidden] { display: none !important; }
+
+    body {
+      background: var(--cb-dark);
+      color: var(--cb-text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav (same as codes.html) ─── */
+    .cb-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(var(--cb-bg-rgb),0.97);
+      border-bottom: 0.5px solid var(--cb-border);
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cb-amber); }
+    .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-nav-login {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-muted);
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .btn-nav-login:hover { color: var(--cb-text); }
+    .btn-nav-signup {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.45rem 1.1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-nav-signup:hover { background: var(--cb-amber-dim); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cb-muted); transition: background 0.2s; }
+    .nav-hamburger:hover span { background: var(--cb-amber); }
+
+    /* ─── Header ─── */
+    .page-header {
+      background: var(--cb-wash);
+      border-bottom: 1px solid var(--cb-border);
+      padding: 4rem 3rem 2.75rem;
+    }
+    .page-header-content { max-width: 900px; margin: 0 auto; }
+    .page-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.9rem;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cb-text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header p { font-size: 1.02rem; font-weight: 300; color: var(--cb-muted); line-height: 1.85; max-width: 680px; }
+
+    /* ─── Steps ─── */
+    .print-main { max-width: 900px; margin: 0 auto; padding: 3rem 3rem 4.5rem; }
+    .maker {
+      background: var(--cb-surface);
+      border: 0.5px solid var(--cb-border);
+      box-shadow: var(--cb-card-shadow);
+      padding: 1.8rem;
+      margin-bottom: 2.25rem;
+      scroll-margin-top: 6.5rem;
+    }
+    .maker h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+    .step-num {
+      display: block;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.2rem;
+    }
+    .maker > p { font-size: 1rem; font-weight: 300; color: var(--cb-muted); line-height: 1.8; margin-bottom: 1rem; }
+
+    .caution {
+      border-left: 2px solid var(--cb-amber);
+      background: var(--cb-amber-dim);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .caution strong { font-weight: 500; color: var(--cb-amber); }
+    .caution.warn { border-left-color: var(--cb-red); background: rgba(139,26,47,0.06); }
+    .caution.warn strong { color: var(--cb-red); }
+
+    .field, fieldset.field { margin-bottom: 1.3rem; border: none; min-width: 0; }
+    .field-label, fieldset.field > legend {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      margin-bottom: 0.45rem;
+      padding: 0;
+    }
+    .field-help { font-size: 0.85rem; font-weight: 300; color: var(--cb-muted); margin-top: 0.35rem; line-height: 1.6; }
+    .field input[type="text"],
+    .field select {
+      width: 100%;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cb-text);
+      background: var(--cb-surface);
+      border: 1px solid var(--cb-border);
+      padding: 0.6rem 0.8rem;
+      border-radius: 0;
+      appearance: auto;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--cb-amber-light);
+      box-shadow: 0 0 0 2px var(--cb-amber-dim);
+    }
+    .field-check { display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; margin-bottom: 0.35rem; }
+    .field-check input[type="radio"] { margin-top: 0.4rem; width: 1rem; height: 1rem; accent-color: var(--cb-amber); flex-shrink: 0; cursor: pointer; }
+    .field-check input[type="radio"]:focus-visible { outline: 2px solid var(--cb-amber-light); outline-offset: 2px; }
+    .field-check input:disabled + span { opacity: 0.45; }
+    .field-check input:disabled { cursor: not-allowed; }
+    .field-check span { font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-error {
+      display: none;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-red);
+      background: rgba(139,26,47,0.06);
+      border-left: 2px solid var(--cb-red);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .form-error.show { display: block; }
+    .status-line { font-size: 0.95rem; font-weight: 300; color: var(--cb-muted); margin-bottom: 1rem; }
+
+    /* ─── Results ─── */
+    .res-head { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400; margin: 1.4rem 0 0.4rem; }
+    .res-head:first-child { margin-top: 0; }
+    .col-note { font-size: 0.88rem; font-weight: 300; color: var(--cb-muted); line-height: 1.65; margin-bottom: 0.9rem; }
+    .col-note a, .val-note a, .maker a { color: var(--cb-amber); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; margin-bottom: 0.9rem; }
+    .val-card {
+      border: 0.5px solid var(--cb-border);
+      background: var(--cb-wash);
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+    .val-label { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cb-muted); }
+    .val-num { font-family: 'Playfair Display', serif; font-size: 1.35rem; line-height: 1.3; }
+    .val-num .unit { font-family: 'Crimson Pro', Georgia, serif; font-size: 0.85rem; color: var(--cb-muted); }
+    .val-note { font-size: 0.8rem; font-weight: 300; color: var(--cb-muted); line-height: 1.5; }
+    .btn-copy {
+      align-self: flex-start;
+      margin-top: 0.35rem;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.74rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cb-amber);
+      background: transparent;
+      border: 0.5px solid var(--cb-amber);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: var(--cb-amber-dim); }
+    .btn-copy:focus-visible, .field select:focus-visible { outline: 2px solid var(--cb-amber-light); outline-offset: 2px; }
+    .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .col h4 { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cb-amber); margin-bottom: 0.6rem; }
+    .steps { margin: 0 0 0.5rem 1.3rem; }
+    .steps li { font-size: 1rem; font-weight: 300; line-height: 1.75; margin-bottom: 0.65rem; padding-left: 0.25rem; }
+    .report-line { font-size: 0.9rem; font-weight: 300; color: var(--cb-muted); margin-top: 1rem; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    .handoff-note {
+      border-top: 0.5px solid var(--cb-border);
+      padding-top: 1.6rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.85;
+    }
+    .handoff-note strong { font-weight: 500; color: var(--cb-text); }
+
+    /* ─── Footer ─── */
+    .cb-footer {
+      padding: 2.25rem 3rem;
+      border-top: 0.5px solid var(--cb-border);
+      background: var(--cb-surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 0.92rem; font-weight: 600; color: var(--cb-amber); letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-sub { font-size: 0.75rem; font-weight: 400; color: var(--cb-muted); letter-spacing: 0.05em; margin-top: 0.2rem; }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; row-gap: 0.6rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.08em; color: var(--cb-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cb-amber); }
+    .footer-copy { flex-basis: 100%; font-size: 0.75rem; font-weight: 400; color: var(--cb-muted); letter-spacing: 0.05em; }
+
+    .nav-links .nav-faq-mobile, .nav-links .nav-signin-mobile { display: none; }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 980px) {
+      .cb-nav { flex-wrap: nowrap; padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-actions .btn-nav-login { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--cb-dark);
+        border-bottom: 0.5px solid var(--cb-border);
+        padding: 1.25rem 1.5rem 1.5rem;
+        gap: 0;
+        z-index: 199;
+      }
+      .nav-mobile-open .nav-links li { border-bottom: 0.5px solid var(--cb-border); }
+      .nav-mobile-open .nav-links li:last-child { border-bottom: none; }
+      .nav-mobile-open .nav-links a { display: block; padding: 0.85rem 0; font-size: 0.9rem; }
+      .nav-links .nav-faq-mobile, .nav-links .nav-signin-mobile { display: list-item; }
+    }
+    @media (max-width: 768px) {
+      .nav-logo img { height: 30px; }
+      .btn-nav-signup { font-size: 0.76rem; padding: 0.4rem 0.85rem; }
+      .page-header { padding: 3rem 1.25rem 2rem; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 0.95rem; }
+      .print-main { padding: 2.25rem 1.25rem 3.5rem; }
+      .maker { padding: 1.25rem; }
+      .row2, .cols2 { grid-template-columns: 1fr; gap: 0; }
+      .cols2 { gap: 1rem; }
+      .row2 .field { margin-bottom: 1.3rem; }
+      .cb-footer { padding: 2rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 400px) {
+      .nav-wordmark { font-size: 0.95rem; }
+      .btn-nav-signup { padding: 0.35rem 0.6rem; letter-spacing: 0.06em; }
+      .cards { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <link rel="canonical" href="https://thecraftbeacon.com/print-setup.html" />
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CraftBeacon" />
+  <meta property="og:url" content="https://thecraftbeacon.com/print-setup.html" />
+  <meta property="og:title" content="Print Setup Guide — CraftBeacon" />
+  <meta property="og:description" content="Get your trim, spine and cover numbers for KDP and IngramSpark, then the exact steps to enter them in Word or LibreOffice. Free, in your browser, nothing uploaded." />
+  <meta property="og:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Print Setup Guide — CraftBeacon" />
+  <meta name="twitter:description" content="Get your trim, spine and cover numbers for KDP and IngramSpark, then the exact steps to enter them in Word or LibreOffice. Free, in your browser, nothing uploaded." />
+  <meta name="twitter:image" content="https://thecraftbeacon.com/assets/hero-lighthouse.jpg" />
+</head>
+<body>
+
+  <nav class="cb-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="/">
+      <img src="assets/Logo-Navy.png" alt="" />
+      <span class="nav-wordmark">CraftBeacon</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">How it works</a></li>
+      <li><a href="tools.html" aria-current="page">Tools</a></li>
+      <li><a href="/#tiers">Pricing</a></li>
+      <li class="nav-faq-mobile"><a href="/#faq">FAQ</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li class="nav-signin-mobile"><a href="/login.html">Sign in</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="btn-nav-login" href="/login.html">Sign in</a>
+      <a class="btn-nav-signup" href="/login.html">Start free</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header-content">
+      <div class="page-label">Free utility</div>
+      <h1>Print Setup Guide</h1>
+      <p>Enter your trim size, page count and paper. You get your interior page setup, spine width and full cover size for KDP and IngramSpark, then the exact steps to enter those numbers in Word or LibreOffice. Everything happens in your browser. Nothing you enter is sent to us or stored. This page calculates from the numbers you give it. It doesn&rsquo;t write anything for your book.</p>
+    </div>
+  </header>
+
+  <main class="print-main">
+
+    <noscript>
+      <div class="caution warn"><strong>JavaScript is off.</strong> This page needs JavaScript to do its arithmetic in your browser. Turn it on and reload, or use each platform&rsquo;s own cover template generator.</div>
+    </noscript>
+
+    <!-- ═══ Step 1 ═══ -->
+    <section class="maker" id="step-book" aria-labelledby="bookHeading">
+      <h2 id="bookHeading"><span class="step-num">Step 1</span>Your book</h2>
+
+      <div class="row2">
+        <div class="field">
+          <label class="field-label" for="trimSel">Trim size</label>
+          <select id="trimSel"></select>
+          <p class="field-help">Width &times; height, in inches.</p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="pagesInput">Page count</label>
+          <input type="text" id="pagesInput" inputmode="numeric" autocomplete="off" value="300" />
+          <p class="field-help">Both platforms need an even number of pages; we round up if yours is odd.</p>
+        </div>
+      </div>
+
+      <div class="row2" id="customTrim" hidden>
+        <div class="field">
+          <label class="field-label" for="customW">Custom width (in)</label>
+          <input type="text" id="customW" inputmode="decimal" autocomplete="off" placeholder="5.5" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="customH">Custom height (in)</label>
+          <input type="text" id="customH" inputmode="decimal" autocomplete="off" placeholder="8.5" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="paperSel">Ink and paper</label>
+        <select id="paperSel"></select>
+      </div>
+
+      <fieldset class="field">
+        <legend>Platform</legend>
+        <label class="field-check"><input type="radio" name="platform" value="kdp" checked /><span>Amazon KDP</span></label>
+        <label class="field-check"><input type="radio" name="platform" value="ingram" /><span>IngramSpark</span></label>
+        <label class="field-check"><input type="radio" name="platform" value="both" /><span>Both, side by side</span></label>
+        <p class="field-help" id="platformNote" hidden>IngramSpark spines are measured here for black-and-white paper only, so choose a black-ink paper to compare.</p>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>Do any images run to the edge of your interior pages?</legend>
+        <label class="field-check"><input type="radio" name="bleed" value="no" checked /><span>No</span></label>
+        <label class="field-check"><input type="radio" name="bleed" value="yes" /><span>Yes</span></label>
+        <p class="field-help">Covers always need bleed (artwork that runs past the trim edge). Interiors only need it if images touch the edge, and KDP then requires a PDF upload.</p>
+      </fieldset>
+    </section>
+
+    <!-- ═══ Step 2 ═══ -->
+    <section class="maker" id="step-numbers" aria-labelledby="numbersHeading">
+      <h2 id="numbersHeading"><span class="step-num">Step 2</span>Your numbers</h2>
+      <div id="results" aria-live="polite"></div>
+      <p class="sr-only" id="copyStatus" role="status"></p>
+    </section>
+
+    <!-- ═══ Step 3 ═══ -->
+    <section class="maker" id="step-software" aria-labelledby="softwareHeading">
+      <h2 id="softwareHeading"><span class="step-num">Step 3</span>Your software</h2>
+      <div class="field">
+        <label class="field-label" for="guideSel">Word processor</label>
+        <select id="guideSel"></select>
+      </div>
+      <div id="guideOut"></div>
+      <p class="report-line">Notice a step that moved? <a id="reportLink" href="mailto:patrick@thecraftbeacon.com?subject=Print%20Setup%20Guide%3A%20step%20update">Tell us</a>.</p>
+    </section>
+
+    <p class="handoff-note"><strong>Check before you finalize.</strong> These numbers come from each platform&rsquo;s published specifications as of the verified dates shown above. Confirm them against the platform&rsquo;s own template before you finalize your files. CraftBeacon does not store anything you enter.</p>
+
+  </main>
+
+  <footer class="cb-footer" role="contentinfo">
+    <div>
+      <div class="footer-logo-text">CraftBeacon</div>
+      <div class="footer-sub">The AI that coaches instead of writing.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="mailto:patrick@thecraftbeacon.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 CraftBeacon · thecraftbeacon.com · The writing coach that never writes for you.</p>
+  </footer>
+
+  <script src="assets/print-config.js"></script>
+  <script src="assets/print-calc.js"></script>
+  <script src="assets/print.js"></script>
+</body>
+</html>

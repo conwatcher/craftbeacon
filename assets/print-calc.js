@@ -155,7 +155,10 @@
   function compute(input) {
     var w = warnings(input);
     var blocked = w.some(function (x) { return x.level === 'error'; });
-    if (blocked) return { ok: false, warnings: w };
+    if (blocked) {
+      // "the numbers below use N pages" would be false: nothing is shown
+      return { ok: false, warnings: w.filter(function (x) { return x.code !== 'odd-pages'; }) };
+    }
 
     var int = interior(input.trimW, input.trimH, input.pages, input.bleed, input.platforms);
     if (!int) return { ok: false, warnings: w };
