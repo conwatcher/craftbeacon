@@ -8,6 +8,8 @@ CraftBeacon (thecraftbeacon.com) is a live, revenue-generating AI writing coachi
 
 **One deliberate exception (July 18, 2026):** book metadata keywords — Amazon/KDP search keywords, category strings, SEO search terms — are provided directly in the Marketing Lane. They are analytical discovery data, not authored prose. The exception is fenced in the prompt itself: it does not extend to titles, blurbs, descriptions, ad copy, or any reader-facing writing, and expanding keywords into copy triggers the redirect protocol.
 
+**Utility category (decided Nov 2, 2026):** free, browser-only utilities that are deterministic encoders or calculators (QR & Barcode Maker, Print Setup Guide) sit outside the no-generating rule. They never write or suggest anything for the author's book, and calculators compute only from values the author enters. The category stays narrow; the rule gets no exceptions list.
+
 ### Relay prompt architecture (since July 18, 2026)
 
 The `craftbeacon-relay-v2` `SYSTEM_PROMPT` uses a **two-mode structure** to fix over-coaching: **Answer Mode** (informational requests — marketing strategy, production specs, publishing/craft questions — lead with the answer, state assumptions instead of interrogating, question only after the answer) and **Coaching Mode** (creative/structural manuscript work — diagnostic sequence applies, with clarifying questions only when the diagnosis depends on them and confirmation folded into the diagnosis reply). Turn rules: max one question per reply, every reply contains a deliverable. Answer Mode is the default in the Marketing and Production lanes. Local source of truth for the deployed Worker: `C:\Projects\Craft Beacon Files\System\craftbeacon-relay-v2.js` (matches production as of the Session 27 deploy).
