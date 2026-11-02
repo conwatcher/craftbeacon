@@ -25,6 +25,7 @@ CraftBeacon is organized into three coaching lanes: Writing (the craft of the ma
 ## Free utilities
 
 - [QR & Barcode Maker](https://thecraftbeacon.com/codes.html): free QR codes and ISBN barcodes for authors, made in the browser; it encodes numbers and addresses the author already has and writes nothing
+- [Print Setup Guide](https://thecraftbeacon.com/print-setup.html): free trim, spine and cover numbers for KDP and IngramSpark, with step-by-step setup for Word and LibreOffice; it calculates from numbers the author enters and writes nothing
 
 ## Field guides
 
