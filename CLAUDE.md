@@ -18,8 +18,8 @@ CraftBeacon is kept brand-separate from Patrick's book universe (Red Foundations
 
 ## Stack
 
-- **Front end:** GitHub Pages, 19 static HTML pages. Repo `conwatcher/craftbeacon` (public).
-- **Relay layer:** Cloudflare Workers (nine live) — `craftbeacon-relay-v2` (main API relay), `craftbeacon-report-request` (report requests), `craftbeacon-tools` (Author Tools), `craftbeacon-counselor` (Publishing Guidance Counselor), `craftbeacon-summarizer` (daily session summaries), `craftbeacon-member-name`, `craftbeacon-signup-bridge`, `craftbeacon-stripe-webhook`, `monkeys-paw`.
+- **Front end:** GitHub Pages, 19 static HTML pages at the top level (the `sketchkey/guides/` folder is separate, see below). Repo `conwatcher/craftbeacon` (public).
+- **Relay layer:** Cloudflare Workers (nine live) — `craftbeacon-relay-v2` (main API relay), `craftbeacon-report-request` (report requests), `craftbeacon-tools` (Author Tools), `craftbeacon-counselor` (Publishing Guidance Counselor), `craftbeacon-summarizer` (daily session summaries), `craftbeacon-member-name`, `craftbeacon-signup-bridge`, `craftbeacon-stripe-webhook` (listens for Stripe subscription events and keeps the Supabase `members` table in sync with what each member pays for), `monkeys-paw` (a personal experiment, not part of the product: a toy mini-AI that plays "Monkey's Paw" with deliberately literal answers; only Patrick has used it).
 - **AI:** Anthropic API — Haiku for free tier, Sonnet for paid.
 - **Auth/membership:** Supabase Auth (magic-link sign-in via `login.html`) + Stripe Payment Links; membership tier lives in the Supabase `members` table.
 - **Database:** Supabase, project `craftbeacon-sessions`.
@@ -27,6 +27,10 @@ CraftBeacon is kept brand-separate from Patrick's book universe (Red Foundations
 - **Analytics:** Google Analytics `G-FRZ967M5K9`, Meta Pixel `1659330215146600`.
 
 Tiers: Free (Haiku, 5 msgs/session), Writing Lane, Marketing Lane, Production Lane, Premium (Sonnet, all lanes).
+
+## Sketchkey guides (Freelance side)
+
+`sketchkey/guides/` holds client setup guides (GitHub, VentraIP and MailerLite so far, more planned) for Patrick's Freelance Web Building business, Sketchkey. They are hosted from this repo on purpose. Each page carries `noindex, nofollow`, and they are not listed in `sitemap.xml` or `llms.txt`. They are not CraftBeacon product pages: keep them out of the sitemap and nav, and leave them alone unless the task is about the guides.
 
 ## Deploy rules — read before shipping
 
