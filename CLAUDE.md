@@ -12,14 +12,14 @@ CraftBeacon (thecraftbeacon.com) is a live, revenue-generating AI writing coachi
 
 ### Relay prompt architecture (since July 18, 2026)
 
-The `craftbeacon-relay-v2` `SYSTEM_PROMPT` uses a **two-mode structure** to fix over-coaching: **Answer Mode** (informational requests — marketing strategy, production specs, publishing/craft questions — lead with the answer, state assumptions instead of interrogating, question only after the answer) and **Coaching Mode** (creative/structural manuscript work — diagnostic sequence applies, with clarifying questions only when the diagnosis depends on them and confirmation folded into the diagnosis reply). Turn rules: max one question per reply, every reply contains a deliverable. Answer Mode is the default in the Marketing and Production lanes. Local source of truth for the deployed Worker: `C:\Projects\Craft Beacon Files\System\craftbeacon-relay-v2.js` (matches production as of the Session 27 deploy).
+The `craftbeacon-relay-v2` `SYSTEM_PROMPT` uses a **two-mode structure** to fix over-coaching: **Answer Mode** (informational requests — marketing strategy, production specs, publishing/craft questions — lead with the answer, state assumptions instead of interrogating, question only after the answer) and **Coaching Mode** (creative/structural manuscript work — diagnostic sequence applies, with clarifying questions only when the diagnosis depends on them and confirmation folded into the diagnosis reply). Turn rules: max one question per reply, every reply contains a deliverable. Answer Mode is the default in the Marketing and Production lanes. Local source of truth for the deployed Worker: `C:\Projects\Craft Beacon Files\System\craftbeacon-relay-v2.js` (matches production).
 
 CraftBeacon is kept brand-separate from Patrick's book universe (Red Foundations Publishing). No Red Foundations references in site footers or copy — this was removed deliberately.
 
 ## Stack
 
-- **Front end:** GitHub Pages, 11 static HTML pages. Repo `conwatcher/craftbeacon` (public).
-- **Relay layer:** Cloudflare Workers — `craftbeacon-relay-v2` (main API relay), `craftbeacon-report-request`, `craftbeacon-member-name`, `craftbeacon-signup-bridge`.
+- **Front end:** GitHub Pages, 19 static HTML pages. Repo `conwatcher/craftbeacon` (public).
+- **Relay layer:** Cloudflare Workers (nine live) — `craftbeacon-relay-v2` (main API relay), `craftbeacon-report-request` (report requests), `craftbeacon-tools` (Author Tools), `craftbeacon-counselor` (Publishing Guidance Counselor), `craftbeacon-summarizer` (daily session summaries), `craftbeacon-member-name`, `craftbeacon-signup-bridge`, `craftbeacon-stripe-webhook`, `monkeys-paw`.
 - **AI:** Anthropic API — Haiku for free tier, Sonnet for paid.
 - **Auth/membership:** Supabase Auth (magic-link sign-in via `login.html`) + Stripe Payment Links; membership tier lives in the Supabase `members` table.
 - **Database:** Supabase, project `craftbeacon-sessions`.
@@ -60,29 +60,11 @@ Do not modify, reorder, or "clean up" these. The Lead event must fire only on re
 - **Content and SEO pages** (`journey.html`, `guide.html`, `resources.html`): keep full nav. These exist to build trust and rank organically; we *want* readers wandering deeper into the site.
 - The rule: strip nav only where the page has a single transactional ask.
 
-## Machine layout — corrected 31 August 2026
+## Machine layout
 
-The drives were reorganised. `C:\Dev\` and `C:\Projects\` are the real top-level folders
-now; **`D:\` is backup-only and holds no working files.** Earlier notes pointing at
-`D:\CraftBeacon` and `D:\conwa\Desktop` are stale — those paths no longer exist.
+Drive layout and folder locations are kept in the global file, `C:\Users\conwa\.claude\CLAUDE.md`. Read that, not a path list here. This repo is `C:\Dev\CraftBeacon`.
 
-| What | Where |
-|---|---|
-| This repo | `C:\Dev\CraftBeacon` |
-| Other code projects | `C:\Dev\` (`RF-Book`, `Utility`) |
-| Working files, non-code | `C:\Projects\` (`Craft Beacon Files`, `Red Foundations Files`, `Freelance Files`, `Games-Hobby`) |
-| CraftBeacon Worker sources, prompts, field guides | `C:\Projects\Craft Beacon Files\System\` |
-| Desktop | `C:\Users\conwa\Desktop` |
-| PendingSort — session summaries, handoff notes, work output | `C:\Users\conwa\Desktop\PendingSort` |
-| `D:\` | Backup only. Do not write working files here. |
-
-Session summaries and handoff files go in `C:\Users\conwa\Desktop\PendingSort` by explicit
-absolute path. If it looks missing, the path is wrong — report it rather than creating a
-second one somewhere else.
-
-**Local tooling note:** Python is not installed. Use Node for anything that needs a
-runtime — the local static server used for palette verification is
-`.claude/static-server.js`, launched through `.claude/launch.json` (both gitignored).
+**Local tooling note:** the local static server used for palette verification is `.claude/static-server.js`, launched through `.claude/launch.json` (both gitignored).
 
 ## Working with Patrick on this repo
 
