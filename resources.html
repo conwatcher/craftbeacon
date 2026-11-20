@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://assets.mailerlite.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.mailerlite.com; font-src 'self' data: https://fonts.gstatic.com https://assets.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://*.mailerlite.com https://*.mlcdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.mailerlite.com https://*.mlcdn.com; font-src 'self' data: https://fonts.gstatic.com https://*.mailerlite.com; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.g.doubleclick.net https://assets.mailerlite.com; connect-src 'self' https://*.conwatcher.workers.dev https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://*.g.doubleclick.net https://*.mailerlite.com; frame-src https://*.mailerlite.com; form-action 'self' https://docs.google.com https://*.mailerlite.com; base-uri 'self'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Author resources — CraftBeacon</title>
 
@@ -42,6 +42,16 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2420250');
+  </script>
+  <!-- End MailerLite Universal -->
 
   <!-- Shared light palette - must precede the page's own <style> so page rules win -->
   <link rel="stylesheet" href="/assets/theme.css">
@@ -345,6 +355,33 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       color: var(--cb-muted);
       line-height: 1.6;
     }
+
+    /* ─── Quiet CTA blocks (free tools / newsletter) ───
+       Deliberately low-key: light border, banded background, reference-page
+       type sizes. Not an ad unit. */
+    .resource-cta {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--cb-surface2);
+      border: 0.5px solid var(--cb-border);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.65;
+    }
+    .resource-cta p { margin: 0; }
+    .resource-cta strong { font-weight: 400; color: var(--cb-text); }
+    .resource-cta a { color: var(--cb-amber); text-decoration: underline; text-underline-offset: 2px; }
+    .resource-cta a:hover { text-decoration-thickness: 2px; }
+    .resource-cta-form { max-width: 480px; margin-top: 0.75rem; }
+    .resource-footer-line {
+      margin: 0 0 1rem;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--cb-muted);
+      line-height: 1.65;
+    }
+    .resource-footer-line a { color: var(--cb-amber); text-decoration: underline; text-underline-offset: 2px; }
 
     /* ─── Start-here card (standalone, above the desks) ─── */
     .starter-card {
@@ -1076,6 +1113,9 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
             <div class="resource-card-desc">Cloud writing environment designed for daily writing habits, word-count goals, and distraction-free drafting. Verify current pricing directly.</div>
           </a>
         </div>
+        <div class="resource-cta">
+          <p><strong>Curious how your draft is landing?</strong> The free Manuscript Health Report diagnoses structure, character and pacing, then hands the work back to you. CraftBeacon never writes your pages. <a href="tools.html#manuscript-health-report" onclick="fbq('trackCustom', 'ResourcesCtaClick', {section: 'writing', destination: 'health-report'}); gtag('event', 'resources_cta_click', {section: 'writing', destination: 'health-report'});"><strong>Get your free report &rarr;</strong></a></p>
+        </div>
       </div>
 
       <div class="resource-section" id="feedback">
@@ -1162,6 +1202,12 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
             <div class="resource-card-name">Substack</div>
             <div class="resource-card-desc">Free to publish; monetization via paid subscriptions. Strong fit for authors building a reading community.</div>
           </a>
+        </div>
+        <div class="resource-cta">
+          <p><strong>Building a reader list of your own?</strong> The Beacon Brief is CraftBeacon's newsletter for authors: craft, publishing and tool updates, no fluff. Unsubscribe anytime.</p>
+          <div class="resource-cta-form">
+            <div class="ml-embedded" data-form="ePVaSP"></div>
+          </div>
         </div>
       </div>
 
@@ -1301,6 +1347,9 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
             <div class="resource-card-name">Kindle Previewer</div>
             <div class="resource-card-desc">Free Amazon desktop tool for checking exactly how an ebook will render on Kindle devices before publishing. A separate tool from Kindle Create.</div>
           </a>
+        </div>
+        <div class="resource-cta">
+          <p><strong>Before you format:</strong> the free Print Setup Guide gives you trim, spine and cover dimensions for KDP and IngramSpark, plus the steps to enter them in Word or LibreOffice. It runs in your browser, so nothing is uploaded. <a href="print-setup.html" onclick="fbq('trackCustom', 'ResourcesCtaClick', {section: 'formatting', destination: 'print-setup'}); gtag('event', 'resources_cta_click', {section: 'formatting', destination: 'print-setup'});"><strong>Open the Print Setup Guide &rarr;</strong></a></p>
         </div>
       </div>
 
@@ -1463,6 +1512,8 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
           </a>
         </div>
       </div>
+
+      <p class="resource-footer-line">Free tools for authors: Manuscript Health Report, Print Setup Guide, QR &amp; Barcode Maker. <a href="tools.html" onclick="fbq('trackCustom', 'ResourcesCtaClick', {section: 'footer', destination: 'tools'}); gtag('event', 'resources_cta_click', {section: 'footer', destination: 'tools'});"><strong>See the free tools &rarr;</strong></a></p>
 
     </main>
   </div>
