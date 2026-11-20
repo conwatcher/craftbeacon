@@ -1571,5 +1571,32 @@ src="https://www.facebook.com/tr?id=1659330215146600&ev=PageView&noscript=1"
       });
     });
   </script>
+  <script>
+    // Fire conversion events exactly once, when MailerLite shows its in-page success state.
+    // Double opt-in: "submitted" (pre-confirmation) is the correct moment to count a Lead.
+    // Same logic as newsletter.html; the source tag lets GA4 and Meta tell the pages apart.
+    (function () {
+      const mlEmbed = document.querySelector('.ml-embedded[data-form="ePVaSP"]');
+      if (!mlEmbed) return;
+      let fired = false;
+      function isVisible(el) {
+        return !!el && (el.offsetHeight > 0 || el.getClientRects().length > 0);
+      }
+      function checkSuccess() {
+        if (fired) return;
+        // MailerLite reveals a success body (.ml-form-successBody) after a valid submit.
+        const success = mlEmbed.querySelector('.ml-form-successBody, [class*="successBody"], [class*="success"]');
+        if (isVisible(success)) {
+          fired = true;
+          if (window.fbq) fbq('track', 'Lead', { content_name: 'Beacon Brief Signup', source: 'resources' });
+          if (window.gtag) gtag('event', 'newsletter_signup', { source: 'resources' });
+          obs.disconnect();
+        }
+      }
+      const obs = new MutationObserver(checkSuccess);
+      obs.observe(mlEmbed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+      checkSuccess();
+    })();
+  </script>
 </body>
 </html>
